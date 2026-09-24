@@ -12,10 +12,7 @@ export class HealthController {
 
   @Get()
   async check() {
-    await Promise.all([
-      this.prisma.$queryRaw`SELECT 1`,
-      this.redis.ping(),
-    ]);
+    await Promise.all([this.prisma.$queryRaw`SELECT 1`, this.redis.ping()]);
 
     return {
       status: 'ok',
@@ -24,7 +21,6 @@ export class HealthController {
         database: 'up',
         redis: 'up',
       },
-      timestamp: new Date().toISOString(),
     };
   }
 }

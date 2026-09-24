@@ -26,4 +26,10 @@ export const envValidationSchema = Joi.object({
     .default('info'),
 
   LOG_PRETTY: Joi.boolean().truthy('true').falsy('false').default(false),
+
+  CORS_ORIGINS: Joi.string().default(
+    'http://localhost:3000,http://localhost:5173',
+  ),
+
+  CORS_CREDENTIALS: Joi.boolean().truthy('true').falsy('false').default(true),
 });
