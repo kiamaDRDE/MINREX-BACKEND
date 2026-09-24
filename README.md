@@ -1,118 +1,557 @@
+
+# MINREX API
+
+Service backend de la plateforme numérique MINREX.
+
+`minrex-api` fournit le socle backend et les API nécessaires à la
+plateforme MINREX. L’application est conçue comme un backend NestJS modulaire,
+avec PostgreSQL comme base de données relationnelle principale, Redis pour la
+mise en cache et les traitements temporaires/distribués, et Prisma ORM pour
+l’accès à la base de données.
+
+Le projet est actuellement en cours de développement actif.
+
+> **Important**
+>
+> Les spécifications fonctionnelles sont encore en cours de validation.
+> Les règles métier et les modules doivent donc être implémentés progressivement
+> et ne doivent pas être considérés comme définitifs tant que les exigences
+> correspondantes n’ont pas été formellement approuvées.
+
+---
+
+## Table des matières
+
+- [Vue d’ensemble](#vue-densemble)
+- [Objectifs](#objectifs)
+- [État actuel](#état-actuel)
+- [Pile technologique](#pile-technologique)
+- [Architecture](#architecture)
+- [Structure du projet](#structure-du-projet)
+- [Prérequis](#prérequis)
+- [Prise en main](#prise-en-main)
+- [Configuration de l’environnement](#configuration-de-lenvironnement)
+- [Base de données](#base-de-données)
+- [Redis](#redis)
+- [Exécution de l’application](#exécution-de-lapplication)
+- [Documentation de l’API](#documentation-de-lapi)
+- [Contrôle de santé](#contrôle-de-santé)
+- [Format des réponses API](#format-des-réponses-api)
+- [Journalisation et traçage des requêtes](#journalisation-et-traçage-des-requêtes)
+- [Sécurité](#sécurité)
+- [Tests](#tests)
+- [Qualité du code](#qualité-du-code)
+- [Intégration continue](#intégration-continue)
+- [Workflow de développement](#workflow-de-développement)
+- [Politique des modules métier](#politique-des-modules-métier)
+- [Commandes utiles](#commandes-utiles)
+- [Contribution](#contribution)
+- [Entreprise](#entreprise)
+
+---
+
+# Vue d’ensemble
+
+MINREX API est le service backend qui prend en charge la plateforme numérique
+développée pour le Ministère des Relations Extérieures.
+
+Le backend est conçu pour prendre progressivement en charge plusieurs domaines
+fonctionnels, notamment la gestion des utilisateurs, le recensement de la
+diaspora, la vérification, l’assistance et la protection consulaires, les talents,
+le mentorat, les publications, la gestion documentaire, les notifications et le
+reporting.
+
+La phase actuelle de développement se concentre principalement sur la mise en
+place d’un socle technique sécurisé, maintenable et évolutif avant l’introduction
+de règles métier qui sont encore en attente de validation fonctionnelle.
+
+---
+
+# Objectifs
+
+Le backend a pour objectif de fournir :
+
+- une couche API sécurisée pour les applications web et mobiles ;
+- un accès centralisé aux données de l’application ;
+- des mécanismes structurés d’authentification et d’autorisation ;
+- un accès fiable à la base de données ;
+- la mise en cache et le support de traitements distribués ;
+- la documentation de l’API ;
+- une journalisation structurée et la traçabilité des requêtes ;
+- des réponses de succès et d’erreur standardisées ;
+- la supervision de l’état de santé du système ;
+- des tests automatisés et des contrôles de qualité ;
+- un socle modulaire pour les futurs modules métier.
+
+---
+
+# État actuel
+
+Le socle technique comprend actuellement :
+
+| Composant                      | État                                     |
+| ------------------------------ | ----------------------------------------- |
+| Application NestJS             | ✅ Prêt                                  |
+| Validation de l’environnement | ✅ Prêt                                  |
+| Versionnement de l’API        | ✅ Prêt                                  |
+| Swagger / OpenAPI              | ✅ Prêt                                  |
+| PostgreSQL                     | ✅ Prêt                                  |
+| Prisma ORM                     | ✅ Prêt                                  |
+| Redis                          | ✅ Prêt                                  |
+| Docker Compose                 | ✅ Prêt                                  |
+| Contrôles de santé           | ✅ Prêt                                  |
+| Journalisation structurée     | ✅ Prêt                                  |
+| Corrélation des requêtes     | ✅ Prêt                                  |
+| Gestion globale des erreurs    | ✅ Prêt                                  |
+| Réponses API standardisées   | ✅ Prêt                                  |
+| En-têtes de sécurité Helmet | ✅ Prêt                                  |
+| Configuration CORS             | ✅ Prêt                                  |
+| Tests Jest                     | ✅ Prêt                                  |
+| Linting                        | ✅ Prêt                                  |
+| Validation du build            | ✅ Prêt                                  |
+| CI GitHub                      | ✅ Prêt / En cours                       |
+| Modules métier                | ⏳ En attente de validation fonctionnelle |
+
+---
+
+# Pile technologique
+
+## Backend
+
+- **Node.js 24**
+- **NestJS**
+- **TypeScript**
+
+## Base de données
+
+- **PostgreSQL 17**
+- **Prisma ORM 7**
+
+## Cache et services distribués
+
+- **Redis 8**
+- **ioredis**
+
+## Documentation de l’API
+
+- **Swagger**
+- **OpenAPI**
+
+## Journalisation
+
+- **Pino**
+- **nestjs-pino**
+
+## Sécurité
+
+- **Helmet**
+- Validation de l’environnement
+- Restrictions CORS
+- Masquage des données sensibles dans les logs
+
+## Tests
+
+- **Jest**
+- **ts-jest**
+
+## Infrastructure
+
+- **Docker**
+- **Docker Compose**
+
+## Gestionnaire de paquets
+
+- **pnpm**
+
+---
+
+# Architecture
+
+Le projet suit une architecture modulaire.
+
+L’objectif principal est de maintenir une séparation claire entre
+l’infrastructure technique et la logique métier afin que les modules
+fonctionnels puissent évoluer sans créer un couplage fort dans
+l’ensemble de l’application.
+
+```text
+Clients
+│
+├── Application Web
+├── Application Mobile
+└── Interfaces d’administration
+        │
+        ▼
+┌─────────────────────────────┐
+│         MINREX API          │
+│                             │
+│   Application NestJS        │
+│                             │
+│   ┌─────────────────────┐   │
+│   │ Modules métier      │   │
+│   └─────────────────────┘   │
+│                             │
+│   ┌─────────────────────┐   │
+│   │ Infrastructure      │   │
+│   │                     │   │
+│   │ PostgreSQL          │   │
+│   │ Prisma              │   │
+│   │ Redis               │   │
+│   │ Journalisation      │   │
+│   │ Suivi de santé      │   │
+│   └─────────────────────┘   │
+└──────────────┬──────────────┘
+               │
+       ┌───────┴────────┐
+       ▼                ▼
+   PostgreSQL          Redis
+```
+
+# MINREX API
+
+Service backend de la plateforme numérique MINREX.
+
+`minrex-api` fournit le socle backend et les API nécessaires à la
+plateforme MINREX. L’application est conçue comme un backend NestJS modulaire,
+avec PostgreSQL comme base de données relationnelle principale, Redis pour la
+mise en cache et les traitements temporaires/distribués, et Prisma ORM pour
+l’accès à la base de données.
+
+Le projet est actuellement en cours de développement actif.
+
+> **Important**
+>
+> Les spécifications fonctionnelles sont encore en cours de validation.
+> Les règles métier et les modules doivent donc être implémentés progressivement
+> et ne doivent pas être considérés comme définitifs tant que les exigences
+> correspondantes n’ont pas été formellement approuvées.
+
+---
+
+## Table des matières
+
+- [Vue d’ensemble](#vue-densemble)
+- [Objectifs](#objectifs)
+- [État actuel](#état-actuel)
+- [Pile technologique](#pile-technologique)
+- [Architecture](#architecture)
+- [Structure du projet](#structure-du-projet)
+- [Prérequis](#prérequis)
+- [Prise en main](#prise-en-main)
+- [Configuration de l’environnement](#configuration-de-lenvironnement)
+- [Base de données](#base-de-données)
+- [Redis](#redis)
+- [Exécution de l’application](#exécution-de-lapplication)
+- [Documentation de l’API](#documentation-de-lapi)
+- [Contrôle de santé](#contrôle-de-santé)
+- [Format des réponses API](#format-des-réponses-api)
+- [Journalisation et traçage des requêtes](#journalisation-et-traçage-des-requêtes)
+- [Sécurité](#sécurité)
+- [Tests](#tests)
+- [Qualité du code](#qualité-du-code)
+- [Intégration continue](#intégration-continue)
+- [Workflow de développement](#workflow-de-développement)
+- [Politique des modules métier](#politique-des-modules-métier)
+- [Commandes utiles](#commandes-utiles)
+- [Contribution](#contribution)
+- [Entreprise](#entreprise)
+
+---
+
+# Vue d’ensemble
+
+MINREX API est le service backend qui prend en charge la plateforme numérique
+développée pour le Ministère des Relations Extérieures.
+
+Le backend est conçu pour prendre progressivement en charge plusieurs domaines
+fonctionnels, notamment la gestion des utilisateurs, le recensement de la
+diaspora, la vérification, l’assistance et la protection consulaires, les talents,
+le mentorat, les publications, la gestion documentaire, les notifications et le
+reporting.
+
+La phase actuelle de développement se concentre principalement sur la mise en
+place d’un socle technique sécurisé, maintenable et évolutif avant l’introduction
+de règles métier qui sont encore en attente de validation fonctionnelle.
+
+---
+
+# Objectifs
+
+Le backend a pour objectif de fournir :
+
+- une couche API sécurisée pour les applications web et mobiles ;
+- un accès centralisé aux données de l’application ;
+- des mécanismes structurés d’authentification et d’autorisation ;
+- un accès fiable à la base de données ;
+- la mise en cache et le support de traitements distribués ;
+- la documentation de l’API ;
+- une journalisation structurée et la traçabilité des requêtes ;
+- des réponses de succès et d’erreur standardisées ;
+- la supervision de l’état de santé du système ;
+- des tests automatisés et des contrôles de qualité ;
+- un socle modulaire pour les futurs modules métier.
+
+---
+
+# État actuel
+
+Le socle technique comprend actuellement :
+
+| Composant                      | État                                     |
+| ------------------------------ | ----------------------------------------- |
+| Application NestJS             | ✅ Prêt                                  |
+| Validation de l’environnement | ✅ Prêt                                  |
+| Versionnement de l’API        | ✅ Prêt                                  |
+| Swagger / OpenAPI              | ✅ Prêt                                  |
+| PostgreSQL                     | ✅ Prêt                                  |
+| Prisma ORM                     | ✅ Prêt                                  |
+| Redis                          | ✅ Prêt                                  |
+| Docker Compose                 | ✅ Prêt                                  |
+| Contrôles de santé           | ✅ Prêt                                  |
+| Journalisation structurée     | ✅ Prêt                                  |
+| Corrélation des requêtes     | ✅ Prêt                                  |
+| Gestion globale des erreurs    | ✅ Prêt                                  |
+| Réponses API standardisées   | ✅ Prêt                                  |
+| En-têtes de sécurité Helmet | ✅ Prêt                                  |
+| Configuration CORS             | ✅ Prêt                                  |
+| Tests Jest                     | ✅ Prêt                                  |
+| Linting                        | ✅ Prêt                                  |
+| Validation du build            | ✅ Prêt                                  |
+| CI GitHub                      | ✅ Prêt / En cours                       |
+| Modules métier                | ⏳ En attente de validation fonctionnelle |
+
+---
+
+# Pile technologique
+
+## Backend
+
+- **Node.js 24**
+- **NestJS**
+- **TypeScript**
+
+## Base de données
+
+- **PostgreSQL 17**
+- **Prisma ORM 7**
+
+## Cache et services distribués
+
+- **Redis 8**
+- **ioredis**
+
+## Documentation de l’API
+
+- **Swagger**
+- **OpenAPI**
+
+## Journalisation
+
+- **Pino**
+- **nestjs-pino**
+
+## Sécurité
+
+- **Helmet**
+- Validation de l’environnement
+- Restrictions CORS
+- Masquage des données sensibles dans les logs
+
+## Tests
+
+- **Jest**
+- **ts-jest**
+
+## Infrastructure
+
+- **Docker**
+- **Docker Compose**
+
+## Gestionnaire de paquets
+
+- **pnpm**
+
+---
+
+# Architecture
+
+Le projet suit une architecture modulaire.
+
+L’objectif principal est de maintenir une séparation claire entre
+l’infrastructure technique et la logique métier afin que les modules
+fonctionnels puissent évoluer sans créer un couplage fort dans
+l’ensemble de l’application.
+
+```text
+Clients
+│
+├── Application Web
+├── Application Mobile
+└── Interfaces d’administration
+        │
+        ▼
+┌─────────────────────────────┐
+│         MINREX API          │
+│                             │
+│   Application NestJS        │
+│                             │
+│   ┌─────────────────────┐   │
+│   │ Modules métier      │   │
+│   └─────────────────────┘   │
+│                             │
+│   ┌─────────────────────┐   │
+│   │ Infrastructure      │   │
+│   │                     │   │
+│   │ PostgreSQL          │   │
+│   │ Prisma              │   │
+│   │ Redis               │   │
+│   │ Journalisation      │   │
+│   │ Suivi de santé      │   │
+│   └─────────────────────┘   │
+└──────────────┬──────────────┘
+               │
+       ┌───────┴────────┐
+       ▼                ▼
+   PostgreSQL          Redis
+```
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Logo Nest" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+<p align="center">Un framework <a href="http://nodejs.org" target="_blank">Node.js</a> progressif permettant de construire des applications serveur efficaces et évolutives.</p>
     <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="Version NPM" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Licence du paquet" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="Téléchargements NPM" /></a>
 <a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
 <a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Contributeurs sur Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors sur Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Faire un don"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Nous soutenir"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Nous suivre sur Twitter"></a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  <!--[![Contributeurs sur Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors sur Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Dépôt de démarrage TypeScript du framework [Nest](https://github.com/nestjs/nest).
 
-## Project setup
+## Configuration du projet
 
 ```bash
 $ pnpm install
 ```
 
-## Compile and run the project
+## Compiler et exécuter le projet
 
 ```bash
-# development
+# développement
 $ pnpm run start
 
-# watch mode
+# mode surveillance
 $ pnpm run start:dev
 
-# production mode
+# mode production
 $ pnpm run start:prod
 ```
 
-## Run tests
+## Exécuter les tests
 
 ```bash
-# unit tests
+# tests unitaires
 $ pnpm run test
 
-# e2e tests
+# tests e2e
 $ pnpm run test:e2e
 
-# test coverage
+# couverture de tests
 $ pnpm run test:cov
 ```
 
-## Deployment
+## Déploiement
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Lorsque vous êtes prêt à déployer votre application NestJS en production,
+plusieurs étapes importantes permettent de garantir un fonctionnement aussi
+efficace que possible. Consultez la
+[documentation sur le déploiement](https://docs.nestjs.com/deployment) pour
+plus d’informations.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Si vous recherchez une plateforme cloud pour déployer votre application
+NestJS, consultez [Mau](https://mau.nestjs.com), notre plateforme officielle
+de déploiement des applications NestJS sur AWS. Mau permet un déploiement
+simple et rapide en quelques étapes :
 
 ```bash
 $ pnpm install -g @nestjs/mau
 $ mau deploy
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Avec Mau, vous pouvez déployer votre application en quelques clics et vous
+concentrer sur le développement des fonctionnalités plutôt que sur la gestion
+de l’infrastructure.
 
-## Observability
+## Observabilité
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+Dans les applications de production, l’observabilité est essentielle pour
+comprendre le comportement du système, détecter rapidement les problèmes et
+maintenir des performances fiables.
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+[NestJS Observe](https://observe.nestjs.com) instrumente automatiquement votre
+application NestJS et offre une visibilité approfondie sur le système avec une
+configuration minimale :
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+- **Traçage distribué :** suivre les requêtes entre les services et comprendre leur cheminement dans le système.
+- **Analyse en cascade :** visualiser l’exécution des requêtes et identifier les opérations lentes, les goulots d’étranglement et les délais inattendus.
+- **Analyse des performances :** analyser les performances de l’application en temps réel et identifier rapidement les zones à optimiser.
+- **Métriques :** suivre les indicateurs clés de l’application et de l’infrastructure pour comprendre l’état de santé et les tendances de performance.
+- **Journalisation :** centraliser et corréler les logs avec les traces et les autres données de télémétrie afin de faciliter le débogage.
+- **Suivi des erreurs :** détecter rapidement les erreurs et analyser leur cause racine avec le contexte associé.
+- **Suivi des SLA :** suivre les objectifs de niveau de service et détecter lorsque l’application approche ou dépasse les seuils définis.
+- **Alarmes et alertes :** configurer des alertes pour les erreurs critiques, les dégradations de performance, les violations de SLA et d’autres anomalies afin de permettre une réaction rapide de l’équipe.
 
-This project is already instrumented. Create a free account at [observe.nestjs.com](https://observe.nestjs.com), add an application, and paste the generated app key and secret into the `ObserveModule.forRoot()` call in `src/app.module.ts`.
+Ce projet est déjà instrumenté. Créez un compte gratuit sur
+[observe.nestjs.com](https://observe.nestjs.com), ajoutez une application,
+puis insérez la clé d’application et le secret générés dans l’appel
+`ObserveModule.forRoot()` du fichier `src/app.module.ts`.
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+L’offre gratuite ne nécessite aucune information de paiement et couvre
+300 000 événements par mois. Vous pouvez également consulter la
+[démonstration en direct](https://www.observe-demo.nestjs.com/dashboard) :
+elle présente un tableau de bord complet basé sur les données d’un service
+actif, sans aucune installation.
 
-## Resources
+## Ressources
 
-Check out a few resources that may come in handy when working with NestJS:
+Voici quelques ressources utiles pour travailler avec NestJS :
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Consultez la [documentation NestJS](https://docs.nestjs.com) pour en savoir plus sur le framework.
+- Pour les questions et le support, consultez notre [canal Discord](https://discord.gg/G7Qnnhy).
+- Pour approfondir vos connaissances avec davantage de pratique, consultez nos [cours vidéo officiels](https://courses.nestjs.com/).
+- Déployez votre application sur AWS en quelques clics avec [NestJS Mau](https://mau.nestjs.com).
+- Instrumentez automatiquement votre application avec [NestJS Observe](https://observe.nestjs.com) : traçage distribué, métriques, journalisation, suivi des erreurs et performances.
+- Visualisez le graphe de votre application et interagissez avec l’application NestJS en temps réel grâce à [NestJS Devtools](https://devtools.nestjs.com).
+- Besoin d’aide sur votre projet, à temps partiel ou à temps plein ? Consultez le [support entreprise officiel](https://enterprise.nestjs.com).
+- Pour suivre les actualités et mises à jour, suivez-nous sur [X](https://x.com/nestframework) et [LinkedIn](https://linkedin.com/company/nestjs).
+- Vous cherchez un emploi ou souhaitez publier une offre ? Consultez le [tableau des offres d’emploi officiel](https://jobs.nestjs.com).
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest est un projet open source sous licence MIT. Il peut évoluer grâce aux
+sponsors et au soutien de ses contributeurs. Si vous souhaitez les rejoindre,
+[consultez cette page](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Rester en contact
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
+- Auteur - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Site web - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+## Licence
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Nest est distribué sous [licence MIT](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
