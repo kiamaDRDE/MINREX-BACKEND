@@ -1,14 +1,265 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
   importFileExtension = "js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ENUMS
+ * |--------------------------------------------------------------------------
+ */
+
+enum DiplomaticPostStatus {
+  ACTIVE
+  INACTIVE
+  CLOSED
+}
+
+enum ServiceStatus {
+  ACTIVE
+  INACTIVE
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | GEOGRAPHY
+ * |--------------------------------------------------------------------------
+ */
+
+model Country {
+  id       String @id @default(uuid()) @db.Uuid
+  iso2Code String @unique @map("iso2_code") @db.Char(2)
+  iso3Code String @unique @map("iso3_code") @db.Char(3)
+  name     String @unique @db.VarChar(150)
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  // Postes physiquement situés dans ce pays.
+  hostedPosts DiplomaticPost[] @relation("PostHostCountry")
+
+  // Couvertures territoriales concernant ce pays.
+  postCoverages PostCoverage[]
+
+  @@index([isActive])
+  @@map("countries")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | DIPLOMATIC POST TYPES
+ * |--------------------------------------------------------------------------
+ */
+
+model PostType {
+  id   String @id @default(uuid()) @db.Uuid
+  code String @unique @db.VarChar(50)
+  name String @unique @db.VarChar(100)
+
+  description String? @db.Text
+
+  // Règles de couverture géographique.
+  // Exemples :
+  // Ambassade -> 1..N
+  // Consulat -> 1..N
+  // Mission permanente -> 0..1
+  minCoverageCount Int  @default(0) @map("min_coverage_count")
+  maxCoverageCount Int? @map("max_coverage_count")
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  posts DiplomaticPost[]
+
+  @@index([isActive])
+  @@map("post_types")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | DIPLOMATIC AND CONSULAR POSTS
+ * |--------------------------------------------------------------------------
+ */
+
+model DiplomaticPost {
+  id String @id @default(uuid()) @db.Uuid
+
+  code String @unique @db.VarChar(50)
+  name String @db.VarChar(200)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Type du poste
+   * |--------------------------------------------------------------------------
+   */
+
+  typeId String   @map("type_id") @db.Uuid
+  type   PostType @relation(fields: [typeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  status DiplomaticPostStatus @default(ACTIVE)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Localisation physique
+   * |--------------------------------------------------------------------------
+   */
+
+  hostCountryId String?  @map("host_country_id") @db.Uuid
+  hostCountry   Country? @relation("PostHostCountry", fields: [hostCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  city    String? @db.VarChar(150)
+  address String? @db.VarChar(255)
+
+  latitude  Decimal? @db.Decimal(9, 6)
+  longitude Decimal? @db.Decimal(9, 6)
+
+  openedAt DateTime? @map("opened_at") @db.Date
+  closedAt DateTime? @map("closed_at") @db.Date
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Hiérarchie administrative
+   * |--------------------------------------------------------------------------
+   * |
+   * | Cette relation NE définit PAS la couverture géographique.
+   * |
+   */
+
+  parentPostId String?         @map("parent_post_id") @db.Uuid
+  parentPost   DiplomaticPost? @relation("PostHierarchy", fields: [parentPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  childPosts DiplomaticPost[] @relation("PostHierarchy")
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Relations opérationnelles
+   * |--------------------------------------------------------------------------
+   */
+
+  coverages PostCoverage[]
+  services  Service[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([typeId])
+  @@index([hostCountryId])
+  @@index([parentPostId])
+  @@index([status])
+  @@index([name])
+  @@map("diplomatic_posts")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | DIPLOMATIC POST GEOGRAPHIC COVERAGE
+ * |--------------------------------------------------------------------------
+ */
+
+model PostCoverage {
+  id String @id @default(uuid()) @db.Uuid
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Poste
+   * |--------------------------------------------------------------------------
+   */
+
+  postId String         @map("post_id") @db.Uuid
+  post   DiplomaticPost @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Pays couvert
+   * |--------------------------------------------------------------------------
+   */
+
+  countryId String  @map("country_id") @db.Uuid
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Nature de la compétence
+   * |--------------------------------------------------------------------------
+   */
+
+  competenceNature String? @map("competence_nature") @db.VarChar(100)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Période de validité
+   * |--------------------------------------------------------------------------
+   */
+
+  startDate DateTime  @default(now()) @map("start_date") @db.Date
+  endDate   DateTime? @map("end_date") @db.Date
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([postId, countryId, startDate])
+  @@index([postId])
+  @@index([countryId])
+  @@index([countryId, endDate])
+  @@map("post_coverages")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | DIPLOMATIC POST SERVICES
+ * |--------------------------------------------------------------------------
+ */
+
+model Service {
+  id String @id @default(uuid()) @db.Uuid
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Poste auquel appartient le service
+   * |--------------------------------------------------------------------------
+   */
+
+  postId String         @map("post_id") @db.Uuid
+  post   DiplomaticPost @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Informations du service
+   * |--------------------------------------------------------------------------
+   */
+
+  code String @db.VarChar(50)
+  name String @db.VarChar(150)
+
+  serviceType String? @map("service_type") @db.VarChar(100)
+  description String? @db.Text
+
+  status ServiceStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Le même code ne peut pas être répété dans un même poste.
+   * |--------------------------------------------------------------------------
+   */
+
+  @@unique([postId, code])
+  @@index([postId])
+  @@index([status])
+  @@index([name])
+  @@map("services")
 }

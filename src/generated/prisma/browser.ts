@@ -17,4 +17,28 @@ import * as Prisma from './internal/prismaNamespaceBrowser.js'
 export { Prisma }
 export * as $Enums from './enums.js'
 export * from './enums.js';
-
+/**
+ * Model Country
+ * 
+ */
+export type Country = Prisma.CountryModel
+/**
+ * Model PostType
+ * 
+ */
+export type PostType = Prisma.PostTypeModel
+/**
+ * Model DiplomaticPost
+ * 
+ */
+export type DiplomaticPost = Prisma.DiplomaticPostModel
+/**
+ * Model PostCoverage
+ * 
+ */
+export type PostCoverage = Prisma.PostCoverageModel
+/**
+ * Model Service
+ * 
+ */
+export type Service = Prisma.ServiceModel

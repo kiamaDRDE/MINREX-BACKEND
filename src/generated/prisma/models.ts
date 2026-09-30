@@ -8,4 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Country.js'
+export type * from './models/PostType.js'
+export type * from './models/DiplomaticPost.js'
+export type * from './models/PostCoverage.js'
+export type * from './models/Service.js'
 export type * from './commonInputTypes.js'

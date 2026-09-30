@@ -51,7 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  Country: 'Country',
+  PostType: 'PostType',
+  DiplomaticPost: 'DiplomaticPost',
+  PostCoverage: 'PostCoverage',
+  Service: 'Service'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +72,106 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const CountryScalarFieldEnum = {
+  id: 'id',
+  iso2Code: 'iso2Code',
+  iso3Code: 'iso3Code',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CountryScalarFieldEnum = (typeof CountryScalarFieldEnum)[keyof typeof CountryScalarFieldEnum]
+
+
+export const PostTypeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  minCoverageCount: 'minCoverageCount',
+  maxCoverageCount: 'maxCoverageCount',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PostTypeScalarFieldEnum = (typeof PostTypeScalarFieldEnum)[keyof typeof PostTypeScalarFieldEnum]
+
+
+export const DiplomaticPostScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  typeId: 'typeId',
+  status: 'status',
+  hostCountryId: 'hostCountryId',
+  city: 'city',
+  address: 'address',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  openedAt: 'openedAt',
+  closedAt: 'closedAt',
+  parentPostId: 'parentPostId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DiplomaticPostScalarFieldEnum = (typeof DiplomaticPostScalarFieldEnum)[keyof typeof DiplomaticPostScalarFieldEnum]
+
+
+export const PostCoverageScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  countryId: 'countryId',
+  competenceNature: 'competenceNature',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PostCoverageScalarFieldEnum = (typeof PostCoverageScalarFieldEnum)[keyof typeof PostCoverageScalarFieldEnum]
+
+
+export const ServiceScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  code: 'code',
+  name: 'name',
+  serviceType: 'serviceType',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
