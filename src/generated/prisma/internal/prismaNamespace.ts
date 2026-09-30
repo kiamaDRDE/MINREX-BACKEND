@@ -401,7 +401,19 @@ export const ModelName = {
   PostType: 'PostType',
   DiplomaticPost: 'DiplomaticPost',
   PostCoverage: 'PostCoverage',
-  Service: 'Service'
+  Service: 'Service',
+  User: 'User',
+  UserProfile: 'UserProfile',
+  Role: 'Role',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
+  UserRoleAssignment: 'UserRoleAssignment',
+  UserPostAssignment: 'UserPostAssignment',
+  VerificationToken: 'VerificationToken',
+  CensusRecord: 'CensusRecord',
+  CensusDocument: 'CensusDocument',
+  CensusReview: 'CensusReview',
+  CensusStatusHistory: 'CensusStatusHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -791,6 +803,894 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    User: {
+      payload: Prisma.$UserPayload<ExtArgs>
+      fields: Prisma.UserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findMany: {
+          args: Prisma.UserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        create: {
+          args: Prisma.UserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        createMany: {
+          args: Prisma.UserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        delete: {
+          args: Prisma.UserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        update: {
+          args: Prisma.UserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
+        }
+        groupBy: {
+          args: Prisma.UserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserProfile: {
+      payload: Prisma.$UserProfilePayload<ExtArgs>
+      fields: Prisma.UserProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.UserProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        findMany: {
+          args: Prisma.UserProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>[]
+        }
+        create: {
+          args: Prisma.UserProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        createMany: {
+          args: Prisma.UserProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.UserProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        update: {
+          args: Prisma.UserProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.UserProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserProfile>
+        }
+        groupBy: {
+          args: Prisma.UserProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserProfileCountAggregateOutputType> | number
+        }
+      }
+    }
+    Role: {
+      payload: Prisma.$RolePayload<ExtArgs>
+      fields: Prisma.RoleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        findFirst: {
+          args: Prisma.RoleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        findMany: {
+          args: Prisma.RoleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>[]
+        }
+        create: {
+          args: Prisma.RoleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        createMany: {
+          args: Prisma.RoleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>[]
+        }
+        delete: {
+          args: Prisma.RoleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        update: {
+          args: Prisma.RoleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        deleteMany: {
+          args: Prisma.RoleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>[]
+        }
+        upsert: {
+          args: Prisma.RoleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        aggregate: {
+          args: Prisma.RoleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRole>
+        }
+        groupBy: {
+          args: Prisma.RoleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleCountAggregateOutputType> | number
+        }
+      }
+    }
+    Permission: {
+      payload: Prisma.$PermissionPayload<ExtArgs>
+      fields: Prisma.PermissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PermissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PermissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        findFirst: {
+          args: Prisma.PermissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PermissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        findMany: {
+          args: Prisma.PermissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+        }
+        create: {
+          args: Prisma.PermissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        createMany: {
+          args: Prisma.PermissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PermissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+        }
+        delete: {
+          args: Prisma.PermissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        update: {
+          args: Prisma.PermissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PermissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PermissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PermissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PermissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PermissionPayload>
+        }
+        aggregate: {
+          args: Prisma.PermissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePermission>
+        }
+        groupBy: {
+          args: Prisma.PermissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PermissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PermissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PermissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    RolePermission: {
+      payload: Prisma.$RolePermissionPayload<ExtArgs>
+      fields: Prisma.RolePermissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RolePermissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RolePermissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        findFirst: {
+          args: Prisma.RolePermissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RolePermissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        findMany: {
+          args: Prisma.RolePermissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>[]
+        }
+        create: {
+          args: Prisma.RolePermissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        createMany: {
+          args: Prisma.RolePermissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RolePermissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>[]
+        }
+        delete: {
+          args: Prisma.RolePermissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        update: {
+          args: Prisma.RolePermissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.RolePermissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RolePermissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RolePermissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.RolePermissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePermissionPayload>
+        }
+        aggregate: {
+          args: Prisma.RolePermissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRolePermission>
+        }
+        groupBy: {
+          args: Prisma.RolePermissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RolePermissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RolePermissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RolePermissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserRoleAssignment: {
+      payload: Prisma.$UserRoleAssignmentPayload<ExtArgs>
+      fields: Prisma.UserRoleAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserRoleAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserRoleAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.UserRoleAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserRoleAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.UserRoleAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.UserRoleAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.UserRoleAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserRoleAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.UserRoleAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        update: {
+          args: Prisma.UserRoleAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserRoleAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserRoleAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserRoleAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserRoleAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserRoleAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.UserRoleAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserRoleAssignment>
+        }
+        groupBy: {
+          args: Prisma.UserRoleAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRoleAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserRoleAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserRoleAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserPostAssignment: {
+      payload: Prisma.$UserPostAssignmentPayload<ExtArgs>
+      fields: Prisma.UserPostAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPostAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPostAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.UserPostAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPostAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.UserPostAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.UserPostAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.UserPostAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPostAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.UserPostAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        update: {
+          args: Prisma.UserPostAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPostAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPostAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPostAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPostAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPostAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.UserPostAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPostAssignment>
+        }
+        groupBy: {
+          args: Prisma.UserPostAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPostAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPostAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPostAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    VerificationToken: {
+      payload: Prisma.$VerificationTokenPayload<ExtArgs>
+      fields: Prisma.VerificationTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VerificationTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VerificationTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.VerificationTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VerificationTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        findMany: {
+          args: Prisma.VerificationTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
+        }
+        create: {
+          args: Prisma.VerificationTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        createMany: {
+          args: Prisma.VerificationTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VerificationTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.VerificationTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        update: {
+          args: Prisma.VerificationTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.VerificationTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VerificationTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VerificationTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.VerificationTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.VerificationTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVerificationToken>
+        }
+        groupBy: {
+          args: Prisma.VerificationTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VerificationTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationTokenCountAggregateOutputType> | number
+        }
+      }
+    }
+    CensusRecord: {
+      payload: Prisma.$CensusRecordPayload<ExtArgs>
+      fields: Prisma.CensusRecordFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CensusRecordFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CensusRecordFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        findFirst: {
+          args: Prisma.CensusRecordFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CensusRecordFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        findMany: {
+          args: Prisma.CensusRecordFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>[]
+        }
+        create: {
+          args: Prisma.CensusRecordCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        createMany: {
+          args: Prisma.CensusRecordCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CensusRecordCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>[]
+        }
+        delete: {
+          args: Prisma.CensusRecordDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        update: {
+          args: Prisma.CensusRecordUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        deleteMany: {
+          args: Prisma.CensusRecordDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CensusRecordUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CensusRecordUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>[]
+        }
+        upsert: {
+          args: Prisma.CensusRecordUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusRecordPayload>
+        }
+        aggregate: {
+          args: Prisma.CensusRecordAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCensusRecord>
+        }
+        groupBy: {
+          args: Prisma.CensusRecordGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusRecordGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CensusRecordCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusRecordCountAggregateOutputType> | number
+        }
+      }
+    }
+    CensusDocument: {
+      payload: Prisma.$CensusDocumentPayload<ExtArgs>
+      fields: Prisma.CensusDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CensusDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CensusDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.CensusDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CensusDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.CensusDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.CensusDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.CensusDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CensusDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.CensusDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        update: {
+          args: Prisma.CensusDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.CensusDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CensusDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CensusDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.CensusDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.CensusDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCensusDocument>
+        }
+        groupBy: {
+          args: Prisma.CensusDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CensusDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
+    CensusReview: {
+      payload: Prisma.$CensusReviewPayload<ExtArgs>
+      fields: Prisma.CensusReviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CensusReviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CensusReviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        findFirst: {
+          args: Prisma.CensusReviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CensusReviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        findMany: {
+          args: Prisma.CensusReviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>[]
+        }
+        create: {
+          args: Prisma.CensusReviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        createMany: {
+          args: Prisma.CensusReviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CensusReviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>[]
+        }
+        delete: {
+          args: Prisma.CensusReviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        update: {
+          args: Prisma.CensusReviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.CensusReviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CensusReviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CensusReviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.CensusReviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusReviewPayload>
+        }
+        aggregate: {
+          args: Prisma.CensusReviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCensusReview>
+        }
+        groupBy: {
+          args: Prisma.CensusReviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusReviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CensusReviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusReviewCountAggregateOutputType> | number
+        }
+      }
+    }
+    CensusStatusHistory: {
+      payload: Prisma.$CensusStatusHistoryPayload<ExtArgs>
+      fields: Prisma.CensusStatusHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CensusStatusHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CensusStatusHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CensusStatusHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CensusStatusHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.CensusStatusHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.CensusStatusHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.CensusStatusHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CensusStatusHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CensusStatusHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        update: {
+          args: Prisma.CensusStatusHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CensusStatusHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CensusStatusHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CensusStatusHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CensusStatusHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CensusStatusHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CensusStatusHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCensusStatusHistory>
+        }
+        groupBy: {
+          args: Prisma.CensusStatusHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusStatusHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CensusStatusHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CensusStatusHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -906,6 +1806,220 @@ export const ServiceScalarFieldEnum = {
 } as const
 
 export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  phone: 'phone',
+  passwordHash: 'passwordHash',
+  status: 'status',
+  emailVerifiedAt: 'emailVerifiedAt',
+  phoneVerifiedAt: 'phoneVerifiedAt',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  displayName: 'displayName',
+  photoUrl: 'photoUrl',
+  preferredLanguage: 'preferredLanguage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  scope: 'scope',
+  isSystem: 'isSystem',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId',
+  createdAt: 'createdAt'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
+export const UserRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roleId: 'roleId',
+  postId: 'postId',
+  serviceId: 'serviceId',
+  isActive: 'isActive',
+  assignedAt: 'assignedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
+
+
+export const UserPostAssignmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  serviceId: 'serviceId',
+  jobTitle: 'jobTitle',
+  status: 'status',
+  isPrimary: 'isPrimary',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPostAssignmentScalarFieldEnum = (typeof UserPostAssignmentScalarFieldEnum)[keyof typeof UserPostAssignmentScalarFieldEnum]
+
+
+export const VerificationTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const CensusRecordScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  userId: 'userId',
+  status: 'status',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  birthDate: 'birthDate',
+  birthPlace: 'birthPlace',
+  nationalityCountryId: 'nationalityCountryId',
+  email: 'email',
+  primaryPhone: 'primaryPhone',
+  secondaryPhone: 'secondaryPhone',
+  preferredContactChannel: 'preferredContactChannel',
+  residenceCountryId: 'residenceCountryId',
+  residenceCity: 'residenceCity',
+  residenceAddress: 'residenceAddress',
+  residencePostalCode: 'residencePostalCode',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  residenceSinceYear: 'residenceSinceYear',
+  residenceStatus: 'residenceStatus',
+  cameroonRegion: 'cameroonRegion',
+  cameroonCity: 'cameroonCity',
+  lastCameroonAddress: 'lastCameroonAddress',
+  departureYear: 'departureYear',
+  departureReason: 'departureReason',
+  maritalStatus: 'maritalStatus',
+  dependantsCount: 'dependantsCount',
+  employmentStatus: 'employmentStatus',
+  profession: 'profession',
+  jobTitle: 'jobTitle',
+  sector: 'sector',
+  employer: 'employer',
+  yearsExperience: 'yearsExperience',
+  expertiseDomains: 'expertiseDomains',
+  skills: 'skills',
+  qualifications: 'qualifications',
+  optInTalentDirectory: 'optInTalentDirectory',
+  assignedPostId: 'assignedPostId',
+  routedAt: 'routedAt',
+  declaredAccurate: 'declaredAccurate',
+  consentDataProcessing: 'consentDataProcessing',
+  privacyNoticeAccepted: 'privacyNoticeAccepted',
+  submittedAt: 'submittedAt',
+  verifiedAt: 'verifiedAt',
+  rejectedAt: 'rejectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CensusRecordScalarFieldEnum = (typeof CensusRecordScalarFieldEnum)[keyof typeof CensusRecordScalarFieldEnum]
+
+
+export const CensusDocumentScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  type: 'type',
+  status: 'status',
+  documentNumber: 'documentNumber',
+  issuingCountry: 'issuingCountry',
+  issueDate: 'issueDate',
+  expiryDate: 'expiryDate',
+  storageKey: 'storageKey',
+  originalName: 'originalName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  rejectionReason: 'rejectionReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CensusDocumentScalarFieldEnum = (typeof CensusDocumentScalarFieldEnum)[keyof typeof CensusDocumentScalarFieldEnum]
+
+
+export const CensusReviewScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  reviewerId: 'reviewerId',
+  decision: 'decision',
+  comment: 'comment',
+  correctionFields: 'correctionFields',
+  createdAt: 'createdAt'
+} as const
+
+export type CensusReviewScalarFieldEnum = (typeof CensusReviewScalarFieldEnum)[keyof typeof CensusReviewScalarFieldEnum]
+
+
+export const CensusStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  changedById: 'changedById',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CensusStatusHistoryScalarFieldEnum = (typeof CensusStatusHistoryScalarFieldEnum)[keyof typeof CensusStatusHistoryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1026,6 +2140,202 @@ export type EnumServiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ServiceStatus[]'
  */
 export type ListEnumServiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UserStatus'
+ */
+export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'UserStatus[]'
+ */
+export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferredLanguage'
+ */
+export type EnumPreferredLanguageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredLanguage'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferredLanguage[]'
+ */
+export type ListEnumPreferredLanguageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredLanguage[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RoleScope'
+ */
+export type EnumRoleScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleScope'>
+    
+
+
+/**
+ * Reference to a field of type 'RoleScope[]'
+ */
+export type ListEnumRoleScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleScope[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AssignmentStatus'
+ */
+export type EnumAssignmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssignmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AssignmentStatus[]'
+ */
+export type ListEnumAssignmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssignmentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'VerificationTokenType'
+ */
+export type EnumVerificationTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationTokenType'>
+    
+
+
+/**
+ * Reference to a field of type 'VerificationTokenType[]'
+ */
+export type ListEnumVerificationTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationTokenType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusStatus'
+ */
+export type EnumCensusStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusStatus[]'
+ */
+export type ListEnumCensusStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ContactChannel'
+ */
+export type EnumContactChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactChannel'>
+    
+
+
+/**
+ * Reference to a field of type 'ContactChannel[]'
+ */
+export type ListEnumContactChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContactChannel[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ResidenceStatus'
+ */
+export type EnumResidenceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResidenceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ResidenceStatus[]'
+ */
+export type ListEnumResidenceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResidenceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DepartureReason'
+ */
+export type EnumDepartureReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DepartureReason'>
+    
+
+
+/**
+ * Reference to a field of type 'DepartureReason[]'
+ */
+export type ListEnumDepartureReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DepartureReason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MaritalStatus'
+ */
+export type EnumMaritalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaritalStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MaritalStatus[]'
+ */
+export type ListEnumMaritalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MaritalStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EmploymentStatus'
+ */
+export type EnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EmploymentStatus[]'
+ */
+export type ListEnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusDocumentType'
+ */
+export type EnumCensusDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusDocumentType'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusDocumentType[]'
+ */
+export type ListEnumCensusDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusDocumentType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusDocumentStatus'
+ */
+export type EnumCensusDocumentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusDocumentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusDocumentStatus[]'
+ */
+export type ListEnumCensusDocumentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusDocumentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusReviewDecision'
+ */
+export type EnumCensusReviewDecisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusReviewDecision'>
+    
+
+
+/**
+ * Reference to a field of type 'CensusReviewDecision[]'
+ */
+export type ListEnumCensusReviewDecisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CensusReviewDecision[]'>
     
 
 
@@ -1198,6 +2508,18 @@ export type GlobalOmitConfig = {
   diplomaticPost?: Prisma.DiplomaticPostOmit
   postCoverage?: Prisma.PostCoverageOmit
   service?: Prisma.ServiceOmit
+  user?: Prisma.UserOmit
+  userProfile?: Prisma.UserProfileOmit
+  role?: Prisma.RoleOmit
+  permission?: Prisma.PermissionOmit
+  rolePermission?: Prisma.RolePermissionOmit
+  userRoleAssignment?: Prisma.UserRoleAssignmentOmit
+  userPostAssignment?: Prisma.UserPostAssignmentOmit
+  verificationToken?: Prisma.VerificationTokenOmit
+  censusRecord?: Prisma.CensusRecordOmit
+  censusDocument?: Prisma.CensusDocumentOmit
+  censusReview?: Prisma.CensusReviewOmit
+  censusStatusHistory?: Prisma.CensusStatusHistoryOmit
 }
 
 /* Types for Logging */

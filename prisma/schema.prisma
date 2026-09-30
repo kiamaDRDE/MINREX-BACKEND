@@ -28,6 +28,108 @@ enum ServiceStatus {
   INACTIVE
 }
 
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum PreferredLanguage {
+  FR
+  EN
+}
+
+enum RoleScope {
+  GLOBAL
+  POST
+  SERVICE
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  INACTIVE
+  ENDED
+}
+
+enum VerificationTokenType {
+  EMAIL_VERIFICATION
+  PHONE_VERIFICATION
+  PASSWORD_RESET
+  MFA_OTP
+}
+
+enum CensusStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  CORRECTION_REQUIRED
+  VERIFIED
+  REJECTED
+}
+
+enum ContactChannel {
+  EMAIL
+  SMS
+  PUSH
+}
+
+enum ResidenceStatus {
+  CITIZEN
+  PERMANENT_RESIDENT
+  WORKER
+  STUDENT
+  REFUGEE_ASYLUM_SEEKER
+  TEMPORARY_RESIDENT
+  OTHER
+}
+
+enum DepartureReason {
+  STUDIES
+  WORK
+  FAMILY_REUNIFICATION
+  BUSINESS
+  PROTECTION
+  OTHER
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  SEPARATED
+  OTHER
+}
+
+enum EmploymentStatus {
+  EMPLOYED
+  ENTREPRENEUR
+  SELF_EMPLOYED
+  STUDENT
+  UNEMPLOYED
+  RETIRED
+  OTHER
+}
+
+enum CensusDocumentType {
+  IDENTITY_DOCUMENT
+  RESIDENCE_PROOF
+  OTHER
+}
+
+enum CensusDocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum CensusReviewDecision {
+  VERIFIED
+  CORRECTION_REQUIRED
+  REJECTED
+}
+
 /**
  * |--------------------------------------------------------------------------
  * | GEOGRAPHY
@@ -45,11 +147,11 @@ model Country {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  // Postes physiquement situés dans ce pays.
-  hostedPosts DiplomaticPost[] @relation("PostHostCountry")
-
-  // Couvertures territoriales concernant ce pays.
+  hostedPosts   DiplomaticPost[] @relation("PostHostCountry")
   postCoverages PostCoverage[]
+
+  censusResidenceRecords   CensusRecord[] @relation("CensusResidenceCountry")
+  censusNationalityRecords CensusRecord[] @relation("CensusNationalityCountry")
 
   @@index([isActive])
   @@map("countries")
@@ -68,11 +170,6 @@ model PostType {
 
   description String? @db.Text
 
-  // Règles de couverture géographique.
-  // Exemples :
-  // Ambassade -> 1..N
-  // Consulat -> 1..N
-  // Mission permanente -> 0..1
   minCoverageCount Int  @default(0) @map("min_coverage_count")
   maxCoverageCount Int? @map("max_coverage_count")
 
@@ -99,22 +196,10 @@ model DiplomaticPost {
   code String @unique @db.VarChar(50)
   name String @db.VarChar(200)
 
-  /**
-   * |--------------------------------------------------------------------------
-   * | Type du poste
-   * |--------------------------------------------------------------------------
-   */
-
   typeId String   @map("type_id") @db.Uuid
   type   PostType @relation(fields: [typeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   status DiplomaticPostStatus @default(ACTIVE)
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Localisation physique
-   * |--------------------------------------------------------------------------
-   */
 
   hostCountryId String?  @map("host_country_id") @db.Uuid
   hostCountry   Country? @relation("PostHostCountry", fields: [hostCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
@@ -128,28 +213,16 @@ model DiplomaticPost {
   openedAt DateTime? @map("opened_at") @db.Date
   closedAt DateTime? @map("closed_at") @db.Date
 
-  /**
-   * |--------------------------------------------------------------------------
-   * | Hiérarchie administrative
-   * |--------------------------------------------------------------------------
-   * |
-   * | Cette relation NE définit PAS la couverture géographique.
-   * |
-   */
-
-  parentPostId String?         @map("parent_post_id") @db.Uuid
-  parentPost   DiplomaticPost? @relation("PostHierarchy", fields: [parentPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-
-  childPosts DiplomaticPost[] @relation("PostHierarchy")
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Relations opérationnelles
-   * |--------------------------------------------------------------------------
-   */
+  parentPostId String?          @map("parent_post_id") @db.Uuid
+  parentPost   DiplomaticPost?  @relation("PostHierarchy", fields: [parentPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  childPosts   DiplomaticPost[] @relation("PostHierarchy")
 
   coverages PostCoverage[]
   services  Service[]
+
+  userPostAssignments UserPostAssignment[]
+  roleAssignments     UserRoleAssignment[]
+  censusRecords       CensusRecord[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -171,37 +244,13 @@ model DiplomaticPost {
 model PostCoverage {
   id String @id @default(uuid()) @db.Uuid
 
-  /**
-   * |--------------------------------------------------------------------------
-   * | Poste
-   * |--------------------------------------------------------------------------
-   */
-
   postId String         @map("post_id") @db.Uuid
   post   DiplomaticPost @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Pays couvert
-   * |--------------------------------------------------------------------------
-   */
 
   countryId String  @map("country_id") @db.Uuid
   country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  /**
-   * |--------------------------------------------------------------------------
-   * | Nature de la compétence
-   * |--------------------------------------------------------------------------
-   */
-
   competenceNature String? @map("competence_nature") @db.VarChar(100)
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Période de validité
-   * |--------------------------------------------------------------------------
-   */
 
   startDate DateTime  @default(now()) @map("start_date") @db.Date
   endDate   DateTime? @map("end_date") @db.Date
@@ -225,20 +274,8 @@ model PostCoverage {
 model Service {
   id String @id @default(uuid()) @db.Uuid
 
-  /**
-   * |--------------------------------------------------------------------------
-   * | Poste auquel appartient le service
-   * |--------------------------------------------------------------------------
-   */
-
   postId String         @map("post_id") @db.Uuid
   post   DiplomaticPost @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Informations du service
-   * |--------------------------------------------------------------------------
-   */
 
   code String @db.VarChar(50)
   name String @db.VarChar(150)
@@ -248,18 +285,426 @@ model Service {
 
   status ServiceStatus @default(ACTIVE)
 
+  userPostAssignments UserPostAssignment[]
+  roleAssignments     UserRoleAssignment[]
+
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
-
-  /**
-   * |--------------------------------------------------------------------------
-   * | Le même code ne peut pas être répété dans un même poste.
-   * |--------------------------------------------------------------------------
-   */
 
   @@unique([postId, code])
   @@index([postId])
   @@index([status])
   @@index([name])
   @@map("services")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | USERS
+ * |--------------------------------------------------------------------------
+ */
+
+model User {
+  id String @id @default(uuid()) @db.Uuid
+
+  email String? @unique @db.VarChar(255)
+  phone String? @unique @db.VarChar(30)
+
+  passwordHash String? @map("password_hash") @db.VarChar(255)
+
+  status UserStatus @default(PENDING_VERIFICATION)
+
+  emailVerifiedAt DateTime? @map("email_verified_at") @db.Timestamptz(3)
+  phoneVerifiedAt DateTime? @map("phone_verified_at") @db.Timestamptz(3)
+  lastLoginAt     DateTime? @map("last_login_at") @db.Timestamptz(3)
+
+  profile UserProfile?
+
+  roleAssignments UserRoleAssignment[]
+  postAssignments UserPostAssignment[]
+
+  verificationTokens VerificationToken[]
+
+  censusRecords       CensusRecord[]
+  censusReviews       CensusReview[]        @relation("CensusReviewer")
+  censusStatusChanges CensusStatusHistory[] @relation("CensusStatusChangedBy")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([status])
+  @@index([email])
+  @@index([phone])
+  @@map("users")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | USER PROFILE
+ * |--------------------------------------------------------------------------
+ */
+
+model UserProfile {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @unique @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  firstName String @map("first_name") @db.VarChar(100)
+  lastName  String @map("last_name") @db.VarChar(100)
+
+  displayName String? @map("display_name") @db.VarChar(200)
+  photoUrl    String? @map("photo_url") @db.VarChar(500)
+
+  preferredLanguage PreferredLanguage @default(FR) @map("preferred_language")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([lastName, firstName])
+  @@map("user_profiles")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ROLES
+ * |--------------------------------------------------------------------------
+ */
+
+model Role {
+  id String @id @default(uuid()) @db.Uuid
+
+  code String @unique @db.VarChar(80)
+  name String @unique @db.VarChar(120)
+
+  description String? @db.Text
+
+  scope RoleScope @default(GLOBAL)
+
+  isSystem Boolean @default(false) @map("is_system")
+  isActive Boolean @default(true) @map("is_active")
+
+  userAssignments UserRoleAssignment[]
+  permissions     RolePermission[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([scope])
+  @@index([isActive])
+  @@map("roles")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | PERMISSIONS
+ * |--------------------------------------------------------------------------
+ */
+
+model Permission {
+  id String @id @default(uuid()) @db.Uuid
+
+  code String @unique @db.VarChar(120)
+  name String @db.VarChar(150)
+
+  description String? @db.Text
+
+  roles RolePermission[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("permissions")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ROLE <-> PERMISSION
+ * |--------------------------------------------------------------------------
+ */
+
+model RolePermission {
+  roleId       String @map("role_id") @db.Uuid
+  permissionId String @map("permission_id") @db.Uuid
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+  @@map("role_permissions")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | USER ROLE ASSIGNMENTS
+ * |--------------------------------------------------------------------------
+ */
+
+model UserRoleAssignment {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  roleId String @map("role_id") @db.Uuid
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  postId String?         @map("post_id") @db.Uuid
+  post   DiplomaticPost? @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  serviceId String?  @map("service_id") @db.Uuid
+  service   Service? @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  isActive Boolean @default(true) @map("is_active")
+
+  assignedAt DateTime  @default(now()) @map("assigned_at") @db.Timestamptz(3)
+  expiresAt  DateTime? @map("expires_at") @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([roleId])
+  @@index([postId])
+  @@index([serviceId])
+  @@index([userId, isActive])
+  @@map("user_role_assignments")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ORGANISATIONAL ASSIGNMENT
+ * |--------------------------------------------------------------------------
+ */
+
+model UserPostAssignment {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  postId String @map("post_id") @db.Uuid
+
+  serviceId String? @map("service_id") @db.Uuid
+
+  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  post    DiplomaticPost @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  service Service?       @relation(fields: [serviceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  jobTitle String? @map("job_title") @db.VarChar(150)
+
+  status    AssignmentStatus @default(ACTIVE)
+  isPrimary Boolean          @default(false) @map("is_primary")
+
+  startedAt DateTime  @default(now()) @map("started_at") @db.Timestamptz(3)
+  endedAt   DateTime? @map("ended_at") @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([postId])
+  @@index([serviceId])
+  @@index([status])
+  @@index([userId, status])
+  @@map("user_post_assignments")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | VERIFICATION TOKENS
+ * |--------------------------------------------------------------------------
+ */
+
+model VerificationToken {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  type VerificationTokenType
+
+  tokenHash String @map("token_hash") @db.VarChar(255)
+
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(3)
+  consumedAt DateTime? @map("consumed_at") @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([userId, type])
+  @@index([expiresAt])
+  @@map("verification_tokens")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | CENSUS / RECENSEMENT
+ * |--------------------------------------------------------------------------
+ */
+
+model CensusRecord {
+  id        String @id @default(uuid()) @db.Uuid
+  reference String @unique @db.VarChar(40)
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  status CensusStatus @default(DRAFT)
+
+  // Snapshot d'identité au moment du recensement.
+  firstName  String?   @map("first_name") @db.VarChar(100)
+  lastName   String?   @map("last_name") @db.VarChar(100)
+  birthDate  DateTime? @map("birth_date") @db.Date
+  birthPlace String?   @map("birth_place") @db.VarChar(150)
+
+  nationalityCountryId String?  @map("nationality_country_id") @db.Uuid
+  nationalityCountry   Country? @relation("CensusNationalityCountry", fields: [nationalityCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  // Coordonnées de contact utilisées pour le dossier de recensement.
+  email                   String?         @db.VarChar(255)
+  primaryPhone            String?         @map("primary_phone") @db.VarChar(30)
+  secondaryPhone          String?         @map("secondary_phone") @db.VarChar(30)
+  preferredContactChannel ContactChannel? @map("preferred_contact_channel")
+
+  // Résidence dans la diaspora.
+  residenceCountryId String?  @map("residence_country_id") @db.Uuid
+  residenceCountry   Country? @relation("CensusResidenceCountry", fields: [residenceCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  residenceCity       String?          @map("residence_city") @db.VarChar(150)
+  residenceAddress    String?          @map("residence_address") @db.VarChar(255)
+  residencePostalCode String?          @map("residence_postal_code") @db.VarChar(30)
+  latitude            Decimal?         @db.Decimal(9, 6)
+  longitude           Decimal?         @db.Decimal(9, 6)
+  residenceSinceYear  Int?             @map("residence_since_year")
+  residenceStatus     ResidenceStatus? @map("residence_status")
+
+  // Rattachement au Cameroun.
+  cameroonRegion      String?          @map("cameroon_region") @db.VarChar(100)
+  cameroonCity        String?          @map("cameroon_city") @db.VarChar(150)
+  lastCameroonAddress String?          @map("last_cameroon_address") @db.VarChar(255)
+  departureYear       Int?             @map("departure_year")
+  departureReason     DepartureReason? @map("departure_reason")
+
+  // Situation familiale.
+  maritalStatus   MaritalStatus? @map("marital_status")
+  dependantsCount Int?           @map("dependants_count")
+
+  // Situation professionnelle.
+  employmentStatus EmploymentStatus? @map("employment_status")
+  profession       String?           @db.VarChar(150)
+  jobTitle         String?           @map("job_title") @db.VarChar(150)
+  sector           String?           @db.VarChar(150)
+  employer         String?           @db.VarChar(200)
+  yearsExperience  Int?              @map("years_experience")
+
+  // Informations utiles au futur module Talent.
+  expertiseDomains     String[] @default([]) @map("expertise_domains")
+  skills               String[] @default([])
+  qualifications       String?  @db.Text
+  optInTalentDirectory Boolean  @default(false) @map("opt_in_talent_directory")
+
+  // Poste calculé à partir de la couverture territoriale.
+  assignedPostId String?         @map("assigned_post_id") @db.Uuid
+  assignedPost   DiplomaticPost? @relation(fields: [assignedPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  routedAt       DateTime?       @map("routed_at") @db.Timestamptz(3)
+
+  // Déclarations et consentements.
+  declaredAccurate      Boolean @default(false) @map("declared_accurate")
+  consentDataProcessing Boolean @default(false) @map("consent_data_processing")
+  privacyNoticeAccepted Boolean @default(false) @map("privacy_notice_accepted")
+
+  submittedAt DateTime? @map("submitted_at") @db.Timestamptz(3)
+  verifiedAt  DateTime? @map("verified_at") @db.Timestamptz(3)
+  rejectedAt  DateTime? @map("rejected_at") @db.Timestamptz(3)
+
+  documents     CensusDocument[]
+  reviews       CensusReview[]
+  statusHistory CensusStatusHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([status])
+  @@index([residenceCountryId])
+  @@index([assignedPostId])
+  @@map("census_records")
+}
+
+model CensusDocument {
+  id String @id @default(uuid()) @db.Uuid
+
+  censusRecordId String       @map("census_record_id") @db.Uuid
+  censusRecord   CensusRecord @relation(fields: [censusRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  type   CensusDocumentType
+  status CensusDocumentStatus @default(PENDING)
+
+  documentNumber String?   @map("document_number") @db.VarChar(100)
+  issuingCountry String?   @map("issuing_country") @db.VarChar(150)
+  issueDate      DateTime? @map("issue_date") @db.Date
+  expiryDate     DateTime? @map("expiry_date") @db.Date
+
+  storageKey   String  @map("storage_key") @db.VarChar(500)
+  originalName String  @map("original_name") @db.VarChar(255)
+  mimeType     String? @map("mime_type") @db.VarChar(100)
+  sizeBytes    Int?    @map("size_bytes")
+
+  rejectionReason String? @map("rejection_reason") @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([censusRecordId])
+  @@index([type])
+  @@index([status])
+  @@map("census_documents")
+}
+
+model CensusReview {
+  id String @id @default(uuid()) @db.Uuid
+
+  censusRecordId String       @map("census_record_id") @db.Uuid
+  censusRecord   CensusRecord @relation(fields: [censusRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  reviewerId String @map("reviewer_id") @db.Uuid
+  reviewer   User   @relation("CensusReviewer", fields: [reviewerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  decision CensusReviewDecision
+  comment  String?              @db.Text
+
+  correctionFields String[] @default([]) @map("correction_fields")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([censusRecordId])
+  @@index([reviewerId])
+  @@index([decision])
+  @@map("census_reviews")
+}
+
+model CensusStatusHistory {
+  id String @id @default(uuid()) @db.Uuid
+
+  censusRecordId String       @map("census_record_id") @db.Uuid
+  censusRecord   CensusRecord @relation(fields: [censusRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  fromStatus CensusStatus? @map("from_status")
+  toStatus   CensusStatus  @map("to_status")
+
+  changedById String? @map("changed_by_id") @db.Uuid
+  changedBy   User?   @relation("CensusStatusChangedBy", fields: [changedById], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  reason String? @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([censusRecordId])
+  @@index([changedById])
+  @@index([toStatus])
+  @@index([createdAt])
+  @@map("census_status_history")
 }

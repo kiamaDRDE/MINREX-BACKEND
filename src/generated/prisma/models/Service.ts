@@ -215,6 +215,8 @@ export type ServiceWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   post?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
+  userPostAssignments?: Prisma.UserPostAssignmentListRelationFilter
+  roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
 }
 
 export type ServiceOrderByWithRelationInput = {
@@ -228,6 +230,8 @@ export type ServiceOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   post?: Prisma.DiplomaticPostOrderByWithRelationInput
+  userPostAssignments?: Prisma.UserPostAssignmentOrderByRelationAggregateInput
+  roleAssignments?: Prisma.UserRoleAssignmentOrderByRelationAggregateInput
 }
 
 export type ServiceWhereUniqueInput = Prisma.AtLeast<{
@@ -245,6 +249,8 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
   post?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
+  userPostAssignments?: Prisma.UserPostAssignmentListRelationFilter
+  roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
 }, "id" | "postId_code">
 
 export type ServiceOrderByWithAggregationInput = {
@@ -287,6 +293,8 @@ export type ServiceCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   post: Prisma.DiplomaticPostCreateNestedOneWithoutServicesInput
+  userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutServiceInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateInput = {
@@ -299,6 +307,8 @@ export type ServiceUncheckedCreateInput = {
   status?: $Enums.ServiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutServiceInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUpdateInput = {
@@ -311,6 +321,8 @@ export type ServiceUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   post?: Prisma.DiplomaticPostUpdateOneRequiredWithoutServicesNestedInput
+  userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutServiceNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateInput = {
@@ -323,6 +335,8 @@ export type ServiceUncheckedUpdateInput = {
   status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutServiceNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyInput = {
@@ -411,6 +425,11 @@ export type ServiceMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ServiceNullableScalarRelationFilter = {
+  is?: Prisma.ServiceWhereInput | null
+  isNot?: Prisma.ServiceWhereInput | null
+}
+
 export type ServiceCreateNestedManyWithoutPostInput = {
   create?: Prisma.XOR<Prisma.ServiceCreateWithoutPostInput, Prisma.ServiceUncheckedCreateWithoutPostInput> | Prisma.ServiceCreateWithoutPostInput[] | Prisma.ServiceUncheckedCreateWithoutPostInput[]
   connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutPostInput | Prisma.ServiceCreateOrConnectWithoutPostInput[]
@@ -457,6 +476,38 @@ export type EnumServiceStatusFieldUpdateOperationsInput = {
   set?: $Enums.ServiceStatus
 }
 
+export type ServiceCreateNestedOneWithoutRoleAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutRoleAssignmentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutRoleAssignmentsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneWithoutRoleAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutRoleAssignmentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutRoleAssignmentsInput
+  upsert?: Prisma.ServiceUpsertWithoutRoleAssignmentsInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutRoleAssignmentsInput, Prisma.ServiceUpdateWithoutRoleAssignmentsInput>, Prisma.ServiceUncheckedUpdateWithoutRoleAssignmentsInput>
+}
+
+export type ServiceCreateNestedOneWithoutUserPostAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutUserPostAssignmentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutUserPostAssignmentsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneWithoutUserPostAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutUserPostAssignmentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutUserPostAssignmentsInput
+  upsert?: Prisma.ServiceUpsertWithoutUserPostAssignmentsInput
+  disconnect?: Prisma.ServiceWhereInput | boolean
+  delete?: Prisma.ServiceWhereInput | boolean
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutUserPostAssignmentsInput, Prisma.ServiceUpdateWithoutUserPostAssignmentsInput>, Prisma.ServiceUncheckedUpdateWithoutUserPostAssignmentsInput>
+}
+
 export type ServiceCreateWithoutPostInput = {
   id?: string
   code: string
@@ -466,6 +517,8 @@ export type ServiceCreateWithoutPostInput = {
   status?: $Enums.ServiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutServiceInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutPostInput = {
@@ -477,6 +530,8 @@ export type ServiceUncheckedCreateWithoutPostInput = {
   status?: $Enums.ServiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutServiceInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutPostInput = {
@@ -520,6 +575,142 @@ export type ServiceScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Service"> | Date | string
 }
 
+export type ServiceCreateWithoutRoleAssignmentsInput = {
+  id?: string
+  code: string
+  name: string
+  serviceType?: string | null
+  description?: string | null
+  status?: $Enums.ServiceStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  post: Prisma.DiplomaticPostCreateNestedOneWithoutServicesInput
+  userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutRoleAssignmentsInput = {
+  id?: string
+  postId: string
+  code: string
+  name: string
+  serviceType?: string | null
+  description?: string | null
+  status?: $Enums.ServiceStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutRoleAssignmentsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutRoleAssignmentsInput>
+}
+
+export type ServiceUpsertWithoutRoleAssignmentsInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedUpdateWithoutRoleAssignmentsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutRoleAssignmentsInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutRoleAssignmentsInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutRoleAssignmentsInput, Prisma.ServiceUncheckedUpdateWithoutRoleAssignmentsInput>
+}
+
+export type ServiceUpdateWithoutRoleAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  post?: Prisma.DiplomaticPostUpdateOneRequiredWithoutServicesNestedInput
+  userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutRoleAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  postId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutUserPostAssignmentsInput = {
+  id?: string
+  code: string
+  name: string
+  serviceType?: string | null
+  description?: string | null
+  status?: $Enums.ServiceStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  post: Prisma.DiplomaticPostCreateNestedOneWithoutServicesInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutUserPostAssignmentsInput = {
+  id?: string
+  postId: string
+  code: string
+  name: string
+  serviceType?: string | null
+  description?: string | null
+  status?: $Enums.ServiceStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutUserPostAssignmentsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutUserPostAssignmentsInput>
+}
+
+export type ServiceUpsertWithoutUserPostAssignmentsInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedUpdateWithoutUserPostAssignmentsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedCreateWithoutUserPostAssignmentsInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutUserPostAssignmentsInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutUserPostAssignmentsInput, Prisma.ServiceUncheckedUpdateWithoutUserPostAssignmentsInput>
+}
+
+export type ServiceUpdateWithoutUserPostAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  post?: Prisma.DiplomaticPostUpdateOneRequiredWithoutServicesNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutUserPostAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  postId?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serviceType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutServiceNestedInput
+}
+
 export type ServiceCreateManyPostInput = {
   id?: string
   code: string
@@ -540,6 +731,8 @@ export type ServiceUpdateWithoutPostInput = {
   status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutServiceNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutPostInput = {
@@ -551,6 +744,8 @@ export type ServiceUncheckedUpdateWithoutPostInput = {
   status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutServiceNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutPostInput = {
@@ -565,6 +760,44 @@ export type ServiceUncheckedUpdateManyWithoutPostInput = {
 }
 
 
+/**
+ * Count Type ServiceCountOutputType
+ */
+
+export type ServiceCountOutputType = {
+  userPostAssignments: number
+  roleAssignments: number
+}
+
+export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  userPostAssignments?: boolean | ServiceCountOutputTypeCountUserPostAssignmentsArgs
+  roleAssignments?: boolean | ServiceCountOutputTypeCountRoleAssignmentsArgs
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceCountOutputType
+   */
+  select?: Prisma.ServiceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountUserPostAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserPostAssignmentWhereInput
+}
+
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountRoleAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserRoleAssignmentWhereInput
+}
+
 
 export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -577,6 +810,9 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   post?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
+  userPostAssignments?: boolean | Prisma.Service$userPostAssignmentsArgs<ExtArgs>
+  roleAssignments?: boolean | Prisma.Service$roleAssignmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -620,6 +856,9 @@ export type ServiceSelectScalar = {
 export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "postId" | "code" | "name" | "serviceType" | "description" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["service"]>
 export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   post?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
+  userPostAssignments?: boolean | Prisma.Service$userPostAssignmentsArgs<ExtArgs>
+  roleAssignments?: boolean | Prisma.Service$roleAssignmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   post?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
@@ -632,22 +871,12 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Service"
   objects: {
     post: Prisma.$DiplomaticPostPayload<ExtArgs>
+    userPostAssignments: Prisma.$UserPostAssignmentPayload<ExtArgs>[]
+    roleAssignments: Prisma.$UserRoleAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    /**
-     * *
-     *    * |--------------------------------------------------------------------------
-     *    * | Poste auquel appartient le service
-     *    * |--------------------------------------------------------------------------
-     */
     postId: string
-    /**
-     * *
-     *    * |--------------------------------------------------------------------------
-     *    * | Informations du service
-     *    * |--------------------------------------------------------------------------
-     */
     code: string
     name: string
     serviceType: string | null
@@ -1050,6 +1279,8 @@ readonly fields: ServiceFieldRefs;
 export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   post<T extends Prisma.DiplomaticPostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPostDefaultArgs<ExtArgs>>): Prisma.Prisma__DiplomaticPostClient<runtime.Types.Result.GetResult<Prisma.$DiplomaticPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userPostAssignments<T extends Prisma.Service$userPostAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$userPostAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPostAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  roleAssignments<T extends Prisma.Service$roleAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$roleAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1486,6 +1717,54 @@ export type ServiceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Services to delete.
    */
   limit?: number
+}
+
+/**
+ * Service.userPostAssignments
+ */
+export type Service$userPostAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPostAssignment
+   */
+  select?: Prisma.UserPostAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPostAssignment
+   */
+  omit?: Prisma.UserPostAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPostAssignmentInclude<ExtArgs> | null
+  where?: Prisma.UserPostAssignmentWhereInput
+  orderBy?: Prisma.UserPostAssignmentOrderByWithRelationInput | Prisma.UserPostAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.UserPostAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserPostAssignmentScalarFieldEnum | Prisma.UserPostAssignmentScalarFieldEnum[]
+}
+
+/**
+ * Service.roleAssignments
+ */
+export type Service$roleAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserRoleAssignment
+   */
+  select?: Prisma.UserRoleAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserRoleAssignment
+   */
+  omit?: Prisma.UserRoleAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserRoleAssignmentInclude<ExtArgs> | null
+  where?: Prisma.UserRoleAssignmentWhereInput
+  orderBy?: Prisma.UserRoleAssignmentOrderByWithRelationInput | Prisma.UserRoleAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.UserRoleAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserRoleAssignmentScalarFieldEnum | Prisma.UserRoleAssignmentScalarFieldEnum[]
 }
 
 /**

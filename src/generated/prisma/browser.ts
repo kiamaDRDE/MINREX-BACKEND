@@ -42,3 +42,63 @@ export type PostCoverage = Prisma.PostCoverageModel
  * 
  */
 export type Service = Prisma.ServiceModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model UserProfile
+ * 
+ */
+export type UserProfile = Prisma.UserProfileModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
+/**
+ * Model UserRoleAssignment
+ * 
+ */
+export type UserRoleAssignment = Prisma.UserRoleAssignmentModel
+/**
+ * Model UserPostAssignment
+ * 
+ */
+export type UserPostAssignment = Prisma.UserPostAssignmentModel
+/**
+ * Model VerificationToken
+ * 
+ */
+export type VerificationToken = Prisma.VerificationTokenModel
+/**
+ * Model CensusRecord
+ * 
+ */
+export type CensusRecord = Prisma.CensusRecordModel
+/**
+ * Model CensusDocument
+ * 
+ */
+export type CensusDocument = Prisma.CensusDocumentModel
+/**
+ * Model CensusReview
+ * 
+ */
+export type CensusReview = Prisma.CensusReviewModel
+/**
+ * Model CensusStatusHistory
+ * 
+ */
+export type CensusStatusHistory = Prisma.CensusStatusHistoryModel

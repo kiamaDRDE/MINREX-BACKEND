@@ -55,7 +55,19 @@ export const ModelName = {
   PostType: 'PostType',
   DiplomaticPost: 'DiplomaticPost',
   PostCoverage: 'PostCoverage',
-  Service: 'Service'
+  Service: 'Service',
+  User: 'User',
+  UserProfile: 'UserProfile',
+  Role: 'Role',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
+  UserRoleAssignment: 'UserRoleAssignment',
+  UserPostAssignment: 'UserPostAssignment',
+  VerificationToken: 'VerificationToken',
+  CensusRecord: 'CensusRecord',
+  CensusDocument: 'CensusDocument',
+  CensusReview: 'CensusReview',
+  CensusStatusHistory: 'CensusStatusHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -150,6 +162,220 @@ export const ServiceScalarFieldEnum = {
 } as const
 
 export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  phone: 'phone',
+  passwordHash: 'passwordHash',
+  status: 'status',
+  emailVerifiedAt: 'emailVerifiedAt',
+  phoneVerifiedAt: 'phoneVerifiedAt',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  displayName: 'displayName',
+  photoUrl: 'photoUrl',
+  preferredLanguage: 'preferredLanguage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  scope: 'scope',
+  isSystem: 'isSystem',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId',
+  createdAt: 'createdAt'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
+export const UserRoleAssignmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roleId: 'roleId',
+  postId: 'postId',
+  serviceId: 'serviceId',
+  isActive: 'isActive',
+  assignedAt: 'assignedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserRoleAssignmentScalarFieldEnum = (typeof UserRoleAssignmentScalarFieldEnum)[keyof typeof UserRoleAssignmentScalarFieldEnum]
+
+
+export const UserPostAssignmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  postId: 'postId',
+  serviceId: 'serviceId',
+  jobTitle: 'jobTitle',
+  status: 'status',
+  isPrimary: 'isPrimary',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserPostAssignmentScalarFieldEnum = (typeof UserPostAssignmentScalarFieldEnum)[keyof typeof UserPostAssignmentScalarFieldEnum]
+
+
+export const VerificationTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const CensusRecordScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  userId: 'userId',
+  status: 'status',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  birthDate: 'birthDate',
+  birthPlace: 'birthPlace',
+  nationalityCountryId: 'nationalityCountryId',
+  email: 'email',
+  primaryPhone: 'primaryPhone',
+  secondaryPhone: 'secondaryPhone',
+  preferredContactChannel: 'preferredContactChannel',
+  residenceCountryId: 'residenceCountryId',
+  residenceCity: 'residenceCity',
+  residenceAddress: 'residenceAddress',
+  residencePostalCode: 'residencePostalCode',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  residenceSinceYear: 'residenceSinceYear',
+  residenceStatus: 'residenceStatus',
+  cameroonRegion: 'cameroonRegion',
+  cameroonCity: 'cameroonCity',
+  lastCameroonAddress: 'lastCameroonAddress',
+  departureYear: 'departureYear',
+  departureReason: 'departureReason',
+  maritalStatus: 'maritalStatus',
+  dependantsCount: 'dependantsCount',
+  employmentStatus: 'employmentStatus',
+  profession: 'profession',
+  jobTitle: 'jobTitle',
+  sector: 'sector',
+  employer: 'employer',
+  yearsExperience: 'yearsExperience',
+  expertiseDomains: 'expertiseDomains',
+  skills: 'skills',
+  qualifications: 'qualifications',
+  optInTalentDirectory: 'optInTalentDirectory',
+  assignedPostId: 'assignedPostId',
+  routedAt: 'routedAt',
+  declaredAccurate: 'declaredAccurate',
+  consentDataProcessing: 'consentDataProcessing',
+  privacyNoticeAccepted: 'privacyNoticeAccepted',
+  submittedAt: 'submittedAt',
+  verifiedAt: 'verifiedAt',
+  rejectedAt: 'rejectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CensusRecordScalarFieldEnum = (typeof CensusRecordScalarFieldEnum)[keyof typeof CensusRecordScalarFieldEnum]
+
+
+export const CensusDocumentScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  type: 'type',
+  status: 'status',
+  documentNumber: 'documentNumber',
+  issuingCountry: 'issuingCountry',
+  issueDate: 'issueDate',
+  expiryDate: 'expiryDate',
+  storageKey: 'storageKey',
+  originalName: 'originalName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  rejectionReason: 'rejectionReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CensusDocumentScalarFieldEnum = (typeof CensusDocumentScalarFieldEnum)[keyof typeof CensusDocumentScalarFieldEnum]
+
+
+export const CensusReviewScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  reviewerId: 'reviewerId',
+  decision: 'decision',
+  comment: 'comment',
+  correctionFields: 'correctionFields',
+  createdAt: 'createdAt'
+} as const
+
+export type CensusReviewScalarFieldEnum = (typeof CensusReviewScalarFieldEnum)[keyof typeof CensusReviewScalarFieldEnum]
+
+
+export const CensusStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  censusRecordId: 'censusRecordId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  changedById: 'changedById',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CensusStatusHistoryScalarFieldEnum = (typeof CensusStatusHistoryScalarFieldEnum)[keyof typeof CensusStatusHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

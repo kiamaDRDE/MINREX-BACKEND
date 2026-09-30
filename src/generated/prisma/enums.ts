@@ -24,3 +24,147 @@ export const ServiceStatus = {
 } as const
 
 export type ServiceStatus = (typeof ServiceStatus)[keyof typeof ServiceStatus]
+
+
+export const UserStatus = {
+  PENDING_VERIFICATION: 'PENDING_VERIFICATION',
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const PreferredLanguage = {
+  FR: 'FR',
+  EN: 'EN'
+} as const
+
+export type PreferredLanguage = (typeof PreferredLanguage)[keyof typeof PreferredLanguage]
+
+
+export const RoleScope = {
+  GLOBAL: 'GLOBAL',
+  POST: 'POST',
+  SERVICE: 'SERVICE'
+} as const
+
+export type RoleScope = (typeof RoleScope)[keyof typeof RoleScope]
+
+
+export const AssignmentStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  ENDED: 'ENDED'
+} as const
+
+export type AssignmentStatus = (typeof AssignmentStatus)[keyof typeof AssignmentStatus]
+
+
+export const VerificationTokenType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PHONE_VERIFICATION: 'PHONE_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  MFA_OTP: 'MFA_OTP'
+} as const
+
+export type VerificationTokenType = (typeof VerificationTokenType)[keyof typeof VerificationTokenType]
+
+
+export const CensusStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  CORRECTION_REQUIRED: 'CORRECTION_REQUIRED',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type CensusStatus = (typeof CensusStatus)[keyof typeof CensusStatus]
+
+
+export const ContactChannel = {
+  EMAIL: 'EMAIL',
+  SMS: 'SMS',
+  PUSH: 'PUSH'
+} as const
+
+export type ContactChannel = (typeof ContactChannel)[keyof typeof ContactChannel]
+
+
+export const ResidenceStatus = {
+  CITIZEN: 'CITIZEN',
+  PERMANENT_RESIDENT: 'PERMANENT_RESIDENT',
+  WORKER: 'WORKER',
+  STUDENT: 'STUDENT',
+  REFUGEE_ASYLUM_SEEKER: 'REFUGEE_ASYLUM_SEEKER',
+  TEMPORARY_RESIDENT: 'TEMPORARY_RESIDENT',
+  OTHER: 'OTHER'
+} as const
+
+export type ResidenceStatus = (typeof ResidenceStatus)[keyof typeof ResidenceStatus]
+
+
+export const DepartureReason = {
+  STUDIES: 'STUDIES',
+  WORK: 'WORK',
+  FAMILY_REUNIFICATION: 'FAMILY_REUNIFICATION',
+  BUSINESS: 'BUSINESS',
+  PROTECTION: 'PROTECTION',
+  OTHER: 'OTHER'
+} as const
+
+export type DepartureReason = (typeof DepartureReason)[keyof typeof DepartureReason]
+
+
+export const MaritalStatus = {
+  SINGLE: 'SINGLE',
+  MARRIED: 'MARRIED',
+  DIVORCED: 'DIVORCED',
+  WIDOWED: 'WIDOWED',
+  SEPARATED: 'SEPARATED',
+  OTHER: 'OTHER'
+} as const
+
+export type MaritalStatus = (typeof MaritalStatus)[keyof typeof MaritalStatus]
+
+
+export const EmploymentStatus = {
+  EMPLOYED: 'EMPLOYED',
+  ENTREPRENEUR: 'ENTREPRENEUR',
+  SELF_EMPLOYED: 'SELF_EMPLOYED',
+  STUDENT: 'STUDENT',
+  UNEMPLOYED: 'UNEMPLOYED',
+  RETIRED: 'RETIRED',
+  OTHER: 'OTHER'
+} as const
+
+export type EmploymentStatus = (typeof EmploymentStatus)[keyof typeof EmploymentStatus]
+
+
+export const CensusDocumentType = {
+  IDENTITY_DOCUMENT: 'IDENTITY_DOCUMENT',
+  RESIDENCE_PROOF: 'RESIDENCE_PROOF',
+  OTHER: 'OTHER'
+} as const
+
+export type CensusDocumentType = (typeof CensusDocumentType)[keyof typeof CensusDocumentType]
+
+
+export const CensusDocumentStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type CensusDocumentStatus = (typeof CensusDocumentStatus)[keyof typeof CensusDocumentStatus]
+
+
+export const CensusReviewDecision = {
+  VERIFIED: 'VERIFIED',
+  CORRECTION_REQUIRED: 'CORRECTION_REQUIRED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type CensusReviewDecision = (typeof CensusReviewDecision)[keyof typeof CensusReviewDecision]
