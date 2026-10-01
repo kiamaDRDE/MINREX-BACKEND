@@ -1,14 +1,18 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
   Req,
   Res,
+  UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -26,6 +30,9 @@ import { LoginDto } from './dto/login.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { ResendVerificationDto } from './dto/resend-verification.dto.js';
 import { VerifyEmailDto } from './dto/verify-email.dto.js';
+import { AccessTokenGuard } from './guards/access-token.guard.js';
+
+import type { AuthenticatedRequest } from './interfaces/authenticated-request.interface.js';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -199,5 +206,31 @@ export class AuthController {
     });
 
     return result;
+  }
+
+  /*
+|--------------------------------------------------------------------------
+| CURRENT AUTHENTICATED USER
+|--------------------------------------------------------------------------
+*/
+
+  @Get('me')
+  @UseGuards(AccessTokenGuard)
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: 'Get the currently authenticated MINREX user',
+  })
+  @ApiOkResponse({
+    description: 'Authenticated user returned successfully.',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'Access token is missing, invalid, expired or belongs to a revoked session.',
+  })
+  async me(
+    @Req()
+    request: AuthenticatedRequest,
+  ) {
+    return this.authService.getCurrentUser(request.auth.userId);
   }
 }

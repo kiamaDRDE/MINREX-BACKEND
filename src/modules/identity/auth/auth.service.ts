@@ -676,6 +676,45 @@ export class AuthService {
     };
   }
 
+  async getCurrentUser(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        phone: true,
+        status: true,
+        emailVerifiedAt: true,
+        lastLoginAt: true,
+        createdAt: true,
+
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            preferredLanguage: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Authenticated user no longer exists.');
+    }
+
+    if (user.status !== UserStatus.ACTIVE || !user.emailVerifiedAt) {
+      throw new UnauthorizedException('This account is not currently active.');
+    }
+
+    return {
+      user,
+    };
+  }
+
   /*
   |--------------------------------------------------------------------------
   | PRIVATE HELPERS
