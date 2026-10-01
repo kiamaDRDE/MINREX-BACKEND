@@ -27,6 +27,7 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
+  username: string | null
   phone: string | null
   passwordHash: string | null
   status: $Enums.UserStatus | null
@@ -40,6 +41,7 @@ export type UserMinAggregateOutputType = {
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
+  username: string | null
   phone: string | null
   passwordHash: string | null
   status: $Enums.UserStatus | null
@@ -53,6 +55,7 @@ export type UserMaxAggregateOutputType = {
 export type UserCountAggregateOutputType = {
   id: number
   email: number
+  username: number
   phone: number
   passwordHash: number
   status: number
@@ -68,6 +71,7 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
+  username?: true
   phone?: true
   passwordHash?: true
   status?: true
@@ -81,6 +85,7 @@ export type UserMinAggregateInputType = {
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
+  username?: true
   phone?: true
   passwordHash?: true
   status?: true
@@ -94,6 +99,7 @@ export type UserMaxAggregateInputType = {
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
+  username?: true
   phone?: true
   passwordHash?: true
   status?: true
@@ -179,7 +185,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  email: string | null
+  email: string
+  username: string
   phone: string | null
   passwordHash: string | null
   status: $Enums.UserStatus
@@ -213,7 +220,8 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.UuidFilter<"User"> | string
-  email?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringFilter<"User"> | string
+  username?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
@@ -226,6 +234,7 @@ export type UserWhereInput = {
   roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
   postAssignments?: Prisma.UserPostAssignmentListRelationFilter
   verificationTokens?: Prisma.VerificationTokenListRelationFilter
+  authSessions?: Prisma.AuthSessionListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
   censusReviews?: Prisma.CensusReviewListRelationFilter
   censusStatusChanges?: Prisma.CensusStatusHistoryListRelationFilter
@@ -233,7 +242,8 @@ export type UserWhereInput = {
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -246,6 +256,7 @@ export type UserOrderByWithRelationInput = {
   roleAssignments?: Prisma.UserRoleAssignmentOrderByRelationAggregateInput
   postAssignments?: Prisma.UserPostAssignmentOrderByRelationAggregateInput
   verificationTokens?: Prisma.VerificationTokenOrderByRelationAggregateInput
+  authSessions?: Prisma.AuthSessionOrderByRelationAggregateInput
   censusRecords?: Prisma.CensusRecordOrderByRelationAggregateInput
   censusReviews?: Prisma.CensusReviewOrderByRelationAggregateInput
   censusStatusChanges?: Prisma.CensusStatusHistoryOrderByRelationAggregateInput
@@ -254,10 +265,11 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  phone?: string
+  username?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -269,14 +281,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
   postAssignments?: Prisma.UserPostAssignmentListRelationFilter
   verificationTokens?: Prisma.VerificationTokenListRelationFilter
+  authSessions?: Prisma.AuthSessionListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
   censusReviews?: Prisma.CensusReviewListRelationFilter
   censusStatusChanges?: Prisma.CensusStatusHistoryListRelationFilter
-}, "id" | "email" | "phone">
+}, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -295,7 +309,8 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  username?: Prisma.StringWithAggregatesFilter<"User"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
@@ -308,7 +323,8 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -321,6 +337,7 @@ export type UserCreateInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
@@ -328,7 +345,8 @@ export type UserCreateInput = {
 
 export type UserUncheckedCreateInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -341,6 +359,7 @@ export type UserUncheckedCreateInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -348,7 +367,8 @@ export type UserUncheckedCreateInput = {
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -361,6 +381,7 @@ export type UserUpdateInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
@@ -368,7 +389,8 @@ export type UserUpdateInput = {
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -381,6 +403,7 @@ export type UserUncheckedUpdateInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -388,7 +411,8 @@ export type UserUncheckedUpdateInput = {
 
 export type UserCreateManyInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -401,7 +425,8 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -414,7 +439,8 @@ export type UserUpdateManyMutationInput = {
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -428,6 +454,7 @@ export type UserUncheckedUpdateManyInput = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -441,6 +468,7 @@ export type UserCountOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -454,6 +482,7 @@ export type UserMaxOrderByAggregateInput = {
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -534,6 +563,20 @@ export type UserUpdateOneRequiredWithoutVerificationTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerificationTokensInput, Prisma.UserUpdateWithoutVerificationTokensInput>, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
 }
 
+export type UserCreateNestedOneWithoutAuthSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuthSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthSessionsInput
+  upsert?: Prisma.UserUpsertWithoutAuthSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthSessionsInput, Prisma.UserUpdateWithoutAuthSessionsInput>, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+}
+
 export type UserCreateNestedOneWithoutCensusRecordsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCensusRecordsInput, Prisma.UserUncheckedCreateWithoutCensusRecordsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCensusRecordsInput
@@ -580,7 +623,8 @@ export type UserUpdateOneWithoutCensusStatusChangesNestedInput = {
 
 export type UserCreateWithoutProfileInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -592,6 +636,7 @@ export type UserCreateWithoutProfileInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
@@ -599,7 +644,8 @@ export type UserCreateWithoutProfileInput = {
 
 export type UserUncheckedCreateWithoutProfileInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -611,6 +657,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -634,7 +681,8 @@ export type UserUpdateToOneWithWhereWithoutProfileInput = {
 
 export type UserUpdateWithoutProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -646,6 +694,7 @@ export type UserUpdateWithoutProfileInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
@@ -653,7 +702,8 @@ export type UserUpdateWithoutProfileInput = {
 
 export type UserUncheckedUpdateWithoutProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -665,6 +715,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -672,7 +723,8 @@ export type UserUncheckedUpdateWithoutProfileInput = {
 
 export type UserCreateWithoutRoleAssignmentsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -684,6 +736,7 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
@@ -691,7 +744,8 @@ export type UserCreateWithoutRoleAssignmentsInput = {
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -703,6 +757,7 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -726,7 +781,8 @@ export type UserUpdateToOneWithWhereWithoutRoleAssignmentsInput = {
 
 export type UserUpdateWithoutRoleAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -738,6 +794,7 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
@@ -745,7 +802,8 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -757,6 +815,7 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -764,7 +823,8 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
 
 export type UserCreateWithoutPostAssignmentsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -776,6 +836,7 @@ export type UserCreateWithoutPostAssignmentsInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
@@ -783,7 +844,8 @@ export type UserCreateWithoutPostAssignmentsInput = {
 
 export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -795,6 +857,7 @@ export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -818,7 +881,8 @@ export type UserUpdateToOneWithWhereWithoutPostAssignmentsInput = {
 
 export type UserUpdateWithoutPostAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -830,6 +894,7 @@ export type UserUpdateWithoutPostAssignmentsInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
@@ -837,7 +902,8 @@ export type UserUpdateWithoutPostAssignmentsInput = {
 
 export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -849,6 +915,7 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -856,7 +923,8 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
 
 export type UserCreateWithoutVerificationTokensInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -868,6 +936,7 @@ export type UserCreateWithoutVerificationTokensInput = {
   profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
@@ -875,7 +944,8 @@ export type UserCreateWithoutVerificationTokensInput = {
 
 export type UserUncheckedCreateWithoutVerificationTokensInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -887,6 +957,7 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -910,7 +981,8 @@ export type UserUpdateToOneWithWhereWithoutVerificationTokensInput = {
 
 export type UserUpdateWithoutVerificationTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -922,6 +994,7 @@ export type UserUpdateWithoutVerificationTokensInput = {
   profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
@@ -929,7 +1002,8 @@ export type UserUpdateWithoutVerificationTokensInput = {
 
 export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -941,14 +1015,16 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
-export type UserCreateWithoutCensusRecordsInput = {
+export type UserCreateWithoutAuthSessionsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -961,13 +1037,15 @@ export type UserCreateWithoutCensusRecordsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
 }
 
-export type UserUncheckedCreateWithoutCensusRecordsInput = {
+export type UserUncheckedCreateWithoutAuthSessionsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -980,6 +1058,107 @@ export type UserUncheckedCreateWithoutCensusRecordsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutAuthSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+}
+
+export type UserUpsertWithoutAuthSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuthSessionsInput, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuthSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuthSessionsInput, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+}
+
+export type UserUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutCensusRecordsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutCensusRecordsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
@@ -1002,7 +1181,8 @@ export type UserUpdateToOneWithWhereWithoutCensusRecordsInput = {
 
 export type UserUpdateWithoutCensusRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1015,13 +1195,15 @@ export type UserUpdateWithoutCensusRecordsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1034,13 +1216,15 @@ export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutCensusReviewsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -1053,13 +1237,15 @@ export type UserCreateWithoutCensusReviewsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutCensusReviewsInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -1072,6 +1258,7 @@ export type UserUncheckedCreateWithoutCensusReviewsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
@@ -1094,7 +1281,8 @@ export type UserUpdateToOneWithWhereWithoutCensusReviewsInput = {
 
 export type UserUpdateWithoutCensusReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1107,13 +1295,15 @@ export type UserUpdateWithoutCensusReviewsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1126,13 +1316,15 @@ export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutCensusStatusChangesInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -1145,13 +1337,15 @@ export type UserCreateWithoutCensusStatusChangesInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
 }
 
 export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   id?: string
-  email?: string | null
+  email: string
+  username: string
   phone?: string | null
   passwordHash?: string | null
   status?: $Enums.UserStatus
@@ -1164,6 +1358,7 @@ export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
 }
@@ -1186,7 +1381,8 @@ export type UserUpdateToOneWithWhereWithoutCensusStatusChangesInput = {
 
 export type UserUpdateWithoutCensusStatusChangesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1199,13 +1395,15 @@ export type UserUpdateWithoutCensusStatusChangesInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1218,6 +1416,7 @@ export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
 }
@@ -1231,6 +1430,7 @@ export type UserCountOutputType = {
   roleAssignments: number
   postAssignments: number
   verificationTokens: number
+  authSessions: number
   censusRecords: number
   censusReviews: number
   censusStatusChanges: number
@@ -1240,6 +1440,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   roleAssignments?: boolean | UserCountOutputTypeCountRoleAssignmentsArgs
   postAssignments?: boolean | UserCountOutputTypeCountPostAssignmentsArgs
   verificationTokens?: boolean | UserCountOutputTypeCountVerificationTokensArgs
+  authSessions?: boolean | UserCountOutputTypeCountAuthSessionsArgs
   censusRecords?: boolean | UserCountOutputTypeCountCensusRecordsArgs
   censusReviews?: boolean | UserCountOutputTypeCountCensusReviewsArgs
   censusStatusChanges?: boolean | UserCountOutputTypeCountCensusStatusChangesArgs
@@ -1279,6 +1480,13 @@ export type UserCountOutputTypeCountVerificationTokensArgs<ExtArgs extends runti
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCensusRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CensusRecordWhereInput
 }
@@ -1301,6 +1509,7 @@ export type UserCountOutputTypeCountCensusStatusChangesArgs<ExtArgs extends runt
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  username?: boolean
   phone?: boolean
   passwordHash?: boolean
   status?: boolean
@@ -1313,6 +1522,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   roleAssignments?: boolean | Prisma.User$roleAssignmentsArgs<ExtArgs>
   postAssignments?: boolean | Prisma.User$postAssignmentsArgs<ExtArgs>
   verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
+  authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.User$censusRecordsArgs<ExtArgs>
   censusReviews?: boolean | Prisma.User$censusReviewsArgs<ExtArgs>
   censusStatusChanges?: boolean | Prisma.User$censusStatusChangesArgs<ExtArgs>
@@ -1322,6 +1532,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  username?: boolean
   phone?: boolean
   passwordHash?: boolean
   status?: boolean
@@ -1335,6 +1546,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
+  username?: boolean
   phone?: boolean
   passwordHash?: boolean
   status?: boolean
@@ -1348,6 +1560,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
+  username?: boolean
   phone?: boolean
   passwordHash?: boolean
   status?: boolean
@@ -1358,12 +1571,13 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "phone" | "passwordHash" | "status" | "emailVerifiedAt" | "phoneVerifiedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "phone" | "passwordHash" | "status" | "emailVerifiedAt" | "phoneVerifiedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   roleAssignments?: boolean | Prisma.User$roleAssignmentsArgs<ExtArgs>
   postAssignments?: boolean | Prisma.User$postAssignmentsArgs<ExtArgs>
   verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
+  authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.User$censusRecordsArgs<ExtArgs>
   censusReviews?: boolean | Prisma.User$censusReviewsArgs<ExtArgs>
   censusStatusChanges?: boolean | Prisma.User$censusStatusChangesArgs<ExtArgs>
@@ -1379,13 +1593,15 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     roleAssignments: Prisma.$UserRoleAssignmentPayload<ExtArgs>[]
     postAssignments: Prisma.$UserPostAssignmentPayload<ExtArgs>[]
     verificationTokens: Prisma.$VerificationTokenPayload<ExtArgs>[]
+    authSessions: Prisma.$AuthSessionPayload<ExtArgs>[]
     censusRecords: Prisma.$CensusRecordPayload<ExtArgs>[]
     censusReviews: Prisma.$CensusReviewPayload<ExtArgs>[]
     censusStatusChanges: Prisma.$CensusStatusHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    email: string | null
+    email: string
+    username: string
     phone: string | null
     passwordHash: string | null
     status: $Enums.UserStatus
@@ -1792,6 +2008,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   roleAssignments<T extends Prisma.User$roleAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   postAssignments<T extends Prisma.User$postAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPostAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   verificationTokens<T extends Prisma.User$verificationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  authSessions<T extends Prisma.User$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusRecords<T extends Prisma.User$censusRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusReviews<T extends Prisma.User$censusReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusStatusChanges<T extends Prisma.User$censusStatusChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusStatusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1826,6 +2043,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly username: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
@@ -2315,6 +2533,30 @@ export type User$verificationTokensArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.VerificationTokenScalarFieldEnum | Prisma.VerificationTokenScalarFieldEnum[]
+}
+
+/**
+ * User.authSessions
+ */
+export type User$authSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthSession
+   */
+  select?: Prisma.AuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthSession
+   */
+  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthSessionInclude<ExtArgs> | null
+  where?: Prisma.AuthSessionWhereInput
+  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
 }
 
 /**

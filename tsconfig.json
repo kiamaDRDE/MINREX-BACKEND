@@ -2,6 +2,9 @@
   "compilerOptions": {
     "module": "preserve",
     "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "resolvePackageJsonExports": true,
     "esModuleInterop": true,
     "isolatedModules": true,

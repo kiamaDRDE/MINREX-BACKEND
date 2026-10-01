@@ -83,6 +83,11 @@ export type UserPostAssignment = Prisma.UserPostAssignmentModel
  */
 export type VerificationToken = Prisma.VerificationTokenModel
 /**
+ * Model AuthSession
+ * 
+ */
+export type AuthSession = Prisma.AuthSessionModel
+/**
  * Model CensusRecord
  * 
  */

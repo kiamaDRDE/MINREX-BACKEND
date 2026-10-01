@@ -64,6 +64,7 @@ export const ModelName = {
   UserRoleAssignment: 'UserRoleAssignment',
   UserPostAssignment: 'UserPostAssignment',
   VerificationToken: 'VerificationToken',
+  AuthSession: 'AuthSession',
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
@@ -167,6 +168,7 @@ export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeo
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  username: 'username',
   phone: 'phone',
   passwordHash: 'passwordHash',
   status: 'status',
@@ -275,6 +277,22 @@ export const VerificationTokenScalarFieldEnum = {
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const AuthSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  refreshTokenHash: 'refreshTokenHash',
+  userAgent: 'userAgent',
+  ipAddress: 'ipAddress',
+  expiresAt: 'expiresAt',
+  lastUsedAt: 'lastUsedAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
 export const CensusRecordScalarFieldEnum = {

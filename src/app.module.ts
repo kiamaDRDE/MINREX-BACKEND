@@ -9,6 +9,8 @@ import { RedisModule } from './infrastructure/cache/redis.module.js';
 import { DatabaseModule } from './infrastructure/database/database.module.js';
 import { HealthModule } from './infrastructure/health/health.module.js';
 import { LoggingModule } from './infrastructure/logging/logging.module.js';
+import { IdentityModule } from './modules/identity/identity.module.js';
+import { MailModule } from './infrastructure/mail/mail.module.js';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { LoggingModule } from './infrastructure/logging/logging.module.js';
     DatabaseModule,
     RedisModule,
     HealthModule,
+    IdentityModule,
+    MailModule,
   ],
 
   providers: [

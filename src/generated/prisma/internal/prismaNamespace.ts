@@ -410,6 +410,7 @@ export const ModelName = {
   UserRoleAssignment: 'UserRoleAssignment',
   UserPostAssignment: 'UserPostAssignment',
   VerificationToken: 'VerificationToken',
+  AuthSession: 'AuthSession',
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1395,6 +1396,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AuthSession: {
+      payload: Prisma.$AuthSessionPayload<ExtArgs>
+      fields: Prisma.AuthSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuthSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuthSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.AuthSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuthSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        findMany: {
+          args: Prisma.AuthSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
+        }
+        create: {
+          args: Prisma.AuthSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        createMany: {
+          args: Prisma.AuthSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuthSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.AuthSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        update: {
+          args: Prisma.AuthSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuthSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuthSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuthSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.AuthSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.AuthSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthSession>
+        }
+        groupBy: {
+          args: Prisma.AuthSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuthSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthSessionCountAggregateOutputType> | number
+        }
+      }
+    }
     CensusRecord: {
       payload: Prisma.$CensusRecordPayload<ExtArgs>
       fields: Prisma.CensusRecordFieldRefs
@@ -1811,6 +1886,7 @@ export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeo
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  username: 'username',
   phone: 'phone',
   passwordHash: 'passwordHash',
   status: 'status',
@@ -1919,6 +1995,22 @@ export const VerificationTokenScalarFieldEnum = {
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const AuthSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  refreshTokenHash: 'refreshTokenHash',
+  userAgent: 'userAgent',
+  ipAddress: 'ipAddress',
+  expiresAt: 'expiresAt',
+  lastUsedAt: 'lastUsedAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
 export const CensusRecordScalarFieldEnum = {
@@ -2516,6 +2608,7 @@ export type GlobalOmitConfig = {
   userRoleAssignment?: Prisma.UserRoleAssignmentOmit
   userPostAssignment?: Prisma.UserPostAssignmentOmit
   verificationToken?: Prisma.VerificationTokenOmit
+  authSession?: Prisma.AuthSessionOmit
   censusRecord?: Prisma.CensusRecordOmit
   censusDocument?: Prisma.CensusDocumentOmit
   censusReview?: Prisma.CensusReviewOmit

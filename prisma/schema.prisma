@@ -307,8 +307,10 @@ model Service {
 model User {
   id String @id @default(uuid()) @db.Uuid
 
-  email String? @unique @db.VarChar(255)
-  phone String? @unique @db.VarChar(30)
+  email    String @unique @db.VarChar(255)
+  username String @unique @db.VarChar(50)
+
+  phone String? @db.VarChar(30)
 
   passwordHash String? @map("password_hash") @db.VarChar(255)
 
@@ -324,6 +326,7 @@ model User {
   postAssignments UserPostAssignment[]
 
   verificationTokens VerificationToken[]
+  authSessions       AuthSession[]
 
   censusRecords       CensusRecord[]
   censusReviews       CensusReview[]        @relation("CensusReviewer")
@@ -334,7 +337,7 @@ model User {
 
   @@index([status])
   @@index([email])
-  @@index([phone])
+  @@index([username])
   @@map("users")
 }
 
@@ -536,6 +539,38 @@ model VerificationToken {
   @@index([userId, type])
   @@index([expiresAt])
   @@map("verification_tokens")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | AUTH SESSIONS
+ * |--------------------------------------------------------------------------
+ */
+
+model AuthSession {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  // On ne stocke jamais le refresh token brut.
+  refreshTokenHash String @map("refresh_token_hash") @db.VarChar(255)
+
+  userAgent String? @map("user_agent") @db.VarChar(500)
+  ipAddress String? @map("ip_address") @db.VarChar(64)
+
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(3)
+  lastUsedAt DateTime? @map("last_used_at") @db.Timestamptz(3)
+
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("auth_sessions")
 }
 
 /**

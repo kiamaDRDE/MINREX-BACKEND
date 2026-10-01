@@ -32,4 +32,22 @@ export const envValidationSchema = Joi.object({
   ),
 
   CORS_CREDENTIALS: Joi.boolean().truthy('true').falsy('false').default(true),
+
+  MAIL_HOST: Joi.string().required(),
+  MAIL_PORT: Joi.number().port().default(1025),
+  MAIL_SECURE: Joi.boolean().default(false),
+
+  MAIL_USER: Joi.string().allow('').optional(),
+  MAIL_PASSWORD: Joi.string().allow('').optional(),
+
+  MAIL_FROM: Joi.string().email().required(),
+  MAIL_FROM_NAME: Joi.string().default('MINREX'),
+
+  FRONTEND_URL: Joi.string().uri().required(),
+
+  JWT_ACCESS_SECRET: Joi.string().min(32).required(),
+
+  JWT_ACCESS_TTL_SECONDS: Joi.number().integer().positive().default(900),
+
+  JWT_REFRESH_TTL_SECONDS: Joi.number().integer().positive().default(604800),
 });
