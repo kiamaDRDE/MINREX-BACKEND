@@ -580,6 +580,102 @@ export class AuthService {
     };
   }
 
+  async logout(rawRefreshToken?: string) {
+    /*
+     * Logout remains idempotent.
+     *
+     * Even if the cookie is already missing or invalid,
+     * the API returns a successful logout response.
+     */
+    if (!rawRefreshToken) {
+      return {
+        loggedOut: true,
+        message: 'Logged out successfully.',
+      };
+    }
+
+    /*
+     * Refresh token format:
+     *
+     * sessionId.secret
+     */
+    const separatorIndex = rawRefreshToken.indexOf('.');
+
+    if (separatorIndex <= 0) {
+      return {
+        loggedOut: true,
+        message: 'Logged out successfully.',
+      };
+    }
+
+    const sessionId = rawRefreshToken.slice(0, separatorIndex);
+
+    if (!sessionId) {
+      return {
+        loggedOut: true,
+        message: 'Logged out successfully.',
+      };
+    }
+
+    const session = await this.prisma.authSession.findUnique({
+      where: {
+        id: sessionId,
+      },
+
+      select: {
+        id: true,
+        refreshTokenHash: true,
+        revokedAt: true,
+      },
+    });
+
+    /*
+     * Do not expose whether the session exists.
+     */
+    if (!session) {
+      return {
+        loggedOut: true,
+        message: 'Logged out successfully.',
+      };
+    }
+
+    /*
+     * Verify that the supplied refresh token actually
+     * belongs to the session before revoking it.
+     */
+    const suppliedTokenHash = this.hashToken(rawRefreshToken);
+
+    if (suppliedTokenHash !== session.refreshTokenHash) {
+      return {
+        loggedOut: true,
+        message: 'Logged out successfully.',
+      };
+    }
+
+    /*
+     * Revoke only if it hasn't already been revoked.
+     */
+    if (!session.revokedAt) {
+      const now = new Date();
+
+      await this.prisma.authSession.update({
+        where: {
+          id: session.id,
+        },
+
+        data: {
+          revokedAt: now,
+          lastUsedAt: now,
+        },
+      });
+    }
+
+    return {
+      loggedOut: true,
+      message: 'Logged out successfully.',
+    };
+  }
+
   /*
   |--------------------------------------------------------------------------
   | PRIVATE HELPERS

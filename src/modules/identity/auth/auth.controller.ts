@@ -159,4 +159,45 @@ export class AuthController {
 
     return responseData;
   }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Sign out from the current session',
+  })
+  @ApiOkResponse({
+    description: 'Current authentication session revoked successfully.',
+  })
+  async logout(
+    @Req()
+    request: Request,
+
+    @Res({
+      passthrough: true,
+    })
+    response: Response,
+  ) {
+    const refreshToken = request.cookies?.['minrex_refresh_token'] as
+      string | undefined;
+
+    const result = await this.authService.logout(refreshToken);
+
+    /*
+     * Remove the refresh-token cookie.
+     *
+     * The path/security options must correspond
+     * to those used when the cookie was created.
+     */
+    response.clearCookie('minrex_refresh_token', {
+      httpOnly: true,
+
+      secure: process.env.NODE_ENV === 'production',
+
+      sameSite: 'lax',
+
+      path: '/api/v1/auth',
+    });
+
+    return result;
+  }
 }
