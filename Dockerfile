@@ -3,7 +3,8 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-RUN npm install -g pnpm
+# Installer pnpm v9 (compatible avec lockfileVersion 9.0 et autorise les scripts natifs argon2/prisma)
+RUN npm install -g pnpm@9
 
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma/
@@ -22,7 +23,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9
 
 COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma/
