@@ -9,6 +9,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -21,22 +22,57 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import type { Request, Response } from 'express';
+import type {
+  Request,
+  Response,
+} from 'express';
 
-import { AuthService } from './auth.service.js';
+import {
+  AuthorizationService,
+} from '../authorization/authorization.service.js';
 
-import { LoginDto } from './dto/login.dto.js';
-import { RegisterDto } from './dto/register.dto.js';
-import { ResendVerificationDto } from './dto/resend-verification.dto.js';
-import { VerifyEmailDto } from './dto/verify-email.dto.js';
-import { AccessTokenGuard } from './guards/access-token.guard.js';
+import {
+  AuthService,
+} from './auth.service.js';
 
-import type { AuthenticatedRequest } from './interfaces/authenticated-request.interface.js';
+import {
+  LoginDto,
+} from './dto/login.dto.js';
 
-@ApiTags('Authentication')
-@Controller('auth')
+import {
+  RegisterDto,
+} from './dto/register.dto.js';
+
+import {
+  ResendVerificationDto,
+} from './dto/resend-verification.dto.js';
+
+import {
+  VerifyEmailDto,
+} from './dto/verify-email.dto.js';
+
+import {
+  AccessTokenGuard,
+} from './guards/access-token.guard.js';
+
+import type {
+  AuthenticatedRequest,
+} from './interfaces/authenticated-request.interface.js';
+
+@ApiTags(
+  'Authentication',
+)
+@Controller(
+  'auth',
+)
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService:
+      AuthService,
+
+    private readonly authorizationService:
+      AuthorizationService,
+  ) {}
 
   /*
   |--------------------------------------------------------------------------
@@ -44,23 +80,33 @@ export class AuthController {
   |--------------------------------------------------------------------------
   */
 
-  @Post('register')
+  @Post(
+    'register',
+  )
   @ApiOperation({
-    summary: 'Register a new MINREX user account',
+    summary:
+      'Register a new MINREX user account',
   })
   @ApiCreatedResponse({
     description:
       'Account created successfully. Email verification is required.',
   })
   @ApiBadRequestResponse({
-    description: 'Invalid registration data.',
+    description:
+      'Invalid registration data.',
   })
   @ApiConflictResponse({
     description:
       'An account already exists with the supplied email or username.',
   })
-  register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto);
+  register(
+    @Body()
+    dto:
+      RegisterDto,
+  ) {
+    return this.authService.register(
+      dto,
+    );
   }
 
   /*
@@ -69,19 +115,32 @@ export class AuthController {
   |--------------------------------------------------------------------------
   */
 
-  @Post('verify-email')
-  @HttpCode(HttpStatus.OK)
+  @Post(
+    'verify-email',
+  )
+  @HttpCode(
+    HttpStatus.OK,
+  )
   @ApiOperation({
-    summary: 'Verify the email address of a MINREX account',
+    summary:
+      'Verify the email address of a MINREX account',
   })
   @ApiOkResponse({
-    description: 'Email address verified successfully.',
+    description:
+      'Email address verified successfully.',
   })
   @ApiBadRequestResponse({
-    description: 'Verification token is invalid or expired.',
+    description:
+      'Verification token is invalid or expired.',
   })
-  verifyEmail(@Body() dto: VerifyEmailDto) {
-    return this.authService.verifyEmail(dto);
+  verifyEmail(
+    @Body()
+    dto:
+      VerifyEmailDto,
+  ) {
+    return this.authService.verifyEmail(
+      dto,
+    );
   }
 
   /*
@@ -90,19 +149,32 @@ export class AuthController {
   |--------------------------------------------------------------------------
   */
 
-  @Post('resend-verification')
-  @HttpCode(HttpStatus.OK)
+  @Post(
+    'resend-verification',
+  )
+  @HttpCode(
+    HttpStatus.OK,
+  )
   @ApiOperation({
-    summary: 'Request a new email verification token',
+    summary:
+      'Request a new email verification token',
   })
   @ApiOkResponse({
-    description: 'Verification request processed successfully.',
+    description:
+      'Verification request processed successfully.',
   })
   @ApiBadRequestResponse({
-    description: 'Invalid request data.',
+    description:
+      'Invalid request data.',
   })
-  resendVerification(@Body() dto: ResendVerificationDto) {
-    return this.authService.resendVerification(dto);
+  resendVerification(
+    @Body()
+    dto:
+      ResendVerificationDto,
+  ) {
+    return this.authService.resendVerification(
+      dto,
+    );
   }
 
   /*
@@ -111,116 +183,187 @@ export class AuthController {
   |--------------------------------------------------------------------------
   */
 
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
+  @Post(
+    'login',
+  )
+  @HttpCode(
+    HttpStatus.OK,
+  )
   @ApiOperation({
-    summary: 'Sign in using an email address or username',
+    summary:
+      'Sign in using an email address or username',
   })
   @ApiOkResponse({
-    description: 'Authentication successful.',
+    description:
+      'Authentication successful.',
   })
   @ApiBadRequestResponse({
-    description: 'Invalid login request.',
+    description:
+      'Invalid login request.',
   })
   @ApiUnauthorizedResponse({
-    description: 'Invalid email, username or password.',
+    description:
+      'Invalid email, username or password.',
   })
   @ApiForbiddenResponse({
-    description: 'The account is not verified, suspended or disabled.',
+    description:
+      'The account is not verified, suspended or disabled.',
   })
   async login(
-    @Body() dto: LoginDto,
+    @Body()
+    dto:
+      LoginDto,
 
     @Req()
-    request: Request,
+    request:
+      Request,
 
     @Res({
-      passthrough: true,
+      passthrough:
+        true,
     })
-    response: Response,
+    response:
+      Response,
   ) {
-    const result = await this.authService.login(dto, {
-      ipAddress: request.ip ?? null,
+    const result =
+      await this.authService.login(
+        dto,
+        {
+          ipAddress:
+            request.ip ??
+            null,
 
-      userAgent: request.headers['user-agent'] ?? null,
-    });
+          userAgent:
+            request.headers[
+              'user-agent'
+            ] ??
+            null,
+        },
+      );
 
-    const { refreshToken, refreshTokenExpiresAt, ...responseData } = result;
+    const {
+      refreshToken,
+      refreshTokenExpiresAt,
+      ...responseData
+    } =
+      result;
 
     /*
-     * Refresh token is stored in an HttpOnly cookie.
-     * It is therefore inaccessible from frontend JavaScript.
+     * Refresh token remains inaccessible
+     * from frontend JavaScript.
      */
-    response.cookie('minrex_refresh_token', refreshToken, {
-      httpOnly: true,
+    response.cookie(
+      'minrex_refresh_token',
+      refreshToken,
+      {
+        httpOnly:
+          true,
 
-      secure: process.env.NODE_ENV === 'production',
+        secure:
+          process.env.NODE_ENV ===
+          'production',
 
-      sameSite: 'lax',
+        sameSite:
+          'lax',
 
-      expires: refreshTokenExpiresAt,
+        expires:
+          refreshTokenExpiresAt,
 
-      path: '/api/v1/auth',
-    });
+        path:
+          '/api/v1/auth',
+      },
+    );
 
     return responseData;
   }
 
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
+  /*
+  |--------------------------------------------------------------------------
+  | LOGOUT
+  |--------------------------------------------------------------------------
+  */
+
+  @Post(
+    'logout',
+  )
+  @HttpCode(
+    HttpStatus.OK,
+  )
   @ApiOperation({
-    summary: 'Sign out from the current session',
+    summary:
+      'Sign out from the current session',
   })
   @ApiOkResponse({
-    description: 'Current authentication session revoked successfully.',
+    description:
+      'Current authentication session revoked successfully.',
   })
   async logout(
     @Req()
-    request: Request,
+    request:
+      Request,
 
     @Res({
-      passthrough: true,
+      passthrough:
+        true,
     })
-    response: Response,
+    response:
+      Response,
   ) {
-    const refreshToken = request.cookies?.['minrex_refresh_token'] as
-      string | undefined;
+    const refreshToken =
+      request.cookies?.[
+        'minrex_refresh_token'
+      ] as
+        | string
+        | undefined;
 
-    const result = await this.authService.logout(refreshToken);
+    const result =
+      await this.authService.logout(
+        refreshToken,
+      );
 
-    /*
-     * Remove the refresh-token cookie.
-     *
-     * The path/security options must correspond
-     * to those used when the cookie was created.
-     */
-    response.clearCookie('minrex_refresh_token', {
-      httpOnly: true,
+    response.clearCookie(
+      'minrex_refresh_token',
+      {
+        httpOnly:
+          true,
 
-      secure: process.env.NODE_ENV === 'production',
+        secure:
+          process.env.NODE_ENV ===
+          'production',
 
-      sameSite: 'lax',
+        sameSite:
+          'lax',
 
-      path: '/api/v1/auth',
-    });
+        path:
+          '/api/v1/auth',
+      },
+    );
 
     return result;
   }
 
   /*
-|--------------------------------------------------------------------------
-| CURRENT AUTHENTICATED USER
-|--------------------------------------------------------------------------
-*/
+  |--------------------------------------------------------------------------
+  | CURRENT AUTHENTICATED USER
+  |--------------------------------------------------------------------------
+  */
 
-  @Get('me')
-  @UseGuards(AccessTokenGuard)
-  @ApiBearerAuth('access-token')
+  @Get(
+    'me',
+  )
+  @UseGuards(
+    AccessTokenGuard,
+  )
+  @ApiBearerAuth(
+    'access-token',
+  )
   @ApiOperation({
-    summary: 'Get the currently authenticated MINREX user',
+    summary:
+      'Get the current user and authorization context',
   })
   @ApiOkResponse({
-    description: 'Authenticated user returned successfully.',
+    description:
+      'Authenticated user and current authorization context returned successfully.',
   })
   @ApiUnauthorizedResponse({
     description:
@@ -228,8 +371,33 @@ export class AuthController {
   })
   async me(
     @Req()
-    request: AuthenticatedRequest,
+    request:
+      AuthenticatedRequest,
   ) {
-    return this.authService.getCurrentUser(request.auth.userId);
+    /*
+     * Authentication information and authorization
+     * information are intentionally retrieved from
+     * current database state.
+     */
+    const [
+      currentUser,
+      authorization,
+    ] =
+      await Promise.all([
+        this.authService.getCurrentUser(
+          request.auth.userId,
+        ),
+
+        this.authorizationService.getUserAuthorizationContext(
+          request.auth.userId,
+        ),
+      ]);
+
+    return {
+      user:
+        currentUser.user,
+
+      authorization,
+    };
   }
 }
