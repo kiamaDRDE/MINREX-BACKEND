@@ -28,12 +28,10 @@ COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma/
 COPY prisma7.config.ts ./
 
-RUN pnpm install --prod --frozen-lockfile
-RUN npx prisma generate
-
+# Réutiliser les modules et les fichiers compilés du builder
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
-
