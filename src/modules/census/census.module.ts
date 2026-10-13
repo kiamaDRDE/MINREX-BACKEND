@@ -11,6 +11,14 @@ import {
 } from '../identity/authorization/authorization.module.js';
 
 import {
+  CensusAgentController,
+} from './agent/census-agent.controller.js';
+
+import {
+  CensusAgentService,
+} from './agent/census-agent.service.js';
+
+import {
   CensusController,
 } from './census.controller.js';
 
@@ -26,14 +34,17 @@ import {
 
   controllers: [
     CensusController,
+    CensusAgentController,
   ],
 
   providers: [
     CensusService,
+    CensusAgentService,
   ],
 
   exports: [
     CensusService,
+    CensusAgentService,
   ],
 })
 export class CensusModule {}
