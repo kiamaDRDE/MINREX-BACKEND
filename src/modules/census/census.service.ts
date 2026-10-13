@@ -581,6 +581,426 @@ export class CensusService {
     };
   }
 
+    /*
+  |--------------------------------------------------------------------------
+  | Submit census
+  |--------------------------------------------------------------------------
+  */
+
+  async submitMyCensus(
+    userId: string,
+    recordId: string,
+  ) {
+    const record =
+      await this.prisma.censusRecord.findUnique({
+        where: {
+          id: recordId,
+        },
+
+        include: {
+          residenceCountry:
+            true,
+
+          nationalityCountry:
+            true,
+        },
+      });
+
+    if (!record) {
+      throw new NotFoundException(
+        'Census record not found.',
+      );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ownership
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      record.userId !==
+      userId
+    ) {
+      throw new ForbiddenException(
+        'You cannot submit another user census record.',
+      );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Allowed source statuses
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      record.status !==
+        CensusStatus.DRAFT &&
+      record.status !==
+        CensusStatus.CORRECTION_REQUIRED
+    ) {
+      throw new ConflictException(
+        'This census record cannot be submitted in its current status.',
+      );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Required MVP information
+    |--------------------------------------------------------------------------
+    */
+
+    const missingFields: string[] =
+      [];
+
+    if (!record.firstName) {
+      missingFields.push(
+        'firstName',
+      );
+    }
+
+    if (!record.lastName) {
+      missingFields.push(
+        'lastName',
+      );
+    }
+
+    if (!record.birthDate) {
+      missingFields.push(
+        'birthDate',
+      );
+    }
+
+    if (!record.birthPlace) {
+      missingFields.push(
+        'birthPlace',
+      );
+    }
+
+    if (
+      !record.nationalityCountryId
+    ) {
+      missingFields.push(
+        'nationalityCountryId',
+      );
+    }
+
+    if (
+      !record.email &&
+      !record.primaryPhone
+    ) {
+      missingFields.push(
+        'emailOrPrimaryPhone',
+      );
+    }
+
+    if (
+      !record.residenceCountryId
+    ) {
+      missingFields.push(
+        'residenceCountryId',
+      );
+    }
+
+    if (
+      !record.residenceCity
+    ) {
+      missingFields.push(
+        'residenceCity',
+      );
+    }
+
+    if (
+      !record.residenceStatus
+    ) {
+      missingFields.push(
+        'residenceStatus',
+      );
+    }
+
+    if (
+      !record.cameroonRegion
+    ) {
+      missingFields.push(
+        'cameroonRegion',
+      );
+    }
+
+    if (
+      !record.departureYear
+    ) {
+      missingFields.push(
+        'departureYear',
+      );
+    }
+
+    if (
+      !record.departureReason
+    ) {
+      missingFields.push(
+        'departureReason',
+      );
+    }
+
+    if (
+      missingFields.length >
+      0
+    ) {
+      throw new BadRequestException({
+        message:
+          'The census record is incomplete.',
+
+        missingFields,
+      });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mandatory declarations
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      !record.declaredAccurate
+    ) {
+      throw new BadRequestException(
+        'The applicant must confirm that the information provided is accurate.',
+      );
+    }
+
+    if (
+      !record.consentDataProcessing
+    ) {
+      throw new BadRequestException(
+        'Data processing consent is required.',
+      );
+    }
+
+    if (
+      !record.privacyNoticeAccepted
+    ) {
+      throw new BadRequestException(
+        'Privacy notice acceptance is required.',
+      );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Diplomatic routing
+    |--------------------------------------------------------------------------
+    */
+
+    const now =
+      new Date();
+
+    const coverages =
+      await this.prisma.postCoverage.findMany({
+        where: {
+          countryId:
+            record.residenceCountryId!,
+
+          startDate: {
+            lte:
+              now,
+          },
+
+          OR: [
+            {
+              endDate:
+                null,
+            },
+
+            {
+              endDate: {
+                gte:
+                  now,
+              },
+            },
+          ],
+
+          post: {
+            status:
+              'ACTIVE',
+          },
+        },
+
+        select: {
+          id:
+            true,
+
+          postId:
+            true,
+
+          startDate:
+            true,
+
+          post: {
+            select: {
+              id:
+                true,
+
+              code:
+                true,
+
+              name:
+                true,
+
+              city:
+                true,
+
+              status:
+                true,
+            },
+          },
+        },
+
+        orderBy: {
+          startDate:
+            'desc',
+        },
+      });
+
+    /*
+    |--------------------------------------------------------------------------
+    | No diplomatic post
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+      coverages.length ===
+      0
+    ) {
+      throw new BadRequestException(
+        'No active diplomatic post covers the selected country of residence.',
+      );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ambiguous coverage
+    |--------------------------------------------------------------------------
+    |
+    | For the MVP we avoid silently choosing between several diplomatic
+    | posts. The diplomatic network must first be corrected.
+    |--------------------------------------------------------------------------
+    */
+
+    const uniquePostIds = [
+      ...new Set(
+        coverages.map(
+          (coverage) =>
+            coverage.postId,
+        ),
+      ),
+    ];
+
+    if (
+      uniquePostIds.length >
+      1
+    ) {
+      throw new ConflictException(
+        'Several diplomatic posts currently cover this country. The diplomatic network configuration must be reviewed.',
+      );
+    }
+
+    const assignedPostId =
+      uniquePostIds[0];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Status transition
+    |--------------------------------------------------------------------------
+    */
+
+    const previousStatus =
+      record.status;
+
+    const submitted =
+      await this.prisma.$transaction(
+        async (tx) => {
+          const updated =
+            await tx.censusRecord.update({
+              where: {
+                id:
+                  recordId,
+              },
+
+              data: {
+                status:
+                  CensusStatus.SUBMITTED,
+
+                assignedPostId,
+
+                routedAt:
+                  now,
+
+                submittedAt:
+                  now,
+
+                verifiedAt:
+                  null,
+
+                rejectedAt:
+                  null,
+              },
+
+              include: {
+                residenceCountry:
+                  true,
+
+                nationalityCountry:
+                  true,
+
+                assignedPost: {
+                  select: {
+                    id:
+                      true,
+
+                    code:
+                      true,
+
+                    name:
+                      true,
+
+                    city:
+                      true,
+                  },
+                },
+              },
+            });
+
+          await tx.censusStatusHistory.create({
+            data: {
+              censusRecordId:
+                recordId,
+
+              fromStatus:
+                previousStatus,
+
+              toStatus:
+                CensusStatus.SUBMITTED,
+
+              changedById:
+                userId,
+
+              reason:
+                previousStatus ===
+                CensusStatus.CORRECTION_REQUIRED
+                  ? 'Census record resubmitted after correction.'
+                  : 'Census record submitted by applicant.',
+            },
+          });
+
+          return updated;
+        },
+      );
+
+    return {
+      record:
+        submitted,
+    };
+  }
+
   /*
   |--------------------------------------------------------------------------
   | Validation

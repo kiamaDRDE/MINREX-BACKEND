@@ -144,4 +144,36 @@ export class CensusController {
       dto,
     );
   }
+
+    @Post(
+    'me/:recordId/submit',
+  )
+  @RequirePermissions(
+    'census.records.create',
+  )
+  @ApiOperation({
+    summary:
+      'Submit my census record',
+  })
+  @ApiOkResponse({
+    description:
+      'Census record submitted and routed successfully.',
+  })
+  submitMyCensus(
+    @Req()
+    request:
+      AuthenticatedRequest,
+
+    @Param(
+      'recordId',
+      ParseUUIDPipe,
+    )
+    recordId:
+      string,
+  ) {
+    return this.censusService.submitMyCensus(
+      request.auth!.userId!,
+      recordId,
+    );
+  }
 }
