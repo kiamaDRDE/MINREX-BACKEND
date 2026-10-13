@@ -11,7 +11,8 @@ import { HealthModule } from './infrastructure/health/health.module.js';
 import { LoggingModule } from './infrastructure/logging/logging.module.js';
 import { IdentityModule } from './modules/identity/identity.module.js';
 import { MailModule } from './infrastructure/mail/mail.module.js';
-import { NetworkModule, } from './modules/network/network.module.js';
+import { NetworkModule } from './modules/network/network.module.js';
+import { CensusModule } from './modules/census/census.module.js';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { NetworkModule, } from './modules/network/network.module.js';
     IdentityModule,
     MailModule,
     NetworkModule,
+    CensusModule, 
   ],
 
   providers: [
