@@ -55,6 +55,7 @@ export const PERMISSIONS = {
 
   NETWORK: {
     POSTS_READ: 'network.posts.read',
+    MANAGE: 'network.manage',
   },
 
   /*
@@ -176,6 +177,15 @@ export const SYSTEM_PERMISSIONS:
     | Identity
     |--------------------------------------------------------------------------
     */
+
+    {
+      code: PERMISSIONS.NETWORK.MANAGE,
+
+      name: 'Manage diplomatic network',
+      
+      description:
+        'Allows management of countries, diplomatic post types, diplomatic posts, services and geographic coverage.',
+    },
 
     {
       code: PERMISSIONS.IDENTITY.USERS_READ,
