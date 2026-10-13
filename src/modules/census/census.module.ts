@@ -26,6 +26,18 @@ import {
   CensusService,
 } from './census.service.js';
 
+import {
+  CensusDocumentsController,
+} from './documents/census-documents.controller.js';
+
+import {
+  CensusDocumentsService,
+} from './documents/census-documents.service.js';
+
+import {
+  CensusDocumentStorageService,
+} from './documents/census-document-storage.service.js';
+
 @Module({
   imports: [
     AuthModule,
@@ -35,16 +47,20 @@ import {
   controllers: [
     CensusController,
     CensusAgentController,
+    CensusDocumentsController,
   ],
 
   providers: [
     CensusService,
     CensusAgentService,
+    CensusDocumentsService,
+    CensusDocumentStorageService,
   ],
 
   exports: [
     CensusService,
     CensusAgentService,
+    CensusDocumentsService,
   ],
 })
 export class CensusModule {}
