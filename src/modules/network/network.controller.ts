@@ -42,12 +42,28 @@ import {
 } from './dto/create-diplomatic-post.dto.js';
 
 import {
+  CreatePostCoverageDto,
+} from './dto/create-post-coverage.dto.js';
+
+import {
   CreatePostTypeDto,
 } from './dto/create-post-type.dto.js';
 
 import {
+  CreateServiceDto,
+} from './dto/create-service.dto.js';
+
+import {
   UpdateDiplomaticPostDto,
 } from './dto/update-diplomatic-post.dto.js';
+
+import {
+  UpdatePostCoverageDto,
+} from './dto/update-post-coverage.dto.js';
+
+import {
+  UpdateServiceDto,
+} from './dto/update-service.dto.js';
 
 import {
   NetworkService,
@@ -71,6 +87,12 @@ export class NetworkController {
     private readonly networkService:
       NetworkService,
   ) {}
+
+  /*
+  |--------------------------------------------------------------------------
+  | COUNTRIES
+  |--------------------------------------------------------------------------
+  */
 
   @Get(
     'countries',
@@ -108,6 +130,12 @@ export class NetworkController {
     );
   }
 
+  /*
+  |--------------------------------------------------------------------------
+  | POST TYPES
+  |--------------------------------------------------------------------------
+  */
+
   @Get(
     'post-types',
   )
@@ -142,6 +170,12 @@ export class NetworkController {
       dto,
     );
   }
+
+  /*
+  |--------------------------------------------------------------------------
+  | DIPLOMATIC POSTS
+  |--------------------------------------------------------------------------
+  */
 
   @Get(
     'posts',
@@ -223,6 +257,172 @@ export class NetworkController {
   ) {
     return this.networkService.updatePost(
       postId,
+      dto,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | SERVICES
+  |--------------------------------------------------------------------------
+  */
+
+  @Get(
+    'posts/:postId/services',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.POSTS_READ,
+  )
+  @ApiOperation({
+    summary:
+      'List services of a diplomatic post',
+  })
+  findServices(
+    @Param(
+      'postId',
+      ParseUUIDPipe,
+    )
+    postId: string,
+  ) {
+    return this.networkService.findServices(
+      postId,
+    );
+  }
+
+  @Post(
+    'posts/:postId/services',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.MANAGE,
+  )
+  @ApiOperation({
+    summary:
+      'Create a service in a diplomatic post',
+  })
+  @ApiCreatedResponse()
+  createService(
+    @Param(
+      'postId',
+      ParseUUIDPipe,
+    )
+    postId: string,
+
+    @Body()
+    dto:
+      CreateServiceDto,
+  ) {
+    return this.networkService.createService(
+      postId,
+      dto,
+    );
+  }
+
+  @Patch(
+    'services/:serviceId',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.MANAGE,
+  )
+  @ApiOperation({
+    summary:
+      'Update a diplomatic service',
+  })
+  updateService(
+    @Param(
+      'serviceId',
+      ParseUUIDPipe,
+    )
+    serviceId: string,
+
+    @Body()
+    dto:
+      UpdateServiceDto,
+  ) {
+    return this.networkService.updateService(
+      serviceId,
+      dto,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | POST COVERAGE
+  |--------------------------------------------------------------------------
+  */
+
+  @Get(
+    'posts/:postId/coverages',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.POSTS_READ,
+  )
+  @ApiOperation({
+    summary:
+      'List geographic coverages of a diplomatic post',
+  })
+  findCoverages(
+    @Param(
+      'postId',
+      ParseUUIDPipe,
+    )
+    postId: string,
+  ) {
+    return this.networkService.findCoverages(
+      postId,
+    );
+  }
+
+  @Post(
+    'posts/:postId/coverages',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.MANAGE,
+  )
+  @ApiOperation({
+    summary:
+      'Add geographic coverage to a diplomatic post',
+  })
+  @ApiCreatedResponse()
+  createCoverage(
+    @Param(
+      'postId',
+      ParseUUIDPipe,
+    )
+    postId: string,
+
+    @Body()
+    dto:
+      CreatePostCoverageDto,
+  ) {
+    return this.networkService.createCoverage(
+      postId,
+      dto,
+    );
+  }
+
+  @Patch(
+    'coverages/:coverageId',
+  )
+  @RequirePermissions(
+    PERMISSIONS.NETWORK.MANAGE,
+  )
+  @ApiOperation({
+    summary:
+      'Update or end diplomatic post coverage',
+  })
+  updateCoverage(
+    @Param(
+      'coverageId',
+      ParseUUIDPipe,
+    )
+    coverageId: string,
+
+    @Body()
+    dto:
+      UpdatePostCoverageDto,
+  ) {
+    return this.networkService.updateCoverage(
+      coverageId,
       dto,
     );
   }
