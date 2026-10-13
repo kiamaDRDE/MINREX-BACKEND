@@ -414,7 +414,9 @@ export const ModelName = {
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
-  CensusStatusHistory: 'CensusStatusHistory'
+  CensusStatusHistory: 'CensusStatusHistory',
+  AssistanceCase: 'AssistanceCase',
+  AssistanceCaseHistory: 'AssistanceCaseHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1766,6 +1768,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AssistanceCase: {
+      payload: Prisma.$AssistanceCasePayload<ExtArgs>
+      fields: Prisma.AssistanceCaseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistanceCaseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistanceCaseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        findFirst: {
+          args: Prisma.AssistanceCaseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistanceCaseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        findMany: {
+          args: Prisma.AssistanceCaseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>[]
+        }
+        create: {
+          args: Prisma.AssistanceCaseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        createMany: {
+          args: Prisma.AssistanceCaseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistanceCaseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>[]
+        }
+        delete: {
+          args: Prisma.AssistanceCaseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        update: {
+          args: Prisma.AssistanceCaseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistanceCaseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistanceCaseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistanceCaseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistanceCaseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCasePayload>
+        }
+        aggregate: {
+          args: Prisma.AssistanceCaseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistanceCase>
+        }
+        groupBy: {
+          args: Prisma.AssistanceCaseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCaseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistanceCaseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    AssistanceCaseHistory: {
+      payload: Prisma.$AssistanceCaseHistoryPayload<ExtArgs>
+      fields: Prisma.AssistanceCaseHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistanceCaseHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistanceCaseHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.AssistanceCaseHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistanceCaseHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.AssistanceCaseHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.AssistanceCaseHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.AssistanceCaseHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistanceCaseHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.AssistanceCaseHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        update: {
+          args: Prisma.AssistanceCaseHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistanceCaseHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistanceCaseHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistanceCaseHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistanceCaseHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCaseHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.AssistanceCaseHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistanceCaseHistory>
+        }
+        groupBy: {
+          args: Prisma.AssistanceCaseHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCaseHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistanceCaseHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCaseHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2114,6 +2264,48 @@ export const CensusStatusHistoryScalarFieldEnum = {
 export type CensusStatusHistoryScalarFieldEnum = (typeof CensusStatusHistoryScalarFieldEnum)[keyof typeof CensusStatusHistoryScalarFieldEnum]
 
 
+export const AssistanceCaseScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  requesterId: 'requesterId',
+  type: 'type',
+  urgency: 'urgency',
+  status: 'status',
+  subject: 'subject',
+  description: 'description',
+  countryId: 'countryId',
+  city: 'city',
+  address: 'address',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  assignedPostId: 'assignedPostId',
+  routedAt: 'routedAt',
+  assignedToUserId: 'assignedToUserId',
+  assignedAt: 'assignedAt',
+  resolutionSummary: 'resolutionSummary',
+  resolvedAt: 'resolvedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceCaseScalarFieldEnum = (typeof AssistanceCaseScalarFieldEnum)[keyof typeof AssistanceCaseScalarFieldEnum]
+
+
+export const AssistanceCaseHistoryScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  actorId: 'actorId',
+  action: 'action',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2432,6 +2624,62 @@ export type ListEnumCensusReviewDecisionFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'AssistanceType'
+ */
+export type EnumAssistanceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceType'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceType[]'
+ */
+export type ListEnumAssistanceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceUrgency'
+ */
+export type EnumAssistanceUrgencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceUrgency'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceUrgency[]'
+ */
+export type ListEnumAssistanceUrgencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceUrgency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceCaseStatus'
+ */
+export type EnumAssistanceCaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceCaseStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceCaseStatus[]'
+ */
+export type ListEnumAssistanceCaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceCaseStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceHistoryAction'
+ */
+export type EnumAssistanceHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceHistoryAction'>
+    
+
+
+/**
+ * Reference to a field of type 'AssistanceHistoryAction[]'
+ */
+export type ListEnumAssistanceHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AssistanceHistoryAction[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2613,6 +2861,8 @@ export type GlobalOmitConfig = {
   censusDocument?: Prisma.CensusDocumentOmit
   censusReview?: Prisma.CensusReviewOmit
   censusStatusHistory?: Prisma.CensusStatusHistoryOmit
+  assistanceCase?: Prisma.AssistanceCaseOmit
+  assistanceCaseHistory?: Prisma.AssistanceCaseHistoryOmit
 }
 
 /* Types for Logging */

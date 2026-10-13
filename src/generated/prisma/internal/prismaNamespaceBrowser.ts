@@ -68,7 +68,9 @@ export const ModelName = {
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
-  CensusStatusHistory: 'CensusStatusHistory'
+  CensusStatusHistory: 'CensusStatusHistory',
+  AssistanceCase: 'AssistanceCase',
+  AssistanceCaseHistory: 'AssistanceCaseHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -394,6 +396,48 @@ export const CensusStatusHistoryScalarFieldEnum = {
 } as const
 
 export type CensusStatusHistoryScalarFieldEnum = (typeof CensusStatusHistoryScalarFieldEnum)[keyof typeof CensusStatusHistoryScalarFieldEnum]
+
+
+export const AssistanceCaseScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  requesterId: 'requesterId',
+  type: 'type',
+  urgency: 'urgency',
+  status: 'status',
+  subject: 'subject',
+  description: 'description',
+  countryId: 'countryId',
+  city: 'city',
+  address: 'address',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  assignedPostId: 'assignedPostId',
+  routedAt: 'routedAt',
+  assignedToUserId: 'assignedToUserId',
+  assignedAt: 'assignedAt',
+  resolutionSummary: 'resolutionSummary',
+  resolvedAt: 'resolvedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceCaseScalarFieldEnum = (typeof AssistanceCaseScalarFieldEnum)[keyof typeof AssistanceCaseScalarFieldEnum]
+
+
+export const AssistanceCaseHistoryScalarFieldEnum = {
+  id: 'id',
+  caseId: 'caseId',
+  actorId: 'actorId',
+  action: 'action',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

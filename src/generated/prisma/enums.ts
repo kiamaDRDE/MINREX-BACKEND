@@ -9,6 +9,58 @@
 * 🟢 You can import this file directly.
 */
 
+export const AssistanceCaseStatus = {
+  SUBMITTED: 'SUBMITTED',
+  QUALIFIED: 'QUALIFIED',
+  ASSIGNED: 'ASSIGNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type AssistanceCaseStatus = (typeof AssistanceCaseStatus)[keyof typeof AssistanceCaseStatus]
+
+
+export const AssistanceUrgency = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
+} as const
+
+export type AssistanceUrgency = (typeof AssistanceUrgency)[keyof typeof AssistanceUrgency]
+
+
+export const AssistanceType = {
+  DOCUMENT_LOSS: 'DOCUMENT_LOSS',
+  ARREST_DETENTION: 'ARREST_DETENTION',
+  ACCIDENT: 'ACCIDENT',
+  MEDICAL_EMERGENCY: 'MEDICAL_EMERGENCY',
+  VIOLENCE_ABUSE: 'VIOLENCE_ABUSE',
+  REPATRIATION: 'REPATRIATION',
+  DEATH: 'DEATH',
+  LEGAL_ASSISTANCE: 'LEGAL_ASSISTANCE',
+  OTHER: 'OTHER'
+} as const
+
+export type AssistanceType = (typeof AssistanceType)[keyof typeof AssistanceType]
+
+
+export const AssistanceHistoryAction = {
+  CREATED: 'CREATED',
+  QUALIFIED: 'QUALIFIED',
+  ASSIGNED: 'ASSIGNED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  UPDATED: 'UPDATED',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type AssistanceHistoryAction = (typeof AssistanceHistoryAction)[keyof typeof AssistanceHistoryAction]
+
+
 export const DiplomaticPostStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',

@@ -107,3 +107,13 @@ export type CensusReview = Prisma.CensusReviewModel
  * 
  */
 export type CensusStatusHistory = Prisma.CensusStatusHistoryModel
+/**
+ * Model AssistanceCase
+ * 
+ */
+export type AssistanceCase = Prisma.AssistanceCaseModel
+/**
+ * Model AssistanceCaseHistory
+ * 
+ */
+export type AssistanceCaseHistory = Prisma.AssistanceCaseHistoryModel
