@@ -17,6 +17,46 @@ datasource db {
  * |--------------------------------------------------------------------------
  */
 
+enum AssistanceCaseStatus {
+  SUBMITTED
+  QUALIFIED
+  ASSIGNED
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  REJECTED
+}
+
+enum AssistanceUrgency {
+  LOW
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
+enum AssistanceType {
+  DOCUMENT_LOSS
+  ARREST_DETENTION
+  ACCIDENT
+  MEDICAL_EMERGENCY
+  VIOLENCE_ABUSE
+  REPATRIATION
+  DEATH
+  LEGAL_ASSISTANCE
+  OTHER
+}
+
+enum AssistanceHistoryAction {
+  CREATED
+  QUALIFIED
+  ASSIGNED
+  STATUS_CHANGED
+  UPDATED
+  RESOLVED
+  CLOSED
+  REJECTED
+}
+
 enum DiplomaticPostStatus {
   ACTIVE
   INACTIVE
@@ -150,6 +190,8 @@ model Country {
   hostedPosts   DiplomaticPost[] @relation("PostHostCountry")
   postCoverages PostCoverage[]
 
+  assistanceCases AssistanceCase[]
+
   censusResidenceRecords   CensusRecord[] @relation("CensusResidenceCountry")
   censusNationalityRecords CensusRecord[] @relation("CensusNationalityCountry")
 
@@ -223,6 +265,7 @@ model DiplomaticPost {
   userPostAssignments UserPostAssignment[]
   roleAssignments     UserRoleAssignment[]
   censusRecords       CensusRecord[]
+  assistanceCases     AssistanceCase[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -331,6 +374,10 @@ model User {
   censusRecords       CensusRecord[]
   censusReviews       CensusReview[]        @relation("CensusReviewer")
   censusStatusChanges CensusStatusHistory[] @relation("CensusStatusChangedBy")
+
+  assistanceCasesCreated  AssistanceCase[]        @relation("AssistanceRequester")
+  assistanceCasesAssigned AssistanceCase[]        @relation("AssistanceAssignedAgent")
+  assistanceHistory       AssistanceCaseHistory[] @relation("AssistanceHistoryActor")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -742,4 +789,136 @@ model CensusStatusHistory {
   @@index([toStatus])
   @@index([createdAt])
   @@map("census_status_history")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ASSISTANCE & PROTECTION
+ * |--------------------------------------------------------------------------
+ */
+
+model AssistanceCase {
+  id        String @id @default(uuid()) @db.Uuid
+  reference String @unique @db.VarChar(40)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Requester
+   * |--------------------------------------------------------------------------
+   */
+
+  requesterId String @map("requester_id") @db.Uuid
+  requester   User   @relation("AssistanceRequester", fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Request
+   * |--------------------------------------------------------------------------
+   */
+
+  type    AssistanceType
+  urgency AssistanceUrgency    @default(NORMAL)
+  status  AssistanceCaseStatus @default(SUBMITTED)
+
+  subject     String @db.VarChar(200)
+  description String @db.Text
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Location
+   * |--------------------------------------------------------------------------
+   */
+
+  countryId String  @map("country_id") @db.Uuid
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  city    String? @db.VarChar(150)
+  address String? @db.VarChar(255)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Contact snapshot
+   * |--------------------------------------------------------------------------
+   */
+
+  contactEmail String? @map("contact_email") @db.VarChar(255)
+  contactPhone String? @map("contact_phone") @db.VarChar(30)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Diplomatic routing
+   * |--------------------------------------------------------------------------
+   */
+
+  assignedPostId String         @map("assigned_post_id") @db.Uuid
+  assignedPost   DiplomaticPost @relation(fields: [assignedPostId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  routedAt DateTime @default(now()) @map("routed_at") @db.Timestamptz(3)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Agent assignment
+   * |--------------------------------------------------------------------------
+   */
+
+  assignedToUserId String? @map("assigned_to_user_id") @db.Uuid
+  assignedToUser   User?   @relation("AssistanceAssignedAgent", fields: [assignedToUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  assignedAt DateTime? @map("assigned_at") @db.Timestamptz(3)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | Resolution
+   * |--------------------------------------------------------------------------
+   */
+
+  resolutionSummary String? @map("resolution_summary") @db.Text
+
+  resolvedAt DateTime? @map("resolved_at") @db.Timestamptz(3)
+  closedAt   DateTime? @map("closed_at") @db.Timestamptz(3)
+
+  /**
+   * |--------------------------------------------------------------------------
+   * | History
+   * |--------------------------------------------------------------------------
+   */
+
+  history AssistanceCaseHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([requesterId])
+  @@index([assignedPostId])
+  @@index([assignedToUserId])
+  @@index([countryId])
+  @@index([status])
+  @@index([urgency])
+  @@index([createdAt])
+  @@map("assistance_cases")
+}
+
+model AssistanceCaseHistory {
+  id String @id @default(uuid()) @db.Uuid
+
+  caseId         String         @map("case_id") @db.Uuid
+  assistanceCase AssistanceCase @relation(fields: [caseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  actorId String? @map("actor_id") @db.Uuid
+  actor   User?   @relation("AssistanceHistoryActor", fields: [actorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  action AssistanceHistoryAction
+
+  fromStatus AssistanceCaseStatus? @map("from_status")
+  toStatus   AssistanceCaseStatus? @map("to_status")
+
+  comment String? @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([caseId])
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("assistance_case_history")
 }
