@@ -36,6 +36,10 @@ import {
   MentorshipService,
 } from './mentorship.service.js';
 
+import {
+  RejectMentorshipRequestDto,
+} from './dto/reject-mentorship-request.dto.js';
+
 @ApiTags('Mentorship - Administration')
 @ApiBearerAuth('access-token')
 @UseGuards(AccessTokenGuard)
@@ -85,6 +89,33 @@ export class MentorshipAdminController {
     dto: MatchMentorshipRequestDto,
   ) {
     return this.mentorshipService.matchRequest(
+      request.auth.userId,
+      requestId,
+      dto,
+    );
+  }
+
+  @Post(
+    'requests/:requestId/reject',
+  )
+  @ApiOperation({
+    summary:
+      'Reject a submitted mentorship request',
+  })
+  rejectRequest(
+    @Req()
+    request: AuthenticatedRequest,
+  
+    @Param(
+      'requestId',
+      ParseUUIDPipe,
+    )
+    requestId: string,
+  
+    @Body()
+    dto: RejectMentorshipRequestDto,
+  ) {
+    return this.mentorshipService.rejectRequest(
       request.auth.userId,
       requestId,
       dto,

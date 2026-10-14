@@ -30,6 +30,14 @@ import {
   MatchMentorshipRequestDto,
 } from './dto/match-mentorship-request.dto.js';
 
+import {
+  CancelMentorshipRequestDto,
+} from './dto/cancel-mentorship-request.dto.js';
+
+import {
+  RejectMentorshipRequestDto,
+} from './dto/reject-mentorship-request.dto.js';
+
 @Injectable()
 export class MentorshipService {
   constructor(
@@ -316,14 +324,12 @@ export class MentorshipService {
     );
 
     return this.prisma.mentorshipRequest.findMany({
-      where: {
-        ...(query.status
-          ? {
-              status:
-                query.status,
-            }
-          : {}),
-      },
+      where: query.status
+        ? {
+            status:
+              query.status,
+          }
+        : {},
 
       orderBy: {
         createdAt:
@@ -632,6 +638,733 @@ export class MentorshipService {
         'You are not authorized to manage mentorship requests.',
       );
     }
+  }
+
+/*
+|--------------------------------------------------------------------------
+| MENTOR - LIST ASSIGNED REQUESTS
+|--------------------------------------------------------------------------
+*/
+
+async findMentorRequests(
+  mentorId: string,
+) {
+  await this.assertCanActAsMentor(
+    mentorId,
+  );
+
+  return this.prisma.mentorshipRequest.findMany({
+    where: {
+      mentorId,
+    },
+
+    orderBy: {
+      createdAt:
+        'desc',
+    },
+
+    select: {
+      id:
+        true,
+
+      reference:
+        true,
+
+      topic:
+        true,
+
+      objectives:
+        true,
+
+      status:
+        true,
+
+      requesterId:
+        true,
+
+      matchedAt:
+        true,
+
+      startedAt:
+        true,
+
+      completedAt:
+        true,
+
+      createdAt:
+        true,
+
+      updatedAt:
+        true,
+
+      requester: {
+        select: {
+          id:
+            true,
+
+          profile: {
+            select: {
+              firstName:
+                true,
+
+              lastName:
+                true,
+
+              displayName:
+                true,
+
+              photoUrl:
+                true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
+/*
+|--------------------------------------------------------------------------
+| MENTOR - GET ONE ASSIGNED REQUEST
+|--------------------------------------------------------------------------
+*/
+
+async findMentorRequest(
+  mentorId: string,
+  requestId: string,
+) {
+  await this.assertCanActAsMentor(
+    mentorId,
+  );
+
+  const mentorshipRequest =
+    await this.prisma.mentorshipRequest.findFirst({
+      where: {
+        id:
+          requestId,
+
+        mentorId,
+      },
+
+      include: {
+        requester: {
+          select: {
+            id:
+              true,
+
+            profile:
+              true,
+          },
+        },
+
+        history: {
+          orderBy: {
+            createdAt:
+              'asc',
+          },
+        },
+      },
+    });
+
+  if (!mentorshipRequest) {
+    throw new NotFoundException(
+      'Mentorship request not found.',
+    );
+  }
+
+  return mentorshipRequest;
+}
+
+/*
+|--------------------------------------------------------------------------
+| MENTOR - START MENTORSHIP
+|--------------------------------------------------------------------------
+*/
+
+async startMentorship(
+  mentorId: string,
+  requestId: string,
+) {
+  await this.assertCanActAsMentor(
+    mentorId,
+  );
+
+  const mentorshipRequest =
+    await this.prisma.mentorshipRequest.findFirst({
+      where: {
+        id:
+          requestId,
+
+        mentorId,
+      },
+
+      select: {
+        id:
+          true,
+
+        status:
+          true,
+      },
+    });
+
+  if (!mentorshipRequest) {
+    throw new NotFoundException(
+      'Mentorship request not found.',
+    );
+  }
+
+  if (
+    mentorshipRequest.status !==
+    MentorshipRequestStatus.MATCHED
+  ) {
+    throw new ConflictException(
+      'Only matched mentorship requests can be started.',
+    );
+  }
+
+  const now =
+    new Date();
+
+  return this.prisma.$transaction(
+    async (tx) => {
+      const result =
+        await tx.mentorshipRequest.updateMany({
+          where: {
+            id:
+              requestId,
+
+            mentorId,
+
+            status:
+              MentorshipRequestStatus.MATCHED,
+          },
+
+          data: {
+            status:
+              MentorshipRequestStatus.IN_PROGRESS,
+
+            startedAt:
+              now,
+          },
+        });
+
+      if (
+        result.count !== 1
+      ) {
+        throw new ConflictException(
+          'The mentorship request can no longer be started.',
+        );
+      }
+
+      await tx.mentorshipRequestHistory.create({
+        data: {
+          requestId,
+
+          actorId:
+            mentorId,
+
+          action:
+            MentorshipHistoryAction.STARTED,
+
+          fromStatus:
+            MentorshipRequestStatus.MATCHED,
+
+          toStatus:
+            MentorshipRequestStatus.IN_PROGRESS,
+
+          comment:
+            'Mentorship started by mentor.',
+        },
+      });
+
+      return tx.mentorshipRequest.findUnique({
+        where: {
+          id:
+            requestId,
+        },
+
+        include: {
+          requester: {
+            select: {
+              id:
+                true,
+
+              profile:
+                true,
+            },
+          },
+
+          mentor: {
+            select: {
+              id:
+                true,
+
+              profile:
+                true,
+            },
+          },
+
+          history: {
+            orderBy: {
+              createdAt:
+                'asc',
+            },
+          },
+        },
+      });
+    },
+  );
+}
+
+  /*
+  |--------------------------------------------------------------------------
+  | MENTOR - COMPLETE MENTORSHIP
+  |--------------------------------------------------------------------------
+  */
+  
+  async completeMentorship(
+    mentorId: string,
+    requestId: string,
+  ) {
+    await this.assertCanActAsMentor(
+      mentorId,
+    );
+  
+    const mentorshipRequest =
+      await this.prisma.mentorshipRequest.findFirst({
+        where: {
+          id:
+            requestId,
+  
+          mentorId,
+        },
+  
+        select: {
+          id:
+            true,
+  
+          status:
+            true,
+        },
+      });
+  
+    if (!mentorshipRequest) {
+      throw new NotFoundException(
+        'Mentorship request not found.',
+      );
+    }
+  
+    if (
+      mentorshipRequest.status !==
+      MentorshipRequestStatus.IN_PROGRESS
+    ) {
+      throw new ConflictException(
+        'Only mentorship requests in progress can be completed.',
+      );
+    }
+  
+    const now =
+      new Date();
+  
+    return this.prisma.$transaction(
+      async (tx) => {
+        const result =
+          await tx.mentorshipRequest.updateMany({
+            where: {
+              id:
+                requestId,
+  
+              mentorId,
+  
+              status:
+                MentorshipRequestStatus.IN_PROGRESS,
+            },
+  
+            data: {
+              status:
+                MentorshipRequestStatus.COMPLETED,
+  
+              completedAt:
+                now,
+            },
+          });
+  
+        if (
+          result.count !== 1
+        ) {
+          throw new ConflictException(
+            'The mentorship request can no longer be completed.',
+          );
+        }
+  
+        await tx.mentorshipRequestHistory.create({
+          data: {
+            requestId,
+  
+            actorId:
+              mentorId,
+  
+            action:
+              MentorshipHistoryAction.COMPLETED,
+  
+            fromStatus:
+              MentorshipRequestStatus.IN_PROGRESS,
+  
+            toStatus:
+              MentorshipRequestStatus.COMPLETED,
+  
+            comment:
+              'Mentorship completed by mentor.',
+          },
+        });
+  
+        return tx.mentorshipRequest.findUnique({
+          where: {
+            id:
+              requestId,
+          },
+  
+          include: {
+            requester: {
+              select: {
+                id:
+                  true,
+  
+                profile:
+                  true,
+              },
+            },
+  
+            mentor: {
+              select: {
+                id:
+                  true,
+  
+                profile:
+                  true,
+              },
+            },
+  
+            history: {
+              orderBy: {
+                createdAt:
+                  'asc',
+              },
+            },
+          },
+        });
+      },
+    );
+  }
+
+  private async assertCanActAsMentor(
+    userId: string,
+  ): Promise<void> {
+    const now =
+      new Date();
+  
+    const assignment =
+      await this.prisma.userRoleAssignment.findFirst({
+        where: {
+          userId,
+  
+          isActive:
+            true,
+  
+          OR: [
+            {
+              expiresAt:
+                null,
+            },
+            {
+              expiresAt: {
+                gt:
+                  now,
+              },
+            },
+          ],
+  
+          role: {
+            isActive:
+              true,
+  
+            code:
+              'MENTOR_EXPERT',
+          },
+        },
+  
+        select: {
+          id:
+            true,
+        },
+      });
+  
+    if (!assignment) {
+      throw new ForbiddenException(
+        'You are not authorized to act as a mentor.',
+      );
+    }
+  }  
+
+  /*
+  |--------------------------------------------------------------------------
+  | CITIZEN - CANCEL OWN REQUEST
+  |--------------------------------------------------------------------------
+  */
+  
+  async cancelMyRequest(
+    userId: string,
+    requestId: string,
+    dto: CancelMentorshipRequestDto,
+  ) {
+    const mentorshipRequest =
+      await this.prisma.mentorshipRequest.findFirst({
+        where: {
+          id:
+            requestId,
+  
+          requesterId:
+            userId,
+        },
+  
+        select: {
+          id:
+            true,
+  
+          status:
+            true,
+        },
+      });
+  
+    if (!mentorshipRequest) {
+      throw new NotFoundException(
+        'Mentorship request not found.',
+      );
+    }
+  
+    const cancellableStatuses: MentorshipRequestStatus[] = [
+      MentorshipRequestStatus.SUBMITTED,
+      MentorshipRequestStatus.MATCHED,
+    ];
+    
+    if (
+      !cancellableStatuses.includes(
+        mentorshipRequest.status,
+      )
+    ) {
+      throw new ConflictException(
+        'This mentorship request can no longer be cancelled.',
+      );
+    }
+  
+    const previousStatus =
+      mentorshipRequest.status;
+  
+    const now =
+      new Date();
+  
+    return this.prisma.$transaction(
+      async (tx) => {
+        const result =
+          await tx.mentorshipRequest.updateMany({
+            where: {
+              id:
+                requestId,
+  
+              requesterId:
+                userId,
+  
+              status:
+                previousStatus,
+            },
+  
+            data: {
+              status:
+                MentorshipRequestStatus.CANCELLED,
+  
+              cancelledAt:
+                now,
+            },
+          });
+  
+        if (
+          result.count !== 1
+        ) {
+          throw new ConflictException(
+            'The mentorship request has already been updated.',
+          );
+        }
+  
+        await tx.mentorshipRequestHistory.create({
+          data: {
+            requestId,
+  
+            actorId:
+              userId,
+  
+            action:
+              MentorshipHistoryAction.CANCELLED,
+  
+            fromStatus:
+              previousStatus,
+  
+            toStatus:
+              MentorshipRequestStatus.CANCELLED,
+  
+            comment:
+              dto.reason?.trim() ||
+              'Mentorship request cancelled by requester.',
+          },
+        });
+  
+        return tx.mentorshipRequest.findUnique({
+          where: {
+            id:
+              requestId,
+          },
+  
+          include: {
+            mentor: {
+              select: {
+                id:
+                  true,
+  
+                profile:
+                  true,
+              },
+            },
+  
+            history: {
+              orderBy: {
+                createdAt:
+                  'asc',
+              },
+            },
+          },
+        });
+      },
+    );
+  }
+  
+  /*
+  |--------------------------------------------------------------------------
+  | ADMIN - REJECT REQUEST
+  |--------------------------------------------------------------------------
+  */
+  
+  async rejectRequest(
+    actorId: string,
+    requestId: string,
+    dto: RejectMentorshipRequestDto,
+  ) {
+    await this.assertCanManageMentorship(
+      actorId,
+    );
+  
+    const mentorshipRequest =
+      await this.prisma.mentorshipRequest.findUnique({
+        where: {
+          id:
+            requestId,
+        },
+  
+        select: {
+          id:
+            true,
+  
+          status:
+            true,
+        },
+      });
+  
+    if (!mentorshipRequest) {
+      throw new NotFoundException(
+        'Mentorship request not found.',
+      );
+    }
+  
+    if (
+      mentorshipRequest.status !==
+      MentorshipRequestStatus.SUBMITTED
+    ) {
+      throw new ConflictException(
+        'Only submitted mentorship requests can be rejected.',
+      );
+    }
+  
+    return this.prisma.$transaction(
+      async (tx) => {
+        const result =
+          await tx.mentorshipRequest.updateMany({
+            where: {
+              id:
+                requestId,
+  
+              status:
+                MentorshipRequestStatus.SUBMITTED,
+            },
+  
+            data: {
+              status:
+                MentorshipRequestStatus.REJECTED,
+            },
+          });
+  
+        if (
+          result.count !== 1
+        ) {
+          throw new ConflictException(
+            'The mentorship request has already been processed.',
+          );
+        }
+  
+        await tx.mentorshipRequestHistory.create({
+          data: {
+            requestId,
+  
+            actorId,
+  
+            action:
+              MentorshipHistoryAction.REJECTED,
+  
+            fromStatus:
+              MentorshipRequestStatus.SUBMITTED,
+  
+            toStatus:
+              MentorshipRequestStatus.REJECTED,
+  
+            comment:
+              dto.reason.trim(),
+          },
+        });
+  
+        return tx.mentorshipRequest.findUnique({
+          where: {
+            id:
+              requestId,
+          },
+  
+          include: {
+            requester: {
+              select: {
+                id:
+                  true,
+  
+                profile:
+                  true,
+              },
+            },
+  
+            history: {
+              orderBy: {
+                createdAt:
+                  'asc',
+              },
+            },
+          },
+        });
+      },
+    );
   }
 
   /*
