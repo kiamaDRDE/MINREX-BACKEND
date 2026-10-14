@@ -14,6 +14,7 @@ import { MailModule } from './infrastructure/mail/mail.module.js';
 import { NetworkModule } from './modules/network/network.module.js';
 import { CensusModule } from './modules/census/census.module.js';
 import { AssistanceModule } from './modules/assistance/assistance.module.js';
+import { TalentModule } from './modules/talent/talent.module.js';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AssistanceModule } from './modules/assistance/assistance.module.js';
     NetworkModule,
     CensusModule,
     AssistanceModule,
+    TalentModule,
   ],
 
   providers: [
