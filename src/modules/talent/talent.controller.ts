@@ -26,7 +26,7 @@ import {
 } from './talent.service.js';
 
 @ApiTags('Talent')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 @UseGuards(AccessTokenGuard)
 @Controller('talents')
 export class TalentController {

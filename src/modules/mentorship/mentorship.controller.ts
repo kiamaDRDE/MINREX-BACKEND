@@ -32,7 +32,7 @@ import {
 } from './mentorship.service.js';
 
 @ApiTags('Mentorship')
-@ApiBearerAuth()
+@ApiBearerAuth('access-token')
 @UseGuards(AccessTokenGuard)
 @Controller('mentorship')
 export class MentorshipController {

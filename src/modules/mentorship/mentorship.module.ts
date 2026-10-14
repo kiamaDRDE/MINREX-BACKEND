@@ -14,6 +14,10 @@ import {
   MentorshipService,
 } from './mentorship.service.js';
 
+import {
+  MentorshipAdminController,
+} from './mentorship-admin.controller.js';
+
 @Module({
   imports: [
     AuthModule,
@@ -21,6 +25,7 @@ import {
 
   controllers: [
     MentorshipController,
+    MentorshipAdminController,
   ],
 
   providers: [
