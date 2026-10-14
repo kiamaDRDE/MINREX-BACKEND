@@ -416,7 +416,9 @@ export const ModelName = {
   CensusReview: 'CensusReview',
   CensusStatusHistory: 'CensusStatusHistory',
   AssistanceCase: 'AssistanceCase',
-  AssistanceCaseHistory: 'AssistanceCaseHistory'
+  AssistanceCaseHistory: 'AssistanceCaseHistory',
+  MentorshipRequest: 'MentorshipRequest',
+  MentorshipRequestHistory: 'MentorshipRequestHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -432,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory" | "mentorshipRequest" | "mentorshipRequestHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1916,6 +1918,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MentorshipRequest: {
+      payload: Prisma.$MentorshipRequestPayload<ExtArgs>
+      fields: Prisma.MentorshipRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MentorshipRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MentorshipRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.MentorshipRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MentorshipRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        findMany: {
+          args: Prisma.MentorshipRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>[]
+        }
+        create: {
+          args: Prisma.MentorshipRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        createMany: {
+          args: Prisma.MentorshipRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MentorshipRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.MentorshipRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        update: {
+          args: Prisma.MentorshipRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.MentorshipRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MentorshipRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MentorshipRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.MentorshipRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.MentorshipRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMentorshipRequest>
+        }
+        groupBy: {
+          args: Prisma.MentorshipRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorshipRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MentorshipRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorshipRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    MentorshipRequestHistory: {
+      payload: Prisma.$MentorshipRequestHistoryPayload<ExtArgs>
+      fields: Prisma.MentorshipRequestHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MentorshipRequestHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MentorshipRequestHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.MentorshipRequestHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MentorshipRequestHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.MentorshipRequestHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.MentorshipRequestHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.MentorshipRequestHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MentorshipRequestHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.MentorshipRequestHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        update: {
+          args: Prisma.MentorshipRequestHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.MentorshipRequestHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MentorshipRequestHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MentorshipRequestHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.MentorshipRequestHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MentorshipRequestHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.MentorshipRequestHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMentorshipRequestHistory>
+        }
+        groupBy: {
+          args: Prisma.MentorshipRequestHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorshipRequestHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MentorshipRequestHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MentorshipRequestHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2306,6 +2456,39 @@ export const AssistanceCaseHistoryScalarFieldEnum = {
 export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
 
 
+export const MentorshipRequestScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  requesterId: 'requesterId',
+  mentorId: 'mentorId',
+  topic: 'topic',
+  objectives: 'objectives',
+  status: 'status',
+  matchedAt: 'matchedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MentorshipRequestScalarFieldEnum = (typeof MentorshipRequestScalarFieldEnum)[keyof typeof MentorshipRequestScalarFieldEnum]
+
+
+export const MentorshipRequestHistoryScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  actorId: 'actorId',
+  action: 'action',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type MentorshipRequestHistoryScalarFieldEnum = (typeof MentorshipRequestHistoryScalarFieldEnum)[keyof typeof MentorshipRequestHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2680,6 +2863,34 @@ export type ListEnumAssistanceHistoryActionFieldRefInput<$PrismaModel> = FieldRe
 
 
 /**
+ * Reference to a field of type 'MentorshipRequestStatus'
+ */
+export type EnumMentorshipRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MentorshipRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MentorshipRequestStatus[]'
+ */
+export type ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MentorshipRequestStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MentorshipHistoryAction'
+ */
+export type EnumMentorshipHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MentorshipHistoryAction'>
+    
+
+
+/**
+ * Reference to a field of type 'MentorshipHistoryAction[]'
+ */
+export type ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MentorshipHistoryAction[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2863,6 +3074,8 @@ export type GlobalOmitConfig = {
   censusStatusHistory?: Prisma.CensusStatusHistoryOmit
   assistanceCase?: Prisma.AssistanceCaseOmit
   assistanceCaseHistory?: Prisma.AssistanceCaseHistoryOmit
+  mentorshipRequest?: Prisma.MentorshipRequestOmit
+  mentorshipRequestHistory?: Prisma.MentorshipRequestHistoryOmit
 }
 
 /* Types for Logging */

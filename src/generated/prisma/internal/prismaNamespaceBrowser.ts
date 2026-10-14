@@ -70,7 +70,9 @@ export const ModelName = {
   CensusReview: 'CensusReview',
   CensusStatusHistory: 'CensusStatusHistory',
   AssistanceCase: 'AssistanceCase',
-  AssistanceCaseHistory: 'AssistanceCaseHistory'
+  AssistanceCaseHistory: 'AssistanceCaseHistory',
+  MentorshipRequest: 'MentorshipRequest',
+  MentorshipRequestHistory: 'MentorshipRequestHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -438,6 +440,39 @@ export const AssistanceCaseHistoryScalarFieldEnum = {
 } as const
 
 export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
+
+
+export const MentorshipRequestScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  requesterId: 'requesterId',
+  mentorId: 'mentorId',
+  topic: 'topic',
+  objectives: 'objectives',
+  status: 'status',
+  matchedAt: 'matchedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MentorshipRequestScalarFieldEnum = (typeof MentorshipRequestScalarFieldEnum)[keyof typeof MentorshipRequestScalarFieldEnum]
+
+
+export const MentorshipRequestHistoryScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  actorId: 'actorId',
+  action: 'action',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type MentorshipRequestHistoryScalarFieldEnum = (typeof MentorshipRequestHistoryScalarFieldEnum)[keyof typeof MentorshipRequestHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

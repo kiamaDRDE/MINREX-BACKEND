@@ -657,6 +657,57 @@ export type EnumAssistanceCaseStatusNullableWithAggregatesFilter<$PrismaModel = 
   _max?: Prisma.NestedEnumAssistanceCaseStatusNullableFilter<$PrismaModel>
 }
 
+export type EnumMentorshipRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel> | $Enums.MentorshipRequestStatus
+}
+
+export type EnumMentorshipRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel>
+}
+
+export type EnumMentorshipHistoryActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipHistoryAction | Prisma.EnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel> | $Enums.MentorshipHistoryAction
+}
+
+export type EnumMentorshipRequestStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel> | $Enums.MentorshipRequestStatus | null
+}
+
+export type EnumMentorshipHistoryActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipHistoryAction | Prisma.EnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipHistoryActionWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipHistoryAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel>
+}
+
+export type EnumMentorshipRequestStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMentorshipRequestStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipRequestStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1307,6 +1358,57 @@ export type NestedEnumAssistanceCaseStatusNullableWithAggregatesFilter<$PrismaMo
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAssistanceCaseStatusNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAssistanceCaseStatusNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumMentorshipRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel> | $Enums.MentorshipRequestStatus
+}
+
+export type NestedEnumMentorshipRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipRequestStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumMentorshipHistoryActionFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipHistoryAction | Prisma.EnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel> | $Enums.MentorshipHistoryAction
+}
+
+export type NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel> | $Enums.MentorshipRequestStatus | null
+}
+
+export type NestedEnumMentorshipHistoryActionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipHistoryAction | Prisma.EnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  in?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MentorshipHistoryAction[] | Prisma.ListEnumMentorshipHistoryActionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMentorshipHistoryActionWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipHistoryAction
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipHistoryActionFilter<$PrismaModel>
+}
+
+export type NestedEnumMentorshipRequestStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MentorshipRequestStatus | Prisma.EnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MentorshipRequestStatus[] | Prisma.ListEnumMentorshipRequestStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMentorshipRequestStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.MentorshipRequestStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMentorshipRequestStatusNullableFilter<$PrismaModel>
 }
 
 

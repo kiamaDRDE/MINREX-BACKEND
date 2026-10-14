@@ -170,6 +170,24 @@ enum CensusReviewDecision {
   REJECTED
 }
 
+enum MentorshipRequestStatus {
+  SUBMITTED
+  MATCHED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+enum MentorshipHistoryAction {
+  CREATED
+  MATCHED
+  STARTED
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
 /**
  * |--------------------------------------------------------------------------
  * | GEOGRAPHY
@@ -378,6 +396,10 @@ model User {
   assistanceCasesCreated  AssistanceCase[]        @relation("AssistanceRequester")
   assistanceCasesAssigned AssistanceCase[]        @relation("AssistanceAssignedAgent")
   assistanceHistory       AssistanceCaseHistory[] @relation("AssistanceHistoryActor")
+
+  mentorshipRequestsCreated  MentorshipRequest[]        @relation("MentorshipRequester")
+  mentorshipRequestsMentored MentorshipRequest[]        @relation("MentorshipMentor")
+  mentorshipHistory          MentorshipRequestHistory[] @relation("MentorshipHistoryActor")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -921,4 +943,67 @@ model AssistanceCaseHistory {
   @@index([action])
   @@index([createdAt])
   @@map("assistance_case_history")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | TALENT & MENTORSHIP
+ * |--------------------------------------------------------------------------
+ */
+
+model MentorshipRequest {
+  id        String @id @default(uuid()) @db.Uuid
+  reference String @unique @db.VarChar(40)
+
+  requesterId String @map("requester_id") @db.Uuid
+  requester   User   @relation("MentorshipRequester", fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  mentorId String? @map("mentor_id") @db.Uuid
+  mentor   User?   @relation("MentorshipMentor", fields: [mentorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  topic      String @db.VarChar(150)
+  objectives String @db.Text
+
+  status MentorshipRequestStatus @default(SUBMITTED)
+
+  matchedAt   DateTime? @map("matched_at") @db.Timestamptz(3)
+  startedAt   DateTime? @map("started_at") @db.Timestamptz(3)
+  completedAt DateTime? @map("completed_at") @db.Timestamptz(3)
+  cancelledAt DateTime? @map("cancelled_at") @db.Timestamptz(3)
+
+  history MentorshipRequestHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([requesterId])
+  @@index([mentorId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("mentorship_requests")
+}
+
+model MentorshipRequestHistory {
+  id String @id @default(uuid()) @db.Uuid
+
+  requestId String            @map("request_id") @db.Uuid
+  request   MentorshipRequest @relation(fields: [requestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  actorId String? @map("actor_id") @db.Uuid
+  actor   User?   @relation("MentorshipHistoryActor", fields: [actorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  action MentorshipHistoryAction
+
+  fromStatus MentorshipRequestStatus? @map("from_status")
+  toStatus   MentorshipRequestStatus? @map("to_status")
+
+  comment String? @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([requestId])
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("mentorship_request_history")
 }

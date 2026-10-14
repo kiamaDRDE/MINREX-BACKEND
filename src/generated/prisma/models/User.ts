@@ -241,6 +241,9 @@ export type UserWhereInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseListRelationFilter
   assistanceCasesAssigned?: Prisma.AssistanceCaseListRelationFilter
   assistanceHistory?: Prisma.AssistanceCaseHistoryListRelationFilter
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestListRelationFilter
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestListRelationFilter
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -266,6 +269,9 @@ export type UserOrderByWithRelationInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseOrderByRelationAggregateInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseOrderByRelationAggregateInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryOrderByRelationAggregateInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestOrderByRelationAggregateInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestOrderByRelationAggregateInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -294,6 +300,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   assistanceCasesCreated?: Prisma.AssistanceCaseListRelationFilter
   assistanceCasesAssigned?: Prisma.AssistanceCaseListRelationFilter
   assistanceHistory?: Prisma.AssistanceCaseHistoryListRelationFilter
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestListRelationFilter
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestListRelationFilter
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -353,6 +362,9 @@ export type UserCreateInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -378,6 +390,9 @@ export type UserUncheckedCreateInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserUpdateInput = {
@@ -403,6 +418,9 @@ export type UserUpdateInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -428,6 +446,9 @@ export type UserUncheckedUpdateInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -688,6 +709,52 @@ export type UserUpdateOneWithoutAssistanceHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssistanceHistoryInput, Prisma.UserUpdateWithoutAssistanceHistoryInput>, Prisma.UserUncheckedUpdateWithoutAssistanceHistoryInput>
 }
 
+export type UserCreateNestedOneWithoutMentorshipRequestsCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipRequestsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutMentorshipRequestsMentoredInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsMentoredInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipRequestsMentoredInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMentorshipRequestsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipRequestsCreatedInput
+  upsert?: Prisma.UserUpsertWithoutMentorshipRequestsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMentorshipRequestsCreatedInput, Prisma.UserUpdateWithoutMentorshipRequestsCreatedInput>, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput>
+}
+
+export type UserUpdateOneWithoutMentorshipRequestsMentoredNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsMentoredInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipRequestsMentoredInput
+  upsert?: Prisma.UserUpsertWithoutMentorshipRequestsMentoredInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMentorshipRequestsMentoredInput, Prisma.UserUpdateWithoutMentorshipRequestsMentoredInput>, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput>
+}
+
+export type UserCreateNestedOneWithoutMentorshipHistoryInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipHistoryInput, Prisma.UserUncheckedCreateWithoutMentorshipHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipHistoryInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutMentorshipHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMentorshipHistoryInput, Prisma.UserUncheckedCreateWithoutMentorshipHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMentorshipHistoryInput
+  upsert?: Prisma.UserUpsertWithoutMentorshipHistoryInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMentorshipHistoryInput, Prisma.UserUpdateWithoutMentorshipHistoryInput>, Prisma.UserUncheckedUpdateWithoutMentorshipHistoryInput>
+}
+
 export type UserCreateWithoutProfileInput = {
   id?: string
   email: string
@@ -710,6 +777,9 @@ export type UserCreateWithoutProfileInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -734,6 +804,9 @@ export type UserUncheckedCreateWithoutProfileInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -774,6 +847,9 @@ export type UserUpdateWithoutProfileInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -798,6 +874,9 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutRoleAssignmentsInput = {
@@ -822,6 +901,9 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -846,6 +928,9 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -886,6 +971,9 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -910,6 +998,9 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutPostAssignmentsInput = {
@@ -934,6 +1025,9 @@ export type UserCreateWithoutPostAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutPostAssignmentsInput = {
@@ -958,6 +1052,9 @@ export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutPostAssignmentsInput = {
@@ -998,6 +1095,9 @@ export type UserUpdateWithoutPostAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
@@ -1022,6 +1122,9 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutVerificationTokensInput = {
@@ -1046,6 +1149,9 @@ export type UserCreateWithoutVerificationTokensInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutVerificationTokensInput = {
@@ -1070,6 +1176,9 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutVerificationTokensInput = {
@@ -1110,6 +1219,9 @@ export type UserUpdateWithoutVerificationTokensInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerificationTokensInput = {
@@ -1134,6 +1246,9 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAuthSessionsInput = {
@@ -1158,6 +1273,9 @@ export type UserCreateWithoutAuthSessionsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAuthSessionsInput = {
@@ -1182,6 +1300,9 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAuthSessionsInput = {
@@ -1222,6 +1343,9 @@ export type UserUpdateWithoutAuthSessionsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthSessionsInput = {
@@ -1246,6 +1370,9 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCensusRecordsInput = {
@@ -1270,6 +1397,9 @@ export type UserCreateWithoutCensusRecordsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCensusRecordsInput = {
@@ -1294,6 +1424,9 @@ export type UserUncheckedCreateWithoutCensusRecordsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCensusRecordsInput = {
@@ -1334,6 +1467,9 @@ export type UserUpdateWithoutCensusRecordsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusRecordsInput = {
@@ -1358,6 +1494,9 @@ export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCensusReviewsInput = {
@@ -1382,6 +1521,9 @@ export type UserCreateWithoutCensusReviewsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCensusReviewsInput = {
@@ -1406,6 +1548,9 @@ export type UserUncheckedCreateWithoutCensusReviewsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCensusReviewsInput = {
@@ -1446,6 +1591,9 @@ export type UserUpdateWithoutCensusReviewsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusReviewsInput = {
@@ -1470,6 +1618,9 @@ export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutCensusStatusChangesInput = {
@@ -1494,6 +1645,9 @@ export type UserCreateWithoutCensusStatusChangesInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
@@ -1518,6 +1672,9 @@ export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutCensusStatusChangesInput = {
@@ -1558,6 +1715,9 @@ export type UserUpdateWithoutCensusStatusChangesInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
@@ -1582,6 +1742,9 @@ export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAssistanceCasesCreatedInput = {
@@ -1606,6 +1769,9 @@ export type UserCreateWithoutAssistanceCasesCreatedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
@@ -1630,6 +1796,9 @@ export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceCasesCreatedInput = {
@@ -1659,6 +1828,9 @@ export type UserCreateWithoutAssistanceCasesAssignedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
@@ -1683,6 +1855,9 @@ export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceCasesAssignedInput = {
@@ -1723,6 +1898,9 @@ export type UserUpdateWithoutAssistanceCasesCreatedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
@@ -1747,6 +1925,9 @@ export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutAssistanceCasesAssignedInput = {
@@ -1782,6 +1963,9 @@ export type UserUpdateWithoutAssistanceCasesAssignedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
@@ -1806,6 +1990,9 @@ export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAssistanceHistoryInput = {
@@ -1830,6 +2017,9 @@ export type UserCreateWithoutAssistanceHistoryInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
@@ -1854,6 +2044,9 @@ export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceHistoryInput = {
@@ -1894,6 +2087,9 @@ export type UserUpdateWithoutAssistanceHistoryInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
@@ -1918,6 +2114,381 @@ export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutMentorshipRequestsCreatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutMentorshipRequestsCreatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutMentorshipRequestsCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsCreatedInput>
+}
+
+export type UserCreateWithoutMentorshipRequestsMentoredInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutMentorshipRequestsMentoredInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutMentorshipRequestsMentoredInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsMentoredInput>
+}
+
+export type UserUpsertWithoutMentorshipRequestsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMentorshipRequestsCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipRequestsCreatedInput, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput>
+}
+
+export type UserUpdateWithoutMentorshipRequestsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserUpsertWithoutMentorshipRequestsMentoredInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedCreateWithoutMentorshipRequestsMentoredInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMentorshipRequestsMentoredInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipRequestsMentoredInput, Prisma.UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput>
+}
+
+export type UserUpdateWithoutMentorshipRequestsMentoredInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutMentorshipHistoryInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+}
+
+export type UserUncheckedCreateWithoutMentorshipHistoryInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+}
+
+export type UserCreateOrConnectWithoutMentorshipHistoryInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipHistoryInput, Prisma.UserUncheckedCreateWithoutMentorshipHistoryInput>
+}
+
+export type UserUpsertWithoutMentorshipHistoryInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipHistoryInput, Prisma.UserUncheckedUpdateWithoutMentorshipHistoryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMentorshipHistoryInput, Prisma.UserUncheckedCreateWithoutMentorshipHistoryInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMentorshipHistoryInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMentorshipHistoryInput, Prisma.UserUncheckedUpdateWithoutMentorshipHistoryInput>
+}
+
+export type UserUpdateWithoutMentorshipHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMentorshipHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
 }
 
 
@@ -1936,6 +2507,9 @@ export type UserCountOutputType = {
   assistanceCasesCreated: number
   assistanceCasesAssigned: number
   assistanceHistory: number
+  mentorshipRequestsCreated: number
+  mentorshipRequestsMentored: number
+  mentorshipHistory: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1949,6 +2523,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   assistanceCasesCreated?: boolean | UserCountOutputTypeCountAssistanceCasesCreatedArgs
   assistanceCasesAssigned?: boolean | UserCountOutputTypeCountAssistanceCasesAssignedArgs
   assistanceHistory?: boolean | UserCountOutputTypeCountAssistanceHistoryArgs
+  mentorshipRequestsCreated?: boolean | UserCountOutputTypeCountMentorshipRequestsCreatedArgs
+  mentorshipRequestsMentored?: boolean | UserCountOutputTypeCountMentorshipRequestsMentoredArgs
+  mentorshipHistory?: boolean | UserCountOutputTypeCountMentorshipHistoryArgs
 }
 
 /**
@@ -2031,6 +2608,27 @@ export type UserCountOutputTypeCountAssistanceHistoryArgs<ExtArgs extends runtim
   where?: Prisma.AssistanceCaseHistoryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMentorshipRequestsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MentorshipRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMentorshipRequestsMentoredArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MentorshipRequestWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMentorshipHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MentorshipRequestHistoryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2055,6 +2653,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   assistanceCasesCreated?: boolean | Prisma.User$assistanceCasesCreatedArgs<ExtArgs>
   assistanceCasesAssigned?: boolean | Prisma.User$assistanceCasesAssignedArgs<ExtArgs>
   assistanceHistory?: boolean | Prisma.User$assistanceHistoryArgs<ExtArgs>
+  mentorshipRequestsCreated?: boolean | Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>
+  mentorshipRequestsMentored?: boolean | Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>
+  mentorshipHistory?: boolean | Prisma.User$mentorshipHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2113,6 +2714,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   assistanceCasesCreated?: boolean | Prisma.User$assistanceCasesCreatedArgs<ExtArgs>
   assistanceCasesAssigned?: boolean | Prisma.User$assistanceCasesAssignedArgs<ExtArgs>
   assistanceHistory?: boolean | Prisma.User$assistanceHistoryArgs<ExtArgs>
+  mentorshipRequestsCreated?: boolean | Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>
+  mentorshipRequestsMentored?: boolean | Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>
+  mentorshipHistory?: boolean | Prisma.User$mentorshipHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2132,6 +2736,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     assistanceCasesCreated: Prisma.$AssistanceCasePayload<ExtArgs>[]
     assistanceCasesAssigned: Prisma.$AssistanceCasePayload<ExtArgs>[]
     assistanceHistory: Prisma.$AssistanceCaseHistoryPayload<ExtArgs>[]
+    mentorshipRequestsCreated: Prisma.$MentorshipRequestPayload<ExtArgs>[]
+    mentorshipRequestsMentored: Prisma.$MentorshipRequestPayload<ExtArgs>[]
+    mentorshipHistory: Prisma.$MentorshipRequestHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2550,6 +3157,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   assistanceCasesCreated<T extends Prisma.User$assistanceCasesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assistanceCasesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assistanceCasesAssigned<T extends Prisma.User$assistanceCasesAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assistanceCasesAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assistanceHistory<T extends Prisma.User$assistanceHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assistanceHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCaseHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mentorshipRequestsCreated<T extends Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mentorshipRequestsMentored<T extends Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mentorshipHistory<T extends Prisma.User$mentorshipHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3239,6 +3849,78 @@ export type User$assistanceHistoryArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AssistanceCaseHistoryScalarFieldEnum | Prisma.AssistanceCaseHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.mentorshipRequestsCreated
+ */
+export type User$mentorshipRequestsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MentorshipRequest
+   */
+  select?: Prisma.MentorshipRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MentorshipRequest
+   */
+  omit?: Prisma.MentorshipRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MentorshipRequestInclude<ExtArgs> | null
+  where?: Prisma.MentorshipRequestWhereInput
+  orderBy?: Prisma.MentorshipRequestOrderByWithRelationInput | Prisma.MentorshipRequestOrderByWithRelationInput[]
+  cursor?: Prisma.MentorshipRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MentorshipRequestScalarFieldEnum | Prisma.MentorshipRequestScalarFieldEnum[]
+}
+
+/**
+ * User.mentorshipRequestsMentored
+ */
+export type User$mentorshipRequestsMentoredArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MentorshipRequest
+   */
+  select?: Prisma.MentorshipRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MentorshipRequest
+   */
+  omit?: Prisma.MentorshipRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MentorshipRequestInclude<ExtArgs> | null
+  where?: Prisma.MentorshipRequestWhereInput
+  orderBy?: Prisma.MentorshipRequestOrderByWithRelationInput | Prisma.MentorshipRequestOrderByWithRelationInput[]
+  cursor?: Prisma.MentorshipRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MentorshipRequestScalarFieldEnum | Prisma.MentorshipRequestScalarFieldEnum[]
+}
+
+/**
+ * User.mentorshipHistory
+ */
+export type User$mentorshipHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MentorshipRequestHistory
+   */
+  select?: Prisma.MentorshipRequestHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MentorshipRequestHistory
+   */
+  omit?: Prisma.MentorshipRequestHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MentorshipRequestHistoryInclude<ExtArgs> | null
+  where?: Prisma.MentorshipRequestHistoryWhereInput
+  orderBy?: Prisma.MentorshipRequestHistoryOrderByWithRelationInput | Prisma.MentorshipRequestHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.MentorshipRequestHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MentorshipRequestHistoryScalarFieldEnum | Prisma.MentorshipRequestHistoryScalarFieldEnum[]
 }
 
 /**

@@ -220,3 +220,27 @@ export const CensusReviewDecision = {
 } as const
 
 export type CensusReviewDecision = (typeof CensusReviewDecision)[keyof typeof CensusReviewDecision]
+
+
+export const MentorshipRequestStatus = {
+  SUBMITTED: 'SUBMITTED',
+  MATCHED: 'MATCHED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type MentorshipRequestStatus = (typeof MentorshipRequestStatus)[keyof typeof MentorshipRequestStatus]
+
+
+export const MentorshipHistoryAction = {
+  CREATED: 'CREATED',
+  MATCHED: 'MATCHED',
+  STARTED: 'STARTED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type MentorshipHistoryAction = (typeof MentorshipHistoryAction)[keyof typeof MentorshipHistoryAction]

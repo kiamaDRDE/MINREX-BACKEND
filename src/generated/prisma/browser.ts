@@ -117,3 +117,13 @@ export type AssistanceCase = Prisma.AssistanceCaseModel
  * 
  */
 export type AssistanceCaseHistory = Prisma.AssistanceCaseHistoryModel
+/**
+ * Model MentorshipRequest
+ * 
+ */
+export type MentorshipRequest = Prisma.MentorshipRequestModel
+/**
+ * Model MentorshipRequestHistory
+ * 
+ */
+export type MentorshipRequestHistory = Prisma.MentorshipRequestHistoryModel
