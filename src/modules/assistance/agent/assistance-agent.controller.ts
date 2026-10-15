@@ -65,6 +65,10 @@ import {
   ResolveAssistanceCaseDto,
 } from './dto/resolve-assistance-case.dto.js';
 
+import {
+  PERMISSIONS,
+} from '../../identity/authorization/constants/permissions.constants.js';
+
 type AuthenticatedRequest =
   Request & {
     auth?: {
@@ -94,7 +98,7 @@ export class AssistanceAgentController {
 
   @Get()
   @RequirePermissions(
-    'assistance.cases.read',
+    PERMISSIONS.ASSISTANCE.CASES_READ,
   )
   @AuthorizationScope({
     postParam:
@@ -127,7 +131,7 @@ export class AssistanceAgentController {
     ':caseId',
   )
   @RequirePermissions(
-    'assistance.cases.read',
+    PERMISSIONS.ASSISTANCE.CASES_READ,
   )
   @AuthorizationScope({
     postParam:
@@ -158,7 +162,7 @@ export class AssistanceAgentController {
     ':caseId/qualify',
   )
   @RequirePermissions(
-    'assistance.cases.update',
+    PERMISSIONS.ASSISTANCE.CASES_UPDATE,
   )
   @AuthorizationScope({
     postParam:
@@ -199,7 +203,7 @@ export class AssistanceAgentController {
     ':caseId/assign',
   )
   @RequirePermissions(
-    'assistance.cases.assign',
+    PERMISSIONS.ASSISTANCE.CASES_ASSIGN,
   )
   @AuthorizationScope({
     postParam:
@@ -240,7 +244,7 @@ export class AssistanceAgentController {
     ':caseId/start',
   )
   @RequirePermissions(
-    'assistance.cases.update',
+    PERMISSIONS.ASSISTANCE.CASES_UPDATE,
   )
   @AuthorizationScope({
     postParam:
@@ -281,7 +285,7 @@ export class AssistanceAgentController {
     ':caseId/resolve',
   )
   @RequirePermissions(
-    'assistance.cases.update',
+    PERMISSIONS.ASSISTANCE.CASES_UPDATE,
   )
   @AuthorizationScope({
     postParam:
@@ -322,7 +326,7 @@ export class AssistanceAgentController {
     ':caseId/close',
   )
   @RequirePermissions(
-    'assistance.cases.close',
+    PERMISSIONS.ASSISTANCE.CASES_CLOSE,
   )
   @AuthorizationScope({
     postParam:
@@ -363,7 +367,7 @@ export class AssistanceAgentController {
     ':caseId/reject',
   )
   @RequirePermissions(
-    'assistance.cases.update',
+    PERMISSIONS.ASSISTANCE.CASES_UPDATE,
   )
   @AuthorizationScope({
     postParam:
