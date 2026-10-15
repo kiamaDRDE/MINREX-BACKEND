@@ -108,15 +108,18 @@ export const PERMISSIONS = {
   TALENT: {
     PROFILES_MANAGE_SELF:
       'talent.profiles.manage.self',
-
+  
     PROFILES_READ:
       'talent.profiles.read',
-
+  
     MENTORSHIP_REQUEST:
       'talent.mentorship.request',
-
+  
     MENTORSHIP_MANAGE:
       'talent.mentorship.manage',
+  
+    MENTORSHIP_HANDLE:
+      'talent.mentorship.handle',
   },
 } as const;
 
@@ -177,15 +180,6 @@ export const SYSTEM_PERMISSIONS:
     | Identity
     |--------------------------------------------------------------------------
     */
-
-    {
-      code: PERMISSIONS.NETWORK.MANAGE,
-
-      name: 'Manage diplomatic network',
-      
-      description:
-        'Allows management of countries, diplomatic post types, diplomatic posts, services and geographic coverage.',
-    },
 
     {
       code: PERMISSIONS.IDENTITY.USERS_READ,
@@ -253,6 +247,15 @@ export const SYSTEM_PERMISSIONS:
     | Diplomatic Network
     |--------------------------------------------------------------------------
     */
+   
+    {
+      code: PERMISSIONS.NETWORK.MANAGE,
+
+      name: 'Manage diplomatic network',
+      
+      description:
+        'Allows management of countries, diplomatic post types, diplomatic posts, services and geographic coverage.',
+    },
 
     {
       code: PERMISSIONS.NETWORK.POSTS_READ,
@@ -443,5 +446,17 @@ export const SYSTEM_PERMISSIONS:
 
       description:
         'Allows authorized mentors or MINREX personnel to manage mentorship activities.',
+    },
+
+    {
+      code:
+        PERMISSIONS.TALENT
+          .MENTORSHIP_HANDLE,
+    
+      name:
+        'Handle assigned mentorship',
+    
+      description:
+        'Allows an authorized mentor to handle mentorship requests assigned to them.',
     },
   ];

@@ -22,9 +22,14 @@ import {
   MentorshipMentorController,
 } from './mentorship-mentor.controller.js';
 
+import {
+  AuthorizationModule,
+} from '../identity/authorization/authorization.module.js';
+
 @Module({
   imports: [
     AuthModule,
+    AuthorizationModule,
   ],
 
   controllers: [

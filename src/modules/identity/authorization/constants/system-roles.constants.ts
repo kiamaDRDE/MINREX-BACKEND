@@ -368,39 +368,39 @@ export const SYSTEM_ROLES:
     {
       code:
         SYSTEM_ROLE_CODES.MENTOR_EXPERT,
-
+    
       name:
         'Mentor / Expert',
-
+    
       description:
         'Diaspora mentor or expert participating in talent and mentorship activities.',
-
+    
       scope:
         RoleScope.GLOBAL,
-
+    
       isSystem:
         true,
-
+    
       permissions: [
         /*
          * Own talent profile
          */
-
+    
         PERMISSIONS.TALENT
           .PROFILES_MANAGE_SELF,
-
+    
         /*
          * Talent discovery
          */
-
+    
         PERMISSIONS.TALENT.PROFILES_READ,
-
+    
         /*
          * Mentorship
          */
-
+    
         PERMISSIONS.TALENT
-          .MENTORSHIP_MANAGE,
+          .MENTORSHIP_HANDLE,
       ],
     },
   ];

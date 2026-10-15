@@ -26,9 +26,27 @@ import {
   MentorshipService,
 } from './mentorship.service.js';
 
+import {
+  PERMISSIONS,
+} from '../identity/authorization/constants/permissions.constants.js';
+
+import {
+  RequirePermissions,
+} from '../identity/authorization/decorators/require-permissions.decorator.js';
+
+import {
+  PermissionsGuard,
+} from '../identity/authorization/guards/permissions.guard.js';
+
 @ApiTags('Mentorship - Mentor')
 @ApiBearerAuth('access-token')
-@UseGuards(AccessTokenGuard)
+@RequirePermissions(
+  PERMISSIONS.TALENT.MENTORSHIP_HANDLE,
+)
+@UseGuards(
+  AccessTokenGuard,
+  PermissionsGuard,
+)
 @Controller('mentorship/mentor')
 export class MentorshipMentorController {
   constructor(

@@ -40,9 +40,27 @@ import {
   RejectMentorshipRequestDto,
 } from './dto/reject-mentorship-request.dto.js';
 
+import {
+  PERMISSIONS,
+} from '../identity/authorization/constants/permissions.constants.js';
+
+import {
+  RequirePermissions,
+} from '../identity/authorization/decorators/require-permissions.decorator.js';
+
+import {
+  PermissionsGuard,
+} from '../identity/authorization/guards/permissions.guard.js';
+
 @ApiTags('Mentorship - Administration')
 @ApiBearerAuth('access-token')
-@UseGuards(AccessTokenGuard)
+@RequirePermissions(
+  PERMISSIONS.TALENT.MENTORSHIP_MANAGE,
+)
+@UseGuards(
+  AccessTokenGuard,
+  PermissionsGuard,
+)
 @Controller('mentorship/admin')
 export class MentorshipAdminController {
   constructor(
@@ -63,7 +81,6 @@ export class MentorshipAdminController {
     query: ListMentorshipRequestsQueryDto,
   ) {
     return this.mentorshipService.findAdminRequests(
-      request.auth.userId,
       query,
     );
   }

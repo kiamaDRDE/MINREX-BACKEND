@@ -1,6 +1,5 @@
 import {
   ConflictException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -316,13 +315,8 @@ export class MentorshipService {
   */
 
   async findAdminRequests(
-    actorId: string,
     query: ListMentorshipRequestsQueryDto,
   ) {
-    await this.assertCanManageMentorship(
-      actorId,
-    );
-
     return this.prisma.mentorshipRequest.findMany({
       where: query.status
         ? {
@@ -436,10 +430,6 @@ export class MentorshipService {
     requestId: string,
     dto: MatchMentorshipRequestDto,
   ) {
-    await this.assertCanManageMentorship(
-      actorId,
-    );
-
     const request =
       await this.prisma.mentorshipRequest.findUnique({
         where: {
@@ -581,65 +571,6 @@ export class MentorshipService {
     );
   }
 
-  /*
-  |--------------------------------------------------------------------------
-  | PRIVATE - CHECK ADMIN ACCESS
-  |--------------------------------------------------------------------------
-  */
-
-  private async assertCanManageMentorship(
-    userId: string,
-  ): Promise<void> {
-    const now =
-      new Date();
-
-    const assignment =
-      await this.prisma.userRoleAssignment.findFirst({
-        where: {
-          userId,
-
-          isActive:
-            true,
-
-          OR: [
-            {
-              expiresAt:
-                null,
-            },
-            {
-              expiresAt: {
-                gt:
-                  now,
-              },
-            },
-          ],
-
-          role: {
-            isActive:
-              true,
-
-            code: {
-              in: [
-                'PLATFORM_ADMIN',
-                'MINREX_CENTRAL_AGENT',
-              ],
-            },
-          },
-        },
-
-        select: {
-          id:
-            true,
-        },
-      });
-
-    if (!assignment) {
-      throw new ForbiddenException(
-        'You are not authorized to manage mentorship requests.',
-      );
-    }
-  }
-
 /*
 |--------------------------------------------------------------------------
 | MENTOR - LIST ASSIGNED REQUESTS
@@ -649,10 +580,6 @@ export class MentorshipService {
 async findMentorRequests(
   mentorId: string,
 ) {
-  await this.assertCanActAsMentor(
-    mentorId,
-  );
-
   return this.prisma.mentorshipRequest.findMany({
     where: {
       mentorId,
@@ -733,10 +660,6 @@ async findMentorRequest(
   mentorId: string,
   requestId: string,
 ) {
-  await this.assertCanActAsMentor(
-    mentorId,
-  );
-
   const mentorshipRequest =
     await this.prisma.mentorshipRequest.findFirst({
       where: {
@@ -785,10 +708,6 @@ async startMentorship(
   mentorId: string,
   requestId: string,
 ) {
-  await this.assertCanActAsMentor(
-    mentorId,
-  );
-
   const mentorshipRequest =
     await this.prisma.mentorshipRequest.findFirst({
       where: {
@@ -926,10 +845,6 @@ async startMentorship(
     mentorId: string,
     requestId: string,
   ) {
-    await this.assertCanActAsMentor(
-      mentorId,
-    );
-  
     const mentorshipRequest =
       await this.prisma.mentorshipRequest.findFirst({
         where: {
@@ -1056,55 +971,6 @@ async startMentorship(
       },
     );
   }
-
-  private async assertCanActAsMentor(
-    userId: string,
-  ): Promise<void> {
-    const now =
-      new Date();
-  
-    const assignment =
-      await this.prisma.userRoleAssignment.findFirst({
-        where: {
-          userId,
-  
-          isActive:
-            true,
-  
-          OR: [
-            {
-              expiresAt:
-                null,
-            },
-            {
-              expiresAt: {
-                gt:
-                  now,
-              },
-            },
-          ],
-  
-          role: {
-            isActive:
-              true,
-  
-            code:
-              'MENTOR_EXPERT',
-          },
-        },
-  
-        select: {
-          id:
-            true,
-        },
-      });
-  
-    if (!assignment) {
-      throw new ForbiddenException(
-        'You are not authorized to act as a mentor.',
-      );
-    }
-  }  
 
   /*
   |--------------------------------------------------------------------------
@@ -1257,10 +1123,6 @@ async startMentorship(
     requestId: string,
     dto: RejectMentorshipRequestDto,
   ) {
-    await this.assertCanManageMentorship(
-      actorId,
-    );
-  
     const mentorshipRequest =
       await this.prisma.mentorshipRequest.findUnique({
         where: {
