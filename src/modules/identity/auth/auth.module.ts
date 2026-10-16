@@ -31,6 +31,10 @@ import {
   AccessTokenGuard,
 } from './guards/access-token.guard.js';
 
+import {
+  AuthRateLimitGuard,
+} from './guards/auth-rate-limit.guard.js';
+
 @Module({
   imports: [
     ConfigModule,
@@ -67,6 +71,7 @@ import {
   providers: [
     AuthService,
     AccessTokenGuard,
+    AuthRateLimitGuard,
   ],
 
   exports: [

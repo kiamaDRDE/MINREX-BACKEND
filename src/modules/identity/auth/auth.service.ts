@@ -177,102 +177,83 @@ export class AuthService {
 
   async verifyEmail(dto: VerifyEmailDto) {
     const tokenHash = this.hashToken(dto.token);
-
-    const now = new Date();
-
-    /*
-     * Search for a valid and unused verification token.
-     */
-    const verificationToken = await this.prisma.verificationToken.findFirst({
-      where: {
-        tokenHash,
-
-        type: VerificationTokenType.EMAIL_VERIFICATION,
-
-        consumedAt: null,
-
-        expiresAt: {
-          gt: now,
-        },
-      },
-
-      select: {
-        id: true,
-        userId: true,
-
-        user: {
-          select: {
-            status: true,
-            emailVerifiedAt: true,
+  
+    await this.prisma.$transaction(async (tx) => {
+      const now = new Date();
+  
+      const verificationToken = await tx.verificationToken.findFirst({
+        where: {
+          tokenHash,
+          type: VerificationTokenType.EMAIL_VERIFICATION,
+          consumedAt: null,
+          expiresAt: {
+            gt: now,
           },
         },
-      },
-    });
-
-    if (!verificationToken) {
-      throw new BadRequestException(
-        'Verification token is invalid or has expired.',
-      );
-    }
-
-    /*
-     * Defensive check.
-     */
-    if (verificationToken.user.emailVerifiedAt) {
-      return {
-        verified: true,
-        message: 'Email address is already verified.',
-      };
-    }
-
-    /*
-     * Verification is performed atomically.
-     *
-     * - consume current token
-     * - activate user
-     * - invalidate other unused tokens
-     */
-    await this.prisma.$transaction([
-      this.prisma.verificationToken.update({
+        select: {
+          id: true,
+          userId: true,
+        },
+      });
+  
+      if (!verificationToken) {
+        throw new BadRequestException(
+          'Verification token is invalid or has expired.',
+        );
+      }
+  
+      // Only one concurrent request can consume this token.
+      const consumed = await tx.verificationToken.updateMany({
         where: {
           id: verificationToken.id,
+          consumedAt: null,
+          expiresAt: {
+            gt: new Date(),
+          },
         },
-
         data: {
           consumedAt: now,
         },
-      }),
-
-      this.prisma.user.update({
+      });
+  
+      if (consumed.count !== 1) {
+        throw new BadRequestException(
+          'Verification token is invalid or has expired.',
+        );
+      }
+  
+      // Never reactivate a suspended or disabled account.
+      const activated = await tx.user.updateMany({
         where: {
           id: verificationToken.userId,
+          status: UserStatus.PENDING_VERIFICATION,
+          emailVerifiedAt: null,
         },
-
         data: {
           emailVerifiedAt: now,
           status: UserStatus.ACTIVE,
         },
-      }),
-
-      this.prisma.verificationToken.updateMany({
+      });
+  
+      if (activated.count !== 1) {
+        // Throwing also rolls back token consumption.
+        throw new BadRequestException(
+          'Email verification cannot be completed for this account.',
+        );
+      }
+  
+      await tx.verificationToken.updateMany({
         where: {
           userId: verificationToken.userId,
-
           type: VerificationTokenType.EMAIL_VERIFICATION,
-
           consumedAt: null,
-
-          id: {
-            not: verificationToken.id,
-          },
         },
-
         data: {
           consumedAt: now,
         },
-      }),
-    ]);
-
+      });
+    });
+  
     return {
       verified: true,
       message: 'Email address verified successfully.',

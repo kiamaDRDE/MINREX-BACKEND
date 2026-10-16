@@ -59,11 +59,18 @@ import type {
   AuthenticatedRequest,
 } from './interfaces/authenticated-request.interface.js';
 
+import {
+  AuthRateLimitGuard,
+} from './guards/auth-rate-limit.guard.js';
+
 @ApiTags(
   'Authentication',
 )
 @Controller(
   'auth',
+)
+@UseGuards(
+  AuthRateLimitGuard,
 )
 export class AuthController {
   constructor(
