@@ -43,19 +43,31 @@ import {
       imports: [
         ConfigModule,
       ],
-
+    
       inject: [
         ConfigService,
       ],
-
+    
       useFactory: (
-        configService:
-          ConfigService,
+        configService: ConfigService,
       ) => ({
         secret:
           configService.getOrThrow<string>(
             'JWT_ACCESS_SECRET',
           ),
+    
+        signOptions: {
+          algorithm: 'HS256',
+          issuer: 'minrex-api',
+          audience: 'minrex-api:access',
+        },
+    
+        verifyOptions: {
+          algorithms: ['HS256'],
+          issuer: 'minrex-api',
+          audience: 'minrex-api:access',
+          ignoreExpiration: false,
+        },
       }),
     }),
 
