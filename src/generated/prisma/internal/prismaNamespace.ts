@@ -411,6 +411,7 @@ export const ModelName = {
   UserPostAssignment: 'UserPostAssignment',
   VerificationToken: 'VerificationToken',
   AuthSession: 'AuthSession',
+  ConsumedRefreshToken: 'ConsumedRefreshToken',
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory" | "mentorshipRequest" | "mentorshipRequestHistory"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "consumedRefreshToken" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory" | "mentorshipRequest" | "mentorshipRequestHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1474,6 +1475,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ConsumedRefreshToken: {
+      payload: Prisma.$ConsumedRefreshTokenPayload<ExtArgs>
+      fields: Prisma.ConsumedRefreshTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConsumedRefreshTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConsumedRefreshTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.ConsumedRefreshTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConsumedRefreshTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        findMany: {
+          args: Prisma.ConsumedRefreshTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>[]
+        }
+        create: {
+          args: Prisma.ConsumedRefreshTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        createMany: {
+          args: Prisma.ConsumedRefreshTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConsumedRefreshTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.ConsumedRefreshTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        update: {
+          args: Prisma.ConsumedRefreshTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConsumedRefreshTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConsumedRefreshTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConsumedRefreshTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConsumedRefreshTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsumedRefreshTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.ConsumedRefreshTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConsumedRefreshToken>
+        }
+        groupBy: {
+          args: Prisma.ConsumedRefreshTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsumedRefreshTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConsumedRefreshTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsumedRefreshTokenCountAggregateOutputType> | number
+        }
+      }
+    }
     CensusRecord: {
       payload: Prisma.$CensusRecordPayload<ExtArgs>
       fields: Prisma.CensusRecordFieldRefs
@@ -2313,6 +2388,16 @@ export const AuthSessionScalarFieldEnum = {
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
+export const ConsumedRefreshTokenScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  tokenHash: 'tokenHash',
+  consumedAt: 'consumedAt'
+} as const
+
+export type ConsumedRefreshTokenScalarFieldEnum = (typeof ConsumedRefreshTokenScalarFieldEnum)[keyof typeof ConsumedRefreshTokenScalarFieldEnum]
+
+
 export const CensusRecordScalarFieldEnum = {
   id: 'id',
   reference: 'reference',
@@ -3068,6 +3153,7 @@ export type GlobalOmitConfig = {
   userPostAssignment?: Prisma.UserPostAssignmentOmit
   verificationToken?: Prisma.VerificationTokenOmit
   authSession?: Prisma.AuthSessionOmit
+  consumedRefreshToken?: Prisma.ConsumedRefreshTokenOmit
   censusRecord?: Prisma.CensusRecordOmit
   censusDocument?: Prisma.CensusDocumentOmit
   censusReview?: Prisma.CensusReviewOmit

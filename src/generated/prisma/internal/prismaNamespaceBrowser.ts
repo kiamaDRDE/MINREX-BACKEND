@@ -65,6 +65,7 @@ export const ModelName = {
   UserPostAssignment: 'UserPostAssignment',
   VerificationToken: 'VerificationToken',
   AuthSession: 'AuthSession',
+  ConsumedRefreshToken: 'ConsumedRefreshToken',
   CensusRecord: 'CensusRecord',
   CensusDocument: 'CensusDocument',
   CensusReview: 'CensusReview',
@@ -297,6 +298,16 @@ export const AuthSessionScalarFieldEnum = {
 } as const
 
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
+
+
+export const ConsumedRefreshTokenScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  tokenHash: 'tokenHash',
+  consumedAt: 'consumedAt'
+} as const
+
+export type ConsumedRefreshTokenScalarFieldEnum = (typeof ConsumedRefreshTokenScalarFieldEnum)[keyof typeof ConsumedRefreshTokenScalarFieldEnum]
 
 
 export const CensusRecordScalarFieldEnum = {

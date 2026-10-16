@@ -88,6 +88,11 @@ export type VerificationToken = Prisma.VerificationTokenModel
  */
 export type AuthSession = Prisma.AuthSessionModel
 /**
+ * Model ConsumedRefreshToken
+ * 
+ */
+export type ConsumedRefreshToken = Prisma.ConsumedRefreshTokenModel
+/**
  * Model CensusRecord
  * 
  */
