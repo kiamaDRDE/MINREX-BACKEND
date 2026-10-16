@@ -309,6 +309,7 @@ export type DiplomaticPostWhereInput = {
   userPostAssignments?: Prisma.UserPostAssignmentListRelationFilter
   roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
+  assistanceCases?: Prisma.AssistanceCaseListRelationFilter
 }
 
 export type DiplomaticPostOrderByWithRelationInput = {
@@ -336,6 +337,7 @@ export type DiplomaticPostOrderByWithRelationInput = {
   userPostAssignments?: Prisma.UserPostAssignmentOrderByRelationAggregateInput
   roleAssignments?: Prisma.UserRoleAssignmentOrderByRelationAggregateInput
   censusRecords?: Prisma.CensusRecordOrderByRelationAggregateInput
+  assistanceCases?: Prisma.AssistanceCaseOrderByRelationAggregateInput
 }
 
 export type DiplomaticPostWhereUniqueInput = Prisma.AtLeast<{
@@ -366,6 +368,7 @@ export type DiplomaticPostWhereUniqueInput = Prisma.AtLeast<{
   userPostAssignments?: Prisma.UserPostAssignmentListRelationFilter
   roleAssignments?: Prisma.UserRoleAssignmentListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
+  assistanceCases?: Prisma.AssistanceCaseListRelationFilter
 }, "id" | "code">
 
 export type DiplomaticPostOrderByWithAggregationInput = {
@@ -434,6 +437,7 @@ export type DiplomaticPostCreateInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateInput = {
@@ -458,6 +462,7 @@ export type DiplomaticPostUncheckedCreateInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUpdateInput = {
@@ -482,6 +487,7 @@ export type DiplomaticPostUpdateInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateInput = {
@@ -506,6 +512,7 @@ export type DiplomaticPostUncheckedUpdateInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateManyInput = {
@@ -875,6 +882,20 @@ export type DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DiplomaticPostUpdateToOneWithWhereWithoutCensusRecordsInput, Prisma.DiplomaticPostUpdateWithoutCensusRecordsInput>, Prisma.DiplomaticPostUncheckedUpdateWithoutCensusRecordsInput>
 }
 
+export type DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput = {
+  create?: Prisma.XOR<Prisma.DiplomaticPostCreateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedCreateWithoutAssistanceCasesInput>
+  connectOrCreate?: Prisma.DiplomaticPostCreateOrConnectWithoutAssistanceCasesInput
+  connect?: Prisma.DiplomaticPostWhereUniqueInput
+}
+
+export type DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput = {
+  create?: Prisma.XOR<Prisma.DiplomaticPostCreateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedCreateWithoutAssistanceCasesInput>
+  connectOrCreate?: Prisma.DiplomaticPostCreateOrConnectWithoutAssistanceCasesInput
+  upsert?: Prisma.DiplomaticPostUpsertWithoutAssistanceCasesInput
+  connect?: Prisma.DiplomaticPostWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DiplomaticPostUpdateToOneWithWhereWithoutAssistanceCasesInput, Prisma.DiplomaticPostUpdateWithoutAssistanceCasesInput>, Prisma.DiplomaticPostUncheckedUpdateWithoutAssistanceCasesInput>
+}
+
 export type DiplomaticPostCreateWithoutHostCountryInput = {
   id?: string
   code: string
@@ -896,6 +917,7 @@ export type DiplomaticPostCreateWithoutHostCountryInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutHostCountryInput = {
@@ -919,6 +941,7 @@ export type DiplomaticPostUncheckedCreateWithoutHostCountryInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutHostCountryInput = {
@@ -989,6 +1012,7 @@ export type DiplomaticPostCreateWithoutTypeInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutTypeInput = {
@@ -1012,6 +1036,7 @@ export type DiplomaticPostUncheckedCreateWithoutTypeInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutTypeInput = {
@@ -1061,6 +1086,7 @@ export type DiplomaticPostCreateWithoutChildPostsInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutChildPostsInput = {
@@ -1084,6 +1110,7 @@ export type DiplomaticPostUncheckedCreateWithoutChildPostsInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutChildPostsInput = {
@@ -1112,6 +1139,7 @@ export type DiplomaticPostCreateWithoutParentPostInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutParentPostInput = {
@@ -1135,6 +1163,7 @@ export type DiplomaticPostUncheckedCreateWithoutParentPostInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutParentPostInput = {
@@ -1179,6 +1208,7 @@ export type DiplomaticPostUpdateWithoutChildPostsInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutChildPostsInput = {
@@ -1202,6 +1232,7 @@ export type DiplomaticPostUncheckedUpdateWithoutChildPostsInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUpsertWithWhereUniqueWithoutParentPostInput = {
@@ -1241,6 +1272,7 @@ export type DiplomaticPostCreateWithoutCoveragesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutCoveragesInput = {
@@ -1264,6 +1296,7 @@ export type DiplomaticPostUncheckedCreateWithoutCoveragesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutCoveragesInput = {
@@ -1303,6 +1336,7 @@ export type DiplomaticPostUpdateWithoutCoveragesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutCoveragesInput = {
@@ -1326,6 +1360,7 @@ export type DiplomaticPostUncheckedUpdateWithoutCoveragesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateWithoutServicesInput = {
@@ -1349,6 +1384,7 @@ export type DiplomaticPostCreateWithoutServicesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutServicesInput = {
@@ -1372,6 +1408,7 @@ export type DiplomaticPostUncheckedCreateWithoutServicesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutServicesInput = {
@@ -1411,6 +1448,7 @@ export type DiplomaticPostUpdateWithoutServicesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutServicesInput = {
@@ -1434,6 +1472,7 @@ export type DiplomaticPostUncheckedUpdateWithoutServicesInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateWithoutRoleAssignmentsInput = {
@@ -1457,6 +1496,7 @@ export type DiplomaticPostCreateWithoutRoleAssignmentsInput = {
   services?: Prisma.ServiceCreateNestedManyWithoutPostInput
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -1480,6 +1520,7 @@ export type DiplomaticPostUncheckedCreateWithoutRoleAssignmentsInput = {
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutPostInput
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -1519,6 +1560,7 @@ export type DiplomaticPostUpdateWithoutRoleAssignmentsInput = {
   services?: Prisma.ServiceUpdateManyWithoutPostNestedInput
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -1542,6 +1584,7 @@ export type DiplomaticPostUncheckedUpdateWithoutRoleAssignmentsInput = {
   services?: Prisma.ServiceUncheckedUpdateManyWithoutPostNestedInput
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateWithoutUserPostAssignmentsInput = {
@@ -1565,6 +1608,7 @@ export type DiplomaticPostCreateWithoutUserPostAssignmentsInput = {
   services?: Prisma.ServiceCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutUserPostAssignmentsInput = {
@@ -1588,6 +1632,7 @@ export type DiplomaticPostUncheckedCreateWithoutUserPostAssignmentsInput = {
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutUserPostAssignmentsInput = {
@@ -1627,6 +1672,7 @@ export type DiplomaticPostUpdateWithoutUserPostAssignmentsInput = {
   services?: Prisma.ServiceUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutUserPostAssignmentsInput = {
@@ -1650,6 +1696,7 @@ export type DiplomaticPostUncheckedUpdateWithoutUserPostAssignmentsInput = {
   services?: Prisma.ServiceUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateWithoutCensusRecordsInput = {
@@ -1673,6 +1720,7 @@ export type DiplomaticPostCreateWithoutCensusRecordsInput = {
   services?: Prisma.ServiceCreateNestedManyWithoutPostInput
   userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostUncheckedCreateWithoutCensusRecordsInput = {
@@ -1696,6 +1744,7 @@ export type DiplomaticPostUncheckedCreateWithoutCensusRecordsInput = {
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutPostInput
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedPostInput
 }
 
 export type DiplomaticPostCreateOrConnectWithoutCensusRecordsInput = {
@@ -1735,6 +1784,7 @@ export type DiplomaticPostUpdateWithoutCensusRecordsInput = {
   services?: Prisma.ServiceUpdateManyWithoutPostNestedInput
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutCensusRecordsInput = {
@@ -1758,6 +1808,119 @@ export type DiplomaticPostUncheckedUpdateWithoutCensusRecordsInput = {
   services?: Prisma.ServiceUncheckedUpdateManyWithoutPostNestedInput
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
+}
+
+export type DiplomaticPostCreateWithoutAssistanceCasesInput = {
+  id?: string
+  code: string
+  name: string
+  status?: $Enums.DiplomaticPostStatus
+  city?: string | null
+  address?: string | null
+  latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  openedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  type: Prisma.PostTypeCreateNestedOneWithoutPostsInput
+  hostCountry?: Prisma.CountryCreateNestedOneWithoutHostedPostsInput
+  parentPost?: Prisma.DiplomaticPostCreateNestedOneWithoutChildPostsInput
+  childPosts?: Prisma.DiplomaticPostCreateNestedManyWithoutParentPostInput
+  coverages?: Prisma.PostCoverageCreateNestedManyWithoutPostInput
+  services?: Prisma.ServiceCreateNestedManyWithoutPostInput
+  userPostAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutPostInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutPostInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutAssignedPostInput
+}
+
+export type DiplomaticPostUncheckedCreateWithoutAssistanceCasesInput = {
+  id?: string
+  code: string
+  name: string
+  typeId: string
+  status?: $Enums.DiplomaticPostStatus
+  hostCountryId?: string | null
+  city?: string | null
+  address?: string | null
+  latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  openedAt?: Date | string | null
+  closedAt?: Date | string | null
+  parentPostId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  childPosts?: Prisma.DiplomaticPostUncheckedCreateNestedManyWithoutParentPostInput
+  coverages?: Prisma.PostCoverageUncheckedCreateNestedManyWithoutPostInput
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutPostInput
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutPostInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutPostInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedPostInput
+}
+
+export type DiplomaticPostCreateOrConnectWithoutAssistanceCasesInput = {
+  where: Prisma.DiplomaticPostWhereUniqueInput
+  create: Prisma.XOR<Prisma.DiplomaticPostCreateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedCreateWithoutAssistanceCasesInput>
+}
+
+export type DiplomaticPostUpsertWithoutAssistanceCasesInput = {
+  update: Prisma.XOR<Prisma.DiplomaticPostUpdateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedUpdateWithoutAssistanceCasesInput>
+  create: Prisma.XOR<Prisma.DiplomaticPostCreateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedCreateWithoutAssistanceCasesInput>
+  where?: Prisma.DiplomaticPostWhereInput
+}
+
+export type DiplomaticPostUpdateToOneWithWhereWithoutAssistanceCasesInput = {
+  where?: Prisma.DiplomaticPostWhereInput
+  data: Prisma.XOR<Prisma.DiplomaticPostUpdateWithoutAssistanceCasesInput, Prisma.DiplomaticPostUncheckedUpdateWithoutAssistanceCasesInput>
+}
+
+export type DiplomaticPostUpdateWithoutAssistanceCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumDiplomaticPostStatusFieldUpdateOperationsInput | $Enums.DiplomaticPostStatus
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  openedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.PostTypeUpdateOneRequiredWithoutPostsNestedInput
+  hostCountry?: Prisma.CountryUpdateOneWithoutHostedPostsNestedInput
+  parentPost?: Prisma.DiplomaticPostUpdateOneWithoutChildPostsNestedInput
+  childPosts?: Prisma.DiplomaticPostUpdateManyWithoutParentPostNestedInput
+  coverages?: Prisma.PostCoverageUpdateManyWithoutPostNestedInput
+  services?: Prisma.ServiceUpdateManyWithoutPostNestedInput
+  userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+}
+
+export type DiplomaticPostUncheckedUpdateWithoutAssistanceCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  typeId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumDiplomaticPostStatusFieldUpdateOperationsInput | $Enums.DiplomaticPostStatus
+  hostCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  openedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  parentPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  childPosts?: Prisma.DiplomaticPostUncheckedUpdateManyWithoutParentPostNestedInput
+  coverages?: Prisma.PostCoverageUncheckedUpdateManyWithoutPostNestedInput
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutPostNestedInput
+  userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostCreateManyHostCountryInput = {
@@ -1798,6 +1961,7 @@ export type DiplomaticPostUpdateWithoutHostCountryInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutHostCountryInput = {
@@ -1821,6 +1985,7 @@ export type DiplomaticPostUncheckedUpdateWithoutHostCountryInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateManyWithoutHostCountryInput = {
@@ -1878,6 +2043,7 @@ export type DiplomaticPostUpdateWithoutTypeInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutTypeInput = {
@@ -1901,6 +2067,7 @@ export type DiplomaticPostUncheckedUpdateWithoutTypeInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateManyWithoutTypeInput = {
@@ -1958,6 +2125,7 @@ export type DiplomaticPostUpdateWithoutParentPostInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateWithoutParentPostInput = {
@@ -1981,6 +2149,7 @@ export type DiplomaticPostUncheckedUpdateWithoutParentPostInput = {
   userPostAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutPostNestedInput
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutPostNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedPostNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedPostNestedInput
 }
 
 export type DiplomaticPostUncheckedUpdateManyWithoutParentPostInput = {
@@ -2012,6 +2181,7 @@ export type DiplomaticPostCountOutputType = {
   userPostAssignments: number
   roleAssignments: number
   censusRecords: number
+  assistanceCases: number
 }
 
 export type DiplomaticPostCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2021,6 +2191,7 @@ export type DiplomaticPostCountOutputTypeSelect<ExtArgs extends runtime.Types.Ex
   userPostAssignments?: boolean | DiplomaticPostCountOutputTypeCountUserPostAssignmentsArgs
   roleAssignments?: boolean | DiplomaticPostCountOutputTypeCountRoleAssignmentsArgs
   censusRecords?: boolean | DiplomaticPostCountOutputTypeCountCensusRecordsArgs
+  assistanceCases?: boolean | DiplomaticPostCountOutputTypeCountAssistanceCasesArgs
 }
 
 /**
@@ -2075,6 +2246,13 @@ export type DiplomaticPostCountOutputTypeCountCensusRecordsArgs<ExtArgs extends 
   where?: Prisma.CensusRecordWhereInput
 }
 
+/**
+ * DiplomaticPostCountOutputType without action
+ */
+export type DiplomaticPostCountOutputTypeCountAssistanceCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssistanceCaseWhereInput
+}
+
 
 export type DiplomaticPostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2101,6 +2279,7 @@ export type DiplomaticPostSelect<ExtArgs extends runtime.Types.Extensions.Intern
   userPostAssignments?: boolean | Prisma.DiplomaticPost$userPostAssignmentsArgs<ExtArgs>
   roleAssignments?: boolean | Prisma.DiplomaticPost$roleAssignmentsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.DiplomaticPost$censusRecordsArgs<ExtArgs>
+  assistanceCases?: boolean | Prisma.DiplomaticPost$assistanceCasesArgs<ExtArgs>
   _count?: boolean | Prisma.DiplomaticPostCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["diplomaticPost"]>
 
@@ -2175,6 +2354,7 @@ export type DiplomaticPostInclude<ExtArgs extends runtime.Types.Extensions.Inter
   userPostAssignments?: boolean | Prisma.DiplomaticPost$userPostAssignmentsArgs<ExtArgs>
   roleAssignments?: boolean | Prisma.DiplomaticPost$roleAssignmentsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.DiplomaticPost$censusRecordsArgs<ExtArgs>
+  assistanceCases?: boolean | Prisma.DiplomaticPost$assistanceCasesArgs<ExtArgs>
   _count?: boolean | Prisma.DiplomaticPostCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DiplomaticPostIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2200,6 +2380,7 @@ export type $DiplomaticPostPayload<ExtArgs extends runtime.Types.Extensions.Inte
     userPostAssignments: Prisma.$UserPostAssignmentPayload<ExtArgs>[]
     roleAssignments: Prisma.$UserRoleAssignmentPayload<ExtArgs>[]
     censusRecords: Prisma.$CensusRecordPayload<ExtArgs>[]
+    assistanceCases: Prisma.$AssistanceCasePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2620,6 +2801,7 @@ export interface Prisma__DiplomaticPostClient<T, Null = never, ExtArgs extends r
   userPostAssignments<T extends Prisma.DiplomaticPost$userPostAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPost$userPostAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPostAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   roleAssignments<T extends Prisma.DiplomaticPost$roleAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPost$roleAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserRoleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusRecords<T extends Prisma.DiplomaticPost$censusRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPost$censusRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assistanceCases<T extends Prisma.DiplomaticPost$assistanceCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPost$assistanceCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3244,6 +3426,30 @@ export type DiplomaticPost$censusRecordsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.CensusRecordScalarFieldEnum | Prisma.CensusRecordScalarFieldEnum[]
+}
+
+/**
+ * DiplomaticPost.assistanceCases
+ */
+export type DiplomaticPost$assistanceCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistanceCase
+   */
+  select?: Prisma.AssistanceCaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistanceCase
+   */
+  omit?: Prisma.AssistanceCaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistanceCaseInclude<ExtArgs> | null
+  where?: Prisma.AssistanceCaseWhereInput
+  orderBy?: Prisma.AssistanceCaseOrderByWithRelationInput | Prisma.AssistanceCaseOrderByWithRelationInput[]
+  cursor?: Prisma.AssistanceCaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssistanceCaseScalarFieldEnum | Prisma.AssistanceCaseScalarFieldEnum[]
 }
 
 /**

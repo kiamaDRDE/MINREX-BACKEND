@@ -1,27 +1,52 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+} from '@nestjs/common';
+
 import {
   ConfigModule,
   ConfigService,
 } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 
-import { MailModule } from '../../../infrastructure/mail/mail.module.js';
+import {
+  JwtModule,
+} from '@nestjs/jwt';
 
-import { AuthController } from './auth.controller.js';
-import { AuthService } from './auth.service.js';
-import { AccessTokenGuard } from './guards/access-token.guard.js';
+import {
+  MailModule,
+} from '../../../infrastructure/mail/mail.module.js';
+
+import {
+  AuthorizationModule,
+} from '../authorization/authorization.module.js';
+
+import {
+  AuthController,
+} from './auth.controller.js';
+
+import {
+  AuthService,
+} from './auth.service.js';
+
+import {
+  AccessTokenGuard,
+} from './guards/access-token.guard.js';
 
 @Module({
   imports: [
     ConfigModule,
 
     JwtModule.registerAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule,
+      ],
 
-      inject: [ConfigService],
+      inject: [
+        ConfigService,
+      ],
 
       useFactory: (
-        configService: ConfigService,
+        configService:
+          ConfigService,
       ) => ({
         secret:
           configService.getOrThrow<string>(
@@ -31,6 +56,8 @@ import { AccessTokenGuard } from './guards/access-token.guard.js';
     }),
 
     MailModule,
+
+    AuthorizationModule,
   ],
 
   controllers: [
