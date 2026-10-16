@@ -17,6 +17,8 @@
     "test:cov": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
+    "db:seed": "prisma db seed",
+    "prisma:seed": "prisma db seed",
     "infra:up": "docker compose up -d",
     "infra:down": "docker compose down",
     "infra:stop": "docker compose stop",
