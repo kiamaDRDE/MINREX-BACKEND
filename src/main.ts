@@ -93,7 +93,21 @@ async function bootstrap() {
     );
 
   app.enableCors({
-    origin: corsOrigins,
+    origin: (origin, callback) => {
+      // Autoriser les requêtes sans origine (SSR, outils CLI, curl)
+      if (!origin) return callback(null, true);
+      // Autoriser les origines définies dans CORS_ORIGINS
+      if (corsOrigins.includes(origin)) return callback(null, true);
+      // Autoriser automatiquement le développement local (localhost et 127.0.0.1 sur tout port)
+      if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+        return callback(null, true);
+      }
+      // Autoriser l'accès depuis le VPS sur tout port (8076, 8080, etc.)
+      if (/^https?:\/\/185\.98\.136\.192(:\d+)?$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
 
     /*
      * Required because authentication uses
