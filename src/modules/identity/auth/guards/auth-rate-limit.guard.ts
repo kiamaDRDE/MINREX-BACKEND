@@ -69,6 +69,13 @@ const POLICIES: Record<string, RoutePolicy> = {
     },
   },
 
+  refresh: {
+    ip: {
+      limit: 30,
+      windowSeconds: 60,
+    },
+  },
+
   logout: {
     ip: {
       limit: 30,

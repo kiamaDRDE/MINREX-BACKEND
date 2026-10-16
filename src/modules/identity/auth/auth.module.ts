@@ -35,6 +35,10 @@ import {
   AuthRateLimitGuard,
 } from './guards/auth-rate-limit.guard.js';
 
+import {
+  AuthCookieGuard,
+} from './guards/auth-cookie.guard.js';
+
 @Module({
   imports: [
     ConfigModule,
@@ -84,6 +88,7 @@ import {
     AuthService,
     AccessTokenGuard,
     AuthRateLimitGuard,
+    AuthCookieGuard
   ],
 
   exports: [

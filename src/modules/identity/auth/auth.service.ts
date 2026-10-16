@@ -26,6 +26,7 @@ import { VerifyEmailDto } from './dto/verify-email.dto.js';
 
 import { LoginDto } from './dto/login.dto.js';
 import { JwtPayload } from './interfaces/jwt-payload.interface.js';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class AuthService {
@@ -559,6 +560,232 @@ export class AuthService {
       refreshToken: rawRefreshToken,
       refreshTokenExpiresAt,
     };
+  }
+
+  async refresh(rawRefreshToken: unknown) {
+    const invalidToken = () =>
+      new UnauthorizedException(
+        'Authentication session is invalid or expired.',
+      );
+  
+    /*
+     * Expected format:
+     * UUID.base64url-secret
+     *
+     * randomBytes(48).toString('base64url') produces
+     * a secret containing 64 characters.
+     */
+    if (typeof rawRefreshToken !== 'string') {
+      throw invalidToken();
+    }
+  
+    const parts = rawRefreshToken.split('.');
+  
+    if (parts.length !== 2) {
+      throw invalidToken();
+    }
+  
+    const [sessionId, secret] = parts;
+  
+    if (
+      !sessionId ||
+      !isUUID(sessionId) ||
+      !secret ||
+      !/^[A-Za-z0-9_-]{64}$/.test(secret)
+    ) {
+      throw invalidToken();
+    }
+  
+    const suppliedTokenHash = this.hashToken(rawRefreshToken);
+  
+    const result = await this.prisma.$transaction(async (tx) => {
+      /*
+       * Serialize refresh requests for this session.
+       *
+       * Tagged-template parameters are bound by Prisma;
+       * do not replace this with string concatenation.
+       */
+      await tx.$queryRaw`
+        SELECT id
+        FROM auth_sessions
+        WHERE id = ${sessionId}::uuid
+        FOR UPDATE
+      `;
+  
+      const session = await tx.authSession.findUnique({
+        where: {
+          id: sessionId,
+        },
+        select: {
+          id: true,
+          userId: true,
+          refreshTokenHash: true,
+          revokedAt: true,
+          expiresAt: true,
+  
+          user: {
+            select: {
+              status: true,
+              emailVerifiedAt: true,
+            },
+          },
+        },
+      });
+  
+      const now = new Date();
+  
+      if (
+        !session ||
+        session.revokedAt ||
+        session.expiresAt <= now
+      ) {
+        return null;
+      }
+  
+      if (
+        session.user.status !== UserStatus.ACTIVE ||
+        !session.user.emailVerifiedAt
+      ) {
+        await tx.authSession.update({
+          where: {
+            id: session.id,
+          },
+          data: {
+            revokedAt: now,
+          },
+        });
+  
+        return null;
+      }
+  
+      if (session.refreshTokenHash !== suppliedTokenHash) {
+        const consumedToken =
+          await tx.consumedRefreshToken.findUnique({
+            where: {
+              tokenHash: suppliedTokenHash,
+            },
+            select: {
+              sessionId: true,
+            },
+          });
+  
+        /*
+         * Revoke only when this is a known previously
+         * consumed token belonging to this session.
+         *
+         * A fabricated token must not let someone revoke
+         * a session just by knowing its UUID.
+         */
+        if (consumedToken?.sessionId === session.id) {
+          await tx.authSession.update({
+            where: {
+              id: session.id,
+            },
+            data: {
+              revokedAt: now,
+            },
+          });
+        }
+  
+        /*
+         * Return instead of throwing here:
+         * throwing would roll back the revocation.
+         */
+        return null;
+      }
+  
+      const configuredAccessTtl =
+        this.configService.getOrThrow<number>(
+          'JWT_ACCESS_TTL_SECONDS',
+        );
+  
+      if (
+        !Number.isInteger(configuredAccessTtl) ||
+        configuredAccessTtl <= 0
+      ) {
+        throw new Error(
+          'JWT_ACCESS_TTL_SECONDS must be a positive integer.',
+        );
+      }
+  
+      const remainingSessionSeconds = Math.floor(
+        (session.expiresAt.getTime() - now.getTime()) / 1000,
+      );
+  
+      const accessTtlSeconds = Math.min(
+        configuredAccessTtl,
+        remainingSessionSeconds,
+      );
+  
+      if (accessTtlSeconds <= 0) {
+        return null;
+      }
+  
+      const refreshSecret =
+        randomBytes(48).toString('base64url');
+  
+      const nextRefreshToken =
+        `${session.id}.${refreshSecret}`;
+  
+      const nextRefreshTokenHash =
+        this.hashToken(nextRefreshToken);
+  
+      const payload: JwtPayload = {
+        sub: session.userId,
+        sid: session.id,
+      };
+  
+      const accessToken = await this.jwtService.signAsync(
+        payload,
+        {
+          expiresIn: accessTtlSeconds,
+  
+          // Distinguish tokens issued within the same second.
+          jwtid: randomUUID(),
+        },
+      );
+  
+      /*
+       * Archive the consumed token and replace the current
+       * hash in the same transaction.
+       */
+      await tx.consumedRefreshToken.create({
+        data: {
+          sessionId: session.id,
+          tokenHash: suppliedTokenHash,
+          consumedAt: now,
+        },
+      });
+  
+      await tx.authSession.update({
+        where: {
+          id: session.id,
+        },
+        data: {
+          refreshTokenHash: nextRefreshTokenHash,
+          lastUsedAt: now,
+        },
+      });
+  
+      return {
+        accessToken,
+  
+        accessTokenExpiresAt: new Date(
+          now.getTime() + accessTtlSeconds * 1000,
+        ),
+  
+        refreshToken: nextRefreshToken,
+  
+        // Keep the original absolute session expiration.
+        refreshTokenExpiresAt: session.expiresAt,
+      };
+    });
+  
+    if (!result) {
+      throw invalidToken();
+    }
+  
+    return result;
   }
 
   async logout(rawRefreshToken?: string) {

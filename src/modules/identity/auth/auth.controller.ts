@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   UseGuards,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import {
@@ -20,6 +21,7 @@ import {
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiHeader,
 } from '@nestjs/swagger';
 
 import type {
@@ -62,6 +64,10 @@ import type {
 import {
   AuthRateLimitGuard,
 } from './guards/auth-rate-limit.guard.js';
+
+import {
+  AuthCookieGuard,
+} from './guards/auth-cookie.guard.js';
 
 @ApiTags(
   'Authentication',
@@ -282,6 +288,88 @@ export class AuthController {
     );
 
     return responseData;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | REFRESH
+  |--------------------------------------------------------------------------
+  */
+
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthCookieGuard)
+  @ApiOperation({
+    summary: 'Refresh access token and rotate the refresh token',
+  })
+  @ApiHeader({
+    name: 'x-minrex-client',
+    required: true,
+    description: 'Must contain the value "web".',
+  })
+  @ApiOkResponse({
+    description: 'Access token renewed and refresh cookie rotated.',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Refresh token is missing, invalid, expired or reused.',
+  })
+  @ApiForbiddenResponse({
+    description: 'Request header is missing or origin is not allowed.',
+  })
+  async refresh(
+    @Req()
+    request: Request,
+  
+    @Res({ passthrough: true })
+    response: Response,
+  ) {
+    response.setHeader('Cache-Control', 'no-store');
+  
+    const rawRefreshToken: unknown =
+      request.cookies?.['minrex_refresh_token'];
+  
+    try {
+      const result =
+        await this.authService.refresh(rawRefreshToken);
+  
+      const {
+        refreshToken,
+        refreshTokenExpiresAt,
+        ...responseData
+      } = result;
+  
+      response.cookie(
+        'minrex_refresh_token',
+        refreshToken,
+        {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          expires: refreshTokenExpiresAt,
+          path: '/api/v1/auth',
+        },
+      );
+  
+      return responseData;
+    } catch (error) {
+      /*
+       * Clear invalid authentication cookies.
+       * Preserve the cookie on database or infrastructure errors.
+       */
+      if (error instanceof UnauthorizedException) {
+        response.clearCookie(
+          'minrex_refresh_token',
+          {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            path: '/api/v1/auth',
+          },
+        );
+      }
+  
+      throw error;
+    }
   }
 
   /*
