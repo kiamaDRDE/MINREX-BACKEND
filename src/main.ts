@@ -128,6 +128,7 @@ async function bootstrap() {
       'Content-Type',
       'Authorization',
       'x-request-id',
+      'x-minrex-client',
     ],
   });
 

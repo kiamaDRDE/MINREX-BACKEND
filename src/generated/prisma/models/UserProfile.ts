@@ -32,6 +32,7 @@ export type UserProfileMinAggregateOutputType = {
   displayName: string | null
   photoUrl: string | null
   preferredLanguage: $Enums.PreferredLanguage | null
+  residenceCountryId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +45,7 @@ export type UserProfileMaxAggregateOutputType = {
   displayName: string | null
   photoUrl: string | null
   preferredLanguage: $Enums.PreferredLanguage | null
+  residenceCountryId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,7 @@ export type UserProfileCountAggregateOutputType = {
   displayName: number
   photoUrl: number
   preferredLanguage: number
+  residenceCountryId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,6 +73,7 @@ export type UserProfileMinAggregateInputType = {
   displayName?: true
   photoUrl?: true
   preferredLanguage?: true
+  residenceCountryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +86,7 @@ export type UserProfileMaxAggregateInputType = {
   displayName?: true
   photoUrl?: true
   preferredLanguage?: true
+  residenceCountryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +99,7 @@ export type UserProfileCountAggregateInputType = {
   displayName?: true
   photoUrl?: true
   preferredLanguage?: true
+  residenceCountryId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +185,7 @@ export type UserProfileGroupByOutputType = {
   displayName: string | null
   photoUrl: string | null
   preferredLanguage: $Enums.PreferredLanguage
+  residenceCountryId: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserProfileCountAggregateOutputType | null
@@ -212,9 +219,11 @@ export type UserProfileWhereInput = {
   displayName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   preferredLanguage?: Prisma.EnumPreferredLanguageFilter<"UserProfile"> | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.UuidNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  residenceCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
 }
 
 export type UserProfileOrderByWithRelationInput = {
@@ -225,9 +234,11 @@ export type UserProfileOrderByWithRelationInput = {
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
+  residenceCountryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  residenceCountry?: Prisma.CountryOrderByWithRelationInput
 }
 
 export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -241,9 +252,11 @@ export type UserProfileWhereUniqueInput = Prisma.AtLeast<{
   displayName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   photoUrl?: Prisma.StringNullableFilter<"UserProfile"> | string | null
   preferredLanguage?: Prisma.EnumPreferredLanguageFilter<"UserProfile"> | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.UuidNullableFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  residenceCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
 }, "id" | "userId">
 
 export type UserProfileOrderByWithAggregationInput = {
@@ -254,6 +267,7 @@ export type UserProfileOrderByWithAggregationInput = {
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
+  residenceCountryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserProfileCountOrderByAggregateInput
@@ -272,6 +286,7 @@ export type UserProfileScalarWhereWithAggregatesInput = {
   displayName?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   preferredLanguage?: Prisma.EnumPreferredLanguageWithAggregatesFilter<"UserProfile"> | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.UuidNullableWithAggregatesFilter<"UserProfile"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserProfile"> | Date | string
 }
@@ -286,6 +301,7 @@ export type UserProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfileInput
+  residenceCountry?: Prisma.CountryCreateNestedOneWithoutUserProfilesByResidenceInput
 }
 
 export type UserProfileUncheckedCreateInput = {
@@ -296,6 +312,7 @@ export type UserProfileUncheckedCreateInput = {
   displayName?: string | null
   photoUrl?: string | null
   preferredLanguage?: $Enums.PreferredLanguage
+  residenceCountryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -310,6 +327,7 @@ export type UserProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  residenceCountry?: Prisma.CountryUpdateOneWithoutUserProfilesByResidenceNestedInput
 }
 
 export type UserProfileUncheckedUpdateInput = {
@@ -320,6 +338,7 @@ export type UserProfileUncheckedUpdateInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -332,6 +351,7 @@ export type UserProfileCreateManyInput = {
   displayName?: string | null
   photoUrl?: string | null
   preferredLanguage?: $Enums.PreferredLanguage
+  residenceCountryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -355,8 +375,19 @@ export type UserProfileUncheckedUpdateManyInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserProfileListRelationFilter = {
+  every?: Prisma.UserProfileWhereInput
+  some?: Prisma.UserProfileWhereInput
+  none?: Prisma.UserProfileWhereInput
+}
+
+export type UserProfileOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserProfileNullableScalarRelationFilter = {
@@ -372,6 +403,7 @@ export type UserProfileCountOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
+  residenceCountryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -384,6 +416,7 @@ export type UserProfileMaxOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
+  residenceCountryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -396,8 +429,51 @@ export type UserProfileMinOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
+  residenceCountryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserProfileCreateNestedManyWithoutResidenceCountryInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput> | Prisma.UserProfileCreateWithoutResidenceCountryInput[] | Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput[]
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput | Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput[]
+  createMany?: Prisma.UserProfileCreateManyResidenceCountryInputEnvelope
+  connect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+}
+
+export type UserProfileUncheckedCreateNestedManyWithoutResidenceCountryInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput> | Prisma.UserProfileCreateWithoutResidenceCountryInput[] | Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput[]
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput | Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput[]
+  createMany?: Prisma.UserProfileCreateManyResidenceCountryInputEnvelope
+  connect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+}
+
+export type UserProfileUpdateManyWithoutResidenceCountryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput> | Prisma.UserProfileCreateWithoutResidenceCountryInput[] | Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput[]
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput | Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput[]
+  upsert?: Prisma.UserProfileUpsertWithWhereUniqueWithoutResidenceCountryInput | Prisma.UserProfileUpsertWithWhereUniqueWithoutResidenceCountryInput[]
+  createMany?: Prisma.UserProfileCreateManyResidenceCountryInputEnvelope
+  set?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  disconnect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  delete?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  connect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  update?: Prisma.UserProfileUpdateWithWhereUniqueWithoutResidenceCountryInput | Prisma.UserProfileUpdateWithWhereUniqueWithoutResidenceCountryInput[]
+  updateMany?: Prisma.UserProfileUpdateManyWithWhereWithoutResidenceCountryInput | Prisma.UserProfileUpdateManyWithWhereWithoutResidenceCountryInput[]
+  deleteMany?: Prisma.UserProfileScalarWhereInput | Prisma.UserProfileScalarWhereInput[]
+}
+
+export type UserProfileUncheckedUpdateManyWithoutResidenceCountryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput> | Prisma.UserProfileCreateWithoutResidenceCountryInput[] | Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput[]
+  connectOrCreate?: Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput | Prisma.UserProfileCreateOrConnectWithoutResidenceCountryInput[]
+  upsert?: Prisma.UserProfileUpsertWithWhereUniqueWithoutResidenceCountryInput | Prisma.UserProfileUpsertWithWhereUniqueWithoutResidenceCountryInput[]
+  createMany?: Prisma.UserProfileCreateManyResidenceCountryInputEnvelope
+  set?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  disconnect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  delete?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  connect?: Prisma.UserProfileWhereUniqueInput | Prisma.UserProfileWhereUniqueInput[]
+  update?: Prisma.UserProfileUpdateWithWhereUniqueWithoutResidenceCountryInput | Prisma.UserProfileUpdateWithWhereUniqueWithoutResidenceCountryInput[]
+  updateMany?: Prisma.UserProfileUpdateManyWithWhereWithoutResidenceCountryInput | Prisma.UserProfileUpdateManyWithWhereWithoutResidenceCountryInput[]
+  deleteMany?: Prisma.UserProfileScalarWhereInput | Prisma.UserProfileScalarWhereInput[]
 }
 
 export type UserProfileCreateNestedOneWithoutUserInput = {
@@ -436,8 +512,21 @@ export type EnumPreferredLanguageFieldUpdateOperationsInput = {
   set?: $Enums.PreferredLanguage
 }
 
-export type UserProfileCreateWithoutUserInput = {
+export type UserProfileCreateWithoutResidenceCountryInput = {
   id?: string
+  firstName: string
+  lastName: string
+  displayName?: string | null
+  photoUrl?: string | null
+  preferredLanguage?: $Enums.PreferredLanguage
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+}
+
+export type UserProfileUncheckedCreateWithoutResidenceCountryInput = {
+  id?: string
+  userId: string
   firstName: string
   lastName: string
   displayName?: string | null
@@ -447,6 +536,60 @@ export type UserProfileCreateWithoutUserInput = {
   updatedAt?: Date | string
 }
 
+export type UserProfileCreateOrConnectWithoutResidenceCountryInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput>
+}
+
+export type UserProfileCreateManyResidenceCountryInputEnvelope = {
+  data: Prisma.UserProfileCreateManyResidenceCountryInput | Prisma.UserProfileCreateManyResidenceCountryInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserProfileUpsertWithWhereUniqueWithoutResidenceCountryInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserProfileUpdateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedUpdateWithoutResidenceCountryInput>
+  create: Prisma.XOR<Prisma.UserProfileCreateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedCreateWithoutResidenceCountryInput>
+}
+
+export type UserProfileUpdateWithWhereUniqueWithoutResidenceCountryInput = {
+  where: Prisma.UserProfileWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateWithoutResidenceCountryInput, Prisma.UserProfileUncheckedUpdateWithoutResidenceCountryInput>
+}
+
+export type UserProfileUpdateManyWithWhereWithoutResidenceCountryInput = {
+  where: Prisma.UserProfileScalarWhereInput
+  data: Prisma.XOR<Prisma.UserProfileUpdateManyMutationInput, Prisma.UserProfileUncheckedUpdateManyWithoutResidenceCountryInput>
+}
+
+export type UserProfileScalarWhereInput = {
+  AND?: Prisma.UserProfileScalarWhereInput | Prisma.UserProfileScalarWhereInput[]
+  OR?: Prisma.UserProfileScalarWhereInput[]
+  NOT?: Prisma.UserProfileScalarWhereInput | Prisma.UserProfileScalarWhereInput[]
+  id?: Prisma.UuidFilter<"UserProfile"> | string
+  userId?: Prisma.UuidFilter<"UserProfile"> | string
+  firstName?: Prisma.StringFilter<"UserProfile"> | string
+  lastName?: Prisma.StringFilter<"UserProfile"> | string
+  displayName?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  photoUrl?: Prisma.StringNullableFilter<"UserProfile"> | string | null
+  preferredLanguage?: Prisma.EnumPreferredLanguageFilter<"UserProfile"> | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.UuidNullableFilter<"UserProfile"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"UserProfile"> | Date | string
+}
+
+export type UserProfileCreateWithoutUserInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  displayName?: string | null
+  photoUrl?: string | null
+  preferredLanguage?: $Enums.PreferredLanguage
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  residenceCountry?: Prisma.CountryCreateNestedOneWithoutUserProfilesByResidenceInput
+}
+
 export type UserProfileUncheckedCreateWithoutUserInput = {
   id?: string
   firstName: string
@@ -454,6 +597,7 @@ export type UserProfileUncheckedCreateWithoutUserInput = {
   displayName?: string | null
   photoUrl?: string | null
   preferredLanguage?: $Enums.PreferredLanguage
+  residenceCountryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -483,10 +627,60 @@ export type UserProfileUpdateWithoutUserInput = {
   preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residenceCountry?: Prisma.CountryUpdateOneWithoutUserProfilesByResidenceNestedInput
 }
 
 export type UserProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
+  residenceCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserProfileCreateManyResidenceCountryInput = {
+  id?: string
+  userId: string
+  firstName: string
+  lastName: string
+  displayName?: string | null
+  photoUrl?: string | null
+  preferredLanguage?: $Enums.PreferredLanguage
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserProfileUpdateWithoutResidenceCountryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+}
+
+export type UserProfileUncheckedUpdateWithoutResidenceCountryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredLanguage?: Prisma.EnumPreferredLanguageFieldUpdateOperationsInput | $Enums.PreferredLanguage
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserProfileUncheckedUpdateManyWithoutResidenceCountryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -506,9 +700,11 @@ export type UserProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   displayName?: boolean
   photoUrl?: boolean
   preferredLanguage?: boolean
+  residenceCountryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
 export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -519,9 +715,11 @@ export type UserProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   displayName?: boolean
   photoUrl?: boolean
   preferredLanguage?: boolean
+  residenceCountryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
 export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -532,9 +730,11 @@ export type UserProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   displayName?: boolean
   photoUrl?: boolean
   preferredLanguage?: boolean
+  residenceCountryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }, ExtArgs["result"]["userProfile"]>
 
 export type UserProfileSelectScalar = {
@@ -545,25 +745,30 @@ export type UserProfileSelectScalar = {
   displayName?: boolean
   photoUrl?: boolean
   preferredLanguage?: boolean
+  residenceCountryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "firstName" | "lastName" | "displayName" | "photoUrl" | "preferredLanguage" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
+export type UserProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "firstName" | "lastName" | "displayName" | "photoUrl" | "preferredLanguage" | "residenceCountryId" | "createdAt" | "updatedAt", ExtArgs["result"]["userProfile"]>
 export type UserProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }
 export type UserProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }
 export type UserProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  residenceCountry?: boolean | Prisma.UserProfile$residenceCountryArgs<ExtArgs>
 }
 
 export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    residenceCountry: Prisma.$CountryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -573,6 +778,7 @@ export type $UserProfilePayload<ExtArgs extends runtime.Types.Extensions.Interna
     displayName: string | null
     photoUrl: string | null
     preferredLanguage: $Enums.PreferredLanguage
+    residenceCountryId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userProfile"]>
@@ -970,6 +1176,7 @@ readonly fields: UserProfileFieldRefs;
 export interface Prisma__UserProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  residenceCountry<T extends Prisma.UserProfile$residenceCountryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserProfile$residenceCountryArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1006,6 +1213,7 @@ export interface UserProfileFieldRefs {
   readonly displayName: Prisma.FieldRef<"UserProfile", 'String'>
   readonly photoUrl: Prisma.FieldRef<"UserProfile", 'String'>
   readonly preferredLanguage: Prisma.FieldRef<"UserProfile", 'PreferredLanguage'>
+  readonly residenceCountryId: Prisma.FieldRef<"UserProfile", 'String'>
   readonly createdAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserProfile", 'DateTime'>
 }
@@ -1406,6 +1614,25 @@ export type UserProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many UserProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * UserProfile.residenceCountry
+ */
+export type UserProfile$residenceCountryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Country
+   */
+  select?: Prisma.CountrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Country
+   */
+  omit?: Prisma.CountryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CountryInclude<ExtArgs> | null
+  where?: Prisma.CountryWhereInput
 }
 
 /**

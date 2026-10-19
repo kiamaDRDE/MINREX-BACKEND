@@ -200,6 +200,8 @@ model Country {
   iso3Code String @unique @map("iso3_code") @db.Char(3)
   name     String @unique @db.VarChar(150)
 
+  dialingCode String? @map("dialing_code") @db.VarChar(10)
+
   isActive Boolean @default(true) @map("is_active")
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
@@ -212,6 +214,8 @@ model Country {
 
   censusResidenceRecords   CensusRecord[] @relation("CensusResidenceCountry")
   censusNationalityRecords CensusRecord[] @relation("CensusNationalityCountry")
+
+  userProfilesByResidence UserProfile[] @relation("UserProfileResidenceCountry")
 
   @@index([isActive])
   @@map("countries")
@@ -371,7 +375,7 @@ model User {
   email    String @unique @db.VarChar(255)
   username String @unique @db.VarChar(50)
 
-  phone String? @db.VarChar(30)
+  phone String? @unique @db.VarChar(30)
 
   passwordHash String? @map("password_hash") @db.VarChar(255)
 
@@ -430,10 +434,15 @@ model UserProfile {
 
   preferredLanguage PreferredLanguage @default(FR) @map("preferred_language")
 
+  residenceCountryId String? @map("residence_country_id") @db.Uuid
+
+  residenceCountry Country? @relation("UserProfileResidenceCountry", fields: [residenceCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@index([lastName, firstName])
+  @@index([residenceCountryId])
   @@map("user_profiles")
 }
 
@@ -617,6 +626,8 @@ model VerificationToken {
  */
 
 model AuthSession {
+  consumedRefreshTokens ConsumedRefreshToken[]
+
   id String @id @default(uuid()) @db.Uuid
 
   userId String @map("user_id") @db.Uuid
@@ -640,6 +651,21 @@ model AuthSession {
   @@index([userId, revokedAt])
   @@index([expiresAt])
   @@map("auth_sessions")
+}
+
+model ConsumedRefreshToken {
+  id String @id @default(uuid()) @db.Uuid
+
+  sessionId String      @map("session_id") @db.Uuid
+  session   AuthSession @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  // Hash uniquement : aucun refresh token brut.
+  tokenHash String @unique @map("token_hash") @db.VarChar(64)
+
+  consumedAt DateTime @default(now()) @map("consumed_at") @db.Timestamptz(3)
+
+  @@index([sessionId])
+  @@map("consumed_refresh_tokens")
 }
 
 /**

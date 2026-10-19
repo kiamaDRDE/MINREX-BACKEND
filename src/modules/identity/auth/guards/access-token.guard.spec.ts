@@ -33,15 +33,21 @@ import {
 describe(
   'AccessTokenGuard',
   () => {
+    const validUserId =
+      'a0000000-0000-4000-8000-000000000001';
+
+    const validSessionId =
+      'b0000000-0000-4000-8000-000000000002';
+
     const jwtServiceMock = {
       verifyAsync:
-        jest.fn(),
+        jest.fn<() => Promise<unknown>>(),
     };
-
+    
     const prismaMock = {
       authSession: {
         findUnique:
-          jest.fn(),
+          jest.fn<() => Promise<unknown>>(),
       },
     };
 
@@ -60,7 +66,7 @@ describe(
       }) as unknown as ExecutionContext;
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      jest.resetAllMocks();
 
       guard =
         new AccessTokenGuard(
@@ -93,18 +99,22 @@ describe(
       async () => {
         jwtServiceMock.verifyAsync.mockResolvedValue({
           sub:
-            'user-id',
+            validUserId,
 
           sid:
-            'session-id',
+            validSessionId,
+
+          exp:
+            Math.floor(Date.now() / 1000) +
+              3600,
         });
 
         prismaMock.authSession.findUnique.mockResolvedValue({
           id:
-            'session-id',
+            validSessionId,
 
           userId:
-            'user-id',
+            validUserId,
 
           revokedAt:
             null,
@@ -155,10 +165,10 @@ describe(
 
           auth: {
             userId:
-              'user-id',
+              validUserId,
 
             sessionId:
-              'session-id',
+              validSessionId,
           },
         });
       },
@@ -169,18 +179,22 @@ describe(
       async () => {
         jwtServiceMock.verifyAsync.mockResolvedValue({
           sub:
-            'user-id',
+            validUserId,
 
           sid:
-            'session-id',
+            validSessionId,
+
+          exp:
+            Math.floor(Date.now() / 1000) +
+              3600,
         });
 
         prismaMock.authSession.findUnique.mockResolvedValue({
           id:
-            'session-id',
+            validSessionId,
 
           userId:
-            'user-id',
+            validUserId,
 
           revokedAt:
             new Date(),
@@ -223,18 +237,22 @@ describe(
       async () => {
         jwtServiceMock.verifyAsync.mockResolvedValue({
           sub:
-            'user-id',
+            validUserId,
 
           sid:
-            'session-id',
+            validSessionId,
+
+          exp:
+            Math.floor(Date.now() / 1000) +
+              3600,
         });
 
         prismaMock.authSession.findUnique.mockResolvedValue({
           id:
-            'session-id',
+            validSessionId,
 
           userId:
-            'user-id',
+            validUserId,
 
           revokedAt:
             null,
@@ -277,18 +295,22 @@ describe(
       async () => {
         jwtServiceMock.verifyAsync.mockResolvedValue({
           sub:
-            'user-id',
+            validUserId,
 
           sid:
-            'session-id',
+            validSessionId,
+
+          exp:
+            Math.floor(Date.now() / 1000) +
+              3600,
         });
 
         prismaMock.authSession.findUnique.mockResolvedValue({
           id:
-            'session-id',
+            validSessionId,
 
           userId:
-            'user-id',
+            validUserId,
 
           revokedAt:
             null,

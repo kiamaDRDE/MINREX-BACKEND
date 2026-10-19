@@ -12,6 +12,8 @@ import { PrismaService } from '../../../../infrastructure/database/prisma.servic
 import type { AuthenticatedRequest } from '../interfaces/authenticated-request.interface.js';
 import type { JwtPayload } from '../interfaces/jwt-payload.interface.js';
 
+import { isUUID } from 'class-validator';
+
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
@@ -53,28 +55,38 @@ export class AccessTokenGuard implements CanActivate {
       );
     }
 
-    let payload: JwtPayload;
-
+    let payload: JwtPayload & {
+      exp: number;
+    };
+    
     try {
-      payload =
-        await this.jwtService.verifyAsync<JwtPayload>(
-          token,
-        );
+      const decoded =
+        await this.jwtService.verifyAsync<
+          Record<string, unknown>
+        >(token);
+    
+      if (
+        typeof decoded !== 'object' ||
+        decoded === null ||
+        typeof decoded.sub !== 'string' ||
+        !isUUID(decoded.sub) ||
+        typeof decoded.sid !== 'string' ||
+        !isUUID(decoded.sid) ||
+        typeof decoded.exp !== 'number' ||
+        !Number.isInteger(decoded.exp) ||
+        decoded.exp <= Math.floor(Date.now() / 1000)
+      ) {
+        throw new Error('Invalid access token claims.');
+      }
+    
+      payload = {
+        sub: decoded.sub,
+        sid: decoded.sid,
+        exp: decoded.exp,
+      };
     } catch {
       throw new UnauthorizedException(
         'Access token is invalid or expired.',
-      );
-    }
-
-    /*
-     * Access token must contain both:
-     *
-     * sub -> user ID
-     * sid -> AuthSession ID
-     */
-    if (!payload.sub || !payload.sid) {
-      throw new UnauthorizedException(
-        'Invalid access token.',
       );
     }
 
