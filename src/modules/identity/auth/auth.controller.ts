@@ -89,6 +89,48 @@ export class AuthController {
 
   /*
   |--------------------------------------------------------------------------
+  | COUNTRIES
+  |--------------------------------------------------------------------------
+  */
+
+  @Get(
+    'countries',
+  )
+  @ApiOperation({
+    summary:
+      'Get active countries available during registration',
+  })
+  @ApiOkResponse({
+    description:
+      'Active countries returned successfully.',
+  })
+  getCountries() {
+    return this.authService.getCountries();
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | PHONE CODES
+  |--------------------------------------------------------------------------
+  */
+
+  @Get(
+    'phone-codes',
+  )
+  @ApiOperation({
+    summary:
+      'Get international dialing codes available during registration',
+  })
+  @ApiOkResponse({
+    description:
+      'International dialing codes returned successfully.',
+  })
+  getPhoneCodes() {
+    return this.authService.getPhoneCodes();
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | REGISTER
   |--------------------------------------------------------------------------
   */

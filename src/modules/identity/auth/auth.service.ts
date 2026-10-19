@@ -41,6 +41,55 @@ export class AuthService {
 
   /*
   |--------------------------------------------------------------------------
+  | PUBLIC COUNTRY REFERENCES
+  |--------------------------------------------------------------------------
+  */
+
+  async getCountries() {
+    return this.prisma.country.findMany({
+      where: {
+        isActive: true,
+      },
+
+      orderBy: {
+        name: 'asc',
+      },
+
+      select: {
+        id: true,
+        iso2Code: true,
+        iso3Code: true,
+        name: true,
+        dialingCode: true,
+      },
+    });
+  }
+
+  async getPhoneCodes() {
+    return this.prisma.country.findMany({
+      where: {
+        isActive: true,
+
+        dialingCode: {
+          not: null,
+        },
+      },
+
+      orderBy: {
+        name: 'asc',
+      },
+
+      select: {
+        id: true,
+        iso2Code: true,
+        name: true,
+        dialingCode: true,
+      },
+    });
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | REGISTER
   |--------------------------------------------------------------------------
   */
