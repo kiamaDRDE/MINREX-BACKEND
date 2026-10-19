@@ -28,6 +28,10 @@ import { LoginDto } from './dto/login.dto.js';
 import { JwtPayload } from './interfaces/jwt-payload.interface.js';
 import { isUUID } from 'class-validator';
 
+import {
+  parsePhoneNumberFromString,
+} from 'libphonenumber-js';
+
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
@@ -95,126 +99,295 @@ export class AuthService {
   */
 
   async register(dto: RegisterDto) {
-    const email = dto.email.trim().toLowerCase();
-    const username = dto.username.trim().toLowerCase();
-
+    const email =
+      dto.email
+        .trim()
+        .toLowerCase();
+  
+    const username =
+      dto.username
+        .trim()
+        .toLowerCase();
+  
     /*
-     * Email and username are the authentication identifiers
-     * used during registration.
+     * Parse and normalize phone number
+     * to international E.164 format.
      */
-    const existingUser = await this.prisma.user.findFirst({
-      where: {
-        OR: [{ email }, { username }],
-      },
-
-      select: {
-        email: true,
-        username: true,
-      },
-    });
-
-    if (existingUser?.email === email) {
+    const parsedPhone =
+      parsePhoneNumberFromString(
+        dto.phone.trim(),
+      );
+  
+    if (
+      !parsedPhone ||
+      !parsedPhone.isValid()
+    ) {
+      throw new BadRequestException(
+        'The supplied phone number is invalid.',
+      );
+    }
+  
+    const phone =
+      parsedPhone.number.toString();
+  
+    /*
+     * Validate residence country
+     * and check authentication identifiers.
+     */
+    const [
+      residenceCountry,
+      existingUser,
+    ] =
+      await Promise.all([
+        this.prisma.country.findFirst({
+          where: {
+            id:
+              dto.residenceCountryId,
+  
+            isActive:
+              true,
+          },
+  
+          select: {
+            id:
+              true,
+  
+            iso2Code:
+              true,
+  
+            name:
+              true,
+  
+            dialingCode:
+              true,
+          },
+        }),
+  
+        this.prisma.user.findFirst({
+          where: {
+            OR: [
+              {
+                email,
+              },
+  
+              {
+                username,
+              },
+  
+              {
+                phone,
+              },
+            ],
+          },
+  
+          select: {
+            email:
+              true,
+  
+            username:
+              true,
+  
+            phone:
+              true,
+          },
+        }),
+      ]);
+  
+    if (!residenceCountry) {
+      throw new BadRequestException(
+        'The selected residence country is invalid or inactive.',
+      );
+    }
+  
+    if (
+      existingUser?.email ===
+      email
+    ) {
       throw new ConflictException(
         'An account already exists with this email address.',
       );
     }
-
-    if (existingUser?.username === username) {
-      throw new ConflictException('This username is already taken.');
+  
+    if (
+      existingUser?.username ===
+      username
+    ) {
+      throw new ConflictException(
+        'This username is already taken.',
+      );
     }
-
+  
+    if (
+      existingUser?.phone ===
+      phone
+    ) {
+      throw new ConflictException(
+        'An account already exists with this phone number.',
+      );
+    }
+  
     /*
      * Hash password using Argon2id.
      */
-    const passwordHash = await argon2.hash(dto.password, {
-      type: argon2.argon2id,
-    });
-
+    const passwordHash =
+      await argon2.hash(
+        dto.password,
+        {
+          type:
+            argon2.argon2id,
+        },
+      );
+  
     /*
      * Generate email verification token.
-     *
-     * The raw token will only be sent through email.
-     * Only its hash is persisted in PostgreSQL.
      */
-    const rawVerificationToken = randomBytes(32).toString('hex');
-
-    const tokenHash = this.hashToken(rawVerificationToken);
-
-    const verificationExpiresAt = new Date(Date.now() + 30 * 60 * 1000);
-
+    const rawVerificationToken =
+      randomBytes(
+        32,
+      ).toString(
+        'hex',
+      );
+  
+    const tokenHash =
+      this.hashToken(
+        rawVerificationToken,
+      );
+  
+    const verificationExpiresAt =
+      new Date(
+        Date.now() +
+          30 *
+            60 *
+            1000,
+      );
+  
     /*
      * Create user, profile and verification token.
      */
-    const user = await this.prisma.user.create({
-      data: {
-        email,
-        username,
-        passwordHash,
-
-        profile: {
-          create: {
-            firstName: dto.firstName.trim(),
-            lastName: dto.lastName.trim(),
+    const user =
+      await this.prisma.user.create({
+        data: {
+          email,
+          username,
+          phone,
+          passwordHash,
+  
+          profile: {
+            create: {
+              firstName:
+                dto.firstName.trim(),
+  
+              lastName:
+                dto.lastName.trim(),
+  
+              residenceCountryId:
+                residenceCountry.id,
+            },
+          },
+  
+          verificationTokens: {
+            create: {
+              type:
+                VerificationTokenType.EMAIL_VERIFICATION,
+  
+              tokenHash,
+  
+              expiresAt:
+                verificationExpiresAt,
+            },
           },
         },
-
-        verificationTokens: {
-          create: {
-            type: VerificationTokenType.EMAIL_VERIFICATION,
-
-            tokenHash,
-
-            expiresAt: verificationExpiresAt,
+  
+        select: {
+          id:
+            true,
+  
+          email:
+            true,
+  
+          username:
+            true,
+  
+          phone:
+            true,
+  
+          status:
+            true,
+  
+          createdAt:
+            true,
+  
+          profile: {
+            select: {
+              firstName:
+                true,
+  
+              lastName:
+                true,
+  
+              preferredLanguage:
+                true,
+  
+              residenceCountry: {
+                select: {
+                  id:
+                    true,
+  
+                  iso2Code:
+                    true,
+  
+                  name:
+                    true,
+  
+                  dialingCode:
+                    true,
+                },
+              },
+            },
           },
         },
-      },
-
-      select: {
-        id: true,
-        email: true,
-        username: true,
-        status: true,
-        createdAt: true,
-
-        profile: {
-          select: {
-            firstName: true,
-            lastName: true,
-            preferredLanguage: true,
-          },
-        },
-      },
-    });
-
+      });
+  
     /*
      * Send email verification.
      *
      * Failure to send the email must not cancel
      * the database registration.
-     *
-     * The user can later request another verification
-     * email using resend-verification.
      */
     try {
       await this.mailService.sendVerificationEmail({
-        to: email,
-        firstName: user.profile?.firstName ?? null,
-        token: rawVerificationToken,
+        to:
+          email,
+  
+        firstName:
+          user.profile
+            ?.firstName ??
+          null,
+  
+        token:
+          rawVerificationToken,
       });
     } catch (error) {
       this.logger.error(
         'Unable to send registration verification email.',
-        error instanceof Error ? error.stack : undefined,
+        error instanceof Error
+          ? error.stack
+          : undefined,
       );
     }
-
+  
     return {
       user,
-
+  
       verification: {
-        required: true,
-        channel: 'EMAIL',
-        expiresAt: verificationExpiresAt,
+        required:
+          true,
+  
+        channel:
+          'EMAIL',
+  
+        expiresAt:
+          verificationExpiresAt,
       },
     };
   }
