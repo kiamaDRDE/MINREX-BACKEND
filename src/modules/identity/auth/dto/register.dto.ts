@@ -24,19 +24,14 @@ export class RegisterDto {
   phone!: string;
 
   @ApiProperty({
-    example: 'CM',
+    example: 'Germany',
     description:
-      'ISO 3166-1 alpha-2 code of the user residence country.',
+      'Country of residence selected by the user.',
   })
   @IsString()
-  @Matches(
-    /^[A-Za-z]{2}$/,
-    {
-      message:
-        'residenceCountryCode must be a valid ISO-2 country code.',
-    },
-  )
-  residenceCountryCode!: string;
+  @MinLength(2)
+  @MaxLength(150)
+  residenceCountry!: string;
 
   @ApiProperty({
     example: 'ermon@example.com',

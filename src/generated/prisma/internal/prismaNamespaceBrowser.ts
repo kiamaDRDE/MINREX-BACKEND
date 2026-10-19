@@ -196,7 +196,7 @@ export const UserProfileScalarFieldEnum = {
   displayName: 'displayName',
   photoUrl: 'photoUrl',
   preferredLanguage: 'preferredLanguage',
-  residenceCountryId: 'residenceCountryId',
+  residenceCountry: 'residenceCountry',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

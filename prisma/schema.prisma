@@ -215,8 +215,6 @@ model Country {
   censusResidenceRecords   CensusRecord[] @relation("CensusResidenceCountry")
   censusNationalityRecords CensusRecord[] @relation("CensusNationalityCountry")
 
-  userProfilesByResidence UserProfile[] @relation("UserProfileResidenceCountry")
-
   @@index([isActive])
   @@map("countries")
 }
@@ -434,15 +432,11 @@ model UserProfile {
 
   preferredLanguage PreferredLanguage @default(FR) @map("preferred_language")
 
-  residenceCountryId String? @map("residence_country_id") @db.Uuid
-
-  residenceCountry Country? @relation("UserProfileResidenceCountry", fields: [residenceCountryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  residenceCountry String?  @map("residence_country") @db.VarChar(150)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@index([lastName, firstName])
-  @@index([residenceCountryId])
   @@map("user_profiles")
 }
 
