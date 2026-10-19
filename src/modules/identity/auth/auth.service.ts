@@ -141,11 +141,8 @@ export class AuthService {
       await Promise.all([
         this.prisma.country.findFirst({
           where: {
-            id:
-              dto.residenceCountryId,
-  
-            isActive:
-              true,
+            iso2Code: dto.residenceCountryCode.trim().toUpperCase(),
+            isActive: true,
           },
   
           select: {
@@ -1127,6 +1124,7 @@ export class AuthService {
             firstName: true,
             lastName: true,
             preferredLanguage: true,
+
           },
         },
       },

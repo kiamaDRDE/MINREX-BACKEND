@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsString,
-  IsUUID,
   Matches,
   MaxLength,
   MinLength,
@@ -23,15 +22,21 @@ export class RegisterDto {
     },
   )
   phone!: string;
-  
+
   @ApiProperty({
-    example:
-      '550e8400-e29b-41d4-a716-446655440000',
+    example: 'CM',
     description:
-      'Identifier of the user residence country.',
+      'ISO 3166-1 alpha-2 code of the user residence country.',
   })
-  @IsUUID()
-  residenceCountryId!: string;
+  @IsString()
+  @Matches(
+    /^[A-Za-z]{2}$/,
+    {
+      message:
+        'residenceCountryCode must be a valid ISO-2 country code.',
+    },
+  )
+  residenceCountryCode!: string;
 
   @ApiProperty({
     example: 'ermon@example.com',
