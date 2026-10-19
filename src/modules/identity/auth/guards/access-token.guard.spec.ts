@@ -41,13 +41,13 @@ describe(
 
     const jwtServiceMock = {
       verifyAsync:
-        jest.fn(),
+        jest.fn<() => Promise<unknown>>(),
     };
-
+    
     const prismaMock = {
       authSession: {
         findUnique:
-          jest.fn(),
+          jest.fn<() => Promise<unknown>>(),
       },
     };
 
@@ -66,7 +66,7 @@ describe(
       }) as unknown as ExecutionContext;
 
     beforeEach(() => {
-      jest.clearAllMocks();
+      jest.resetAllMocks();
 
       guard =
         new AccessTokenGuard(
