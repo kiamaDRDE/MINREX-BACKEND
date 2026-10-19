@@ -2185,6 +2185,7 @@ export const CountryScalarFieldEnum = {
   iso2Code: 'iso2Code',
   iso3Code: 'iso3Code',
   name: 'name',
+  dialingCode: 'dialingCode',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2283,6 +2284,7 @@ export const UserProfileScalarFieldEnum = {
   displayName: 'displayName',
   photoUrl: 'photoUrl',
   preferredLanguage: 'preferredLanguage',
+  residenceCountryId: 'residenceCountryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
