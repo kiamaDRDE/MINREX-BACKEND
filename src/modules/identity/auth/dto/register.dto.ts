@@ -24,6 +24,21 @@ export class RegisterDto {
   phone!: string;
 
   @ApiProperty({
+    example: 'CM',
+    description:
+      'ISO 3166-1 alpha-2 code of the user residence country.',
+  })
+  @IsString()
+  @Matches(
+    /^[A-Za-z]{2}$/,
+    {
+      message:
+        'residenceCountryCode must be a valid ISO-2 country code.',
+    },
+  )
+  residenceCountryCode!: string;
+
+  @ApiProperty({
     example: 'ermon@example.com',
   })
   @IsEmail()

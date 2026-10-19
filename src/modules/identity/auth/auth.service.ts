@@ -133,35 +133,75 @@ export class AuthService {
     /*
      * Check authentication identifiers.
      */
-    const existingUser =
-      await this.prisma.user.findFirst({
-        where: {
-          OR: [
-            {
-              email,
-            },
-  
-            {
-              username,
-            },
-  
-            {
-              phone,
-            },
-          ],
-        },
-  
-        select: {
-          email:
-            true,
-  
-          username:
-            true,
-  
-          phone:
-            true,
-        },
-      });
+    const [
+      residenceCountry,
+      existingUser,
+    ] =
+      await Promise.all([
+        this.prisma.country.findFirst({
+          where: {
+            iso2Code:
+              dto.residenceCountryCode
+                .trim()
+                .toUpperCase(),
+    
+            isActive:
+              true,
+          },
+    
+          select: {
+            id:
+              true,
+    
+            iso2Code:
+              true,
+    
+            iso3Code:
+              true,
+    
+            name:
+              true,
+    
+            dialingCode:
+              true,
+          },
+        }),
+    
+        this.prisma.user.findFirst({
+          where: {
+            OR: [
+              {
+                email,
+              },
+    
+              {
+                username,
+              },
+    
+              {
+                phone,
+              },
+            ],
+          },
+    
+          select: {
+            email:
+              true,
+    
+            username:
+              true,
+    
+            phone:
+              true,
+          },
+        }),
+      ]);
+
+    if (!residenceCountry) {
+      throw new BadRequestException(
+        'The selected residence country is invalid or inactive.',
+      );
+    }
   
     if (
       existingUser?.email ===
@@ -243,6 +283,9 @@ export class AuthService {
   
               lastName:
                 dto.lastName.trim(),
+
+              residenceCountryId:
+                residenceCountry.id,
             },
           },
   
@@ -288,6 +331,21 @@ export class AuthService {
   
               preferredLanguage:
                 true,
+
+              residenceCountry: {
+                select: {
+                  id:
+                    true,
+                  iso2Code:
+                    true,
+                  iso3Code:
+                    true,
+                  name:
+                    true,
+                  dialingCode:
+                    true,
+                },
+              },
             },
           },
         },
