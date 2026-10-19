@@ -131,70 +131,37 @@ export class AuthService {
       parsedPhone.number.toString();
   
     /*
-     * Validate residence country
-     * and check authentication identifiers.
+     * Check authentication identifiers.
      */
-    const [
-      residenceCountry,
-      existingUser,
-    ] =
-      await Promise.all([
-        this.prisma.country.findFirst({
-          where: {
-            iso2Code: dto.residenceCountryCode.trim().toUpperCase(),
-            isActive: true,
-          },
+    const existingUser =
+      await this.prisma.user.findFirst({
+        where: {
+          OR: [
+            {
+              email,
+            },
   
-          select: {
-            id:
-              true,
+            {
+              username,
+            },
   
-            iso2Code:
-              true,
+            {
+              phone,
+            },
+          ],
+        },
   
-            name:
-              true,
+        select: {
+          email:
+            true,
   
-            dialingCode:
-              true,
-          },
-        }),
+          username:
+            true,
   
-        this.prisma.user.findFirst({
-          where: {
-            OR: [
-              {
-                email,
-              },
-  
-              {
-                username,
-              },
-  
-              {
-                phone,
-              },
-            ],
-          },
-  
-          select: {
-            email:
-              true,
-  
-            username:
-              true,
-  
-            phone:
-              true,
-          },
-        }),
-      ]);
-  
-    if (!residenceCountry) {
-      throw new BadRequestException(
-        'The selected residence country is invalid or inactive.',
-      );
-    }
+          phone:
+            true,
+        },
+      });
   
     if (
       existingUser?.email ===
@@ -276,9 +243,6 @@ export class AuthService {
   
               lastName:
                 dto.lastName.trim(),
-  
-              residenceCountryId:
-                residenceCountry.id,
             },
           },
   
@@ -324,22 +288,6 @@ export class AuthService {
   
               preferredLanguage:
                 true,
-  
-              residenceCountry: {
-                select: {
-                  id:
-                    true,
-  
-                  iso2Code:
-                    true,
-  
-                  name:
-                    true,
-  
-                  dialingCode:
-                    true,
-                },
-              },
             },
           },
         },
