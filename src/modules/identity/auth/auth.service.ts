@@ -311,8 +311,8 @@ export class AuthService {
           username,
           phone,
           passwordHash,
-          status: UserStatus.ACTIVE,
-          emailVerifiedAt: new Date(),
+          status: UserStatus.PENDING_VERIFICATION,
+          emailVerifiedAt: null,
   
           profile: {
             create: {
@@ -691,21 +691,14 @@ export class AuthService {
 
     /*
      * Account must first complete email verification.
-     * Auto-activate pending accounts during development/testing.
      */
     if (
       !user.emailVerifiedAt ||
       user.status === UserStatus.PENDING_VERIFICATION
     ) {
-      await this.prisma.user.update({
-        where: { id: user.id },
-        data: {
-          status: UserStatus.ACTIVE,
-          emailVerifiedAt: new Date(),
-        },
-      });
-      user.status = UserStatus.ACTIVE;
-      user.emailVerifiedAt = new Date();
+      throw new ForbiddenException(
+        'Please verify your email address before signing in.',
+      );
     }
 
     /*
