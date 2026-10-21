@@ -22,6 +22,7 @@ import { PrismaService } from '../../../infrastructure/database/prisma.service.j
 import { MailService } from '../../../infrastructure/mail/mail.service.js';
 
 import { DevActivateDto } from './dto/dev-activate.dto.js';
+import { DevGrantAdminDto } from './dto/dev-grant-admin.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { ResendVerificationDto } from './dto/resend-verification.dto.js';
 import { VerifyEmailDto } from './dto/verify-email.dto.js';
@@ -85,39 +86,85 @@ export class AuthService {
       },
     });
 
-    // Grant PLATFORM_ADMIN role to facilitate testing all API modules
-    const adminRole = await this.prisma.role.findUnique({
-      where: { code: SYSTEM_ROLE_CODES.PLATFORM_ADMIN },
-    });
-
-    if (adminRole) {
-      const existingAssignment =
-        await this.prisma.userRoleAssignment.findFirst({
-          where: {
-            userId: user.id,
-            roleId: adminRole.id,
-          },
-        });
-
-      if (!existingAssignment) {
-        await this.prisma.userRoleAssignment.create({
-          data: {
-            userId: user.id,
-            roleId: adminRole.id,
-            isActive: true,
-          },
-        });
-      }
-    }
-
     this.logger.log(
-      `User ${updatedUser.email} (${updatedUser.id}) was activated via dev-activate.`,
+      `User ${updatedUser.email} (${updatedUser.id}) status set to ACTIVE via dev-activate.`,
     );
 
     return {
       success: true,
-      message: `User ${updatedUser.email} status set to ACTIVE and granted PLATFORM_ADMIN permissions.`,
+      message: `User ${updatedUser.email} status set to ACTIVE.`,
       user: updatedUser,
+    };
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | DEV GRANT PLATFORM ADMIN (TEMPORARY TESTING API)
+  |--------------------------------------------------------------------------
+  */
+
+  async devGrantAdmin(dto: DevGrantAdminDto) {
+    const identifier = dto.identifier.trim().toLowerCase();
+
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: identifier },
+          { username: identifier },
+        ],
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        status: true,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(
+        `User with email or username '${dto.identifier}' not found.`,
+      );
+    }
+
+    const adminRole = await this.prisma.role.findUnique({
+      where: { code: SYSTEM_ROLE_CODES.PLATFORM_ADMIN },
+    });
+
+    if (!adminRole) {
+      throw new NotFoundException(
+        `System role ${SYSTEM_ROLE_CODES.PLATFORM_ADMIN} not found in database. Please run prisma db seed.`,
+      );
+    }
+
+    const existingAssignment =
+      await this.prisma.userRoleAssignment.findFirst({
+        where: {
+          userId: user.id,
+          roleId: adminRole.id,
+        },
+      });
+
+    if (!existingAssignment) {
+      await this.prisma.userRoleAssignment.create({
+        data: {
+          userId: user.id,
+          roleId: adminRole.id,
+          isActive: true,
+        },
+      });
+    }
+
+    this.logger.log(
+      `User ${user.email} (${user.id}) was granted PLATFORM_ADMIN role via dev-grant-admin.`,
+    );
+
+    return {
+      success: true,
+      message: `User ${user.email} was successfully granted PLATFORM_ADMIN role.`,
+      userId: user.id,
+      email: user.email,
+      role: SYSTEM_ROLE_CODES.PLATFORM_ADMIN,
     };
   }
 

@@ -43,6 +43,10 @@ import {
 } from './dto/dev-activate.dto.js';
 
 import {
+  DevGrantAdminDto,
+} from './dto/dev-grant-admin.dto.js';
+
+import {
   LoginDto,
 } from './dto/login.dto.js';
 
@@ -106,7 +110,7 @@ export class AuthController {
   )
   @ApiOperation({
     summary:
-      '[DEV ONLY] Activate a user account to ACTIVE status and grant platform admin role for testing',
+      '[DEV ONLY] Set user status to ACTIVE and mark email as verified',
   })
   @ApiOkResponse({
     description:
@@ -122,6 +126,40 @@ export class AuthController {
       DevActivateDto,
   ) {
     return this.authService.devActivate(
+      dto,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | DEV GRANT PLATFORM ADMIN (TEMPORARY TESTING ENDPOINT)
+  |--------------------------------------------------------------------------
+  */
+
+  @Post(
+    'dev-grant-admin',
+  )
+  @HttpCode(
+    HttpStatus.OK,
+  )
+  @ApiOperation({
+    summary:
+      '[DEV ONLY] Grant PLATFORM_ADMIN role to a user account for testing',
+  })
+  @ApiOkResponse({
+    description:
+      'PLATFORM_ADMIN role granted successfully.',
+  })
+  @ApiNotFoundResponse({
+    description:
+      'User not found.',
+  })
+  devGrantAdmin(
+    @Body()
+    dto:
+      DevGrantAdminDto,
+  ) {
+    return this.authService.devGrantAdmin(
       dto,
     );
   }
