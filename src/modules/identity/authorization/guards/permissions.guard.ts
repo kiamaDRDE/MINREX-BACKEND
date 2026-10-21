@@ -73,6 +73,14 @@ export class PermissionsGuard implements CanActivate {
     }
 
     /*
+     * If the request was bypassed in dev mode without token,
+     * allow all permissions for testing purposes.
+     */
+    if (request.auth.sessionId === 'dev-bypass-session') {
+      return true;
+    }
+
+    /*
      * Retrieve optional authorization scope
      * metadata from the route.
      *

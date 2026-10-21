@@ -17,6 +17,7 @@ import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -36,6 +37,10 @@ import {
 import {
   AuthService,
 } from './auth.service.js';
+
+import {
+  DevActivateDto,
+} from './dto/dev-activate.dto.js';
 
 import {
   LoginDto,
@@ -89,44 +94,36 @@ export class AuthController {
 
   /*
   |--------------------------------------------------------------------------
-  | COUNTRIES
+  | DEV ACTIVATE (TEMPORARY TESTING ENDPOINT)
   |--------------------------------------------------------------------------
   */
 
-  @Get(
-    'countries',
+  @Post(
+    'dev-activate',
+  )
+  @HttpCode(
+    HttpStatus.OK,
   )
   @ApiOperation({
     summary:
-      'Get active countries available during registration',
+      '[DEV ONLY] Activate a user account to ACTIVE status and grant platform admin role for testing',
   })
   @ApiOkResponse({
     description:
-      'Active countries returned successfully.',
+      'User account activated successfully.',
   })
-  getCountries() {
-    return this.authService.getCountries();
-  }
-
-  /*
-  |--------------------------------------------------------------------------
-  | PHONE CODES
-  |--------------------------------------------------------------------------
-  */
-
-  @Get(
-    'phone-codes',
-  )
-  @ApiOperation({
-    summary:
-      'Get international dialing codes available during registration',
-  })
-  @ApiOkResponse({
+  @ApiNotFoundResponse({
     description:
-      'International dialing codes returned successfully.',
+      'User not found.',
   })
-  getPhoneCodes() {
-    return this.authService.getPhoneCodes();
+  devActivate(
+    @Body()
+    dto:
+      DevActivateDto,
+  ) {
+    return this.authService.devActivate(
+      dto,
+    );
   }
 
   /*

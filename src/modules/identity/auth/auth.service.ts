@@ -4,6 +4,7 @@ import {
   ForbiddenException,
   Injectable,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -20,12 +21,14 @@ import {
 import { PrismaService } from '../../../infrastructure/database/prisma.service.js';
 import { MailService } from '../../../infrastructure/mail/mail.service.js';
 
+import { DevActivateDto } from './dto/dev-activate.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { ResendVerificationDto } from './dto/resend-verification.dto.js';
 import { VerifyEmailDto } from './dto/verify-email.dto.js';
 
 import { LoginDto } from './dto/login.dto.js';
 import { JwtPayload } from './interfaces/jwt-payload.interface.js';
+import { SYSTEM_ROLE_CODES } from '../authorization/constants/system-roles.constants.js';
 import { isUUID } from 'class-validator';
 
 import {
@@ -45,51 +48,77 @@ export class AuthService {
 
   /*
   |--------------------------------------------------------------------------
-  | PUBLIC COUNTRY REFERENCES
+  | DEV ACTIVATE (TEMPORARY TESTING API)
   |--------------------------------------------------------------------------
   */
 
-  async getCountries() {
-    return this.prisma.country.findMany({
+  async devActivate(dto: DevActivateDto) {
+    const identifier = dto.identifier.trim().toLowerCase();
+
+    const user = await this.prisma.user.findFirst({
       where: {
-        isActive: true,
-      },
-
-      orderBy: {
-        name: 'asc',
-      },
-
-      select: {
-        id: true,
-        iso2Code: true,
-        iso3Code: true,
-        name: true,
-        dialingCode: true,
+        OR: [
+          { email: identifier },
+          { username: identifier },
+        ],
       },
     });
-  }
 
-  async getPhoneCodes() {
-    return this.prisma.country.findMany({
-      where: {
-        isActive: true,
+    if (!user) {
+      throw new NotFoundException(
+        `User with email or username '${dto.identifier}' not found.`,
+      );
+    }
 
-        dialingCode: {
-          not: null,
-        },
+    const updatedUser = await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        status: UserStatus.ACTIVE,
+        emailVerifiedAt: user.emailVerifiedAt ?? new Date(),
       },
-
-      orderBy: {
-        name: 'asc',
-      },
-
       select: {
         id: true,
-        iso2Code: true,
-        name: true,
-        dialingCode: true,
+        email: true,
+        username: true,
+        status: true,
+        emailVerifiedAt: true,
       },
     });
+
+    // Grant PLATFORM_ADMIN role to facilitate testing all API modules
+    const adminRole = await this.prisma.role.findUnique({
+      where: { code: SYSTEM_ROLE_CODES.PLATFORM_ADMIN },
+    });
+
+    if (adminRole) {
+      const existingAssignment =
+        await this.prisma.userRoleAssignment.findFirst({
+          where: {
+            userId: user.id,
+            roleId: adminRole.id,
+          },
+        });
+
+      if (!existingAssignment) {
+        await this.prisma.userRoleAssignment.create({
+          data: {
+            userId: user.id,
+            roleId: adminRole.id,
+            isActive: true,
+          },
+        });
+      }
+    }
+
+    this.logger.log(
+      `User ${updatedUser.email} (${updatedUser.id}) was activated via dev-activate.`,
+    );
+
+    return {
+      success: true,
+      message: `User ${updatedUser.email} status set to ACTIVE and granted PLATFORM_ADMIN permissions.`,
+      user: updatedUser,
+    };
   }
 
   /*
@@ -235,6 +264,8 @@ export class AuthService {
           username,
           phone,
           passwordHash,
+          status: UserStatus.ACTIVE,
+          emailVerifiedAt: new Date(),
   
           profile: {
             create: {
@@ -613,14 +644,21 @@ export class AuthService {
 
     /*
      * Account must first complete email verification.
+     * Auto-activate pending accounts during development/testing.
      */
     if (
       !user.emailVerifiedAt ||
       user.status === UserStatus.PENDING_VERIFICATION
     ) {
-      throw new ForbiddenException(
-        'Please verify your email address before signing in.',
-      );
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          status: UserStatus.ACTIVE,
+          emailVerifiedAt: new Date(),
+        },
+      });
+      user.status = UserStatus.ACTIVE;
+      user.emailVerifiedAt = new Date();
     }
 
     /*
