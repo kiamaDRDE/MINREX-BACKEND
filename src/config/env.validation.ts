@@ -50,4 +50,6 @@ export const envValidationSchema = Joi.object({
   JWT_ACCESS_TTL_SECONDS: Joi.number().integer().positive().default(900),
 
   JWT_REFRESH_TTL_SECONDS: Joi.number().integer().positive().default(604800),
+  ALLOW_DEV_ENDPOINTS: Joi.boolean().truthy('true').falsy('false').default(false),
+  SWAGGER_ENABLED: Joi.boolean().truthy('true').falsy('false').optional(),
 });

@@ -183,51 +183,59 @@ async function bootstrap() {
 
   /*
   |--------------------------------------------------------------------------
-  | SWAGGER / OPENAPI
+  | SWAGGER / OPENAPI (DISABLED BY DEFAULT IN PRODUCTION)
   |--------------------------------------------------------------------------
   */
 
-  const swaggerConfig =
-    new DocumentBuilder()
-      .setTitle('MINREX API')
-      .setDescription(
-        'API documentation for the MINREX platform',
-      )
-      .setVersion('1.0')
-
-      /*
-       * This will become useful once we protect
-       * endpoints using Bearer JWT authentication.
-       */
-      .addBearerAuth(
-        {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
-        'access-token',
-      )
-
-      .build();
-
-  const swaggerDocument =
-    SwaggerModule.createDocument(
-      app,
-      swaggerConfig,
-    );
-
-  /*
-   * Swagger remains:
-   *
-   * http://localhost:3000/api/docs
-   *
-   * It is intentionally outside /api/v1.
-   */
-  SwaggerModule.setup(
-    `${apiPrefix}/docs`,
-    app,
-    swaggerDocument,
+  const nodeEnv = configService.get<string>('NODE_ENV', 'development');
+  const swaggerEnabled = configService.get<boolean>(
+    'SWAGGER_ENABLED',
+    nodeEnv !== 'production',
   );
+
+  if (swaggerEnabled) {
+    const swaggerConfig =
+      new DocumentBuilder()
+        .setTitle('MINREX API')
+        .setDescription(
+          'API documentation for the MINREX platform',
+        )
+        .setVersion('1.0')
+
+        /*
+         * This will become useful once we protect
+         * endpoints using Bearer JWT authentication.
+         */
+        .addBearerAuth(
+          {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+          'access-token',
+        )
+
+        .build();
+
+    const swaggerDocument =
+      SwaggerModule.createDocument(
+        app,
+        swaggerConfig,
+      );
+
+    /*
+     * Swagger remains:
+     *
+     * http://localhost:3000/api/docs
+     *
+     * It is intentionally outside /api/v1.
+     */
+    SwaggerModule.setup(
+      `${apiPrefix}/docs`,
+      app,
+      swaggerDocument,
+    );
+  }
 
   /*
   |--------------------------------------------------------------------------
@@ -252,7 +260,9 @@ async function bootstrap() {
   );
 
   logger.log(
-    `Swagger documentation: /${apiPrefix}/docs`,
+    swaggerEnabled
+      ? `Swagger documentation: /${apiPrefix}/docs`
+      : 'Swagger documentation disabled in production',
   );
 }
 

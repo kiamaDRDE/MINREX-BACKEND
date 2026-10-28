@@ -49,11 +49,40 @@ export class AuthService {
 
   /*
   |--------------------------------------------------------------------------
+  | DEV ENDPOINT GUARD (STRICTLY BLOCKED IN PRODUCTION)
+  |--------------------------------------------------------------------------
+  */
+
+  private assertDevEndpointsAllowed(endpointName: string): void {
+    const nodeEnv = this.configService.get<string>('NODE_ENV', 'development');
+    const allowDevEndpoints = this.configService.get<boolean>(
+      'ALLOW_DEV_ENDPOINTS',
+      false,
+    );
+
+    if (nodeEnv === 'production') {
+      this.logger.warn(
+        `Blocked unauthorized attempt to invoke ${endpointName} in production environment.`,
+      );
+      throw new NotFoundException('Cannot POST /api/v1/auth/' + endpointName);
+    }
+
+    if (nodeEnv !== 'development' && !allowDevEndpoints) {
+      throw new ForbiddenException(
+        'Development testing endpoints are disabled in this environment.',
+      );
+    }
+  }
+
+  /*
+  |--------------------------------------------------------------------------
   | DEV ACTIVATE (TEMPORARY TESTING API)
   |--------------------------------------------------------------------------
   */
 
   async devActivate(dto: DevActivateDto) {
+    this.assertDevEndpointsAllowed('dev-activate');
+
     const identifier = dto.identifier.trim().toLowerCase();
 
     const user = await this.prisma.user.findFirst({
@@ -104,6 +133,8 @@ export class AuthService {
   */
 
   async devGrantAdmin(dto: DevGrantAdminDto) {
+    this.assertDevEndpointsAllowed('dev-grant-admin');
+
     const identifier = dto.identifier.trim().toLowerCase();
 
     const user = await this.prisma.user.findFirst({
