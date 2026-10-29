@@ -5,13 +5,17 @@ import {
 
 import {
   Transform,
+  Type,
 } from 'class-transformer';
 
 import {
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
+  Max,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -81,6 +85,30 @@ export class CreateDiplomaticPostDto {
   @IsString()
   @MaxLength(255)
   address?: string;
+
+  @ApiPropertyOptional({
+    example: 48.8566,
+    description:
+      'Optional GPS latitude (-90 to 90). Auto-resolved from city/country when omitted.',
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  latitude?: number;
+
+  @ApiPropertyOptional({
+    example: 2.3522,
+    description:
+      'Optional GPS longitude (-180 to 180). Auto-resolved from city/country when omitted.',
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  longitude?: number;
 
   @ApiPropertyOptional({
     description:

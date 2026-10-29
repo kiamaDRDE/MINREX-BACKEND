@@ -5,6 +5,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import {
+  resolveGeoFromCityAndCountry,
+  resolveGeoFromPhoneNumber,
+} from '../../../common/utils/geo-resolver.util.js';
+
 import type {
   Prisma,
 } from '../../../generated/prisma/client.js';
@@ -212,6 +217,9 @@ export class UsersService {
 
           preferredLanguage:
             true,
+
+          residenceCountry:
+            true,
         },
       },
 
@@ -264,6 +272,25 @@ export class UsersService {
 
               name:
                 true,
+
+              city:
+                true,
+
+              latitude:
+                true,
+
+              longitude:
+                true,
+
+              hostCountry: {
+                select: {
+                  iso2Code:
+                    true,
+
+                  name:
+                    true,
+                },
+              },
             },
           },
 
@@ -310,9 +337,89 @@ export class UsersService {
         }),
       ]);
 
+    const items = users.map((u) => {
+      let geoLocation: {
+        latitude: number;
+        longitude: number;
+        city: string | null;
+        country: string;
+      } | null = null;
+
+      const assignedPost = u.roleAssignments.find((ra) => ra.post)?.post;
+      if (assignedPost) {
+        if (
+          assignedPost.latitude !== null &&
+          assignedPost.longitude !== null
+        ) {
+          geoLocation = {
+            latitude: Number(assignedPost.latitude),
+            longitude: Number(assignedPost.longitude),
+            city: assignedPost.city ?? null,
+            country:
+              assignedPost.hostCountry?.name ?? 'International',
+          };
+        } else {
+          const fromPost = resolveGeoFromCityAndCountry({
+            city: assignedPost.city,
+            iso2Code: assignedPost.hostCountry?.iso2Code,
+            countryName: assignedPost.hostCountry?.name,
+            fallbackText: assignedPost.name,
+          });
+          if (fromPost) {
+            geoLocation = {
+              latitude: fromPost.latitude,
+              longitude: fromPost.longitude,
+              city: fromPost.city,
+              country: fromPost.country,
+            };
+          }
+        }
+      }
+
+      if (!geoLocation && u.profile?.residenceCountry) {
+        const fromResidence = resolveGeoFromCityAndCountry({
+          countryName: u.profile.residenceCountry,
+        });
+        if (fromResidence) {
+          geoLocation = {
+            latitude: fromResidence.latitude,
+            longitude: fromResidence.longitude,
+            city: fromResidence.city,
+            country: fromResidence.country,
+          };
+        }
+      }
+
+      if (!geoLocation && u.phone) {
+        const fromPhone = resolveGeoFromPhoneNumber(u.phone);
+        if (fromPhone) {
+          geoLocation = {
+            latitude: fromPhone.latitude,
+            longitude: fromPhone.longitude,
+            city: fromPhone.city,
+            country: fromPhone.country,
+          };
+        }
+      }
+
+      return {
+        ...u,
+        roleAssignments: u.roleAssignments.map((ra) => ({
+          ...ra,
+          post: ra.post
+            ? {
+                id: ra.post.id,
+                code: ra.post.code,
+                name: ra.post.name,
+              }
+            : null,
+        })),
+        geoLocation,
+      };
+    });
+
     return {
-      items:
-        users,
+      items,
 
       pagination: {
         page,
@@ -397,6 +504,9 @@ export class UsersService {
                 true,
 
               preferredLanguage:
+                true,
+
+              residenceCountry:
                 true,
 
               createdAt:

@@ -6,6 +6,10 @@ import {
 } from '@nestjs/common';
 
 import {
+  resolveGeoFromCityAndCountry,
+} from '../../common/utils/geo-resolver.util.js';
+
+import {
   PrismaService,
 } from '../../infrastructure/database/prisma.service.js';
 
@@ -222,7 +226,7 @@ export class NetworkService {
   */
 
   async findPosts() {
-    const items =
+    const rawItems =
       await this.prisma.diplomaticPost.findMany({
         orderBy: {
           name: 'asc',
@@ -235,6 +239,8 @@ export class NetworkService {
           status: true,
           city: true,
           address: true,
+          latitude: true,
+          longitude: true,
 
           type: {
             select: {
@@ -263,6 +269,47 @@ export class NetworkService {
         },
       });
 
+    const items = await Promise.all(
+      rawItems.map(async (item) => {
+        let lat =
+          item.latitude !== null
+            ? Number(item.latitude)
+            : null;
+        let lon =
+          item.longitude !== null
+            ? Number(item.longitude)
+            : null;
+
+        if (lat === null || lon === null) {
+          const resolved = resolveGeoFromCityAndCountry({
+            city: item.city,
+            iso2Code: item.hostCountry?.iso2Code,
+            countryName: item.hostCountry?.name,
+            fallbackText: item.name,
+          });
+
+          if (resolved) {
+            lat = resolved.latitude;
+            lon = resolved.longitude;
+
+            await this.prisma.diplomaticPost.update({
+              where: { id: item.id },
+              data: {
+                latitude: resolved.latitude,
+                longitude: resolved.longitude,
+              },
+            });
+          }
+        }
+
+        return {
+          ...item,
+          latitude: lat,
+          longitude: lon,
+        };
+      }),
+    );
+
     return {
       items,
     };
@@ -285,6 +332,8 @@ export class NetworkService {
           status: true,
           city: true,
           address: true,
+          latitude: true,
+          longitude: true,
           createdAt: true,
           updatedAt: true,
 
@@ -350,7 +399,17 @@ export class NetworkService {
     }
 
     return {
-      post,
+      post: {
+        ...post,
+        latitude:
+          post.latitude !== null
+            ? Number(post.latitude)
+            : null,
+        longitude:
+          post.longitude !== null
+            ? Number(post.longitude)
+            : null,
+      },
     };
   }
 
@@ -383,6 +442,15 @@ export class NetworkService {
       );
     }
 
+    const coords =
+      await this.resolvePostCoordinates({
+        latitude: dto.latitude,
+        longitude: dto.longitude,
+        city: dto.city,
+        hostCountryId: dto.hostCountryId,
+        name: dto.name,
+      });
+
     const post =
       await this.prisma.diplomaticPost.create({
         data: {
@@ -407,6 +475,14 @@ export class NetworkService {
             dto.address ??
             null,
 
+          latitude:
+            coords?.latitude ??
+            null,
+
+          longitude:
+            coords?.longitude ??
+            null,
+
           parentPostId:
             dto.parentPostId ??
             null,
@@ -414,7 +490,17 @@ export class NetworkService {
       });
 
     return {
-      post,
+      post: {
+        ...post,
+        latitude:
+          post.latitude !== null
+            ? Number(post.latitude)
+            : null,
+        longitude:
+          post.longitude !== null
+            ? Number(post.longitude)
+            : null,
+      },
     };
   }
 
@@ -487,6 +573,26 @@ export class NetworkService {
       }
     }
 
+    const shouldRecomputeCoords =
+      dto.latitude !== undefined ||
+      dto.longitude !== undefined ||
+      dto.city !== undefined ||
+      dto.hostCountryId !== undefined ||
+      dto.name !== undefined ||
+      existing.latitude === null ||
+      existing.longitude === null;
+
+    const coords = shouldRecomputeCoords
+      ? await this.resolvePostCoordinates({
+          latitude: dto.latitude,
+          longitude: dto.longitude,
+          city: dto.city ?? existing.city,
+          hostCountryId:
+            dto.hostCountryId ?? existing.hostCountryId,
+          name: dto.name ?? existing.name,
+        })
+      : null;
+
     const post =
       await this.prisma.diplomaticPost.update({
         where: {
@@ -537,6 +643,15 @@ export class NetworkService {
               }
             : {}),
 
+          ...(coords
+            ? {
+                latitude:
+                  coords.latitude,
+                longitude:
+                  coords.longitude,
+              }
+            : {}),
+
           ...(dto.parentPostId !== undefined
             ? {
                 parentPostId:
@@ -554,7 +669,17 @@ export class NetworkService {
       });
 
     return {
-      post,
+      post: {
+        ...post,
+        latitude:
+          post.latitude !== null
+            ? Number(post.latitude)
+            : null,
+        longitude:
+          post.longitude !== null
+            ? Number(post.longitude)
+            : null,
+      },
     };
   }
 
@@ -979,9 +1104,57 @@ export class NetworkService {
 
   /*
   |--------------------------------------------------------------------------
-  | VALIDATION
+  | VALIDATION & GEOCODING
   |--------------------------------------------------------------------------
   */
+
+  private async resolvePostCoordinates(params: {
+    latitude?: number | null | undefined;
+    longitude?: number | null | undefined;
+    city?: string | null | undefined;
+    hostCountryId?: string | null | undefined;
+    name?: string | null | undefined;
+  }): Promise<{ latitude: number; longitude: number } | null> {
+    if (
+      typeof params.latitude === 'number' &&
+      Number.isFinite(params.latitude) &&
+      typeof params.longitude === 'number' &&
+      Number.isFinite(params.longitude)
+    ) {
+      return {
+        latitude: params.latitude,
+        longitude: params.longitude,
+      };
+    }
+
+    let iso2Code: string | null = null;
+    let countryName: string | null = null;
+
+    if (params.hostCountryId) {
+      const country = await this.prisma.country.findUnique({
+        where: { id: params.hostCountryId },
+        select: { iso2Code: true, name: true },
+      });
+      iso2Code = country?.iso2Code ?? null;
+      countryName = country?.name ?? null;
+    }
+
+    const resolved = resolveGeoFromCityAndCountry({
+      city: params.city,
+      iso2Code,
+      countryName,
+      fallbackText: params.name,
+    });
+
+    if (!resolved) {
+      return null;
+    }
+
+    return {
+      latitude: resolved.latitude,
+      longitude: resolved.longitude,
+    };
+  }
 
   private async ensurePostExists(
     postId: string,

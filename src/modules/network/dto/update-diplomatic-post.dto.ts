@@ -4,14 +4,18 @@ import {
 
 import {
   Transform,
+  Type,
 } from 'class-transformer';
 
 import {
   IsEnum,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
+  Max,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -65,6 +69,26 @@ export class UpdateDiplomaticPostDto {
   @IsString()
   @MaxLength(255)
   address?: string;
+
+  @ApiPropertyOptional({
+    example: 48.8566,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  latitude?: number;
+
+  @ApiPropertyOptional({
+    example: 2.3522,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  longitude?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
