@@ -858,11 +858,11 @@ model AssistanceCase {
    * |--------------------------------------------------------------------------
    */
 
-  type    AssistanceType
-  categoryId String?             @map("category_id") @db.Uuid
-  category   AssistanceCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  urgency AssistanceUrgency    @default(NORMAL)
-  status  AssistanceCaseStatus @default(SUBMITTED)
+  type       AssistanceType
+  categoryId String?              @map("category_id") @db.Uuid
+  category   AssistanceCategory?  @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  urgency    AssistanceUrgency    @default(NORMAL)
+  status     AssistanceCaseStatus @default(SUBMITTED)
 
   subject     String @db.VarChar(200)
   description String @db.Text

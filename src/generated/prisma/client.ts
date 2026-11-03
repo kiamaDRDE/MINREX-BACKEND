@@ -147,6 +147,16 @@ export type AssistanceCase = Prisma.AssistanceCaseModel
  */
 export type AssistanceCaseHistory = Prisma.AssistanceCaseHistoryModel
 /**
+ * Model AssistanceCategory
+ * 
+ */
+export type AssistanceCategory = Prisma.AssistanceCategoryModel
+/**
+ * Model AssistanceProtocolStep
+ * 
+ */
+export type AssistanceProtocolStep = Prisma.AssistanceProtocolStepModel
+/**
  * Model MentorshipRequest
  * 
  */

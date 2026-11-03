@@ -418,6 +418,8 @@ export const ModelName = {
   CensusStatusHistory: 'CensusStatusHistory',
   AssistanceCase: 'AssistanceCase',
   AssistanceCaseHistory: 'AssistanceCaseHistory',
+  AssistanceCategory: 'AssistanceCategory',
+  AssistanceProtocolStep: 'AssistanceProtocolStep',
   MentorshipRequest: 'MentorshipRequest',
   MentorshipRequestHistory: 'MentorshipRequestHistory'
 } as const
@@ -435,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "consumedRefreshToken" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory" | "mentorshipRequest" | "mentorshipRequestHistory"
+    modelProps: "country" | "postType" | "diplomaticPost" | "postCoverage" | "service" | "user" | "userProfile" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "userPostAssignment" | "verificationToken" | "authSession" | "consumedRefreshToken" | "censusRecord" | "censusDocument" | "censusReview" | "censusStatusHistory" | "assistanceCase" | "assistanceCaseHistory" | "assistanceCategory" | "assistanceProtocolStep" | "mentorshipRequest" | "mentorshipRequestHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1993,6 +1995,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AssistanceCategory: {
+      payload: Prisma.$AssistanceCategoryPayload<ExtArgs>
+      fields: Prisma.AssistanceCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistanceCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistanceCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.AssistanceCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistanceCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.AssistanceCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.AssistanceCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.AssistanceCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistanceCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.AssistanceCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        update: {
+          args: Prisma.AssistanceCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistanceCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistanceCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistanceCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistanceCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.AssistanceCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistanceCategory>
+        }
+        groupBy: {
+          args: Prisma.AssistanceCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistanceCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    AssistanceProtocolStep: {
+      payload: Prisma.$AssistanceProtocolStepPayload<ExtArgs>
+      fields: Prisma.AssistanceProtocolStepFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AssistanceProtocolStepFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AssistanceProtocolStepFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        findFirst: {
+          args: Prisma.AssistanceProtocolStepFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AssistanceProtocolStepFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        findMany: {
+          args: Prisma.AssistanceProtocolStepFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>[]
+        }
+        create: {
+          args: Prisma.AssistanceProtocolStepCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        createMany: {
+          args: Prisma.AssistanceProtocolStepCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AssistanceProtocolStepCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>[]
+        }
+        delete: {
+          args: Prisma.AssistanceProtocolStepDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        update: {
+          args: Prisma.AssistanceProtocolStepUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        deleteMany: {
+          args: Prisma.AssistanceProtocolStepDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AssistanceProtocolStepUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AssistanceProtocolStepUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>[]
+        }
+        upsert: {
+          args: Prisma.AssistanceProtocolStepUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AssistanceProtocolStepPayload>
+        }
+        aggregate: {
+          args: Prisma.AssistanceProtocolStepAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAssistanceProtocolStep>
+        }
+        groupBy: {
+          args: Prisma.AssistanceProtocolStepGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceProtocolStepGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AssistanceProtocolStepCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AssistanceProtocolStepCountAggregateOutputType> | number
+        }
+      }
+    }
     MentorshipRequest: {
       payload: Prisma.$MentorshipRequestPayload<ExtArgs>
       fields: Prisma.MentorshipRequestFieldRefs
@@ -2506,6 +2656,7 @@ export const AssistanceCaseScalarFieldEnum = {
   reference: 'reference',
   requesterId: 'requesterId',
   type: 'type',
+  categoryId: 'categoryId',
   urgency: 'urgency',
   status: 'status',
   subject: 'subject',
@@ -2541,6 +2692,42 @@ export const AssistanceCaseHistoryScalarFieldEnum = {
 } as const
 
 export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
+
+
+export const AssistanceCategoryScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  shortName: 'shortName',
+  description: 'description',
+  icon: 'icon',
+  badgeColor: 'badgeColor',
+  defaultUrgency: 'defaultUrgency',
+  defaultSlaHours: 'defaultSlaHours',
+  isActive: 'isActive',
+  isSystem: 'isSystem',
+  displayOrder: 'displayOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceCategoryScalarFieldEnum = (typeof AssistanceCategoryScalarFieldEnum)[keyof typeof AssistanceCategoryScalarFieldEnum]
+
+
+export const AssistanceProtocolStepScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  stepNumber: 'stepNumber',
+  title: 'title',
+  description: 'description',
+  recommendedDelay: 'recommendedDelay',
+  responsibleRole: 'responsibleRole',
+  requiredDocs: 'requiredDocs',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceProtocolStepScalarFieldEnum = (typeof AssistanceProtocolStepScalarFieldEnum)[keyof typeof AssistanceProtocolStepScalarFieldEnum]
 
 
 export const MentorshipRequestScalarFieldEnum = {
@@ -3162,6 +3349,8 @@ export type GlobalOmitConfig = {
   censusStatusHistory?: Prisma.CensusStatusHistoryOmit
   assistanceCase?: Prisma.AssistanceCaseOmit
   assistanceCaseHistory?: Prisma.AssistanceCaseHistoryOmit
+  assistanceCategory?: Prisma.AssistanceCategoryOmit
+  assistanceProtocolStep?: Prisma.AssistanceProtocolStepOmit
   mentorshipRequest?: Prisma.MentorshipRequestOmit
   mentorshipRequestHistory?: Prisma.MentorshipRequestHistoryOmit
 }

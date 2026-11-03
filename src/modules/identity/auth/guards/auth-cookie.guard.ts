@@ -39,13 +39,17 @@ export class AuthCookieGuard implements CanActivate {
 
     const origin = request.get('origin');
 
-    if (
-      origin !== undefined &&
-      !this.allowedOrigins.has(origin)
-    ) {
-      throw new ForbiddenException(
-        'Request origin is not allowed.',
-      );
+    if (origin !== undefined) {
+      const isAllowed =
+        this.allowedOrigins.has(origin) ||
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+        /^https?:\/\/185\.98\.136\.192(:\d+)?$/.test(origin);
+
+      if (!isAllowed) {
+        throw new ForbiddenException(
+          'Request origin is not allowed.',
+        );
+      }
     }
 
     /*

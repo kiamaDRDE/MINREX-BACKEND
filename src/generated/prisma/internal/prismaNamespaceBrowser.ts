@@ -72,6 +72,8 @@ export const ModelName = {
   CensusStatusHistory: 'CensusStatusHistory',
   AssistanceCase: 'AssistanceCase',
   AssistanceCaseHistory: 'AssistanceCaseHistory',
+  AssistanceCategory: 'AssistanceCategory',
+  AssistanceProtocolStep: 'AssistanceProtocolStep',
   MentorshipRequest: 'MentorshipRequest',
   MentorshipRequestHistory: 'MentorshipRequestHistory'
 } as const
@@ -418,6 +420,7 @@ export const AssistanceCaseScalarFieldEnum = {
   reference: 'reference',
   requesterId: 'requesterId',
   type: 'type',
+  categoryId: 'categoryId',
   urgency: 'urgency',
   status: 'status',
   subject: 'subject',
@@ -453,6 +456,42 @@ export const AssistanceCaseHistoryScalarFieldEnum = {
 } as const
 
 export type AssistanceCaseHistoryScalarFieldEnum = (typeof AssistanceCaseHistoryScalarFieldEnum)[keyof typeof AssistanceCaseHistoryScalarFieldEnum]
+
+
+export const AssistanceCategoryScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  shortName: 'shortName',
+  description: 'description',
+  icon: 'icon',
+  badgeColor: 'badgeColor',
+  defaultUrgency: 'defaultUrgency',
+  defaultSlaHours: 'defaultSlaHours',
+  isActive: 'isActive',
+  isSystem: 'isSystem',
+  displayOrder: 'displayOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceCategoryScalarFieldEnum = (typeof AssistanceCategoryScalarFieldEnum)[keyof typeof AssistanceCategoryScalarFieldEnum]
+
+
+export const AssistanceProtocolStepScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  stepNumber: 'stepNumber',
+  title: 'title',
+  description: 'description',
+  recommendedDelay: 'recommendedDelay',
+  responsibleRole: 'responsibleRole',
+  requiredDocs: 'requiredDocs',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistanceProtocolStepScalarFieldEnum = (typeof AssistanceProtocolStepScalarFieldEnum)[keyof typeof AssistanceProtocolStepScalarFieldEnum]
 
 
 export const MentorshipRequestScalarFieldEnum = {

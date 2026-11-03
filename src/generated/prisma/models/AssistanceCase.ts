@@ -29,6 +29,7 @@ export type AssistanceCaseMinAggregateOutputType = {
   reference: string | null
   requesterId: string | null
   type: $Enums.AssistanceType | null
+  categoryId: string | null
   urgency: $Enums.AssistanceUrgency | null
   status: $Enums.AssistanceCaseStatus | null
   subject: string | null
@@ -54,6 +55,7 @@ export type AssistanceCaseMaxAggregateOutputType = {
   reference: string | null
   requesterId: string | null
   type: $Enums.AssistanceType | null
+  categoryId: string | null
   urgency: $Enums.AssistanceUrgency | null
   status: $Enums.AssistanceCaseStatus | null
   subject: string | null
@@ -79,6 +81,7 @@ export type AssistanceCaseCountAggregateOutputType = {
   reference: number
   requesterId: number
   type: number
+  categoryId: number
   urgency: number
   status: number
   subject: number
@@ -106,6 +109,7 @@ export type AssistanceCaseMinAggregateInputType = {
   reference?: true
   requesterId?: true
   type?: true
+  categoryId?: true
   urgency?: true
   status?: true
   subject?: true
@@ -131,6 +135,7 @@ export type AssistanceCaseMaxAggregateInputType = {
   reference?: true
   requesterId?: true
   type?: true
+  categoryId?: true
   urgency?: true
   status?: true
   subject?: true
@@ -156,6 +161,7 @@ export type AssistanceCaseCountAggregateInputType = {
   reference?: true
   requesterId?: true
   type?: true
+  categoryId?: true
   urgency?: true
   status?: true
   subject?: true
@@ -254,6 +260,7 @@ export type AssistanceCaseGroupByOutputType = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId: string | null
   urgency: $Enums.AssistanceUrgency
   status: $Enums.AssistanceCaseStatus
   subject: string
@@ -300,6 +307,7 @@ export type AssistanceCaseWhereInput = {
   reference?: Prisma.StringFilter<"AssistanceCase"> | string
   requesterId?: Prisma.UuidFilter<"AssistanceCase"> | string
   type?: Prisma.EnumAssistanceTypeFilter<"AssistanceCase"> | $Enums.AssistanceType
+  categoryId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFilter<"AssistanceCase"> | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFilter<"AssistanceCase"> | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFilter<"AssistanceCase"> | string
@@ -319,6 +327,7 @@ export type AssistanceCaseWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   requester?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  category?: Prisma.XOR<Prisma.AssistanceCategoryNullableScalarRelationFilter, Prisma.AssistanceCategoryWhereInput> | null
   country?: Prisma.XOR<Prisma.CountryScalarRelationFilter, Prisma.CountryWhereInput>
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -330,6 +339,7 @@ export type AssistanceCaseOrderByWithRelationInput = {
   reference?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -349,6 +359,7 @@ export type AssistanceCaseOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   requester?: Prisma.UserOrderByWithRelationInput
+  category?: Prisma.AssistanceCategoryOrderByWithRelationInput
   country?: Prisma.CountryOrderByWithRelationInput
   assignedPost?: Prisma.DiplomaticPostOrderByWithRelationInput
   assignedToUser?: Prisma.UserOrderByWithRelationInput
@@ -363,6 +374,7 @@ export type AssistanceCaseWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AssistanceCaseWhereInput | Prisma.AssistanceCaseWhereInput[]
   requesterId?: Prisma.UuidFilter<"AssistanceCase"> | string
   type?: Prisma.EnumAssistanceTypeFilter<"AssistanceCase"> | $Enums.AssistanceType
+  categoryId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFilter<"AssistanceCase"> | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFilter<"AssistanceCase"> | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFilter<"AssistanceCase"> | string
@@ -382,6 +394,7 @@ export type AssistanceCaseWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   requester?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  category?: Prisma.XOR<Prisma.AssistanceCategoryNullableScalarRelationFilter, Prisma.AssistanceCategoryWhereInput> | null
   country?: Prisma.XOR<Prisma.CountryScalarRelationFilter, Prisma.CountryWhereInput>
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -393,6 +406,7 @@ export type AssistanceCaseOrderByWithAggregationInput = {
   reference?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -424,6 +438,7 @@ export type AssistanceCaseScalarWhereWithAggregatesInput = {
   reference?: Prisma.StringWithAggregatesFilter<"AssistanceCase"> | string
   requesterId?: Prisma.UuidWithAggregatesFilter<"AssistanceCase"> | string
   type?: Prisma.EnumAssistanceTypeWithAggregatesFilter<"AssistanceCase"> | $Enums.AssistanceType
+  categoryId?: Prisma.UuidNullableWithAggregatesFilter<"AssistanceCase"> | string | null
   urgency?: Prisma.EnumAssistanceUrgencyWithAggregatesFilter<"AssistanceCase"> | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusWithAggregatesFilter<"AssistanceCase"> | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringWithAggregatesFilter<"AssistanceCase"> | string
@@ -464,6 +479,7 @@ export type AssistanceCaseCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
@@ -475,6 +491,7 @@ export type AssistanceCaseUncheckedCreateInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -516,6 +533,7 @@ export type AssistanceCaseUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
@@ -527,6 +545,7 @@ export type AssistanceCaseUncheckedUpdateInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -553,6 +572,7 @@ export type AssistanceCaseCreateManyInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -599,6 +619,7 @@ export type AssistanceCaseUncheckedUpdateManyInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -634,6 +655,7 @@ export type AssistanceCaseCountOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -659,6 +681,7 @@ export type AssistanceCaseMaxOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -684,6 +707,7 @@ export type AssistanceCaseMinOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   requesterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   urgency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subject?: Prisma.SortOrder
@@ -903,6 +927,48 @@ export type AssistanceCaseUpdateOneRequiredWithoutHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AssistanceCaseUpdateToOneWithWhereWithoutHistoryInput, Prisma.AssistanceCaseUpdateWithoutHistoryInput>, Prisma.AssistanceCaseUncheckedUpdateWithoutHistoryInput>
 }
 
+export type AssistanceCaseCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput> | Prisma.AssistanceCaseCreateWithoutCategoryInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput | Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyCategoryInputEnvelope
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+}
+
+export type AssistanceCaseUncheckedCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput> | Prisma.AssistanceCaseCreateWithoutCategoryInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput | Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyCategoryInputEnvelope
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+}
+
+export type AssistanceCaseUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput> | Prisma.AssistanceCaseCreateWithoutCategoryInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput | Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutCategoryInput | Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyCategoryInputEnvelope
+  set?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  disconnect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  delete?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  update?: Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutCategoryInput | Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.AssistanceCaseUpdateManyWithWhereWithoutCategoryInput | Prisma.AssistanceCaseUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
+}
+
+export type AssistanceCaseUncheckedUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput> | Prisma.AssistanceCaseCreateWithoutCategoryInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput | Prisma.AssistanceCaseCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutCategoryInput | Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyCategoryInputEnvelope
+  set?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  disconnect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  delete?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  update?: Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutCategoryInput | Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.AssistanceCaseUpdateManyWithWhereWithoutCategoryInput | Prisma.AssistanceCaseUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
+}
+
 export type AssistanceCaseCreateWithoutCountryInput = {
   id?: string
   reference: string
@@ -923,6 +989,7 @@ export type AssistanceCaseCreateWithoutCountryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
@@ -933,6 +1000,7 @@ export type AssistanceCaseUncheckedCreateWithoutCountryInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -987,6 +1055,7 @@ export type AssistanceCaseScalarWhereInput = {
   reference?: Prisma.StringFilter<"AssistanceCase"> | string
   requesterId?: Prisma.UuidFilter<"AssistanceCase"> | string
   type?: Prisma.EnumAssistanceTypeFilter<"AssistanceCase"> | $Enums.AssistanceType
+  categoryId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFilter<"AssistanceCase"> | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFilter<"AssistanceCase"> | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFilter<"AssistanceCase"> | string
@@ -1027,6 +1096,7 @@ export type AssistanceCaseCreateWithoutAssignedPostInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
@@ -1037,6 +1107,7 @@ export type AssistanceCaseUncheckedCreateWithoutAssignedPostInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1102,6 +1173,7 @@ export type AssistanceCaseCreateWithoutRequesterInput = {
   closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
@@ -1112,6 +1184,7 @@ export type AssistanceCaseUncheckedCreateWithoutRequesterInput = {
   id?: string
   reference: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1163,6 +1236,7 @@ export type AssistanceCaseCreateWithoutAssignedToUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
@@ -1173,6 +1247,7 @@ export type AssistanceCaseUncheckedCreateWithoutAssignedToUserInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1255,6 +1330,7 @@ export type AssistanceCaseCreateWithoutHistoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
@@ -1265,6 +1341,7 @@ export type AssistanceCaseUncheckedCreateWithoutHistoryInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1321,6 +1398,7 @@ export type AssistanceCaseUpdateWithoutHistoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
@@ -1331,6 +1409,7 @@ export type AssistanceCaseUncheckedUpdateWithoutHistoryInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1351,11 +1430,90 @@ export type AssistanceCaseUncheckedUpdateWithoutHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type AssistanceCaseCreateWithoutCategoryInput = {
+  id?: string
+  reference: string
+  type: $Enums.AssistanceType
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  routedAt?: Date | string
+  assignedAt?: Date | string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
+  assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
+  assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
+}
+
+export type AssistanceCaseUncheckedCreateWithoutCategoryInput = {
+  id?: string
+  reference: string
+  requesterId: string
+  type: $Enums.AssistanceType
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  countryId: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  assignedPostId: string
+  routedAt?: Date | string
+  assignedToUserId?: string | null
+  assignedAt?: Date | string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutAssistanceCaseInput
+}
+
+export type AssistanceCaseCreateOrConnectWithoutCategoryInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput>
+}
+
+export type AssistanceCaseCreateManyCategoryInputEnvelope = {
+  data: Prisma.AssistanceCaseCreateManyCategoryInput | Prisma.AssistanceCaseCreateManyCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type AssistanceCaseUpsertWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.AssistanceCaseUpdateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedUpdateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedCreateWithoutCategoryInput>
+}
+
+export type AssistanceCaseUpdateWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.AssistanceCaseUpdateWithoutCategoryInput, Prisma.AssistanceCaseUncheckedUpdateWithoutCategoryInput>
+}
+
+export type AssistanceCaseUpdateManyWithWhereWithoutCategoryInput = {
+  where: Prisma.AssistanceCaseScalarWhereInput
+  data: Prisma.XOR<Prisma.AssistanceCaseUpdateManyMutationInput, Prisma.AssistanceCaseUncheckedUpdateManyWithoutCategoryInput>
+}
+
 export type AssistanceCaseCreateManyCountryInput = {
   id?: string
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1395,6 +1553,7 @@ export type AssistanceCaseUpdateWithoutCountryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
@@ -1405,6 +1564,7 @@ export type AssistanceCaseUncheckedUpdateWithoutCountryInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1430,6 +1590,7 @@ export type AssistanceCaseUncheckedUpdateManyWithoutCountryInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1454,6 +1615,7 @@ export type AssistanceCaseCreateManyAssignedPostInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1493,6 +1655,7 @@ export type AssistanceCaseUpdateWithoutAssignedPostInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
@@ -1503,6 +1666,7 @@ export type AssistanceCaseUncheckedUpdateWithoutAssignedPostInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1528,6 +1692,7 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedPostInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1551,6 +1716,7 @@ export type AssistanceCaseCreateManyRequesterInput = {
   id?: string
   reference: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1576,6 +1742,7 @@ export type AssistanceCaseCreateManyAssignedToUserInput = {
   reference: string
   requesterId: string
   type: $Enums.AssistanceType
+  categoryId?: string | null
   urgency?: $Enums.AssistanceUrgency
   status?: $Enums.AssistanceCaseStatus
   subject: string
@@ -1614,6 +1781,7 @@ export type AssistanceCaseUpdateWithoutRequesterInput = {
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
@@ -1624,6 +1792,7 @@ export type AssistanceCaseUncheckedUpdateWithoutRequesterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1649,6 +1818,7 @@ export type AssistanceCaseUncheckedUpdateManyWithoutRequesterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1689,6 +1859,7 @@ export type AssistanceCaseUpdateWithoutAssignedToUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
@@ -1699,6 +1870,7 @@ export type AssistanceCaseUncheckedUpdateWithoutAssignedToUserInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1724,6 +1896,7 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   requesterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
   status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
   subject?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1735,6 +1908,108 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AssistanceCaseCreateManyCategoryInput = {
+  id?: string
+  reference: string
+  requesterId: string
+  type: $Enums.AssistanceType
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  countryId: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  assignedPostId: string
+  routedAt?: Date | string
+  assignedToUserId?: string | null
+  assignedAt?: Date | string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AssistanceCaseUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
+  assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
+  assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
+}
+
+export type AssistanceCaseUncheckedUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  countryId?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutAssistanceCaseNestedInput
+}
+
+export type AssistanceCaseUncheckedUpdateManyWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  countryId?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1779,6 +2054,7 @@ export type AssistanceCaseSelect<ExtArgs extends runtime.Types.Extensions.Intern
   reference?: boolean
   requesterId?: boolean
   type?: boolean
+  categoryId?: boolean
   urgency?: boolean
   status?: boolean
   subject?: boolean
@@ -1798,6 +2074,7 @@ export type AssistanceCaseSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
@@ -1810,6 +2087,7 @@ export type AssistanceCaseSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   reference?: boolean
   requesterId?: boolean
   type?: boolean
+  categoryId?: boolean
   urgency?: boolean
   status?: boolean
   subject?: boolean
@@ -1829,6 +2107,7 @@ export type AssistanceCaseSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   createdAt?: boolean
   updatedAt?: boolean
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
@@ -1839,6 +2118,7 @@ export type AssistanceCaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   reference?: boolean
   requesterId?: boolean
   type?: boolean
+  categoryId?: boolean
   urgency?: boolean
   status?: boolean
   subject?: boolean
@@ -1858,6 +2138,7 @@ export type AssistanceCaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   createdAt?: boolean
   updatedAt?: boolean
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
@@ -1868,6 +2149,7 @@ export type AssistanceCaseSelectScalar = {
   reference?: boolean
   requesterId?: boolean
   type?: boolean
+  categoryId?: boolean
   urgency?: boolean
   status?: boolean
   subject?: boolean
@@ -1888,9 +2170,10 @@ export type AssistanceCaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AssistanceCaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "requesterId" | "type" | "urgency" | "status" | "subject" | "description" | "countryId" | "city" | "address" | "contactEmail" | "contactPhone" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "resolutionSummary" | "resolvedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCase"]>
+export type AssistanceCaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "requesterId" | "type" | "categoryId" | "urgency" | "status" | "subject" | "description" | "countryId" | "city" | "address" | "contactEmail" | "contactPhone" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "resolutionSummary" | "resolvedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCase"]>
 export type AssistanceCaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
@@ -1899,12 +2182,14 @@ export type AssistanceCaseInclude<ExtArgs extends runtime.Types.Extensions.Inter
 }
 export type AssistanceCaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
 }
 export type AssistanceCaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
@@ -1914,6 +2199,7 @@ export type $AssistanceCasePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "AssistanceCase"
   objects: {
     requester: Prisma.$UserPayload<ExtArgs>
+    category: Prisma.$AssistanceCategoryPayload<ExtArgs> | null
     country: Prisma.$CountryPayload<ExtArgs>
     assignedPost: Prisma.$DiplomaticPostPayload<ExtArgs>
     assignedToUser: Prisma.$UserPayload<ExtArgs> | null
@@ -1942,6 +2228,7 @@ export type $AssistanceCasePayload<ExtArgs extends runtime.Types.Extensions.Inte
      *    * |--------------------------------------------------------------------------
      */
     type: $Enums.AssistanceType
+    categoryId: string | null
     urgency: $Enums.AssistanceUrgency
     status: $Enums.AssistanceCaseStatus
     subject: string
@@ -2385,6 +2672,7 @@ readonly fields: AssistanceCaseFieldRefs;
 export interface Prisma__AssistanceCaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   requester<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.AssistanceCase$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistanceCase$categoryArgs<ExtArgs>>): Prisma.Prisma__AssistanceCategoryClient<runtime.Types.Result.GetResult<Prisma.$AssistanceCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   country<T extends Prisma.CountryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CountryDefaultArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedPost<T extends Prisma.DiplomaticPostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPostDefaultArgs<ExtArgs>>): Prisma.Prisma__DiplomaticPostClient<runtime.Types.Result.GetResult<Prisma.$DiplomaticPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedToUser<T extends Prisma.AssistanceCase$assignedToUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2422,6 +2710,7 @@ export interface AssistanceCaseFieldRefs {
   readonly reference: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly requesterId: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly type: Prisma.FieldRef<"AssistanceCase", 'AssistanceType'>
+  readonly categoryId: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly urgency: Prisma.FieldRef<"AssistanceCase", 'AssistanceUrgency'>
   readonly status: Prisma.FieldRef<"AssistanceCase", 'AssistanceCaseStatus'>
   readonly subject: Prisma.FieldRef<"AssistanceCase", 'String'>
@@ -2838,6 +3127,25 @@ export type AssistanceCaseDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many AssistanceCases to delete.
    */
   limit?: number
+}
+
+/**
+ * AssistanceCase.category
+ */
+export type AssistanceCase$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistanceCategory
+   */
+  select?: Prisma.AssistanceCategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistanceCategory
+   */
+  omit?: Prisma.AssistanceCategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistanceCategoryInclude<ExtArgs> | null
+  where?: Prisma.AssistanceCategoryWhereInput
 }
 
 /**
