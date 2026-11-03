@@ -859,6 +859,8 @@ model AssistanceCase {
    */
 
   type    AssistanceType
+  categoryId String?             @map("category_id") @db.Uuid
+  category   AssistanceCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   urgency AssistanceUrgency    @default(NORMAL)
   status  AssistanceCaseStatus @default(SUBMITTED)
 
@@ -963,6 +965,50 @@ model AssistanceCaseHistory {
   @@index([action])
   @@index([createdAt])
   @@map("assistance_case_history")
+}
+
+model AssistanceCategory {
+  id              String            @id @default(uuid()) @db.Uuid
+  code            String            @unique @db.VarChar(50)
+  name            String            @db.VarChar(150)
+  shortName       String?           @map("short_name") @db.VarChar(100)
+  description     String?           @db.Text
+  icon            String?           @db.VarChar(50)
+  badgeColor      String?           @map("badge_color") @db.VarChar(50)
+  defaultUrgency  AssistanceUrgency @default(NORMAL) @map("default_urgency")
+  defaultSlaHours Int               @default(24) @map("default_sla_hours")
+  isActive        Boolean           @default(true) @map("is_active")
+  isSystem        Boolean           @default(false) @map("is_system")
+  displayOrder    Int               @default(0) @map("display_order")
+
+  steps AssistanceProtocolStep[]
+  cases AssistanceCase[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([code])
+  @@index([isActive])
+  @@map("assistance_categories")
+}
+
+model AssistanceProtocolStep {
+  id               String             @id @default(uuid()) @db.Uuid
+  categoryId       String             @map("category_id") @db.Uuid
+  category         AssistanceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  stepNumber       Int                @map("step_number")
+  title            String             @db.VarChar(150)
+  description      String             @db.Text
+  recommendedDelay String?            @map("recommended_delay") @db.VarChar(50)
+  responsibleRole  String?            @map("responsible_role") @db.VarChar(100)
+  requiredDocs     String[]           @default([]) @map("required_docs")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([categoryId, stepNumber])
+  @@index([categoryId])
+  @@map("assistance_protocol_steps")
 }
 
 /**
