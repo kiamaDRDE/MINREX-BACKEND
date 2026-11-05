@@ -15,6 +15,7 @@ import type {
   AuthorizationContext,
   AuthorizationScopeMetadata,
 } from '../interfaces/authorization-context.interface.js';
+import { REQUIRED_ANY_PERMISSIONS_KEY,} from '../decorators/require-any-permissions.decorator.js';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -26,30 +27,27 @@ export class PermissionsGuard implements CanActivate {
   async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {
-    /*
-     * Retrieve permissions required by the route.
-     *
-     * Example:
-     *
-     * @RequirePermissions(
-     *   'assistance.cases.read',
-     *   'assistance.cases.update',
-     * )
-     */
+    const targets = [
+      context.getHandler(),
+      context.getClass(),
+    ];
+    
     const requiredPermissions =
       this.reflector.getAllAndOverride<string[]>(
         REQUIRED_PERMISSIONS_KEY,
-        [
-          context.getHandler(),
-          context.getClass(),
-        ],
+        targets,
       ) ?? [];
-
-    /*
-     * If no permission is declared,
-     * this guard has nothing to authorize.
-     */
-    if (requiredPermissions.length === 0) {
+    
+    const requiredAnyPermissions =
+      this.reflector.getAllAndOverride<string[]>(
+        REQUIRED_ANY_PERMISSIONS_KEY,
+        targets,
+      ) ?? [];
+    
+    if (
+      requiredPermissions.length === 0 &&
+      requiredAnyPermissions.length === 0
+    ) {
       return true;
     }
 
@@ -70,14 +68,6 @@ export class PermissionsGuard implements CanActivate {
       throw new ForbiddenException(
         'Authentication context is missing.',
       );
-    }
-
-    /*
-     * If the request was bypassed in dev mode without token,
-     * allow all permissions for testing purposes.
-     */
-    if (request.auth.sessionId === 'dev-bypass-session') {
-      return true;
     }
 
     /*
@@ -125,6 +115,32 @@ export class PermissionsGuard implements CanActivate {
       }
     }
 
+    if (scopeMetadata?.allowAssignedPosts) {
+  authorizationContext.allowAnyPost = true;
+    }
+    
+    if (
+      scopeMetadata?.resource &&
+      scopeMetadata.resourceIdParam
+    ) {
+      const resourceId = this.normalizeRouteParam(
+        request.params?.[scopeMetadata.resourceIdParam],
+      );
+    
+      if (resourceId) {
+        const resourceContext =
+          await this.authorizationService.resolveResourceContext(
+            scopeMetadata.resource,
+            resourceId,
+          );
+    
+        Object.assign(
+          authorizationContext,
+          resourceContext,
+        );
+      }
+    }
+
     /*
      * Service context.
      */
@@ -147,20 +163,34 @@ export class PermissionsGuard implements CanActivate {
      * every permission required by the route,
      * taking the current scope into account.
      */
-    const authorized =
-      await this.authorizationService
-        .hasAllPermissions(
-          request.auth.userId,
-          requiredPermissions,
-          authorizationContext,
-        );
-
-    if (!authorized) {
+    const [allPermissionsGranted, anyPermissionGranted] =
+      await Promise.all([
+        requiredPermissions.length > 0
+          ? this.authorizationService.hasAllPermissions(
+              request.auth.userId,
+              requiredPermissions,
+              authorizationContext,
+            )
+          : Promise.resolve(true),
+    
+        requiredAnyPermissions.length > 0
+          ? this.authorizationService.hasAnyPermission(
+              request.auth.userId,
+              requiredAnyPermissions,
+              authorizationContext,
+            )
+          : Promise.resolve(true),
+      ]);
+    
+    if (
+      !allPermissionsGranted ||
+      !anyPermissionGranted
+    ) {
       throw new ForbiddenException(
         'You do not have permission to perform this action.',
       );
     }
-
+    
     return true;
   }
 

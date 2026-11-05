@@ -30,6 +30,13 @@ import { QueryPublicationsDto } from './dto/query-publications.dto.js';
 import { ReviewPublicationDto } from './dto/review-publication.dto.js';
 import { UpdatePublicationDto } from './dto/update-publication.dto.js';
 import { PublicationsService } from './publications.service.js';
+import {
+  AuthorizationScope,
+} from '../identity/authorization/decorators/authorization-scope.decorator.js';
+
+import {
+  RequireAnyPermissions,
+} from '../identity/authorization/decorators/require-any-permissions.decorator.js';
 
 type AuthenticatedRequest = Request & {
   auth?: {
@@ -52,7 +59,13 @@ export class PublicationsController {
   */
 
   @Get('feed')
-  @RequirePermissions(PERMISSIONS.PUBLICATIONS.READ_SELF, PERMISSIONS.PUBLICATIONS.READ)
+  @RequireAnyPermissions(
+    PERMISSIONS.PUBLICATIONS.READ_SELF,
+    PERMISSIONS.PUBLICATIONS.READ,
+  )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary: 'Fil d’actualités officiel et communautaire (Publications publiées)',
     description:
@@ -82,7 +95,12 @@ export class PublicationsController {
   */
 
   @Get('queue/level1')
-  @RequirePermissions(PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1)
+  @RequirePermissions(
+    PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1,
+  )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary: 'File de modération Niveau 1 (Agents consulaires / modérateurs territoriaux)',
     description:
@@ -97,7 +115,12 @@ export class PublicationsController {
   }
 
   @Get('queue/level2')
-  @RequirePermissions(PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2)
+  @RequirePermissions(
+    PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2,
+  )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary: 'File d’approbation finale Niveau 2 (Chefs de Poste / Direction Centrale MINREX)',
     description:
@@ -118,7 +141,14 @@ export class PublicationsController {
   */
 
   @Get(':identifier')
-  @RequirePermissions(PERMISSIONS.PUBLICATIONS.READ_SELF, PERMISSIONS.PUBLICATIONS.READ)
+  @RequireAnyPermissions(
+    PERMISSIONS.PUBLICATIONS.READ_SELF,
+    PERMISSIONS.PUBLICATIONS.READ,
+  )
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'identifier',
+  })
   @ApiOperation({
     summary: 'Obtenir le détail d’une publication par son slug ou son UUID',
   })
@@ -181,7 +211,14 @@ export class PublicationsController {
   }
 
   @Delete(':id')
-  @RequirePermissions(PERMISSIONS.PUBLICATIONS.DELETE, PERMISSIONS.PUBLICATIONS.UPDATE_SELF)
+  @RequireAnyPermissions(
+    PERMISSIONS.PUBLICATIONS.DELETE,
+    PERMISSIONS.PUBLICATIONS.UPDATE_SELF,
+  )
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Supprimer une publication (Brouillon par l’auteur ou suppression admin)',
   })
@@ -200,6 +237,10 @@ export class PublicationsController {
   */
 
   @Post(':id/review/level1')
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'id',
+  })
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1)
   @ApiOperation({
@@ -215,6 +256,10 @@ export class PublicationsController {
   }
 
   @Post(':id/review/level2')
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'id',
+  })
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2)
   @ApiOperation({
@@ -236,6 +281,10 @@ export class PublicationsController {
   */
 
   @Post(':id/feature')
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'id',
+  })
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.PUBLICATIONS.FEATURE)
   @ApiOperation({
@@ -244,20 +293,35 @@ export class PublicationsController {
   @ApiOkResponse({ description: 'Statut de mise en avant mis à jour.' })
   setFeatured(
     @Param('id', ParseUUIDPipe) id: string,
+    @Req() request: AuthenticatedRequest,
     @Query('featured') featured: boolean = true,
   ) {
-    return this.publicationsService.setFeatured(id, String(featured) === 'true');
+    return this.publicationsService.setFeatured(
+      id,
+      request.auth!.userId!,
+      String(featured) === 'true',
+    );
   }
 
   @Post(':id/archive')
+  @AuthorizationScope({
+    resource: 'publication',
+    resourceIdParam: 'id',
+  })
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.PUBLICATIONS.ARCHIVE)
   @ApiOperation({
     summary: 'Archiver une publication expirée ou retirée du fil d’actualités',
   })
   @ApiOkResponse({ description: 'Publication archivée.' })
-  archivePublication(@Param('id', ParseUUIDPipe) id: string) {
-    return this.publicationsService.archivePublication(id);
+  archivePublication(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Req() request: AuthenticatedRequest,
+  ) {
+    return this.publicationsService.archivePublication(
+      id,
+      request.auth!.userId!,
+    );
   }
 }
 

@@ -432,6 +432,14 @@ export const SYSTEM_ROLES:
         PERMISSIONS.ASSOCIATIONS.SUBMIT,
 
         /*
+         * Publications personnelles
+         */
+        PERMISSIONS.PUBLICATIONS.CREATE,
+        PERMISSIONS.PUBLICATIONS.READ_SELF,
+        PERMISSIONS.PUBLICATIONS.UPDATE_SELF,
+        PERMISSIONS.PUBLICATIONS.SUBMIT,
+
+        /*
          * Notifications
          */
         PERMISSIONS.NOTIFICATIONS.READ_SELF,

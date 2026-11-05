@@ -129,6 +129,149 @@ export class AuthorizationService {
         ),
     );
   }
+  
+  async hasAnyPermission(
+    userId: string,
+    requiredPermissions: string[],
+    context: AuthorizationContext = {},
+  ): Promise<boolean> {
+    if (requiredPermissions.length === 0) {
+      return true;
+    }
+  
+    for (const permission of requiredPermissions) {
+      const authorized = await this.hasAllPermissions(
+        userId,
+        [permission],
+        context,
+      );
+  
+      if (authorized) {
+        return true;
+      }
+    }
+  
+    return false;
+  }
+  
+  /**
+   * Retourne les postes autorisés pour une permission précise.
+   *
+   * Un rôle GLOBAL ne donne accès à tous les postes que s'il
+   * possède lui-même la permission demandée.
+   */
+  async getPostScopeForPermission(
+    userId: string,
+    permissionCode: string,
+  ): Promise<{
+    isGlobal: boolean;
+    postIds: string[];
+  }> {
+    const now = new Date();
+  
+    const assignments =
+      await this.prisma.userRoleAssignment.findMany({
+        where: {
+          userId,
+          isActive: true,
+  
+          OR: [
+            { expiresAt: null },
+            { expiresAt: { gt: now } },
+          ],
+  
+          role: {
+            isActive: true,
+            permissions: {
+              some: {
+                permission: {
+                  code: permissionCode,
+                },
+              },
+            },
+          },
+        },
+  
+        select: {
+          postId: true,
+  
+          role: {
+            select: {
+              scope: true,
+            },
+          },
+        },
+      });
+  
+    const isGlobal = assignments.some(
+      (assignment) =>
+        assignment.role.scope === RoleScope.GLOBAL,
+    );
+  
+    const postIds = [
+      ...new Set(
+        assignments
+          .filter(
+            (assignment) =>
+              assignment.role.scope === RoleScope.POST &&
+              Boolean(assignment.postId),
+          )
+          .map((assignment) => assignment.postId!)
+      ),
+    ];
+  
+    return {
+      isGlobal,
+      postIds,
+    };
+  }
+  
+  /**
+   * Résout le poste associé à une ressource.
+   *
+   * La valeur provient de la base de données et non
+   * d'un paramètre de poste librement fourni par le client.
+   */
+  async resolveResourceContext(
+    resource: 'association' | 'publication',
+    resourceId: string,
+  ): Promise<AuthorizationContext> {
+    if (resource === 'association') {
+      const association =
+        await this.prisma.association.findUnique({
+          where: {
+            id: resourceId,
+          },
+          select: {
+            diplomaticPostId: true,
+          },
+        });
+  
+      return association
+        ? { postId: association.diplomaticPostId }
+        : {};
+    }
+  
+    const isUuid =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        resourceId,
+      );
+  
+    const publication =
+      await this.prisma.publication.findFirst({
+        where: isUuid
+          ? { id: resourceId }
+          : { slug: resourceId },
+  
+        select: {
+          diplomaticPostId: true,
+        },
+      });
+  
+    return publication?.diplomaticPostId
+      ? { postId: publication.diplomaticPostId }
+      : {};
+  }
 
   /*
   |--------------------------------------------------------------------------
@@ -409,16 +552,14 @@ export class AuthorizationService {
     /*
      * POST-scoped role.
      */
-    if (
-      roleScope ===
-      RoleScope.POST
-    ) {
+    if (roleScope === RoleScope.POST) {
+      if (context.allowAnyPost) {
+        return Boolean(assignmentPostId);
+      }
+    
       return (
-        Boolean(
-          context.postId,
-        ) &&
-        assignmentPostId ===
-          context.postId
+        Boolean(context.postId) &&
+        assignmentPostId === context.postId
       );
     }
 

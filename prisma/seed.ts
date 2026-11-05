@@ -163,6 +163,61 @@ async function seedRolePermissions() {
 
 /*
 |--------------------------------------------------------------------------
+| SEED DEFAULT DIASPORA ASSIGNMENTS
+|--------------------------------------------------------------------------
+*/
+
+async function seedDefaultDiasporaAssignments() {
+  console.log('Assigning default diaspora role to users without roles...');
+
+  const diasporaRole = await prisma.role.findUnique({
+    where: {
+      code: 'DIASPORA_MEMBER',
+    },
+    select: {
+      id: true,
+      isActive: true,
+    },
+  });
+
+  if (!diasporaRole || !diasporaRole.isActive) {
+    throw new Error(
+      'DIASPORA_MEMBER role is missing or inactive.',
+    );
+  }
+
+  const usersWithoutAssignments =
+    await prisma.user.findMany({
+      where: {
+        roleAssignments: {
+          none: {},
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+  if (usersWithoutAssignments.length === 0) {
+    console.log('No users need a default role.');
+    return;
+  }
+
+  await prisma.userRoleAssignment.createMany({
+    data: usersWithoutAssignments.map((user) => ({
+      userId: user.id,
+      roleId: diasporaRole.id,
+      isActive: true,
+    })),
+  });
+
+  console.log(
+    `${usersWithoutAssignments.length} users assigned to DIASPORA_MEMBER.`,
+  );
+}
+
+/*
+|--------------------------------------------------------------------------
 | MAIN
 |--------------------------------------------------------------------------
 */
@@ -181,6 +236,8 @@ async function main() {
   await seedRoles();
 
   await seedRolePermissions();
+
+  await seedDefaultDiasporaAssignments();
 
   await seedCountries(prisma);
 

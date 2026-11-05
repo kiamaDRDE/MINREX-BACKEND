@@ -4,27 +4,36 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  NotificationPriority,
-  NotificationType,
-  PublicationReviewDecision,
-  PublicationReviewLevel,
-  PublicationStatus,
-  PublicationTargetScope,
-  RoleScope,
-} from '../../generated/prisma/enums.js';
 import { PrismaService } from '../../infrastructure/database/prisma.service.js';
 import { NotificationEventBusService } from '../notifications/events/notification-event-bus.service.js';
 import { CreatePublicationDto } from './dto/create-publication.dto.js';
 import { QueryPublicationsDto } from './dto/query-publications.dto.js';
 import { ReviewPublicationDto } from './dto/review-publication.dto.js';
 import { UpdatePublicationDto } from './dto/update-publication.dto.js';
+import {
+  AssociationStatus,
+  NotificationPriority,
+  NotificationType,
+  PublicationReviewDecision,
+  PublicationReviewLevel,
+  PublicationStatus,
+  PublicationTargetScope,
+} from '../../generated/prisma/enums.js';
+
+import {
+  AuthorizationService,
+} from '../identity/authorization/authorization.service.js';
+
+import {
+  PERMISSIONS,
+} from '../identity/authorization/constants/permissions.constants.js';
 
 @Injectable()
 export class PublicationsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly eventBus: NotificationEventBusService,
+    private readonly authorizationService: AuthorizationService,
   ) {}
 
   /**
@@ -66,14 +75,66 @@ export class PublicationsService {
       }
     }
 
+    let associationPostId: string | null = null;
+    
     if (dto.associationId) {
-      const association = await this.prisma.association.findUnique({
-        where: { id: dto.associationId },
-        select: { id: true, status: true },
-      });
+      const association =
+        await this.prisma.association.findUnique({
+          where: {
+            id: dto.associationId,
+          },
+    
+          select: {
+            id: true,
+            status: true,
+            diplomaticPostId: true,
+          },
+        });
+    
       if (!association) {
-        throw new BadRequestException('L’association spécifiée est introuvable.');
+        throw new BadRequestException(
+          'L’association spécifiée est introuvable.',
+        );
       }
+    
+      if (
+        association.status !== AssociationStatus.APPROVED
+      ) {
+        throw new ForbiddenException(
+          'Seule une association approuvée peut être associée à une publication.',
+        );
+      }
+    
+      const membership =
+        await this.prisma.associationMembership.findFirst({
+          where: {
+            associationId: association.id,
+            userId: authorId,
+            isActive: true,
+            isLegalRepresentative: true,
+          },
+    
+          select: {
+            id: true,
+          },
+        });
+    
+      if (!membership) {
+        throw new ForbiddenException(
+          'Seul un représentant légal actif peut publier au nom de cette association.',
+        );
+      }
+    
+      if (
+        dto.diplomaticPostId &&
+        dto.diplomaticPostId !== association.diplomaticPostId
+      ) {
+        throw new BadRequestException(
+          'Le poste diplomatique doit correspondre à celui de l’association.',
+        );
+      }
+    
+      associationPostId = association.diplomaticPostId;
     }
 
     const slug = this.generateSlug(dto.title);
@@ -87,7 +148,10 @@ export class PublicationsService {
         content: dto.content,
         type: dto.type,
         scope: dto.scope ?? PublicationTargetScope.GLOBAL_PUBLIC,
-        diplomaticPostId: dto.diplomaticPostId ?? null,
+        diplomaticPostId:
+          associationPostId ??
+          dto.diplomaticPostId ??
+          null,
         associationId: dto.associationId ?? null,
         coverImageUrl: dto.coverImageUrl ?? null,
         attachments: dto.attachments ?? [],
@@ -205,59 +269,133 @@ export class PublicationsService {
   /**
    * 4. Consultation unitaire d'une publication par ID ou SLUG
    */
-  async getPublicationBySlugOrId(identifier: string, userId?: string, isStaff: boolean = false) {
+  async getPublicationBySlugOrId(
+    identifier: string,
+    userId?: string,
+  ) {
     const isUuid =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
-
-    const publication = await this.prisma.publication.findFirst({
-      where: isUuid ? { id: identifier } : { slug: identifier },
-      include: {
-        author: {
-          select: {
-            id: true,
-            email: true,
-            profile: { select: { firstName: true, lastName: true, photoUrl: true } },
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        identifier,
+      );
+  
+    const publication =
+      await this.prisma.publication.findFirst({
+        where: isUuid
+          ? { id: identifier }
+          : { slug: identifier },
+  
+        include: {
+          author: {
+            select: {
+              id: true,
+              email: true,
+  
+              profile: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                  photoUrl: true,
+                },
+              },
+            },
+          },
+  
+          diplomaticPost: {
+            select: {
+              id: true,
+              name: true,
+              city: true,
+              code: true,
+            },
+          },
+  
+          association: {
+            select: {
+              id: true,
+              name: true,
+              acronym: true,
+              logoUrl: true,
+            },
           },
         },
-        diplomaticPost: { select: { id: true, name: true, city: true, code: true } },
-        association: { select: { id: true, name: true, acronym: true, logoUrl: true } },
-        reviews: isStaff || Boolean(userId)
-          ? {
-              orderBy: { createdAt: 'desc' },
-              include: {
-                reviewer: {
-                  select: {
-                    profile: { select: { firstName: true, lastName: true } },
+      });
+  
+    if (!publication) {
+      throw new NotFoundException(
+        'Publication introuvable.',
+      );
+    }
+  
+    const isAuthor =
+      publication.authorId === userId;
+  
+    const isStaff = userId
+      ? await this.authorizationService.hasAllPermissions(
+          userId,
+          [PERMISSIONS.PUBLICATIONS.READ],
+          {
+            postId:
+              publication.diplomaticPostId ?? undefined,
+          },
+        )
+      : false;
+  
+    if (
+      publication.status !== PublicationStatus.PUBLISHED &&
+      !isAuthor &&
+      !isStaff
+    ) {
+      throw new ForbiddenException(
+        'Cette publication est en cours de modération et n’est pas encore publique.',
+      );
+    }
+  
+    const reviews =
+      isAuthor || isStaff
+        ? await this.prisma.publicationReviewHistory.findMany({
+            where: {
+              publicationId: publication.id,
+            },
+  
+            orderBy: {
+              createdAt: 'desc',
+            },
+  
+            include: {
+              reviewer: {
+                select: {
+                  profile: {
+                    select: {
+                      firstName: true,
+                      lastName: true,
+                    },
                   },
                 },
               },
-            }
-          : false,
-      },
-    });
-
-    if (!publication) {
-      throw new NotFoundException('Publication introuvable.');
-    }
-
-    // Protection : si non publiée, seuls l'auteur ou le personnel habilité peuvent la lire
-    if (publication.status !== PublicationStatus.PUBLISHED && !isStaff) {
-      if (publication.authorId !== userId) {
-        throw new ForbiddenException(
-          'Cette publication est en cours de modération et n’est pas encore publique.',
-        );
-      }
-    }
-
-    // Incrément du compteur de vues lors d'une lecture publique
-    if (publication.status === PublicationStatus.PUBLISHED) {
+            },
+          })
+        : [];
+  
+    if (
+      publication.status === PublicationStatus.PUBLISHED
+    ) {
       await this.prisma.publication.update({
-        where: { id: publication.id },
-        data: { viewCount: { increment: 1 } },
+        where: {
+          id: publication.id,
+        },
+  
+        data: {
+          viewCount: {
+            increment: 1,
+          },
+        },
       });
     }
-
-    return publication;
+  
+    return {
+      ...publication,
+      reviews,
+    };
   }
 
   /**
@@ -343,52 +481,101 @@ export class PublicationsService {
   /**
    * 7. File d'attente Niveau 1 (Modération territoriale / consulaire)
    */
-  async getLevel1Queue(userId: string, query: QueryPublicationsDto) {
+  async getLevel1Queue(
+    userId: string,
+    query: QueryPublicationsDto,
+  ) {
+    const scope =
+      await this.authorizationService.getPostScopeForPermission(
+        userId,
+        PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1,
+      );
+  
     const page = query.page ?? 1;
     const limit = query.limit ?? 20;
     const skip = (page - 1) * limit;
-
-    const assignments = await this.prisma.userRoleAssignment.findMany({
-      where: { userId, isActive: true },
-      include: { role: true },
-    });
-    const isGlobal = assignments.some((a) => a.role.scope === RoleScope.GLOBAL);
-    const assignedPostId = assignments.find((a) => a.postId)?.postId;
-
+  
     const where: Record<string, unknown> = {
       status: PublicationStatus.PENDING_LEVEL1_REVIEW,
     };
-
-    if (!isGlobal && assignedPostId) {
-      where.diplomaticPostId = assignedPostId;
+  
+    if (!scope.isGlobal) {
+      if (query.diplomaticPostId) {
+        if (
+          !scope.postIds.includes(
+            query.diplomaticPostId,
+          )
+        ) {
+          throw new ForbiddenException(
+            'Vous ne pouvez pas consulter les publications d’un autre poste.',
+          );
+        }
+  
+        where.diplomaticPostId =
+          query.diplomaticPostId;
+      } else {
+        where.diplomaticPostId = {
+          in: scope.postIds,
+        };
+      }
     } else if (query.diplomaticPostId) {
-      where.diplomaticPostId = query.diplomaticPostId;
+      where.diplomaticPostId =
+        query.diplomaticPostId;
     }
-
-    if (query.type) where.type = query.type;
-
+  
+    if (query.type) {
+      where.type = query.type;
+    }
+  
     const [total, items] = await Promise.all([
-      this.prisma.publication.count({ where }),
+      this.prisma.publication.count({
+        where,
+      }),
+  
       this.prisma.publication.findMany({
         where,
+  
         include: {
           author: {
             select: {
               email: true,
-              profile: { select: { firstName: true, lastName: true } },
+              profile: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                },
+              },
             },
           },
-          diplomaticPost: { select: { id: true, name: true, city: true } },
-          association: { select: { id: true, name: true } },
+  
+          diplomaticPost: {
+            select: {
+              id: true,
+              name: true,
+              city: true,
+            },
+          },
+  
+          association: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
-        orderBy: { createdAt: 'asc' },
+  
+        orderBy: {
+          createdAt: 'asc',
+        },
+  
         skip,
         take: limit,
       }),
     ]);
-
+  
     return {
       items,
+  
       meta: {
         total,
         page,
@@ -413,6 +600,12 @@ export class PublicationsService {
     if (publication.status !== PublicationStatus.PENDING_LEVEL1_REVIEW) {
       throw new BadRequestException('Cette publication n’est pas en attente d’instruction Niveau 1.');
     }
+
+    await this.assertPostPermission(
+      reviewerId,
+      PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1,
+      publication.diplomaticPostId,
+    );
 
     let nextStatus: PublicationStatus;
     let notifTitle = '';
@@ -477,57 +670,113 @@ export class PublicationsService {
   /**
    * 9. File d'attente Niveau 2 (Validation finale Chef de Poste / MINREX Central)
    */
-  async getLevel2Queue(userId: string, query: QueryPublicationsDto) {
+  async getLevel2Queue(
+    userId: string,
+    query: QueryPublicationsDto,
+  ) {
+    const scope =
+      await this.authorizationService.getPostScopeForPermission(
+        userId,
+        PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2,
+      );
+  
     const page = query.page ?? 1;
     const limit = query.limit ?? 20;
     const skip = (page - 1) * limit;
-
-    const assignments = await this.prisma.userRoleAssignment.findMany({
-      where: { userId, isActive: true },
-      include: { role: true },
-    });
-    const isGlobal = assignments.some((a) => a.role.scope === RoleScope.GLOBAL);
-    const assignedPostId = assignments.find((a) => a.postId)?.postId;
-
+  
     const where: Record<string, unknown> = {
       status: PublicationStatus.PENDING_LEVEL2_APPROVAL,
     };
-
-    if (!isGlobal && assignedPostId) {
-      where.diplomaticPostId = assignedPostId;
+  
+    if (!scope.isGlobal) {
+      if (query.diplomaticPostId) {
+        if (
+          !scope.postIds.includes(
+            query.diplomaticPostId,
+          )
+        ) {
+          throw new ForbiddenException(
+            'Vous ne pouvez pas consulter les publications d’un autre poste.',
+          );
+        }
+  
+        where.diplomaticPostId =
+          query.diplomaticPostId;
+      } else {
+        where.diplomaticPostId = {
+          in: scope.postIds,
+        };
+      }
     } else if (query.diplomaticPostId) {
-      where.diplomaticPostId = query.diplomaticPostId;
+      where.diplomaticPostId =
+        query.diplomaticPostId;
     }
-
-    if (query.type) where.type = query.type;
-
+  
+    if (query.type) {
+      where.type = query.type;
+    }
+  
     const [total, items] = await Promise.all([
-      this.prisma.publication.count({ where }),
+      this.prisma.publication.count({
+        where,
+      }),
+  
       this.prisma.publication.findMany({
         where,
+  
         include: {
           author: {
             select: {
               email: true,
-              profile: { select: { firstName: true, lastName: true } },
+              profile: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                },
+              },
             },
           },
-          diplomaticPost: { select: { id: true, name: true, city: true } },
-          association: { select: { id: true, name: true } },
+  
+          diplomaticPost: {
+            select: {
+              id: true,
+              name: true,
+              city: true,
+            },
+          },
+  
+          association: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+  
           reviews: {
-            where: { level: PublicationReviewLevel.LEVEL1_MODERATION },
-            orderBy: { createdAt: 'desc' },
+            where: {
+              level: PublicationReviewLevel.LEVEL1_MODERATION,
+            },
+  
+            orderBy: {
+              createdAt: 'desc',
+            },
+  
             take: 1,
           },
         },
-        orderBy: { createdAt: 'asc' },
+  
+        orderBy: {
+          createdAt: 'asc',
+        },
+  
         skip,
         take: limit,
       }),
     ]);
-
+  
     return {
       items,
+  
       meta: {
         total,
         page,
@@ -552,6 +801,12 @@ export class PublicationsService {
     if (publication.status !== PublicationStatus.PENDING_LEVEL2_APPROVAL) {
       throw new BadRequestException('Cette publication n’est pas en attente d’approbation Niveau 2.');
     }
+
+    await this.assertPostPermission(
+      approverId,
+      PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2,
+      publication.diplomaticPostId,
+    );
 
     let nextStatus: PublicationStatus;
     let notifTitle = '';
@@ -618,62 +873,132 @@ export class PublicationsService {
   /**
    * 11. Mettre à la une (Success Story / Alerte majeure)
    */
-  async setFeatured(id: string, isFeatured: boolean) {
-    const publication = await this.prisma.publication.findUnique({
-      where: { id },
-    });
-
+  async setFeatured(
+    id: string,
+    actorId: string,
+    isFeatured: boolean,
+  ) {
+    const publication =
+      await this.prisma.publication.findUnique({
+        where: { id },
+      });
+  
     if (!publication) {
-      throw new NotFoundException('Publication introuvable.');
+      throw new NotFoundException(
+        'Publication introuvable.',
+      );
     }
-
+  
+    await this.assertPostPermission(
+      actorId,
+      PERMISSIONS.PUBLICATIONS.FEATURE,
+      publication.diplomaticPostId,
+    );
+  
     return this.prisma.publication.update({
       where: { id },
       data: { isFeatured },
     });
   }
-
-  /**
-   * 12. Archiver une publication
-   */
-  async archivePublication(id: string) {
-    const publication = await this.prisma.publication.findUnique({
-      where: { id },
-    });
-
+  
+  async archivePublication(
+    id: string,
+    actorId: string,
+  ) {
+    const publication =
+      await this.prisma.publication.findUnique({
+        where: { id },
+      });
+  
     if (!publication) {
-      throw new NotFoundException('Publication introuvable.');
+      throw new NotFoundException(
+        'Publication introuvable.',
+      );
     }
-
+  
+    await this.assertPostPermission(
+      actorId,
+      PERMISSIONS.PUBLICATIONS.ARCHIVE,
+      publication.diplomaticPostId,
+    );
+  
     return this.prisma.publication.update({
       where: { id },
-      data: { status: PublicationStatus.ARCHIVED },
+      data: {
+        status: PublicationStatus.ARCHIVED,
+      },
     });
   }
 
   /**
    * 13. Supprimer un brouillon de publication
    */
-  async deletePublication(id: string, authorId: string, isAdmin: boolean = false) {
-    const publication = await this.prisma.publication.findUnique({
-      where: { id },
-    });
-
+  async deletePublication(
+    id: string,
+    userId: string,
+  ) {
+    const publication =
+      await this.prisma.publication.findUnique({
+        where: { id },
+      });
+  
     if (!publication) {
-      throw new NotFoundException('Publication introuvable.');
+      throw new NotFoundException(
+        'Publication introuvable.',
+      );
     }
-
-    if (!isAdmin && publication.authorId !== authorId) {
-      throw new ForbiddenException('Non autorisé à supprimer cette publication.');
+  
+    const isAuthor =
+      publication.authorId === userId;
+  
+    const hasDeletePermission =
+      await this.authorizationService.hasAllPermissions(
+        userId,
+        [PERMISSIONS.PUBLICATIONS.DELETE],
+        {
+          postId:
+            publication.diplomaticPostId ?? undefined,
+        },
+      );
+  
+    if (!isAuthor && !hasDeletePermission) {
+      throw new ForbiddenException(
+        'Non autorisé à supprimer cette publication.',
+      );
     }
-
-    if (!isAdmin && publication.status !== PublicationStatus.DRAFT) {
-      throw new BadRequestException('Seul un brouillon peut être supprimé par son auteur.');
+  
+    if (
+      isAuthor &&
+      !hasDeletePermission &&
+      publication.status !== PublicationStatus.DRAFT
+    ) {
+      throw new BadRequestException(
+        'Seul un brouillon peut être supprimé par son auteur.',
+      );
     }
-
+  
     return this.prisma.publication.delete({
       where: { id },
     });
   }
+  private async assertPostPermission(
+    userId: string,
+    permission: string,
+    postId: string | null,
+  ): Promise<void> {
+    const authorized =
+      await this.authorizationService.hasAllPermissions(
+        userId,
+        [permission],
+        {
+          postId: postId ?? undefined,
+        },
+      );
+  
+    if (!authorized) {
+      throw new ForbiddenException(
+        'Vous ne disposez pas de cette permission pour le poste diplomatique concerné.',
+      );
+    }
+  }
 }
-

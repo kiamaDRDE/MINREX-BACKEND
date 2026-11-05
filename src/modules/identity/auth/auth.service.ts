@@ -3,6 +3,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  InternalServerErrorException,
   Logger,
   NotFoundException,
   UnauthorizedException,
@@ -53,23 +54,29 @@ export class AuthService {
   |--------------------------------------------------------------------------
   */
 
-  private assertDevEndpointsAllowed(endpointName: string): void {
-    const nodeEnv = this.configService.get<string>('NODE_ENV', 'development');
-    const allowDevEndpoints = this.configService.get<boolean>(
-      'ALLOW_DEV_ENDPOINTS',
-      false,
+  private assertDevEndpointsAllowed(
+    endpointName: string,
+  ): void {
+    const nodeEnv = this.configService.get<string>(
+      'NODE_ENV',
+      'development',
     );
-
-    if (nodeEnv === 'production') {
+  
+    const allowDevEndpoints =
+      this.configService.get<string>(
+        'ALLOW_DEV_ENDPOINTS',
+      ) === 'true';
+  
+    if (
+      nodeEnv !== 'development' ||
+      !allowDevEndpoints
+    ) {
       this.logger.warn(
-        `Blocked unauthorized attempt to invoke ${endpointName} in production environment.`,
+        `Blocked attempt to invoke ${endpointName}.`,
       );
-      throw new NotFoundException('Cannot POST /api/v1/auth/' + endpointName);
-    }
-
-    if (nodeEnv !== 'development' && !allowDevEndpoints) {
-      throw new ForbiddenException(
-        'Development testing endpoints are disabled in this environment.',
+  
+      throw new NotFoundException(
+        `Cannot POST /api/v1/auth/${endpointName}`,
       );
     }
   }
@@ -331,6 +338,24 @@ export class AuthService {
             60 *
             1000,
       );
+
+    const diasporaRole =
+      await this.prisma.role.findUnique({
+        where: {
+          code: SYSTEM_ROLE_CODES.DIASPORA_MEMBER,
+        },
+    
+        select: {
+          id: true,
+          isActive: true,
+        },
+      });
+    
+    if (!diasporaRole || !diasporaRole.isActive) {
+      throw new InternalServerErrorException(
+        'The DIASPORA_MEMBER system role is missing or inactive. Run the database seed.',
+      );
+    }
   
     /*
      * Create user, profile and verification token.
@@ -355,6 +380,13 @@ export class AuthService {
 
               residenceCountry:
                 dto.residenceCountry.trim(),
+            },
+          },
+
+          roleAssignments: {
+            create: {
+              roleId: diasporaRole.id,
+              isActive: true,
             },
           },
   

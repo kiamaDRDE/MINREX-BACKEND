@@ -28,12 +28,20 @@ import {
 } from './dto/review-association.dto.js';
 import { UpdateAssociationDto } from './dto/update-association.dto.js';
 import { UploadAssociationDocumentDto } from './dto/upload-association-doc.dto.js';
+import {
+  AuthorizationService,
+} from '../identity/authorization/authorization.service.js';
+
+import {
+  PERMISSIONS,
+} from '../identity/authorization/constants/permissions.constants.js';
 
 @Injectable()
 export class AssociationsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly eventBus: NotificationEventBusService,
+    private readonly authorizationService: AuthorizationService,
   ) {}
 
   /**
@@ -171,26 +179,111 @@ export class AssociationsService {
   /**
    * 3. Détail complet d'une association
    */
-  async getAssociationById(id: string, userId?: string, isStaff: boolean = false) {
-    const association = await this.prisma.association.findUnique({
-      where: { id },
-      include: {
-        country: { select: { id: true, name: true, iso2Code: true } },
-        diplomaticPost: { select: { id: true, name: true, city: true, code: true } },
-        memberships: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                email: true,
-                profile: { select: { firstName: true, lastName: true, photoUrl: true } },
-              },
+  async getAssociationById(
+    id: string,
+    userId?: string,
+  ) {
+    const association =
+      await this.prisma.association.findUnique({
+        where: { id },
+  
+        include: {
+          country: {
+            select: {
+              id: true,
+              name: true,
+              iso2Code: true,
             },
           },
-          orderBy: { joinedAt: 'asc' },
+  
+          diplomaticPost: {
+            select: {
+              id: true,
+              name: true,
+              city: true,
+              code: true,
+            },
+          },
+  
+          memberships: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  email: true,
+                  profile: {
+                    select: {
+                      firstName: true,
+                      lastName: true,
+                      photoUrl: true,
+                    },
+                  },
+                },
+              },
+            },
+  
+            orderBy: {
+              joinedAt: 'asc',
+            },
+          },
         },
-        documents: isStaff || Boolean(userId)
-          ? {
+      });
+  
+    if (!association) {
+      throw new NotFoundException(
+        'Association introuvable.',
+      );
+    }
+  
+    const membership =
+      association.memberships.find(
+        (item) =>
+          item.userId === userId &&
+          item.isActive,
+      );
+  
+    const isOwner =
+      association.creatorId === userId;
+  
+    const isStaff = userId
+      ? await this.authorizationService.hasAllPermissions(
+          userId,
+          [PERMISSIONS.ASSOCIATIONS.READ],
+          {
+            postId: association.diplomaticPostId,
+          },
+        )
+      : false;
+  
+    const isMember = Boolean(membership);
+  
+    if (
+      association.status !== AssociationStatus.APPROVED &&
+      !isStaff &&
+      !isMember &&
+      !isOwner
+    ) {
+      throw new ForbiddenException(
+        'Cette association est en cours d’instruction et n’est pas encore publique.',
+      );
+    }
+  
+    const canSeeMembers =
+      isStaff || isMember || isOwner;
+  
+    const canSeeSensitiveDocuments =
+      isStaff ||
+      isOwner ||
+      Boolean(membership?.isLegalRepresentative);
+  
+    const [documents, history] =
+      canSeeSensitiveDocuments
+        ? await Promise.all([
+            this.prisma.associationDocument.findMany({
+              where: {
+                associationId: id,
+              },
+  
               select: {
                 id: true,
                 type: true,
@@ -200,38 +293,43 @@ export class AssociationsService {
                 mimeType: true,
                 createdAt: true,
               },
-            }
-          : false,
-        history: isStaff || Boolean(userId)
-          ? {
-              orderBy: { createdAt: 'desc' },
+            }),
+  
+            this.prisma.associationHistory.findMany({
+              where: {
+                associationId: id,
+              },
+  
+              orderBy: {
+                createdAt: 'desc',
+              },
+  
               include: {
                 actor: {
                   select: {
-                    profile: { select: { firstName: true, lastName: true } },
+                    profile: {
+                      select: {
+                        firstName: true,
+                        lastName: true,
+                      },
+                    },
                   },
                 },
               },
-            }
-          : false,
-      },
-    });
-
-    if (!association) {
-      throw new NotFoundException('Association introuvable.');
-    }
-
-    // Si non approuvée, seul le staff ou les membres peuvent la consulter
-    if (association.status !== AssociationStatus.APPROVED && !isStaff) {
-      const isMember = association.memberships.some((m) => m.userId === userId);
-      if (!isMember && association.creatorId !== userId) {
-        throw new ForbiddenException(
-          'Cette association est en cours d’instruction et n’est pas encore publique.',
-        );
-      }
-    }
-
-    return association;
+            }),
+          ])
+        : [[], []];
+  
+    return {
+      ...association,
+  
+      memberships: canSeeMembers
+        ? association.memberships
+        : [],
+  
+      documents,
+      history,
+    };
   }
 
   /**
@@ -391,23 +489,73 @@ export class AssociationsService {
   /**
    * 7. Consultation exhaustive des membres d'une association (Demande Utilisateur)
    */
-  async getMembers(associationId: string) {
-    const association = await this.prisma.association.findUnique({
-      where: { id: associationId },
-      select: { id: true },
-    });
-
+  async getMembers(
+    associationId: string,
+    userId: string,
+  ) {
+    const association =
+      await this.prisma.association.findUnique({
+        where: {
+          id: associationId,
+        },
+  
+        select: {
+          id: true,
+          creatorId: true,
+          diplomaticPostId: true,
+        },
+      });
+  
     if (!association) {
-      throw new NotFoundException('Association introuvable.');
+      throw new NotFoundException(
+        'Association introuvable.',
+      );
     }
-
+  
+    const [membership, isStaff] =
+      await Promise.all([
+        this.prisma.associationMembership.findFirst({
+          where: {
+            associationId,
+            userId,
+            isActive: true,
+          },
+  
+          select: {
+            id: true,
+          },
+        }),
+  
+        this.authorizationService.hasAllPermissions(
+          userId,
+          [PERMISSIONS.ASSOCIATIONS.READ],
+          {
+            postId: association.diplomaticPostId,
+          },
+        ),
+      ]);
+  
+    const isOwner =
+      association.creatorId === userId;
+  
+    if (!isOwner && !membership && !isStaff) {
+      throw new ForbiddenException(
+        'Vous n’êtes pas autorisé à consulter les membres de cette association.',
+      );
+    }
+  
     return this.prisma.associationMembership.findMany({
-      where: { associationId },
+      where: {
+        associationId,
+        isActive: true,
+      },
+  
       include: {
         user: {
           select: {
             id: true,
             email: true,
+  
             profile: {
               select: {
                 firstName: true,
@@ -419,7 +567,11 @@ export class AssociationsService {
           },
         },
       },
-      orderBy: [{ isLegalRepresentative: 'desc' }, { joinedAt: 'asc' }],
+  
+      orderBy: [
+        { isLegalRepresentative: 'desc' },
+        { joinedAt: 'asc' },
+      ],
     });
   }
 
@@ -639,17 +791,46 @@ export class AssociationsService {
   /**
    * 12. File d'attente consulaire des associations à instruire
    */
-  async getAgentQueue(agentPostId?: string | null, isGlobal: boolean = false, query?: QueryAssociationsDto) {
+  async getAgentQueue(
+    userId: string,
+    query?: QueryAssociationsDto,
+  ) {
+    const scope =
+      await this.authorizationService.getPostScopeForPermission(
+        userId,
+        PERMISSIONS.ASSOCIATIONS.READ,
+      );
+  
     const page = query?.page ?? 1;
     const limit = query?.limit ?? 20;
     const skip = (page - 1) * limit;
-
+  
     const where: Record<string, unknown> = {};
-
-    if (!isGlobal && agentPostId) {
-      where.diplomaticPostId = agentPostId;
+  
+    if (!scope.isGlobal) {
+      if (query?.diplomaticPostId) {
+        if (
+          !scope.postIds.includes(
+            query.diplomaticPostId,
+          )
+        ) {
+          throw new ForbiddenException(
+            'Vous ne pouvez pas consulter la file d’un autre poste diplomatique.',
+          );
+        }
+  
+        where.diplomaticPostId =
+          query.diplomaticPostId;
+      } else {
+        where.diplomaticPostId = {
+          in: scope.postIds,
+        };
+      }
+    } else if (query?.diplomaticPostId) {
+      where.diplomaticPostId =
+        query.diplomaticPostId;
     }
-
+  
     if (query?.status) {
       where.status = query.status;
     } else {
@@ -661,29 +842,55 @@ export class AssociationsService {
         ],
       };
     }
-
+  
     const [total, items] = await Promise.all([
-      this.prisma.association.count({ where }),
+      this.prisma.association.count({
+        where,
+      }),
+  
       this.prisma.association.findMany({
         where,
+  
         include: {
-          country: { select: { name: true, iso2Code: true } },
+          country: {
+            select: {
+              name: true,
+              iso2Code: true,
+            },
+          },
+  
           creator: {
             select: {
               email: true,
-              profile: { select: { firstName: true, lastName: true } },
+              profile: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                },
+              },
             },
           },
-          _count: { select: { documents: true, memberships: true } },
+  
+          _count: {
+            select: {
+              documents: true,
+              memberships: true,
+            },
+          },
         },
-        orderBy: { submissionDate: 'asc' },
+  
+        orderBy: {
+          submissionDate: 'asc',
+        },
+  
         skip,
         take: limit,
       }),
     ]);
-
+  
     return {
       items,
+  
       meta: {
         total,
         page,
@@ -924,5 +1131,23 @@ export class AssociationsService {
     });
 
     return updated;
+  }
+  private async assertPostPermission(
+    userId: string,
+    permission: string,
+    postId: string,
+  ): Promise<void> {
+    const authorized =
+      await this.authorizationService.hasAllPermissions(
+        userId,
+        [permission],
+        { postId },
+      );
+  
+    if (!authorized) {
+      throw new ForbiddenException(
+        'Vous ne disposez pas de cette permission pour le poste diplomatique concerné.',
+      );
+    }
   }
 }

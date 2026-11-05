@@ -39,6 +39,14 @@ import {
 } from './dto/review-association.dto.js';
 import { UpdateAssociationDto } from './dto/update-association.dto.js';
 import { UploadAssociationDocumentDto } from './dto/upload-association-doc.dto.js';
+import {
+  AuthorizationScope,
+} from '../identity/authorization/decorators/authorization-scope.decorator.js';
+
+import {
+  RequireAnyPermissions,
+} from '../identity/authorization/decorators/require-any-permissions.decorator.js';
+
 
 type AuthenticatedRequest = Request & {
   auth?: {
@@ -86,7 +94,10 @@ export class AssociationsController {
   }
 
   @Get('directory')
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.READ_SELF, PERMISSIONS.ASSOCIATIONS.READ)
+  @RequireAnyPermissions(
+    PERMISSIONS.ASSOCIATIONS.READ_SELF,
+    PERMISSIONS.ASSOCIATIONS.READ,
+  )
   @ApiOperation({
     summary: 'Annuaire officiel des associations camerounaises reconnues (APPROVED)',
     description: 'Recherche paginée avec filtres par pays, ville, catégorie et poste.',
@@ -104,6 +115,9 @@ export class AssociationsController {
 
   @Get('agent/queue')
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.READ)
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary: 'File d’instruction consulaire des associations',
     description:
@@ -115,8 +129,7 @@ export class AssociationsController {
     @Query() query: QueryAssociationsDto,
   ) {
     return this.associationsService.getAgentQueue(
-      null,
-      false,
+      request.auth!.userId!,
       query,
     );
   }
@@ -128,7 +141,14 @@ export class AssociationsController {
   */
 
   @Get(':id')
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.READ_SELF, PERMISSIONS.ASSOCIATIONS.READ)
+  @RequireAnyPermissions(
+    PERMISSIONS.ASSOCIATIONS.READ_SELF,
+  PERMISSIONS.ASSOCIATIONS.READ,
+  )
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Obtenir le détail exhaustif d’une association',
     description:
@@ -193,15 +213,28 @@ export class AssociationsController {
   */
 
   @Get(':id/members')
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.READ_SELF, PERMISSIONS.ASSOCIATIONS.READ)
+  @RequireAnyPermissions(
+    PERMISSIONS.ASSOCIATIONS.READ_SELF,
+    PERMISSIONS.ASSOCIATIONS.READ,
+  )
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Consulter tous les membres et membres du bureau de l’association',
     description:
       'Permet au Président, aux membres ou aux agents consulaires de consulter la liste intégrale des adhérents et dirigeants.',
   })
   @ApiOkResponse({ description: 'Liste des membres de l’association.' })
-  getMembers(@Param('id', ParseUUIDPipe) id: string) {
-    return this.associationsService.getMembers(id);
+  getMembers(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Req() request: AuthenticatedRequest,
+  ) {
+    return this.associationsService.getMembers(
+      id,
+      request.auth!.userId!,
+    );
   }
 
   @Post(':id/members')
@@ -263,6 +296,10 @@ export class AssociationsController {
   @Post(':id/start-review')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REVIEW)
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Prendre en charge l’instruction d’un dossier d’association (Passe en UNDER_REVIEW)',
   })
@@ -277,6 +314,10 @@ export class AssociationsController {
   @Post(':id/request-correction')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REQUEST_CORRECTION)
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Demander un complément ou une correction motivée au déclarant (CORRECTION_REQUIRED)',
   })
@@ -292,6 +333,10 @@ export class AssociationsController {
   @Post(':id/approve')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.APPROVE)
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Valider et certifier officiellement l’association (APPROVED)',
     description:
@@ -308,6 +353,10 @@ export class AssociationsController {
   @Post(':id/reject')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REJECT)
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Rejeter définitivement la demande d’enregistrement avec motif légal (REJECTED)',
   })
@@ -323,6 +372,10 @@ export class AssociationsController {
   @Post(':id/suspend')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions(PERMISSIONS.ASSOCIATIONS.SUSPEND)
+  @AuthorizationScope({
+    resource: 'association',
+    resourceIdParam: 'id',
+  })
   @ApiOperation({
     summary: 'Suspendre administrativement une association certifiée (SUSPENDED)',
   })
