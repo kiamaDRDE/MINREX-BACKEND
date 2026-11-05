@@ -75,7 +75,15 @@ export const ModelName = {
   AssistanceCategory: 'AssistanceCategory',
   AssistanceProtocolStep: 'AssistanceProtocolStep',
   MentorshipRequest: 'MentorshipRequest',
-  MentorshipRequestHistory: 'MentorshipRequestHistory'
+  MentorshipRequestHistory: 'MentorshipRequestHistory',
+  Association: 'Association',
+  AssociationMembership: 'AssociationMembership',
+  AssociationDocument: 'AssociationDocument',
+  AssociationHistory: 'AssociationHistory',
+  Notification: 'Notification',
+  NotificationPreference: 'NotificationPreference',
+  Publication: 'Publication',
+  PublicationReviewHistory: 'PublicationReviewHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -527,12 +535,171 @@ export const MentorshipRequestHistoryScalarFieldEnum = {
 export type MentorshipRequestHistoryScalarFieldEnum = (typeof MentorshipRequestHistoryScalarFieldEnum)[keyof typeof MentorshipRequestHistoryScalarFieldEnum]
 
 
+export const AssociationScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  acronym: 'acronym',
+  category: 'category',
+  description: 'description',
+  objectives: 'objectives',
+  creationDate: 'creationDate',
+  countryId: 'countryId',
+  city: 'city',
+  address: 'address',
+  postalCode: 'postalCode',
+  email: 'email',
+  phone: 'phone',
+  websiteUrl: 'websiteUrl',
+  logoUrl: 'logoUrl',
+  diplomaticPostId: 'diplomaticPostId',
+  status: 'status',
+  submissionDate: 'submissionDate',
+  validatedAt: 'validatedAt',
+  creatorId: 'creatorId',
+  validatedById: 'validatedById',
+  rejectionReason: 'rejectionReason',
+  suspensionReason: 'suspensionReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssociationScalarFieldEnum = (typeof AssociationScalarFieldEnum)[keyof typeof AssociationScalarFieldEnum]
+
+
+export const AssociationMembershipScalarFieldEnum = {
+  id: 'id',
+  associationId: 'associationId',
+  userId: 'userId',
+  role: 'role',
+  isLegalRepresentative: 'isLegalRepresentative',
+  title: 'title',
+  joinedAt: 'joinedAt',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssociationMembershipScalarFieldEnum = (typeof AssociationMembershipScalarFieldEnum)[keyof typeof AssociationMembershipScalarFieldEnum]
+
+
+export const AssociationDocumentScalarFieldEnum = {
+  id: 'id',
+  associationId: 'associationId',
+  type: 'type',
+  title: 'title',
+  fileUrl: 'fileUrl',
+  fileKey: 'fileKey',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt'
+} as const
+
+export type AssociationDocumentScalarFieldEnum = (typeof AssociationDocumentScalarFieldEnum)[keyof typeof AssociationDocumentScalarFieldEnum]
+
+
+export const AssociationHistoryScalarFieldEnum = {
+  id: 'id',
+  associationId: 'associationId',
+  actorId: 'actorId',
+  action: 'action',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type AssociationHistoryScalarFieldEnum = (typeof AssociationHistoryScalarFieldEnum)[keyof typeof AssociationHistoryScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  recipientId: 'recipientId',
+  type: 'type',
+  priority: 'priority',
+  channels: 'channels',
+  title: 'title',
+  content: 'content',
+  actionUrl: 'actionUrl',
+  icon: 'icon',
+  status: 'status',
+  metadata: 'metadata',
+  sentAt: 'sentAt',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const NotificationPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  emailEnabled: 'emailEnabled',
+  inAppEnabled: 'inAppEnabled',
+  smsEnabled: 'smsEnabled',
+  pushEnabled: 'pushEnabled',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
+
+
+export const PublicationScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  summary: 'summary',
+  content: 'content',
+  type: 'type',
+  status: 'status',
+  scope: 'scope',
+  coverImageUrl: 'coverImageUrl',
+  attachments: 'attachments',
+  tags: 'tags',
+  authorId: 'authorId',
+  diplomaticPostId: 'diplomaticPostId',
+  associationId: 'associationId',
+  publishedAt: 'publishedAt',
+  expiresAt: 'expiresAt',
+  viewCount: 'viewCount',
+  isFeatured: 'isFeatured',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PublicationScalarFieldEnum = (typeof PublicationScalarFieldEnum)[keyof typeof PublicationScalarFieldEnum]
+
+
+export const PublicationReviewHistoryScalarFieldEnum = {
+  id: 'id',
+  publicationId: 'publicationId',
+  reviewerId: 'reviewerId',
+  level: 'level',
+  decision: 'decision',
+  comment: 'comment',
+  createdAt: 'createdAt'
+} as const
+
+export type PublicationReviewHistoryScalarFieldEnum = (typeof PublicationReviewHistoryScalarFieldEnum)[keyof typeof PublicationReviewHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -549,4 +716,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

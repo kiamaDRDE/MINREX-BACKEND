@@ -244,3 +244,156 @@ export const MentorshipHistoryAction = {
 } as const
 
 export type MentorshipHistoryAction = (typeof MentorshipHistoryAction)[keyof typeof MentorshipHistoryAction]
+
+
+export const AssociationCategory = {
+  PROFESSIONAL: 'PROFESSIONAL',
+  STUDENT: 'STUDENT',
+  CULTURAL: 'CULTURAL',
+  COMMUNITY: 'COMMUNITY',
+  ECONOMIC: 'ECONOMIC',
+  SCIENTIFIC: 'SCIENTIFIC',
+  REGIONAL: 'REGIONAL',
+  HUMANITARIAN: 'HUMANITARIAN',
+  OTHER: 'OTHER'
+} as const
+
+export type AssociationCategory = (typeof AssociationCategory)[keyof typeof AssociationCategory]
+
+
+export const AssociationStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  CORRECTION_REQUIRED: 'CORRECTION_REQUIRED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type AssociationStatus = (typeof AssociationStatus)[keyof typeof AssociationStatus]
+
+
+export const AssociationMemberRole = {
+  PRESIDENT: 'PRESIDENT',
+  VICE_PRESIDENT: 'VICE_PRESIDENT',
+  SECRETARY_GENERAL: 'SECRETARY_GENERAL',
+  TREASURER: 'TREASURER',
+  COMMUNICATION_OFFICER: 'COMMUNICATION_OFFICER',
+  AUDITOR: 'AUDITOR',
+  LEGAL_ADVISOR: 'LEGAL_ADVISOR',
+  MEMBER: 'MEMBER'
+} as const
+
+export type AssociationMemberRole = (typeof AssociationMemberRole)[keyof typeof AssociationMemberRole]
+
+
+export const AssociationHistoryAction = {
+  CREATED: 'CREATED',
+  UPDATED: 'UPDATED',
+  SUBMITTED: 'SUBMITTED',
+  ASSIGNED: 'ASSIGNED',
+  REVIEW_STARTED: 'REVIEW_STARTED',
+  CORRECTION_REQUESTED: 'CORRECTION_REQUESTED',
+  RESUBMITTED: 'RESUBMITTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED',
+  REACTIVATED: 'REACTIVATED'
+} as const
+
+export type AssociationHistoryAction = (typeof AssociationHistoryAction)[keyof typeof AssociationHistoryAction]
+
+
+export const NotificationChannel = {
+  IN_APP: 'IN_APP',
+  EMAIL: 'EMAIL',
+  SMS: 'SMS',
+  PUSH: 'PUSH'
+} as const
+
+export type NotificationChannel = (typeof NotificationChannel)[keyof typeof NotificationChannel]
+
+
+export const NotificationType = {
+  CENSUS_STATUS: 'CENSUS_STATUS',
+  ASSISTANCE_STATUS: 'ASSISTANCE_STATUS',
+  ASSOCIATION_STATUS: 'ASSOCIATION_STATUS',
+  PUBLICATION_ALERT: 'PUBLICATION_ALERT',
+  MENTORSHIP_INVITE: 'MENTORSHIP_INVITE',
+  SYSTEM_SECURITY: 'SYSTEM_SECURITY'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const NotificationPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type NotificationPriority = (typeof NotificationPriority)[keyof typeof NotificationPriority]
+
+
+export const NotificationStatus = {
+  UNREAD: 'UNREAD',
+  READ: 'READ',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type NotificationStatus = (typeof NotificationStatus)[keyof typeof NotificationStatus]
+
+
+export const PublicationType = {
+  OFFICIAL_ANNOUNCEMENT: 'OFFICIAL_ANNOUNCEMENT',
+  CONSULAR_NOTICE: 'CONSULAR_NOTICE',
+  SUCCESS_STORY: 'SUCCESS_STORY',
+  ASSOCIATION_EVENT: 'ASSOCIATION_EVENT',
+  OPPORTUNITY: 'OPPORTUNITY',
+  COMMUNITY_ARTICLE: 'COMMUNITY_ARTICLE'
+} as const
+
+export type PublicationType = (typeof PublicationType)[keyof typeof PublicationType]
+
+
+export const PublicationStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  PENDING_LEVEL1_REVIEW: 'PENDING_LEVEL1_REVIEW',
+  PENDING_LEVEL2_APPROVAL: 'PENDING_LEVEL2_APPROVAL',
+  PUBLISHED: 'PUBLISHED',
+  CORRECTION_REQUIRED: 'CORRECTION_REQUIRED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type PublicationStatus = (typeof PublicationStatus)[keyof typeof PublicationStatus]
+
+
+export const PublicationTargetScope = {
+  GLOBAL_PUBLIC: 'GLOBAL_PUBLIC',
+  DIASPORA_VERIFIED: 'DIASPORA_VERIFIED',
+  POST_RESTRICTED: 'POST_RESTRICTED'
+} as const
+
+export type PublicationTargetScope = (typeof PublicationTargetScope)[keyof typeof PublicationTargetScope]
+
+
+export const PublicationReviewLevel = {
+  LEVEL1_MODERATION: 'LEVEL1_MODERATION',
+  LEVEL2_FINAL_APPROVAL: 'LEVEL2_FINAL_APPROVAL'
+} as const
+
+export type PublicationReviewLevel = (typeof PublicationReviewLevel)[keyof typeof PublicationReviewLevel]
+
+
+export const PublicationReviewDecision = {
+  VALIDATED_TO_LEVEL2: 'VALIDATED_TO_LEVEL2',
+  APPROVED_AND_PUBLISHED: 'APPROVED_AND_PUBLISHED',
+  CORRECTION_REQUESTED: 'CORRECTION_REQUESTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type PublicationReviewDecision = (typeof PublicationReviewDecision)[keyof typeof PublicationReviewDecision]

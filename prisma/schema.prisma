@@ -188,6 +188,126 @@ enum MentorshipHistoryAction {
   REJECTED
 }
 
+enum AssociationCategory {
+  PROFESSIONAL
+  STUDENT
+  CULTURAL
+  COMMUNITY
+  ECONOMIC
+  SCIENTIFIC
+  REGIONAL
+  HUMANITARIAN
+  OTHER
+}
+
+enum AssociationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  CORRECTION_REQUIRED
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum AssociationMemberRole {
+  PRESIDENT
+  VICE_PRESIDENT
+  SECRETARY_GENERAL
+  TREASURER
+  COMMUNICATION_OFFICER
+  AUDITOR
+  LEGAL_ADVISOR
+  MEMBER
+}
+
+enum AssociationHistoryAction {
+  CREATED
+  UPDATED
+  SUBMITTED
+  ASSIGNED
+  REVIEW_STARTED
+  CORRECTION_REQUESTED
+  RESUBMITTED
+  APPROVED
+  REJECTED
+  SUSPENDED
+  REACTIVATED
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  SMS
+  PUSH
+}
+
+enum NotificationType {
+  CENSUS_STATUS
+  ASSISTANCE_STATUS
+  ASSOCIATION_STATUS
+  PUBLICATION_ALERT
+  MENTORSHIP_INVITE
+  SYSTEM_SECURITY
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum NotificationStatus {
+  UNREAD
+  READ
+  ARCHIVED
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | PUBLICATIONS & VALORISATION (MPV) ENUMS
+ * |--------------------------------------------------------------------------
+ */
+
+enum PublicationType {
+  OFFICIAL_ANNOUNCEMENT
+  CONSULAR_NOTICE
+  SUCCESS_STORY
+  ASSOCIATION_EVENT
+  OPPORTUNITY
+  COMMUNITY_ARTICLE
+}
+
+enum PublicationStatus {
+  DRAFT
+  SUBMITTED
+  PENDING_LEVEL1_REVIEW
+  PENDING_LEVEL2_APPROVAL
+  PUBLISHED
+  CORRECTION_REQUIRED
+  REJECTED
+  ARCHIVED
+}
+
+enum PublicationTargetScope {
+  GLOBAL_PUBLIC
+  DIASPORA_VERIFIED
+  POST_RESTRICTED
+}
+
+enum PublicationReviewLevel {
+  LEVEL1_MODERATION
+  LEVEL2_FINAL_APPROVAL
+}
+
+enum PublicationReviewDecision {
+  VALIDATED_TO_LEVEL2
+  APPROVED_AND_PUBLISHED
+  CORRECTION_REQUESTED
+  REJECTED
+}
+
 /**
  * |--------------------------------------------------------------------------
  * | GEOGRAPHY
@@ -214,6 +334,8 @@ model Country {
 
   censusResidenceRecords   CensusRecord[] @relation("CensusResidenceCountry")
   censusNationalityRecords CensusRecord[] @relation("CensusNationalityCountry")
+
+  associations Association[]
 
   @@index([isActive])
   @@map("countries")
@@ -286,6 +408,8 @@ model DiplomaticPost {
   roleAssignments     UserRoleAssignment[]
   censusRecords       CensusRecord[]
   assistanceCases     AssistanceCase[]
+  associations        Association[]
+  publications        Publication[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -402,6 +526,18 @@ model User {
   mentorshipRequestsCreated  MentorshipRequest[]        @relation("MentorshipRequester")
   mentorshipRequestsMentored MentorshipRequest[]        @relation("MentorshipMentor")
   mentorshipHistory          MentorshipRequestHistory[] @relation("MentorshipHistoryActor")
+
+  associationsCreated          Association[]           @relation("AssociationCreator")
+  associationsValidated        Association[]           @relation("AssociationValidator")
+  associationMemberships       AssociationMembership[]
+  associationDocumentsUploaded AssociationDocument[]   @relation("AssociationDocumentUploader")
+  associationHistory           AssociationHistory[]    @relation("AssociationHistoryActor")
+
+  publicationsAuthored         Publication[]              @relation("PublicationAuthor")
+  publicationReviews           PublicationReviewHistory[] @relation("PublicationReviewer")
+
+  notificationsReceived   Notification[]           @relation("NotificationRecipient")
+  notificationPreferences NotificationPreference[]
 
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
@@ -1072,4 +1208,260 @@ model MentorshipRequestHistory {
   @@index([action])
   @@index([createdAt])
   @@map("mentorship_request_history")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | ASSOCIATIONS (MCA)
+ * |--------------------------------------------------------------------------
+ */
+
+model Association {
+  id   String @id @default(uuid()) @db.Uuid
+  code String @unique @db.VarChar(50)
+
+  name        String              @db.VarChar(200)
+  acronym     String?             @db.VarChar(50)
+  category    AssociationCategory @default(COMMUNITY)
+  description String              @db.Text
+  objectives  String?             @db.Text
+  creationDate DateTime?          @map("creation_date") @db.Date
+
+  countryId String  @map("country_id") @db.Uuid
+  country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  city      String  @db.VarChar(150)
+  address   String? @db.VarChar(255)
+  postalCode String? @map("postal_code") @db.VarChar(30)
+
+  email      String  @db.VarChar(255)
+  phone      String  @db.VarChar(30)
+  websiteUrl String? @map("website_url") @db.VarChar(255)
+  logoUrl    String? @map("logo_url") @db.VarChar(500)
+
+  diplomaticPostId String         @map("diplomatic_post_id") @db.Uuid
+  diplomaticPost   DiplomaticPost @relation(fields: [diplomaticPostId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  status         AssociationStatus @default(DRAFT)
+  submissionDate DateTime?         @map("submission_date") @db.Timestamptz(3)
+  validatedAt    DateTime?         @map("validated_at") @db.Timestamptz(3)
+
+  creatorId String @map("creator_id") @db.Uuid
+  creator   User   @relation("AssociationCreator", fields: [creatorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  validatedById String? @map("validated_by_id") @db.Uuid
+  validator     User?   @relation("AssociationValidator", fields: [validatedById], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  rejectionReason  String? @map("rejection_reason") @db.Text
+  suspensionReason String? @map("suspension_reason") @db.Text
+
+  memberships AssociationMembership[]
+  documents   AssociationDocument[]
+  history     AssociationHistory[]
+  publications Publication[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([countryId])
+  @@index([diplomaticPostId])
+  @@index([status])
+  @@index([category])
+  @@index([creatorId])
+  @@map("associations")
+}
+
+model AssociationMembership {
+  id String @id @default(uuid()) @db.Uuid
+
+  associationId String      @map("association_id") @db.Uuid
+  association   Association @relation(fields: [associationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  role                  AssociationMemberRole @default(MEMBER)
+  isLegalRepresentative Boolean               @default(false) @map("is_legal_representative")
+  title                 String?               @db.VarChar(100)
+  joinedAt              DateTime              @default(now()) @map("joined_at") @db.Timestamptz(3)
+  isActive              Boolean               @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([associationId, userId])
+  @@index([associationId])
+  @@index([userId])
+  @@map("association_memberships")
+}
+
+model AssociationDocument {
+  id String @id @default(uuid()) @db.Uuid
+
+  associationId String      @map("association_id") @db.Uuid
+  association   Association @relation(fields: [associationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  type     String @db.VarChar(50)
+  title    String @db.VarChar(150)
+  fileUrl  String @map("file_url") @db.VarChar(500)
+  fileKey  String @map("file_key") @db.VarChar(255)
+  fileSize Int    @map("file_size")
+  mimeType String @map("mime_type") @db.VarChar(100)
+
+  uploadedById String @map("uploaded_by_id") @db.Uuid
+  uploadedBy   User   @relation("AssociationDocumentUploader", fields: [uploadedById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([associationId])
+  @@index([uploadedById])
+  @@map("association_documents")
+}
+
+model AssociationHistory {
+  id String @id @default(uuid()) @db.Uuid
+
+  associationId String      @map("association_id") @db.Uuid
+  association   Association @relation(fields: [associationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  actorId String? @map("actor_id") @db.Uuid
+  actor   User?   @relation("AssociationHistoryActor", fields: [actorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  action     AssociationHistoryAction
+  fromStatus AssociationStatus?       @map("from_status")
+  toStatus   AssociationStatus?       @map("to_status")
+  comment    String?                  @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([associationId])
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("association_history")
+}
+
+/**
+ * |--------------------------------------------------------------------------
+ * | NOTIFICATIONS (MNOTIF)
+ * |--------------------------------------------------------------------------
+ */
+
+model Notification {
+  id String @id @default(uuid()) @db.Uuid
+
+  recipientId String @map("recipient_id") @db.Uuid
+  recipient   User   @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  type      NotificationType
+  priority  NotificationPriority  @default(NORMAL)
+  channels  NotificationChannel[] @default([IN_APP])
+
+  title     String  @db.VarChar(150)
+  content   String  @db.Text
+  actionUrl String? @map("action_url") @db.VarChar(255)
+  icon      String? @db.VarChar(50)
+
+  status   NotificationStatus @default(UNREAD)
+  metadata Json?              @default("{}")
+
+  sentAt    DateTime  @default(now()) @map("sent_at") @db.Timestamptz(3)
+  readAt    DateTime? @map("read_at") @db.Timestamptz(3)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([recipientId, status])
+  @@index([recipientId, createdAt])
+  @@map("notifications")
+}
+
+model NotificationPreference {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  type         NotificationType
+  emailEnabled Boolean          @default(true) @map("email_enabled")
+  inAppEnabled Boolean          @default(true) @map("in_app_enabled")
+  smsEnabled   Boolean          @default(false) @map("sms_enabled")
+  pushEnabled  Boolean          @default(true) @map("push_enabled")
+
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([userId, type])
+  @@index([userId])
+  @@map("notification_preferences")
+}
+
+
+/**
+ * |--------------------------------------------------------------------------
+ * | PUBLICATIONS, INFORMATIONS & VALORISATION (MPV)
+ * |--------------------------------------------------------------------------
+ */
+
+model Publication {
+  id String @id @default(uuid()) @db.Uuid
+
+  slug    String @unique @db.VarChar(200)
+  title   String @db.VarChar(250)
+  summary String @db.Text
+  content String @db.Text
+
+  type   PublicationType        @default(COMMUNITY_ARTICLE)
+  status PublicationStatus      @default(DRAFT)
+  scope  PublicationTargetScope @default(GLOBAL_PUBLIC)
+
+  coverImageUrl String?  @map("cover_image_url") @db.VarChar(500)
+  attachments   Json?    @default("[]")
+  tags          String[] @default([])
+
+  authorId String @map("author_id") @db.Uuid
+  author   User   @relation("PublicationAuthor", fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  diplomaticPostId String?         @map("diplomatic_post_id") @db.Uuid
+  diplomaticPost   DiplomaticPost? @relation(fields: [diplomaticPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  associationId String?      @map("association_id") @db.Uuid
+  association   Association? @relation(fields: [associationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  publishedAt DateTime? @map("published_at") @db.Timestamptz(3)
+  expiresAt   DateTime? @map("expires_at") @db.Timestamptz(3)
+  viewCount   Int       @default(0) @map("view_count")
+  isFeatured  Boolean   @default(false) @map("is_featured")
+
+  reviews PublicationReviewHistory[]
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([status])
+  @@index([type])
+  @@index([scope])
+  @@index([authorId])
+  @@index([diplomaticPostId])
+  @@index([associationId])
+  @@index([publishedAt])
+  @@index([isFeatured])
+  @@map("publications")
+}
+
+model PublicationReviewHistory {
+  id String @id @default(uuid()) @db.Uuid
+
+  publicationId String      @map("publication_id") @db.Uuid
+  publication   Publication @relation(fields: [publicationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  reviewerId String @map("reviewer_id") @db.Uuid
+  reviewer   User   @relation("PublicationReviewer", fields: [reviewerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  level    PublicationReviewLevel
+  decision PublicationReviewDecision
+  comment  String?                   @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([publicationId])
+  @@index([reviewerId])
+  @@index([createdAt])
+  @@map("publication_review_history")
 }

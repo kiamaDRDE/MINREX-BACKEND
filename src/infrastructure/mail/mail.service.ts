@@ -454,6 +454,102 @@ République du Cameroun
     this.logger.log(`Verification email sent to ${options.to}`);
   }
 
+  async sendNotificationEmail(options: {
+    to: string;
+    recipientName?: string | null;
+    subject: string;
+    title: string;
+    content: string;
+    actionUrl?: string;
+    actionLabel?: string;
+  }): Promise<void> {
+    const fromEmail = this.configService.getOrThrow<string>('MAIL_FROM');
+    const fromName =
+      this.configService.get<string>('MAIL_FROM_NAME') ?? 'MINREX';
+
+    const greeting = options.recipientName?.trim()
+      ? `Bonjour ${this.escapeHtml(options.recipientName.trim())},`
+      : 'Bonjour,';
+
+    const actionButtonHtml = options.actionUrl
+      ? `
+        <div style="margin: 28px 0; text-align: center;">
+          <a
+            href="${this.escapeHtml(options.actionUrl)}"
+            style="
+              display: inline-block;
+              padding: 14px 28px;
+              background-color: #006b3c;
+              color: #ffffff;
+              font-size: 15px;
+              font-weight: 600;
+              text-decoration: none;
+              border-radius: 6px;
+            "
+          >
+            ${this.escapeHtml(options.actionLabel ?? 'Consulter sur la plateforme')}
+          </a>
+        </div>
+      `
+      : '';
+
+    await this.transporter.sendMail({
+      from: `"${fromName}" <${fromEmail}>`,
+      to: options.to,
+      subject: options.subject,
+      text: `
+${greeting}
+
+${options.title}
+
+${options.content}
+
+${options.actionUrl ? `Lien: ${options.actionUrl}` : ''}
+
+MINREX - République du Cameroun
+      `.trim(),
+      html: `
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${this.escapeHtml(options.subject)}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f4f6f8; font-family: Arial, Helvetica, sans-serif; color: #1f2937;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f6f8; padding: 32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 620px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);">
+            <tr>
+              <td style="background-color: #006b3c; padding: 24px 32px; text-align: center;">
+                <div style="font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: 1px;">MINREX</div>
+                <div style="font-size: 12px; color: #e5e7eb; text-transform: uppercase; margin-top: 4px;">République du Cameroun · Diaspora</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 36px 32px 24px 32px;">
+                <h1 style="margin: 0 0 20px; font-size: 20px; color: #111827;">${this.escapeHtml(options.title)}</h1>
+                <p style="margin: 0 0 16px; font-size: 15px; color: #374151;">${greeting}</p>
+                <div style="margin: 0 0 20px; font-size: 15px; line-height: 1.6; color: #374151;">${this.escapeHtml(options.content)}</div>
+                ${actionButtonHtml}
+                <p style="margin: 24px 0 0; font-size: 13px; color: #6b7280; border-top: 1px solid #e5e7eb; padding-top: 16px;">
+                  Ce message vous a été envoyé automatiquement par la plateforme numérique nationale du MINREX.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+      `.trim(),
+    });
+
+    this.logger.log(`Notification email sent to ${options.to} (${options.subject})`);
+  }
+
   private escapeHtml(value: string): string {
     return value
       .replaceAll('&', '&amp;')

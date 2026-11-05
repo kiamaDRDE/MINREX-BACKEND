@@ -244,6 +244,15 @@ export type UserWhereInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestListRelationFilter
   mentorshipRequestsMentored?: Prisma.MentorshipRequestListRelationFilter
   mentorshipHistory?: Prisma.MentorshipRequestHistoryListRelationFilter
+  associationsCreated?: Prisma.AssociationListRelationFilter
+  associationsValidated?: Prisma.AssociationListRelationFilter
+  associationMemberships?: Prisma.AssociationMembershipListRelationFilter
+  associationDocumentsUploaded?: Prisma.AssociationDocumentListRelationFilter
+  associationHistory?: Prisma.AssociationHistoryListRelationFilter
+  publicationsAuthored?: Prisma.PublicationListRelationFilter
+  publicationReviews?: Prisma.PublicationReviewHistoryListRelationFilter
+  notificationsReceived?: Prisma.NotificationListRelationFilter
+  notificationPreferences?: Prisma.NotificationPreferenceListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -272,6 +281,15 @@ export type UserOrderByWithRelationInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestOrderByRelationAggregateInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestOrderByRelationAggregateInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryOrderByRelationAggregateInput
+  associationsCreated?: Prisma.AssociationOrderByRelationAggregateInput
+  associationsValidated?: Prisma.AssociationOrderByRelationAggregateInput
+  associationMemberships?: Prisma.AssociationMembershipOrderByRelationAggregateInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentOrderByRelationAggregateInput
+  associationHistory?: Prisma.AssociationHistoryOrderByRelationAggregateInput
+  publicationsAuthored?: Prisma.PublicationOrderByRelationAggregateInput
+  publicationReviews?: Prisma.PublicationReviewHistoryOrderByRelationAggregateInput
+  notificationsReceived?: Prisma.NotificationOrderByRelationAggregateInput
+  notificationPreferences?: Prisma.NotificationPreferenceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -303,6 +321,15 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   mentorshipRequestsCreated?: Prisma.MentorshipRequestListRelationFilter
   mentorshipRequestsMentored?: Prisma.MentorshipRequestListRelationFilter
   mentorshipHistory?: Prisma.MentorshipRequestHistoryListRelationFilter
+  associationsCreated?: Prisma.AssociationListRelationFilter
+  associationsValidated?: Prisma.AssociationListRelationFilter
+  associationMemberships?: Prisma.AssociationMembershipListRelationFilter
+  associationDocumentsUploaded?: Prisma.AssociationDocumentListRelationFilter
+  associationHistory?: Prisma.AssociationHistoryListRelationFilter
+  publicationsAuthored?: Prisma.PublicationListRelationFilter
+  publicationReviews?: Prisma.PublicationReviewHistoryListRelationFilter
+  notificationsReceived?: Prisma.NotificationListRelationFilter
+  notificationPreferences?: Prisma.NotificationPreferenceListRelationFilter
 }, "id" | "email" | "username" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -365,6 +392,15 @@ export type UserCreateInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -393,6 +429,15 @@ export type UserUncheckedCreateInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -421,6 +466,15 @@ export type UserUpdateInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -449,6 +503,15 @@ export type UserUncheckedUpdateInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -755,6 +818,136 @@ export type UserUpdateOneWithoutMentorshipHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMentorshipHistoryInput, Prisma.UserUpdateWithoutMentorshipHistoryInput>, Prisma.UserUncheckedUpdateWithoutMentorshipHistoryInput>
 }
 
+export type UserCreateNestedOneWithoutAssociationsCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationsCreatedInput, Prisma.UserUncheckedCreateWithoutAssociationsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutAssociationsValidatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationsValidatedInput, Prisma.UserUncheckedCreateWithoutAssociationsValidatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationsValidatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssociationsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationsCreatedInput, Prisma.UserUncheckedCreateWithoutAssociationsCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationsCreatedInput
+  upsert?: Prisma.UserUpsertWithoutAssociationsCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssociationsCreatedInput, Prisma.UserUpdateWithoutAssociationsCreatedInput>, Prisma.UserUncheckedUpdateWithoutAssociationsCreatedInput>
+}
+
+export type UserUpdateOneWithoutAssociationsValidatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationsValidatedInput, Prisma.UserUncheckedCreateWithoutAssociationsValidatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationsValidatedInput
+  upsert?: Prisma.UserUpsertWithoutAssociationsValidatedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssociationsValidatedInput, Prisma.UserUpdateWithoutAssociationsValidatedInput>, Prisma.UserUncheckedUpdateWithoutAssociationsValidatedInput>
+}
+
+export type UserCreateNestedOneWithoutAssociationMembershipsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationMembershipsInput, Prisma.UserUncheckedCreateWithoutAssociationMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssociationMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationMembershipsInput, Prisma.UserUncheckedCreateWithoutAssociationMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationMembershipsInput
+  upsert?: Prisma.UserUpsertWithoutAssociationMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssociationMembershipsInput, Prisma.UserUpdateWithoutAssociationMembershipsInput>, Prisma.UserUncheckedUpdateWithoutAssociationMembershipsInput>
+}
+
+export type UserCreateNestedOneWithoutAssociationDocumentsUploadedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedCreateWithoutAssociationDocumentsUploadedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationDocumentsUploadedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssociationDocumentsUploadedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedCreateWithoutAssociationDocumentsUploadedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationDocumentsUploadedInput
+  upsert?: Prisma.UserUpsertWithoutAssociationDocumentsUploadedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssociationDocumentsUploadedInput, Prisma.UserUpdateWithoutAssociationDocumentsUploadedInput>, Prisma.UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput>
+}
+
+export type UserCreateNestedOneWithoutAssociationHistoryInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationHistoryInput, Prisma.UserUncheckedCreateWithoutAssociationHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationHistoryInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAssociationHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssociationHistoryInput, Prisma.UserUncheckedCreateWithoutAssociationHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssociationHistoryInput
+  upsert?: Prisma.UserUpsertWithoutAssociationHistoryInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssociationHistoryInput, Prisma.UserUpdateWithoutAssociationHistoryInput>, Prisma.UserUncheckedUpdateWithoutAssociationHistoryInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsReceivedInput, Prisma.UserUncheckedCreateWithoutNotificationsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsReceivedInput, Prisma.UserUncheckedCreateWithoutNotificationsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsReceivedInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsReceivedInput, Prisma.UserUpdateWithoutNotificationsReceivedInput>, Prisma.UserUncheckedUpdateWithoutNotificationsReceivedInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationPreferencesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationPreferencesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationPreferencesInput
+  upsert?: Prisma.UserUpsertWithoutNotificationPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationPreferencesInput, Prisma.UserUpdateWithoutNotificationPreferencesInput>, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+}
+
+export type UserCreateNestedOneWithoutPublicationsAuthoredInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedCreateWithoutPublicationsAuthoredInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublicationsAuthoredInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPublicationsAuthoredNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedCreateWithoutPublicationsAuthoredInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublicationsAuthoredInput
+  upsert?: Prisma.UserUpsertWithoutPublicationsAuthoredInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPublicationsAuthoredInput, Prisma.UserUpdateWithoutPublicationsAuthoredInput>, Prisma.UserUncheckedUpdateWithoutPublicationsAuthoredInput>
+}
+
+export type UserCreateNestedOneWithoutPublicationReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublicationReviewsInput, Prisma.UserUncheckedCreateWithoutPublicationReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublicationReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPublicationReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublicationReviewsInput, Prisma.UserUncheckedCreateWithoutPublicationReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublicationReviewsInput
+  upsert?: Prisma.UserUpsertWithoutPublicationReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPublicationReviewsInput, Prisma.UserUpdateWithoutPublicationReviewsInput>, Prisma.UserUncheckedUpdateWithoutPublicationReviewsInput>
+}
+
 export type UserCreateWithoutProfileInput = {
   id?: string
   email: string
@@ -780,6 +973,15 @@ export type UserCreateWithoutProfileInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -807,6 +1009,15 @@ export type UserUncheckedCreateWithoutProfileInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -850,6 +1061,15 @@ export type UserUpdateWithoutProfileInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -877,6 +1097,15 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRoleAssignmentsInput = {
@@ -904,6 +1133,15 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -931,6 +1169,15 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -974,6 +1221,15 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -1001,6 +1257,15 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPostAssignmentsInput = {
@@ -1028,6 +1293,15 @@ export type UserCreateWithoutPostAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPostAssignmentsInput = {
@@ -1055,6 +1329,15 @@ export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPostAssignmentsInput = {
@@ -1098,6 +1381,15 @@ export type UserUpdateWithoutPostAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
@@ -1125,6 +1417,15 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVerificationTokensInput = {
@@ -1152,6 +1453,15 @@ export type UserCreateWithoutVerificationTokensInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVerificationTokensInput = {
@@ -1179,6 +1489,15 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVerificationTokensInput = {
@@ -1222,6 +1541,15 @@ export type UserUpdateWithoutVerificationTokensInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerificationTokensInput = {
@@ -1249,6 +1577,15 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuthSessionsInput = {
@@ -1276,6 +1613,15 @@ export type UserCreateWithoutAuthSessionsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuthSessionsInput = {
@@ -1303,6 +1649,15 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuthSessionsInput = {
@@ -1346,6 +1701,15 @@ export type UserUpdateWithoutAuthSessionsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthSessionsInput = {
@@ -1373,6 +1737,15 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCensusRecordsInput = {
@@ -1400,6 +1773,15 @@ export type UserCreateWithoutCensusRecordsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCensusRecordsInput = {
@@ -1427,6 +1809,15 @@ export type UserUncheckedCreateWithoutCensusRecordsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCensusRecordsInput = {
@@ -1470,6 +1861,15 @@ export type UserUpdateWithoutCensusRecordsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusRecordsInput = {
@@ -1497,6 +1897,15 @@ export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCensusReviewsInput = {
@@ -1524,6 +1933,15 @@ export type UserCreateWithoutCensusReviewsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCensusReviewsInput = {
@@ -1551,6 +1969,15 @@ export type UserUncheckedCreateWithoutCensusReviewsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCensusReviewsInput = {
@@ -1594,6 +2021,15 @@ export type UserUpdateWithoutCensusReviewsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusReviewsInput = {
@@ -1621,6 +2057,15 @@ export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCensusStatusChangesInput = {
@@ -1648,6 +2093,15 @@ export type UserCreateWithoutCensusStatusChangesInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
@@ -1675,6 +2129,15 @@ export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCensusStatusChangesInput = {
@@ -1718,6 +2181,15 @@ export type UserUpdateWithoutCensusStatusChangesInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
@@ -1745,6 +2217,15 @@ export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAssistanceCasesCreatedInput = {
@@ -1772,6 +2253,15 @@ export type UserCreateWithoutAssistanceCasesCreatedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
@@ -1799,6 +2289,15 @@ export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceCasesCreatedInput = {
@@ -1831,6 +2330,15 @@ export type UserCreateWithoutAssistanceCasesAssignedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
@@ -1858,6 +2366,15 @@ export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceCasesAssignedInput = {
@@ -1901,6 +2418,15 @@ export type UserUpdateWithoutAssistanceCasesCreatedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
@@ -1928,6 +2454,15 @@ export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutAssistanceCasesAssignedInput = {
@@ -1966,6 +2501,15 @@ export type UserUpdateWithoutAssistanceCasesAssignedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
@@ -1993,6 +2537,15 @@ export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAssistanceHistoryInput = {
@@ -2020,6 +2573,15 @@ export type UserCreateWithoutAssistanceHistoryInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
@@ -2047,6 +2609,15 @@ export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssistanceHistoryInput = {
@@ -2090,6 +2661,15 @@ export type UserUpdateWithoutAssistanceHistoryInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
@@ -2117,6 +2697,15 @@ export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMentorshipRequestsCreatedInput = {
@@ -2144,6 +2733,15 @@ export type UserCreateWithoutMentorshipRequestsCreatedInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMentorshipRequestsCreatedInput = {
@@ -2171,6 +2769,15 @@ export type UserUncheckedCreateWithoutMentorshipRequestsCreatedInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMentorshipRequestsCreatedInput = {
@@ -2203,6 +2810,15 @@ export type UserCreateWithoutMentorshipRequestsMentoredInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMentorshipRequestsMentoredInput = {
@@ -2230,6 +2846,15 @@ export type UserUncheckedCreateWithoutMentorshipRequestsMentoredInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMentorshipRequestsMentoredInput = {
@@ -2273,6 +2898,15 @@ export type UserUpdateWithoutMentorshipRequestsCreatedInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput = {
@@ -2300,6 +2934,15 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutMentorshipRequestsMentoredInput = {
@@ -2338,6 +2981,15 @@ export type UserUpdateWithoutMentorshipRequestsMentoredInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput = {
@@ -2365,6 +3017,15 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMentorshipHistoryInput = {
@@ -2392,6 +3053,15 @@ export type UserCreateWithoutMentorshipHistoryInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMentorshipHistoryInput = {
@@ -2419,6 +3089,15 @@ export type UserUncheckedCreateWithoutMentorshipHistoryInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMentorshipHistoryInput = {
@@ -2462,6 +3141,15 @@ export type UserUpdateWithoutMentorshipHistoryInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMentorshipHistoryInput = {
@@ -2489,6 +3177,1455 @@ export type UserUncheckedUpdateWithoutMentorshipHistoryInput = {
   assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
   mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
   mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssociationsCreatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssociationsCreatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssociationsCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationsCreatedInput, Prisma.UserUncheckedCreateWithoutAssociationsCreatedInput>
+}
+
+export type UserCreateWithoutAssociationsValidatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssociationsValidatedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssociationsValidatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationsValidatedInput, Prisma.UserUncheckedCreateWithoutAssociationsValidatedInput>
+}
+
+export type UserUpsertWithoutAssociationsCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssociationsCreatedInput, Prisma.UserUncheckedUpdateWithoutAssociationsCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationsCreatedInput, Prisma.UserUncheckedCreateWithoutAssociationsCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssociationsCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssociationsCreatedInput, Prisma.UserUncheckedUpdateWithoutAssociationsCreatedInput>
+}
+
+export type UserUpdateWithoutAssociationsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssociationsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutAssociationsValidatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssociationsValidatedInput, Prisma.UserUncheckedUpdateWithoutAssociationsValidatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationsValidatedInput, Prisma.UserUncheckedCreateWithoutAssociationsValidatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssociationsValidatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssociationsValidatedInput, Prisma.UserUncheckedUpdateWithoutAssociationsValidatedInput>
+}
+
+export type UserUpdateWithoutAssociationsValidatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssociationsValidatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssociationMembershipsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssociationMembershipsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssociationMembershipsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationMembershipsInput, Prisma.UserUncheckedCreateWithoutAssociationMembershipsInput>
+}
+
+export type UserUpsertWithoutAssociationMembershipsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssociationMembershipsInput, Prisma.UserUncheckedUpdateWithoutAssociationMembershipsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationMembershipsInput, Prisma.UserUncheckedCreateWithoutAssociationMembershipsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssociationMembershipsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssociationMembershipsInput, Prisma.UserUncheckedUpdateWithoutAssociationMembershipsInput>
+}
+
+export type UserUpdateWithoutAssociationMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssociationMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssociationDocumentsUploadedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssociationDocumentsUploadedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssociationDocumentsUploadedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedCreateWithoutAssociationDocumentsUploadedInput>
+}
+
+export type UserUpsertWithoutAssociationDocumentsUploadedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedCreateWithoutAssociationDocumentsUploadedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssociationDocumentsUploadedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssociationDocumentsUploadedInput, Prisma.UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput>
+}
+
+export type UserUpdateWithoutAssociationDocumentsUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssociationHistoryInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssociationHistoryInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssociationHistoryInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationHistoryInput, Prisma.UserUncheckedCreateWithoutAssociationHistoryInput>
+}
+
+export type UserUpsertWithoutAssociationHistoryInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssociationHistoryInput, Prisma.UserUncheckedUpdateWithoutAssociationHistoryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssociationHistoryInput, Prisma.UserUncheckedCreateWithoutAssociationHistoryInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssociationHistoryInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssociationHistoryInput, Prisma.UserUncheckedUpdateWithoutAssociationHistoryInput>
+}
+
+export type UserUpdateWithoutAssociationHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssociationHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsReceivedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsReceivedInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsReceivedInput, Prisma.UserUncheckedCreateWithoutNotificationsReceivedInput>
+}
+
+export type UserUpsertWithoutNotificationsReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsReceivedInput, Prisma.UserUncheckedUpdateWithoutNotificationsReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsReceivedInput, Prisma.UserUncheckedCreateWithoutNotificationsReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsReceivedInput, Prisma.UserUncheckedUpdateWithoutNotificationsReceivedInput>
+}
+
+export type UserUpdateWithoutNotificationsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationPreferencesInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+}
+
+export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+}
+
+export type UserCreateOrConnectWithoutNotificationPreferencesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+}
+
+export type UserUpsertWithoutNotificationPreferencesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationPreferencesInput, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationPreferencesInput, Prisma.UserUncheckedCreateWithoutNotificationPreferencesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationPreferencesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationPreferencesInput, Prisma.UserUncheckedUpdateWithoutNotificationPreferencesInput>
+}
+
+export type UserUpdateWithoutNotificationPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type UserCreateWithoutPublicationsAuthoredInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPublicationsAuthoredInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPublicationsAuthoredInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedCreateWithoutPublicationsAuthoredInput>
+}
+
+export type UserUpsertWithoutPublicationsAuthoredInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedUpdateWithoutPublicationsAuthoredInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedCreateWithoutPublicationsAuthoredInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPublicationsAuthoredInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPublicationsAuthoredInput, Prisma.UserUncheckedUpdateWithoutPublicationsAuthoredInput>
+}
+
+export type UserUpdateWithoutPublicationsAuthoredInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPublicationsAuthoredInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPublicationReviewsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPublicationReviewsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPublicationReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublicationReviewsInput, Prisma.UserUncheckedCreateWithoutPublicationReviewsInput>
+}
+
+export type UserUpsertWithoutPublicationReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPublicationReviewsInput, Prisma.UserUncheckedUpdateWithoutPublicationReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublicationReviewsInput, Prisma.UserUncheckedCreateWithoutPublicationReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPublicationReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPublicationReviewsInput, Prisma.UserUncheckedUpdateWithoutPublicationReviewsInput>
+}
+
+export type UserUpdateWithoutPublicationReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPublicationReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2510,6 +4647,15 @@ export type UserCountOutputType = {
   mentorshipRequestsCreated: number
   mentorshipRequestsMentored: number
   mentorshipHistory: number
+  associationsCreated: number
+  associationsValidated: number
+  associationMemberships: number
+  associationDocumentsUploaded: number
+  associationHistory: number
+  publicationsAuthored: number
+  publicationReviews: number
+  notificationsReceived: number
+  notificationPreferences: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2526,6 +4672,15 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   mentorshipRequestsCreated?: boolean | UserCountOutputTypeCountMentorshipRequestsCreatedArgs
   mentorshipRequestsMentored?: boolean | UserCountOutputTypeCountMentorshipRequestsMentoredArgs
   mentorshipHistory?: boolean | UserCountOutputTypeCountMentorshipHistoryArgs
+  associationsCreated?: boolean | UserCountOutputTypeCountAssociationsCreatedArgs
+  associationsValidated?: boolean | UserCountOutputTypeCountAssociationsValidatedArgs
+  associationMemberships?: boolean | UserCountOutputTypeCountAssociationMembershipsArgs
+  associationDocumentsUploaded?: boolean | UserCountOutputTypeCountAssociationDocumentsUploadedArgs
+  associationHistory?: boolean | UserCountOutputTypeCountAssociationHistoryArgs
+  publicationsAuthored?: boolean | UserCountOutputTypeCountPublicationsAuthoredArgs
+  publicationReviews?: boolean | UserCountOutputTypeCountPublicationReviewsArgs
+  notificationsReceived?: boolean | UserCountOutputTypeCountNotificationsReceivedArgs
+  notificationPreferences?: boolean | UserCountOutputTypeCountNotificationPreferencesArgs
 }
 
 /**
@@ -2629,6 +4784,69 @@ export type UserCountOutputTypeCountMentorshipHistoryArgs<ExtArgs extends runtim
   where?: Prisma.MentorshipRequestHistoryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssociationsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssociationsValidatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssociationMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationMembershipWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssociationDocumentsUploadedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationDocumentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssociationHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationHistoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPublicationsAuthoredArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PublicationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPublicationReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PublicationReviewHistoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationPreferenceWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2656,6 +4874,15 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mentorshipRequestsCreated?: boolean | Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>
   mentorshipRequestsMentored?: boolean | Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>
   mentorshipHistory?: boolean | Prisma.User$mentorshipHistoryArgs<ExtArgs>
+  associationsCreated?: boolean | Prisma.User$associationsCreatedArgs<ExtArgs>
+  associationsValidated?: boolean | Prisma.User$associationsValidatedArgs<ExtArgs>
+  associationMemberships?: boolean | Prisma.User$associationMembershipsArgs<ExtArgs>
+  associationDocumentsUploaded?: boolean | Prisma.User$associationDocumentsUploadedArgs<ExtArgs>
+  associationHistory?: boolean | Prisma.User$associationHistoryArgs<ExtArgs>
+  publicationsAuthored?: boolean | Prisma.User$publicationsAuthoredArgs<ExtArgs>
+  publicationReviews?: boolean | Prisma.User$publicationReviewsArgs<ExtArgs>
+  notificationsReceived?: boolean | Prisma.User$notificationsReceivedArgs<ExtArgs>
+  notificationPreferences?: boolean | Prisma.User$notificationPreferencesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2717,6 +4944,15 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   mentorshipRequestsCreated?: boolean | Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>
   mentorshipRequestsMentored?: boolean | Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>
   mentorshipHistory?: boolean | Prisma.User$mentorshipHistoryArgs<ExtArgs>
+  associationsCreated?: boolean | Prisma.User$associationsCreatedArgs<ExtArgs>
+  associationsValidated?: boolean | Prisma.User$associationsValidatedArgs<ExtArgs>
+  associationMemberships?: boolean | Prisma.User$associationMembershipsArgs<ExtArgs>
+  associationDocumentsUploaded?: boolean | Prisma.User$associationDocumentsUploadedArgs<ExtArgs>
+  associationHistory?: boolean | Prisma.User$associationHistoryArgs<ExtArgs>
+  publicationsAuthored?: boolean | Prisma.User$publicationsAuthoredArgs<ExtArgs>
+  publicationReviews?: boolean | Prisma.User$publicationReviewsArgs<ExtArgs>
+  notificationsReceived?: boolean | Prisma.User$notificationsReceivedArgs<ExtArgs>
+  notificationPreferences?: boolean | Prisma.User$notificationPreferencesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2739,6 +4975,15 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mentorshipRequestsCreated: Prisma.$MentorshipRequestPayload<ExtArgs>[]
     mentorshipRequestsMentored: Prisma.$MentorshipRequestPayload<ExtArgs>[]
     mentorshipHistory: Prisma.$MentorshipRequestHistoryPayload<ExtArgs>[]
+    associationsCreated: Prisma.$AssociationPayload<ExtArgs>[]
+    associationsValidated: Prisma.$AssociationPayload<ExtArgs>[]
+    associationMemberships: Prisma.$AssociationMembershipPayload<ExtArgs>[]
+    associationDocumentsUploaded: Prisma.$AssociationDocumentPayload<ExtArgs>[]
+    associationHistory: Prisma.$AssociationHistoryPayload<ExtArgs>[]
+    publicationsAuthored: Prisma.$PublicationPayload<ExtArgs>[]
+    publicationReviews: Prisma.$PublicationReviewHistoryPayload<ExtArgs>[]
+    notificationsReceived: Prisma.$NotificationPayload<ExtArgs>[]
+    notificationPreferences: Prisma.$NotificationPreferencePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3160,6 +5405,15 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   mentorshipRequestsCreated<T extends Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipRequestsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mentorshipRequestsMentored<T extends Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipRequestsMentoredArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mentorshipHistory<T extends Prisma.User$mentorshipHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mentorshipHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MentorshipRequestHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associationsCreated<T extends Prisma.User$associationsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$associationsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associationsValidated<T extends Prisma.User$associationsValidatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$associationsValidatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associationMemberships<T extends Prisma.User$associationMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$associationMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associationDocumentsUploaded<T extends Prisma.User$associationDocumentsUploadedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$associationDocumentsUploadedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associationHistory<T extends Prisma.User$associationHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$associationHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  publicationsAuthored<T extends Prisma.User$publicationsAuthoredArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$publicationsAuthoredArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PublicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  publicationReviews<T extends Prisma.User$publicationReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$publicationReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PublicationReviewHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationsReceived<T extends Prisma.User$notificationsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationPreferences<T extends Prisma.User$notificationPreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3921,6 +6175,222 @@ export type User$mentorshipHistoryArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.MentorshipRequestHistoryScalarFieldEnum | Prisma.MentorshipRequestHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.associationsCreated
+ */
+export type User$associationsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Association
+   */
+  select?: Prisma.AssociationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Association
+   */
+  omit?: Prisma.AssociationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationInclude<ExtArgs> | null
+  where?: Prisma.AssociationWhereInput
+  orderBy?: Prisma.AssociationOrderByWithRelationInput | Prisma.AssociationOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationScalarFieldEnum | Prisma.AssociationScalarFieldEnum[]
+}
+
+/**
+ * User.associationsValidated
+ */
+export type User$associationsValidatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Association
+   */
+  select?: Prisma.AssociationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Association
+   */
+  omit?: Prisma.AssociationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationInclude<ExtArgs> | null
+  where?: Prisma.AssociationWhereInput
+  orderBy?: Prisma.AssociationOrderByWithRelationInput | Prisma.AssociationOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationScalarFieldEnum | Prisma.AssociationScalarFieldEnum[]
+}
+
+/**
+ * User.associationMemberships
+ */
+export type User$associationMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssociationMembership
+   */
+  select?: Prisma.AssociationMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssociationMembership
+   */
+  omit?: Prisma.AssociationMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationMembershipInclude<ExtArgs> | null
+  where?: Prisma.AssociationMembershipWhereInput
+  orderBy?: Prisma.AssociationMembershipOrderByWithRelationInput | Prisma.AssociationMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationMembershipScalarFieldEnum | Prisma.AssociationMembershipScalarFieldEnum[]
+}
+
+/**
+ * User.associationDocumentsUploaded
+ */
+export type User$associationDocumentsUploadedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssociationDocument
+   */
+  select?: Prisma.AssociationDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssociationDocument
+   */
+  omit?: Prisma.AssociationDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationDocumentInclude<ExtArgs> | null
+  where?: Prisma.AssociationDocumentWhereInput
+  orderBy?: Prisma.AssociationDocumentOrderByWithRelationInput | Prisma.AssociationDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationDocumentScalarFieldEnum | Prisma.AssociationDocumentScalarFieldEnum[]
+}
+
+/**
+ * User.associationHistory
+ */
+export type User$associationHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssociationHistory
+   */
+  select?: Prisma.AssociationHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssociationHistory
+   */
+  omit?: Prisma.AssociationHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationHistoryInclude<ExtArgs> | null
+  where?: Prisma.AssociationHistoryWhereInput
+  orderBy?: Prisma.AssociationHistoryOrderByWithRelationInput | Prisma.AssociationHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationHistoryScalarFieldEnum | Prisma.AssociationHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.publicationsAuthored
+ */
+export type User$publicationsAuthoredArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Publication
+   */
+  select?: Prisma.PublicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Publication
+   */
+  omit?: Prisma.PublicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PublicationInclude<ExtArgs> | null
+  where?: Prisma.PublicationWhereInput
+  orderBy?: Prisma.PublicationOrderByWithRelationInput | Prisma.PublicationOrderByWithRelationInput[]
+  cursor?: Prisma.PublicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PublicationScalarFieldEnum | Prisma.PublicationScalarFieldEnum[]
+}
+
+/**
+ * User.publicationReviews
+ */
+export type User$publicationReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PublicationReviewHistory
+   */
+  select?: Prisma.PublicationReviewHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PublicationReviewHistory
+   */
+  omit?: Prisma.PublicationReviewHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PublicationReviewHistoryInclude<ExtArgs> | null
+  where?: Prisma.PublicationReviewHistoryWhereInput
+  orderBy?: Prisma.PublicationReviewHistoryOrderByWithRelationInput | Prisma.PublicationReviewHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.PublicationReviewHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PublicationReviewHistoryScalarFieldEnum | Prisma.PublicationReviewHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.notificationsReceived
+ */
+export type User$notificationsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.notificationPreferences
+ */
+export type User$notificationPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationPreference
+   */
+  select?: Prisma.NotificationPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationPreference
+   */
+  omit?: Prisma.NotificationPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationPreferenceInclude<ExtArgs> | null
+  where?: Prisma.NotificationPreferenceWhereInput
+  orderBy?: Prisma.NotificationPreferenceOrderByWithRelationInput | Prisma.NotificationPreferenceOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationPreferenceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationPreferenceScalarFieldEnum | Prisma.NotificationPreferenceScalarFieldEnum[]
 }
 
 /**

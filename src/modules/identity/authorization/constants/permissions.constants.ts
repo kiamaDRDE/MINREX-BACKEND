@@ -121,6 +121,57 @@ export const PERMISSIONS = {
     MENTORSHIP_HANDLE:
       'talent.mentorship.handle',
   },
+
+  /*
+  |--------------------------------------------------------------------------
+  | ASSOCIATIONS (MCA)
+  |--------------------------------------------------------------------------
+  */
+
+  ASSOCIATIONS: {
+    CREATE: 'associations.create',
+    READ_SELF: 'associations.read.self',
+    UPDATE_SELF: 'associations.update.self',
+    SUBMIT: 'associations.submit',
+    READ: 'associations.read',
+    REVIEW: 'associations.review',
+    REQUEST_CORRECTION: 'associations.request_correction',
+    APPROVE: 'associations.approve',
+    REJECT: 'associations.reject',
+    SUSPEND: 'associations.suspend',
+    MANAGE: 'associations.manage',
+  },
+
+  /*
+  |--------------------------------------------------------------------------
+  | NOTIFICATIONS (MNOTIF)
+  |--------------------------------------------------------------------------
+  */
+
+  NOTIFICATIONS: {
+    READ_SELF: 'notifications.read.self',
+    MANAGE_SELF: 'notifications.manage.self',
+    BROADCAST: 'notifications.broadcast',
+  },
+
+  /*
+  |--------------------------------------------------------------------------
+  | PUBLICATIONS & VALORISATION (MPV)
+  |--------------------------------------------------------------------------
+  */
+
+  PUBLICATIONS: {
+    CREATE: 'publications.create',
+    READ_SELF: 'publications.read.self',
+    UPDATE_SELF: 'publications.update.self',
+    SUBMIT: 'publications.submit',
+    READ: 'publications.read',
+    REVIEW_LEVEL1: 'publications.review_level1',
+    APPROVE_LEVEL2: 'publications.approve_level2',
+    FEATURE: 'publications.feature',
+    ARCHIVE: 'publications.archive',
+    DELETE: 'publications.delete',
+  },
 } as const;
 
 /*
@@ -146,7 +197,10 @@ export type PermissionCode =
   | (typeof PERMISSIONS.NETWORK)[keyof typeof PERMISSIONS.NETWORK]
   | (typeof PERMISSIONS.CENSUS)[keyof typeof PERMISSIONS.CENSUS]
   | (typeof PERMISSIONS.ASSISTANCE)[keyof typeof PERMISSIONS.ASSISTANCE]
-  | (typeof PERMISSIONS.TALENT)[keyof typeof PERMISSIONS.TALENT];
+  | (typeof PERMISSIONS.TALENT)[keyof typeof PERMISSIONS.TALENT]
+  | (typeof PERMISSIONS.ASSOCIATIONS)[keyof typeof PERMISSIONS.ASSOCIATIONS]
+  | (typeof PERMISSIONS.NOTIFICATIONS)[keyof typeof PERMISSIONS.NOTIFICATIONS]
+  | (typeof PERMISSIONS.PUBLICATIONS)[keyof typeof PERMISSIONS.PUBLICATIONS];
 
 /*
 |--------------------------------------------------------------------------
@@ -458,5 +512,145 @@ export const SYSTEM_PERMISSIONS:
     
       description:
         'Allows an authorized mentor to handle mentorship requests assigned to them.',
+    },
+    /*
+    |--------------------------------------------------------------------------
+    | Associations (MCA)
+    |--------------------------------------------------------------------------
+    */
+
+    {
+      code: PERMISSIONS.ASSOCIATIONS.CREATE,
+      name: 'Create association draft',
+      description: 'Allows a user to initiate and create an association draft.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.READ_SELF,
+      name: 'Read own associations',
+      description: 'Allows a user to consult associations they created or belong to.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.UPDATE_SELF,
+      name: 'Update own association',
+      description: 'Allows a representative to edit their association draft or correction.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.SUBMIT,
+      name: 'Submit association',
+      description: 'Allows a representative to submit an association for consular review.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.READ,
+      name: 'Read all associations',
+      description: 'Allows authorized consular or central staff to read associations in their scope.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.REVIEW,
+      name: 'Review association',
+      description: 'Allows a consular agent to take charge of and review an association dossier.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.REQUEST_CORRECTION,
+      name: 'Request association correction',
+      description: 'Allows an agent to send back an association dossier for correction with mandatory motive.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.APPROVE,
+      name: 'Approve association',
+      description: 'Allows a diplomatic post manager or central staff to approve and certify an association.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.REJECT,
+      name: 'Reject association',
+      description: 'Allows a diplomatic post manager or central staff to reject an association with mandatory motive.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.SUSPEND,
+      name: 'Suspend association',
+      description: 'Allows an authorized manager to suspend a previously approved association.',
+    },
+    {
+      code: PERMISSIONS.ASSOCIATIONS.MANAGE,
+      name: 'Manage all associations',
+      description: 'Allows administrative oversight over the national diaspora associations catalogue.',
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notifications (MNOTIF)
+    |--------------------------------------------------------------------------
+    */
+
+    {
+      code: PERMISSIONS.NOTIFICATIONS.READ_SELF,
+      name: 'Read own notifications',
+      description: 'Allows an authenticated user to receive and read their notifications.',
+    },
+    {
+      code: PERMISSIONS.NOTIFICATIONS.MANAGE_SELF,
+      name: 'Manage own notifications',
+      description: 'Allows an authenticated user to mark notifications as read and edit preferences.',
+    },
+    {
+      code: PERMISSIONS.NOTIFICATIONS.BROADCAST,
+      name: 'Broadcast notifications',
+      description: 'Allows authorized personnel to broadcast urgent notifications to diaspora members.',
+    },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Publications & Valorisation (MPV)
+    |--------------------------------------------------------------------------
+    */
+
+    {
+      code: PERMISSIONS.PUBLICATIONS.CREATE,
+      name: 'Create publication draft',
+      description: 'Allows authoring a publication, article, or announcement draft.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.READ_SELF,
+      name: 'Read own publications',
+      description: 'Allows an author to consult their authored publications and review statuses.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.UPDATE_SELF,
+      name: 'Update own publication',
+      description: 'Allows an author to modify their publication draft or submit corrections.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.SUBMIT,
+      name: 'Submit publication for review',
+      description: 'Allows an author to submit their draft to the consular moderation queue.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.READ,
+      name: 'Read publications in moderation queues',
+      description: 'Allows consular or central staff to read publication review queues.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.REVIEW_LEVEL1,
+      name: 'Perform Level 1 publication moderation',
+      description: 'Allows territorial agents to review, request corrections, or pass publications to Level 2.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.APPROVE_LEVEL2,
+      name: 'Perform Level 2 final publication approval',
+      description: 'Allows post managers or central agents to formally approve and publish publications.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.FEATURE,
+      name: 'Feature publication',
+      description: 'Allows post managers or central agents to toggle featured status (Success Stories, alertes).',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.ARCHIVE,
+      name: 'Archive publication',
+      description: 'Allows archiving an active or expired publication.',
+    },
+    {
+      code: PERMISSIONS.PUBLICATIONS.DELETE,
+      name: 'Delete publication',
+      description: 'Allows author or admin to delete an unapproved publication draft.',
     },
   ];

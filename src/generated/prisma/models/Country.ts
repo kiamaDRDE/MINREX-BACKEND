@@ -211,6 +211,7 @@ export type CountryWhereInput = {
   assistanceCases?: Prisma.AssistanceCaseListRelationFilter
   censusResidenceRecords?: Prisma.CensusRecordListRelationFilter
   censusNationalityRecords?: Prisma.CensusRecordListRelationFilter
+  associations?: Prisma.AssociationListRelationFilter
 }
 
 export type CountryOrderByWithRelationInput = {
@@ -227,6 +228,7 @@ export type CountryOrderByWithRelationInput = {
   assistanceCases?: Prisma.AssistanceCaseOrderByRelationAggregateInput
   censusResidenceRecords?: Prisma.CensusRecordOrderByRelationAggregateInput
   censusNationalityRecords?: Prisma.CensusRecordOrderByRelationAggregateInput
+  associations?: Prisma.AssociationOrderByRelationAggregateInput
 }
 
 export type CountryWhereUniqueInput = Prisma.AtLeast<{
@@ -246,6 +248,7 @@ export type CountryWhereUniqueInput = Prisma.AtLeast<{
   assistanceCases?: Prisma.AssistanceCaseListRelationFilter
   censusResidenceRecords?: Prisma.CensusRecordListRelationFilter
   censusNationalityRecords?: Prisma.CensusRecordListRelationFilter
+  associations?: Prisma.AssociationListRelationFilter
 }, "id" | "iso2Code" | "iso3Code" | "name">
 
 export type CountryOrderByWithAggregationInput = {
@@ -290,6 +293,7 @@ export type CountryCreateInput = {
   assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateInput = {
@@ -306,6 +310,7 @@ export type CountryUncheckedCreateInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUpdateInput = {
@@ -322,6 +327,7 @@ export type CountryUpdateInput = {
   assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateInput = {
@@ -338,6 +344,7 @@ export type CountryUncheckedUpdateInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateManyInput = {
@@ -508,6 +515,20 @@ export type CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CountryUpdateToOneWithWhereWithoutAssistanceCasesInput, Prisma.CountryUpdateWithoutAssistanceCasesInput>, Prisma.CountryUncheckedUpdateWithoutAssistanceCasesInput>
 }
 
+export type CountryCreateNestedOneWithoutAssociationsInput = {
+  create?: Prisma.XOR<Prisma.CountryCreateWithoutAssociationsInput, Prisma.CountryUncheckedCreateWithoutAssociationsInput>
+  connectOrCreate?: Prisma.CountryCreateOrConnectWithoutAssociationsInput
+  connect?: Prisma.CountryWhereUniqueInput
+}
+
+export type CountryUpdateOneRequiredWithoutAssociationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CountryCreateWithoutAssociationsInput, Prisma.CountryUncheckedCreateWithoutAssociationsInput>
+  connectOrCreate?: Prisma.CountryCreateOrConnectWithoutAssociationsInput
+  upsert?: Prisma.CountryUpsertWithoutAssociationsInput
+  connect?: Prisma.CountryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CountryUpdateToOneWithWhereWithoutAssociationsInput, Prisma.CountryUpdateWithoutAssociationsInput>, Prisma.CountryUncheckedUpdateWithoutAssociationsInput>
+}
+
 export type CountryCreateWithoutHostedPostsInput = {
   id?: string
   iso2Code: string
@@ -521,6 +542,7 @@ export type CountryCreateWithoutHostedPostsInput = {
   assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutHostedPostsInput = {
@@ -536,6 +558,7 @@ export type CountryUncheckedCreateWithoutHostedPostsInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutHostedPostsInput = {
@@ -567,6 +590,7 @@ export type CountryUpdateWithoutHostedPostsInput = {
   assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutHostedPostsInput = {
@@ -582,6 +606,7 @@ export type CountryUncheckedUpdateWithoutHostedPostsInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateWithoutPostCoveragesInput = {
@@ -597,6 +622,7 @@ export type CountryCreateWithoutPostCoveragesInput = {
   assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutPostCoveragesInput = {
@@ -612,6 +638,7 @@ export type CountryUncheckedCreateWithoutPostCoveragesInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutPostCoveragesInput = {
@@ -643,6 +670,7 @@ export type CountryUpdateWithoutPostCoveragesInput = {
   assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutPostCoveragesInput = {
@@ -658,6 +686,7 @@ export type CountryUncheckedUpdateWithoutPostCoveragesInput = {
   assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateWithoutCensusNationalityRecordsInput = {
@@ -673,6 +702,7 @@ export type CountryCreateWithoutCensusNationalityRecordsInput = {
   postCoverages?: Prisma.PostCoverageCreateNestedManyWithoutCountryInput
   assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutCensusNationalityRecordsInput = {
@@ -688,6 +718,7 @@ export type CountryUncheckedCreateWithoutCensusNationalityRecordsInput = {
   postCoverages?: Prisma.PostCoverageUncheckedCreateNestedManyWithoutCountryInput
   assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutCensusNationalityRecordsInput = {
@@ -708,6 +739,7 @@ export type CountryCreateWithoutCensusResidenceRecordsInput = {
   postCoverages?: Prisma.PostCoverageCreateNestedManyWithoutCountryInput
   assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
   censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutCensusResidenceRecordsInput = {
@@ -723,6 +755,7 @@ export type CountryUncheckedCreateWithoutCensusResidenceRecordsInput = {
   postCoverages?: Prisma.PostCoverageUncheckedCreateNestedManyWithoutCountryInput
   assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutCensusResidenceRecordsInput = {
@@ -754,6 +787,7 @@ export type CountryUpdateWithoutCensusNationalityRecordsInput = {
   postCoverages?: Prisma.PostCoverageUpdateManyWithoutCountryNestedInput
   assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutCensusNationalityRecordsInput = {
@@ -769,6 +803,7 @@ export type CountryUncheckedUpdateWithoutCensusNationalityRecordsInput = {
   postCoverages?: Prisma.PostCoverageUncheckedUpdateManyWithoutCountryNestedInput
   assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUpsertWithoutCensusResidenceRecordsInput = {
@@ -795,6 +830,7 @@ export type CountryUpdateWithoutCensusResidenceRecordsInput = {
   postCoverages?: Prisma.PostCoverageUpdateManyWithoutCountryNestedInput
   assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutCensusResidenceRecordsInput = {
@@ -810,6 +846,7 @@ export type CountryUncheckedUpdateWithoutCensusResidenceRecordsInput = {
   postCoverages?: Prisma.PostCoverageUncheckedUpdateManyWithoutCountryNestedInput
   assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryCreateWithoutAssistanceCasesInput = {
@@ -825,6 +862,7 @@ export type CountryCreateWithoutAssistanceCasesInput = {
   postCoverages?: Prisma.PostCoverageCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationCreateNestedManyWithoutCountryInput
 }
 
 export type CountryUncheckedCreateWithoutAssistanceCasesInput = {
@@ -840,6 +878,7 @@ export type CountryUncheckedCreateWithoutAssistanceCasesInput = {
   postCoverages?: Prisma.PostCoverageUncheckedCreateNestedManyWithoutCountryInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+  associations?: Prisma.AssociationUncheckedCreateNestedManyWithoutCountryInput
 }
 
 export type CountryCreateOrConnectWithoutAssistanceCasesInput = {
@@ -871,6 +910,7 @@ export type CountryUpdateWithoutAssistanceCasesInput = {
   postCoverages?: Prisma.PostCoverageUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUpdateManyWithoutCountryNestedInput
 }
 
 export type CountryUncheckedUpdateWithoutAssistanceCasesInput = {
@@ -886,6 +926,87 @@ export type CountryUncheckedUpdateWithoutAssistanceCasesInput = {
   postCoverages?: Prisma.PostCoverageUncheckedUpdateManyWithoutCountryNestedInput
   censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
   censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
+  associations?: Prisma.AssociationUncheckedUpdateManyWithoutCountryNestedInput
+}
+
+export type CountryCreateWithoutAssociationsInput = {
+  id?: string
+  iso2Code: string
+  iso3Code: string
+  name: string
+  dialingCode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hostedPosts?: Prisma.DiplomaticPostCreateNestedManyWithoutHostCountryInput
+  postCoverages?: Prisma.PostCoverageCreateNestedManyWithoutCountryInput
+  assistanceCases?: Prisma.AssistanceCaseCreateNestedManyWithoutCountryInput
+  censusResidenceRecords?: Prisma.CensusRecordCreateNestedManyWithoutResidenceCountryInput
+  censusNationalityRecords?: Prisma.CensusRecordCreateNestedManyWithoutNationalityCountryInput
+}
+
+export type CountryUncheckedCreateWithoutAssociationsInput = {
+  id?: string
+  iso2Code: string
+  iso3Code: string
+  name: string
+  dialingCode?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  hostedPosts?: Prisma.DiplomaticPostUncheckedCreateNestedManyWithoutHostCountryInput
+  postCoverages?: Prisma.PostCoverageUncheckedCreateNestedManyWithoutCountryInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutCountryInput
+  censusResidenceRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutResidenceCountryInput
+  censusNationalityRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutNationalityCountryInput
+}
+
+export type CountryCreateOrConnectWithoutAssociationsInput = {
+  where: Prisma.CountryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CountryCreateWithoutAssociationsInput, Prisma.CountryUncheckedCreateWithoutAssociationsInput>
+}
+
+export type CountryUpsertWithoutAssociationsInput = {
+  update: Prisma.XOR<Prisma.CountryUpdateWithoutAssociationsInput, Prisma.CountryUncheckedUpdateWithoutAssociationsInput>
+  create: Prisma.XOR<Prisma.CountryCreateWithoutAssociationsInput, Prisma.CountryUncheckedCreateWithoutAssociationsInput>
+  where?: Prisma.CountryWhereInput
+}
+
+export type CountryUpdateToOneWithWhereWithoutAssociationsInput = {
+  where?: Prisma.CountryWhereInput
+  data: Prisma.XOR<Prisma.CountryUpdateWithoutAssociationsInput, Prisma.CountryUncheckedUpdateWithoutAssociationsInput>
+}
+
+export type CountryUpdateWithoutAssociationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  iso2Code?: Prisma.StringFieldUpdateOperationsInput | string
+  iso3Code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dialingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hostedPosts?: Prisma.DiplomaticPostUpdateManyWithoutHostCountryNestedInput
+  postCoverages?: Prisma.PostCoverageUpdateManyWithoutCountryNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUpdateManyWithoutCountryNestedInput
+  censusResidenceRecords?: Prisma.CensusRecordUpdateManyWithoutResidenceCountryNestedInput
+  censusNationalityRecords?: Prisma.CensusRecordUpdateManyWithoutNationalityCountryNestedInput
+}
+
+export type CountryUncheckedUpdateWithoutAssociationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  iso2Code?: Prisma.StringFieldUpdateOperationsInput | string
+  iso3Code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dialingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hostedPosts?: Prisma.DiplomaticPostUncheckedUpdateManyWithoutHostCountryNestedInput
+  postCoverages?: Prisma.PostCoverageUncheckedUpdateManyWithoutCountryNestedInput
+  assistanceCases?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutCountryNestedInput
+  censusResidenceRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutResidenceCountryNestedInput
+  censusNationalityRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutNationalityCountryNestedInput
 }
 
 
@@ -899,6 +1020,7 @@ export type CountryCountOutputType = {
   assistanceCases: number
   censusResidenceRecords: number
   censusNationalityRecords: number
+  associations: number
 }
 
 export type CountryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -907,6 +1029,7 @@ export type CountryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   assistanceCases?: boolean | CountryCountOutputTypeCountAssistanceCasesArgs
   censusResidenceRecords?: boolean | CountryCountOutputTypeCountCensusResidenceRecordsArgs
   censusNationalityRecords?: boolean | CountryCountOutputTypeCountCensusNationalityRecordsArgs
+  associations?: boolean | CountryCountOutputTypeCountAssociationsArgs
 }
 
 /**
@@ -954,6 +1077,13 @@ export type CountryCountOutputTypeCountCensusNationalityRecordsArgs<ExtArgs exte
   where?: Prisma.CensusRecordWhereInput
 }
 
+/**
+ * CountryCountOutputType without action
+ */
+export type CountryCountOutputTypeCountAssociationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssociationWhereInput
+}
+
 
 export type CountrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -969,6 +1099,7 @@ export type CountrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   assistanceCases?: boolean | Prisma.Country$assistanceCasesArgs<ExtArgs>
   censusResidenceRecords?: boolean | Prisma.Country$censusResidenceRecordsArgs<ExtArgs>
   censusNationalityRecords?: boolean | Prisma.Country$censusNationalityRecordsArgs<ExtArgs>
+  associations?: boolean | Prisma.Country$associationsArgs<ExtArgs>
   _count?: boolean | Prisma.CountryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["country"]>
 
@@ -1012,6 +1143,7 @@ export type CountryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   assistanceCases?: boolean | Prisma.Country$assistanceCasesArgs<ExtArgs>
   censusResidenceRecords?: boolean | Prisma.Country$censusResidenceRecordsArgs<ExtArgs>
   censusNationalityRecords?: boolean | Prisma.Country$censusNationalityRecordsArgs<ExtArgs>
+  associations?: boolean | Prisma.Country$associationsArgs<ExtArgs>
   _count?: boolean | Prisma.CountryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CountryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1025,6 +1157,7 @@ export type $CountryPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     assistanceCases: Prisma.$AssistanceCasePayload<ExtArgs>[]
     censusResidenceRecords: Prisma.$CensusRecordPayload<ExtArgs>[]
     censusNationalityRecords: Prisma.$CensusRecordPayload<ExtArgs>[]
+    associations: Prisma.$AssociationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1434,6 +1567,7 @@ export interface Prisma__CountryClient<T, Null = never, ExtArgs extends runtime.
   assistanceCases<T extends Prisma.Country$assistanceCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$assistanceCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusResidenceRecords<T extends Prisma.Country$censusResidenceRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$censusResidenceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusNationalityRecords<T extends Prisma.Country$censusNationalityRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$censusNationalityRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  associations<T extends Prisma.Country$associationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Country$associationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssociationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1981,6 +2115,30 @@ export type Country$censusNationalityRecordsArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.CensusRecordScalarFieldEnum | Prisma.CensusRecordScalarFieldEnum[]
+}
+
+/**
+ * Country.associations
+ */
+export type Country$associationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Association
+   */
+  select?: Prisma.AssociationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Association
+   */
+  omit?: Prisma.AssociationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssociationInclude<ExtArgs> | null
+  where?: Prisma.AssociationWhereInput
+  orderBy?: Prisma.AssociationOrderByWithRelationInput | Prisma.AssociationOrderByWithRelationInput[]
+  cursor?: Prisma.AssociationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssociationScalarFieldEnum | Prisma.AssociationScalarFieldEnum[]
 }
 
 /**

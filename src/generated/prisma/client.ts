@@ -166,3 +166,43 @@ export type MentorshipRequest = Prisma.MentorshipRequestModel
  * 
  */
 export type MentorshipRequestHistory = Prisma.MentorshipRequestHistoryModel
+/**
+ * Model Association
+ * 
+ */
+export type Association = Prisma.AssociationModel
+/**
+ * Model AssociationMembership
+ * 
+ */
+export type AssociationMembership = Prisma.AssociationMembershipModel
+/**
+ * Model AssociationDocument
+ * 
+ */
+export type AssociationDocument = Prisma.AssociationDocumentModel
+/**
+ * Model AssociationHistory
+ * 
+ */
+export type AssociationHistory = Prisma.AssociationHistoryModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model NotificationPreference
+ * 
+ */
+export type NotificationPreference = Prisma.NotificationPreferenceModel
+/**
+ * Model Publication
+ * 
+ */
+export type Publication = Prisma.PublicationModel
+/**
+ * Model PublicationReviewHistory
+ * 
+ */
+export type PublicationReviewHistory = Prisma.PublicationReviewHistoryModel

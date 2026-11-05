@@ -16,6 +16,9 @@ import { CensusModule } from './modules/census/census.module.js';
 import { AssistanceModule } from './modules/assistance/assistance.module.js';
 import { TalentModule } from './modules/talent/talent.module.js';
 import { MentorshipModule } from './modules/mentorship/mentorship.module.js';
+import { NotificationModule } from './modules/notifications/notification.module.js';
+import { AssociationsModule } from './modules/associations/associations.module.js';
+import { PublicationsModule } from './modules/publications/publications.module.js';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { MentorshipModule } from './modules/mentorship/mentorship.module.js';
     AssistanceModule,
     TalentModule,
     MentorshipModule,
+    NotificationModule,
+    AssociationsModule,
+    PublicationsModule,
   ],
 
   providers: [
