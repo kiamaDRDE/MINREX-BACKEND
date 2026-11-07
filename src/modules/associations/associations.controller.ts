@@ -32,21 +32,10 @@ import {
 } from './dto/add-association-member.dto.js';
 import { CreateAssociationDto } from './dto/create-association.dto.js';
 import { QueryAssociationsDto } from './dto/query-associations.dto.js';
-import {
-  RejectAssociationDto,
-  RequestCorrectionDto,
-  SuspendAssociationDto,
-} from './dto/review-association.dto.js';
 import { UpdateAssociationDto } from './dto/update-association.dto.js';
 import { UploadAssociationDocumentDto } from './dto/upload-association-doc.dto.js';
-import {
-  AuthorizationScope,
-} from '../identity/authorization/decorators/authorization-scope.decorator.js';
-
-import {
-  RequireAnyPermissions,
-} from '../identity/authorization/decorators/require-any-permissions.decorator.js';
-
+import { AuthorizationScope } from '../identity/authorization/decorators/authorization-scope.decorator.js';
+import { RequireAnyPermissions } from '../identity/authorization/decorators/require-any-permissions.decorator.js';
 
 type AuthenticatedRequest = Request & {
   auth?: {
@@ -55,7 +44,7 @@ type AuthenticatedRequest = Request & {
   };
 };
 
-@ApiTags('Associations & Communautés (MCA)')
+@ApiTags('Associations & Communautés (MCA) - Espace Citoyen & Annuaire')
 @ApiBearerAuth('access-token')
 @Controller('associations')
 @UseGuards(AccessTokenGuard, PermissionsGuard)
@@ -64,7 +53,7 @@ export class AssociationsController {
 
   /*
   |--------------------------------------------------------------------------
-  | 1. Déclaration & Gestion citoyenne (Espace Diaspora)
+  | 1. Déclaration & Consultation citoyenne (Espace Diaspora)
   |--------------------------------------------------------------------------
   */
 
@@ -109,41 +98,14 @@ export class AssociationsController {
 
   /*
   |--------------------------------------------------------------------------
-  | 2. File d'attente consulaire (Agent / Gestionnaire de Poste)
-  |--------------------------------------------------------------------------
-  */
-
-  @Get('agent/queue')
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.READ)
-  @AuthorizationScope({
-    allowAssignedPosts: true,
-  })
-  @ApiOperation({
-    summary: 'File d’instruction consulaire des associations',
-    description:
-      'Liste paginée des dossiers en attente d’instruction ou de validation consulaire.',
-  })
-  @ApiOkResponse({ description: 'File d’attente consulaire.' })
-  getAgentQueue(
-    @Req() request: AuthenticatedRequest,
-    @Query() query: QueryAssociationsDto,
-  ) {
-    return this.associationsService.getAgentQueue(
-      request.auth!.userId!,
-      query,
-    );
-  }
-
-  /*
-  |--------------------------------------------------------------------------
-  | 3. Consultation détaillée & Modification du dossier
+  | 2. Consultation détaillée & Modification du dossier
   |--------------------------------------------------------------------------
   */
 
   @Get(':id')
   @RequireAnyPermissions(
     PERMISSIONS.ASSOCIATIONS.READ_SELF,
-  PERMISSIONS.ASSOCIATIONS.READ,
+    PERMISSIONS.ASSOCIATIONS.READ,
   )
   @AuthorizationScope({
     resource: 'association',
@@ -208,7 +170,7 @@ export class AssociationsController {
 
   /*
   |--------------------------------------------------------------------------
-  | 4. Membres & Gouvernance du bureau (Réponse directe à la demande utilisateur)
+  | 3. Membres & Gouvernance du bureau
   |--------------------------------------------------------------------------
   */
 
@@ -285,106 +247,5 @@ export class AssociationsController {
     @Req() request: AuthenticatedRequest,
   ) {
     return this.associationsService.removeMember(id, membershipId, request.auth!.userId!);
-  }
-
-  /*
-  |--------------------------------------------------------------------------
-  | 5. Workflow de validation Consulaire & Centrale
-  |--------------------------------------------------------------------------
-  */
-
-  @Post(':id/start-review')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REVIEW)
-  @AuthorizationScope({
-    resource: 'association',
-    resourceIdParam: 'id',
-  })
-  @ApiOperation({
-    summary: 'Prendre en charge l’instruction d’un dossier d’association (Passe en UNDER_REVIEW)',
-  })
-  @ApiOkResponse({ description: 'Dossier pris en charge.' })
-  startReview(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() request: AuthenticatedRequest,
-  ) {
-    return this.associationsService.startReview(id, request.auth!.userId!);
-  }
-
-  @Post(':id/request-correction')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REQUEST_CORRECTION)
-  @AuthorizationScope({
-    resource: 'association',
-    resourceIdParam: 'id',
-  })
-  @ApiOperation({
-    summary: 'Demander un complément ou une correction motivée au déclarant (CORRECTION_REQUIRED)',
-  })
-  @ApiOkResponse({ description: 'Demande de correction transmise au déclarant.' })
-  requestCorrection(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() request: AuthenticatedRequest,
-    @Body() dto: RequestCorrectionDto,
-  ) {
-    return this.associationsService.requestCorrection(id, request.auth!.userId!, dto);
-  }
-
-  @Post(':id/approve')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.APPROVE)
-  @AuthorizationScope({
-    resource: 'association',
-    resourceIdParam: 'id',
-  })
-  @ApiOperation({
-    summary: 'Valider et certifier officiellement l’association (APPROVED)',
-    description:
-      'Accorde la certification consulaire numérique et publie l’association dans l’annuaire officiel.',
-  })
-  @ApiOkResponse({ description: 'Association approuvée et certifiée.' })
-  approveAssociation(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() request: AuthenticatedRequest,
-  ) {
-    return this.associationsService.approveAssociation(id, request.auth!.userId!);
-  }
-
-  @Post(':id/reject')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.REJECT)
-  @AuthorizationScope({
-    resource: 'association',
-    resourceIdParam: 'id',
-  })
-  @ApiOperation({
-    summary: 'Rejeter définitivement la demande d’enregistrement avec motif légal (REJECTED)',
-  })
-  @ApiOkResponse({ description: 'Association rejetée.' })
-  rejectAssociation(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() request: AuthenticatedRequest,
-    @Body() dto: RejectAssociationDto,
-  ) {
-    return this.associationsService.rejectAssociation(id, request.auth!.userId!, dto);
-  }
-
-  @Post(':id/suspend')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions(PERMISSIONS.ASSOCIATIONS.SUSPEND)
-  @AuthorizationScope({
-    resource: 'association',
-    resourceIdParam: 'id',
-  })
-  @ApiOperation({
-    summary: 'Suspendre administrativement une association certifiée (SUSPENDED)',
-  })
-  @ApiOkResponse({ description: 'Association suspendue administrativement.' })
-  suspendAssociation(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Req() request: AuthenticatedRequest,
-    @Body() dto: SuspendAssociationDto,
-  ) {
-    return this.associationsService.suspendAssociation(id, request.auth!.userId!, dto);
   }
 }
