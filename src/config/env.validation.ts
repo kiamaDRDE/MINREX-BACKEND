@@ -52,4 +52,9 @@ export const envValidationSchema = Joi.object({
   JWT_REFRESH_TTL_SECONDS: Joi.number().integer().positive().default(604800),
   ALLOW_DEV_ENDPOINTS: Joi.boolean().truthy('true').falsy('false').default(false),
   SWAGGER_ENABLED: Joi.boolean().truthy('true').falsy('false').optional(),
+  AI_PROVIDER: Joi.string().valid('gemini', 'ollama', 'mock').default('gemini').optional(),
+  AI_API_KEY: Joi.string().allow('').optional(),
+  GEMINI_API_KEY: Joi.string().allow('').optional(),
+  AI_MODEL: Joi.string().allow('').optional(),
+  AI_REQUEST_TIMEOUT_MS: Joi.number().integer().positive().optional(),
 });
