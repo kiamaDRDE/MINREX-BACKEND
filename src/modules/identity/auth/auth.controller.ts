@@ -334,14 +334,11 @@ export class AuthController {
     const {
       refreshToken,
       refreshTokenExpiresAt,
-      ...responseData
     } =
       result;
 
-    /*
-     * Refresh token remains inaccessible
-     * from frontend JavaScript.
-     */
+    const isSecure = this.isSecureRequest(request);
+
     response.cookie(
       'minrex_refresh_token',
       refreshToken,
@@ -350,8 +347,7 @@ export class AuthController {
           true,
 
         secure:
-          process.env.NODE_ENV ===
-          'production',
+          isSecure,
 
         sameSite:
           'lax',
@@ -360,11 +356,11 @@ export class AuthController {
           refreshTokenExpiresAt,
 
         path:
-          '/api/v1/auth',
+          '/',
       },
     );
 
-    return responseData;
+    return result;
   }
 
   /*
@@ -401,9 +397,17 @@ export class AuthController {
     response: Response,
   ) {
     response.setHeader('Cache-Control', 'no-store');
-  
+
+    const isSecure = this.isSecureRequest(request);
+    const bodyRecord =
+      request.body && typeof request.body === 'object'
+        ? (request.body as Record<string, unknown>)
+        : undefined;
+
     const rawRefreshToken: unknown =
-      request.cookies?.['minrex_refresh_token'];
+      request.cookies?.['minrex_refresh_token'] ??
+      bodyRecord?.['refreshToken'] ??
+      request.headers['x-refresh-token'];
   
     try {
       const result =
@@ -412,7 +416,6 @@ export class AuthController {
       const {
         refreshToken,
         refreshTokenExpiresAt,
-        ...responseData
       } = result;
   
       response.cookie(
@@ -420,14 +423,14 @@ export class AuthController {
         refreshToken,
         {
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
+          secure: isSecure,
           sameSite: 'lax',
           expires: refreshTokenExpiresAt,
-          path: '/api/v1/auth',
+          path: '/',
         },
       );
   
-      return responseData;
+      return result;
     } catch (error) {
       /*
        * Clear invalid authentication cookies.
@@ -438,7 +441,16 @@ export class AuthController {
           'minrex_refresh_token',
           {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: isSecure,
+            sameSite: 'lax',
+            path: '/',
+          },
+        );
+        response.clearCookie(
+          'minrex_refresh_token',
+          {
+            httpOnly: true,
+            secure: isSecure,
             sameSite: 'lax',
             path: '/api/v1/auth',
           },
@@ -481,12 +493,17 @@ export class AuthController {
     response:
       Response,
   ) {
+    const isSecure = this.isSecureRequest(request);
+    const bodyRecord =
+      request.body && typeof request.body === 'object'
+        ? (request.body as Record<string, unknown>)
+        : undefined;
+
     const refreshToken =
-      request.cookies?.[
-        'minrex_refresh_token'
-      ] as
-        | string
-        | undefined;
+      (request.cookies?.['minrex_refresh_token'] as string | undefined) ??
+      (typeof bodyRecord?.['refreshToken'] === 'string'
+        ? bodyRecord['refreshToken']
+        : undefined);
 
     const result =
       await this.authService.logout(
@@ -500,8 +517,24 @@ export class AuthController {
           true,
 
         secure:
-          process.env.NODE_ENV ===
-          'production',
+          isSecure,
+
+        sameSite:
+          'lax',
+
+        path:
+          '/',
+      },
+    );
+
+    response.clearCookie(
+      'minrex_refresh_token',
+      {
+        httpOnly:
+          true,
+
+        secure:
+          isSecure,
 
         sameSite:
           'lax',
@@ -512,6 +545,13 @@ export class AuthController {
     );
 
     return result;
+  }
+
+  private isSecureRequest(request: Request): boolean {
+    return (
+      request.secure ||
+      request.headers['x-forwarded-proto'] === 'https'
+    );
   }
 
   /*
