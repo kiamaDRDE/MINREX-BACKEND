@@ -19,6 +19,10 @@ import {
 } from '../../infrastructure/database/prisma.service.js';
 
 import {
+  NotificationEventBusService,
+} from '../notifications/services/notification-event-bus.service.js';
+
+import {
   UpdateCensusRecordDto,
 } from './dto/update-census-record.dto.js';
 
@@ -27,6 +31,8 @@ export class CensusService {
   constructor(
     private readonly prisma:
       PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   /*
@@ -990,6 +996,35 @@ export class CensusService {
                   : 'Census record submitted by applicant.',
             },
           });
+
+          await this.notifications.emitToUser(
+            userId,
+            {
+              type: 'CENSUS_STATUS',
+              title: 'Dossier de recensement soumis',
+              message:
+                previousStatus === CensusStatus.CORRECTION_REQUIRED
+                  ? 'Votre dossier de recensement a été re-soumis après correction.'
+                  : 'Votre dossier de recensement a été soumis au poste consulaire.',
+              priority: 'NORMAL',
+              actionUrl: '/espace/recensement',
+            },
+            tx,
+          );
+
+          await this.notifications.emitToPostRole(
+            assignedPostId,
+            ['CONSULAR_AGENT'],
+            {
+              type: 'CENSUS_STATUS',
+              title: 'Nouveau dossier de recensement',
+              message:
+                'Un nouveau dossier de recensement nécessite votre examen.',
+              priority: 'NORMAL',
+              actionUrl: '/agent-consulaire',
+            },
+            tx,
+          );
 
           return updated;
         },

@@ -11,6 +11,10 @@ import {
 } from '../identity/authorization/authorization.module.js';
 
 import {
+  NotificationModule,
+} from '../notifications/notification.module.js';
+
+import {
   AssistanceController,
 } from './assistance.controller.js';
 
@@ -30,6 +34,7 @@ import {
   imports: [
     AuthModule,
     AuthorizationModule,
+    NotificationModule,
   ],
 
   controllers: [

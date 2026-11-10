@@ -29,11 +29,17 @@ import {
   VerifyCensusDto,
 } from './dto/verify-census.dto.js';
 
+import {
+  NotificationEventBusService,
+} from '../../notifications/services/notification-event-bus.service.js';
+
 @Injectable()
 export class CensusAgentService {
   constructor(
     private readonly prisma:
       PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   /*
@@ -474,6 +480,19 @@ export class CensusAgentService {
             },
           });
 
+          await this.notifications.emitToUser(
+            record.userId,
+            {
+              type: 'CENSUS_STATUS',
+              title: 'Correction demandée sur votre recensement',
+              message:
+                'Des corrections sont requises sur votre dossier de recensement. Veuillez consulter les motifs.',
+              priority: 'HIGH',
+              actionUrl: '/espace/recensement',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -571,6 +590,19 @@ export class CensusAgentService {
             },
           });
 
+          await this.notifications.emitToUser(
+            record.userId,
+            {
+              type: 'CENSUS_STATUS',
+              title: 'Recensement validé',
+              message:
+                'Votre inscription consulaire a été validée avec succès.',
+              priority: 'HIGH',
+              actionUrl: '/espace/recensement',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -666,6 +698,19 @@ export class CensusAgentService {
             },
           });
 
+          await this.notifications.emitToUser(
+            record.userId,
+            {
+              type: 'CENSUS_STATUS',
+              title: 'Dossier de recensement rejeté',
+              message:
+                'Votre dossier de recensement n’a pas pu être validé. Consultez le motif dans votre espace.',
+              priority: 'HIGH',
+              actionUrl: '/espace/recensement',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -721,6 +766,9 @@ export class CensusAgentService {
 
         select: {
           id:
+            true,
+
+          userId:
             true,
 
           status:

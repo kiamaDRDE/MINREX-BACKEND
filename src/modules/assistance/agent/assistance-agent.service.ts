@@ -39,11 +39,17 @@ import {
   ResolveAssistanceCaseDto,
 } from './dto/resolve-assistance-case.dto.js';
 
+import {
+  NotificationEventBusService,
+} from '../../notifications/services/notification-event-bus.service.js';
+
 @Injectable()
 export class AssistanceAgentService {
   constructor(
     private readonly prisma:
       PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   async findCases(
@@ -346,6 +352,23 @@ export class AssistanceAgentService {
             },
           });
 
+          await this.notifications.emitToUser(
+            assistanceCase.requesterId,
+            {
+              type: 'ASSISTANCE_STATUS',
+          
+              title: 'Demande qualifiée',
+          
+              message:
+                'Votre demande d’assistance a été qualifiée.',
+          
+              priority: 'NORMAL',
+          
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -367,6 +390,7 @@ export class AssistanceAgentService {
       await this.findScopedCase(
         postId,
         caseId,
+
       );
 
     if (
@@ -429,6 +453,40 @@ export class AssistanceAgentService {
             },
           });
 
+      await this.notifications.emitToUser(
+        dto.agentUserId,
+        {
+          type: 'ASSISTANCE_STATUS',
+      
+          title: 'Nouveau dossier affecté',
+      
+          message:
+            'Un dossier d’assistance vous a été affecté.',
+      
+          priority: 'HIGH',
+      
+          actionUrl: '/agent-consulaire',
+        },
+        tx,
+      );
+      
+      await this.notifications.emitToUser(
+        assistanceCase.requesterId,
+        {
+          type: 'ASSISTANCE_STATUS',
+      
+          title: 'Agent affecté',
+      
+          message:
+            'Un agent consulaire a été affecté à votre demande.',
+      
+          priority: 'NORMAL',
+      
+          actionUrl: '/espace/assistance',
+        },
+        tx,
+      );
+
           return result;
         },
       );
@@ -472,6 +530,7 @@ export class AssistanceAgentService {
     return this.changeStatus(
       actorId,
       assistanceCase.id,
+      assistanceCase.requesterId,
       AssistanceCaseStatus.ASSIGNED,
       AssistanceCaseStatus.IN_PROGRESS,
       AssistanceHistoryAction.STATUS_CHANGED,
@@ -546,6 +605,23 @@ export class AssistanceAgentService {
                 dto.resolutionSummary.trim(),
             },
           });
+
+          await this.notifications.emitToUser(
+            assistanceCase.requesterId,
+            {
+              type: 'ASSISTANCE_STATUS',
+          
+              title: 'Demande résolue',
+          
+              message:
+                'Votre demande d’assistance a été résolue.',
+          
+              priority: 'HIGH',
+          
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
 
           return result;
         },
@@ -622,6 +698,24 @@ export class AssistanceAgentService {
             },
           });
 
+
+          await this.notifications.emitToUser(
+            assistanceCase.requesterId,
+            {
+              type: 'ASSISTANCE_STATUS',
+          
+              title: 'Demande clôturée',
+          
+              message:
+                'Votre dossier d’assistance a été clôturé.',
+          
+              priority: 'NORMAL',
+          
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -694,6 +788,23 @@ export class AssistanceAgentService {
             },
           });
 
+          await this.notifications.emitToUser(
+            assistanceCase.requesterId,
+            {
+              type: 'ASSISTANCE_STATUS',
+          
+              title: 'Demande rejetée',
+          
+              message:
+                'Votre demande d’assistance a été rejetée. Consultez le motif dans votre espace.',
+          
+              priority: 'HIGH',
+          
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
+
           return result;
         },
       );
@@ -707,6 +818,7 @@ export class AssistanceAgentService {
   private async changeStatus(
     actorId: string,
     caseId: string,
+    requesterId: string,
     fromStatus:
       AssistanceCaseStatus,
     toStatus:
@@ -742,6 +854,23 @@ export class AssistanceAgentService {
               comment,
             },
           });
+
+          await this.notifications.emitToUser(
+            requesterId,
+            {
+              type: 'ASSISTANCE_STATUS',
+          
+              title: 'Demande en cours de traitement',
+          
+              message:
+                'Votre demande est maintenant en cours de traitement.',
+          
+              priority: 'NORMAL',
+          
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
 
           return result;
         },
@@ -795,6 +924,7 @@ export class AssistanceAgentService {
           status: true,
           assignedPostId: true,
           assignedToUserId: true,
+          requesterId: true,
         },
       });
 

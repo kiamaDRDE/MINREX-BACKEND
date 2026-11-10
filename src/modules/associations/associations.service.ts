@@ -10,11 +10,9 @@ import {
   AssociationMemberRole,
   AssociationStatus,
   DiplomaticPostStatus,
-  NotificationPriority,
-  NotificationType,
 } from '../../generated/prisma/enums.js';
 import { PrismaService } from '../../infrastructure/database/prisma.service.js';
-import { NotificationEventBusService } from '../notifications/events/notification-event-bus.service.js';
+import { NotificationEventBusService } from '../notifications/services/notification-event-bus.service.js';
 import {
   AddAssociationMemberDto,
   UpdateAssociationMemberDto,
@@ -40,7 +38,7 @@ import {
 export class AssociationsService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly eventBus: NotificationEventBusService,
+    private readonly notifications: NotificationEventBusService,
     private readonly authorizationService: AuthorizationService,
   ) {}
 
@@ -438,17 +436,34 @@ export class AssociationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        userId,
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Demande d’homologation soumise',
+          message:
+            `Votre demande d’homologation pour "${association.name}" a été soumise.`,
+          priority: 'NORMAL',
+          actionUrl: `/espace/associations/${id}`,
+        },
+        tx,
+      );
 
-    // Émission de notification au déclarant
-    this.eventBus.emit({
-      recipientId: userId,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.NORMAL,
-      title: 'Dossier d’association soumis avec succès',
-      content: `Votre dossier pour "${association.name}" a été transmis au poste : ${association.diplomaticPost.name}. L’instruction administrative est en cours.`,
-      actionUrl: `/espace/associations/${id}`,
+      await this.notifications.emitToPostRole(
+        association.diplomaticPostId,
+        ['CONSULAR_AGENT'],
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Nouvelle demande d’association',
+          message:
+            'Une nouvelle demande d’homologation nécessite votre examen.',
+          priority: 'NORMAL',
+          actionUrl: '/agent-consulaire',
+        },
+        tx,
+      );
+
+      return res;
     });
 
     return updated;
@@ -628,12 +643,11 @@ export class AssociationsService {
       },
     });
 
-    this.eventBus.emit({
-      recipientId: targetUser.id,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.NORMAL,
+    await this.notifications.emitToUser(targetUser.id, {
+      type: 'ASSOCIATION_STATUS',
+      priority: 'NORMAL',
       title: 'Ajout à une association',
-      content: `Vous avez été ajouté au bureau de l’association "${association.name}" avec la fonction : ${dto.title ?? dto.role}.`,
+      message: `Vous avez été ajouté au bureau de l’association "${association.name}" avec la fonction : ${dto.title ?? dto.role}.`,
       actionUrl: `/espace/associations/${associationId}`,
     });
 
@@ -969,16 +983,19 @@ export class AssociationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        association.creatorId,
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Compléments requis pour votre association',
+          message: `Le service consulaire a examiné le dossier de "${association.name}". Motif : ${dto.motive}`,
+          priority: 'HIGH',
+          actionUrl: `/espace/associations/${associationId}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: association.creatorId,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.HIGH,
-      title: 'Compléments requis pour votre association',
-      content: `Le service consulaire a examiné le dossier de "${association.name}". Motif : ${dto.motive}`,
-      actionUrl: `/espace/associations/${associationId}`,
+      return res;
     });
 
     return updated;
@@ -1024,16 +1041,19 @@ export class AssociationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        association.creatorId,
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Félicitations ! Votre association est certifiée',
+          message: `L’association "${association.name}" a été officiellement enregistrée et certifiée par le MINREX (N° ${association.code}). Elle figure désormais dans l’annuaire officiel.`,
+          priority: 'HIGH',
+          actionUrl: `/espace/associations/${associationId}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: association.creatorId,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.HIGH,
-      title: 'Félicitations ! Votre association est certifiée',
-      content: `L’association "${association.name}" a été officiellement enregistrée et certifiée par le MINREX (N° ${association.code}). Elle figure désormais dans l’annuaire officiel.`,
-      actionUrl: `/espace/associations/${associationId}`,
+      return res;
     });
 
     return updated;
@@ -1071,16 +1091,19 @@ export class AssociationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        association.creatorId,
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Dossier d’association non retenu',
+          message: `Votre demande d’enregistrement pour "${association.name}" a été rejetée. Motif : ${dto.motive}`,
+          priority: 'HIGH',
+          actionUrl: `/espace/associations/${associationId}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: association.creatorId,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.HIGH,
-      title: 'Dossier d’association non retenu',
-      content: `Votre demande d’enregistrement pour "${association.name}" a été rejetée. Motif : ${dto.motive}`,
-      actionUrl: `/espace/associations/${associationId}`,
+      return res;
     });
 
     return updated;
@@ -1118,16 +1141,19 @@ export class AssociationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        association.creatorId,
+        {
+          type: 'ASSOCIATION_STATUS',
+          title: 'Association suspendue administrativement',
+          message: `L’enregistrement de "${association.name}" a été temporairement suspendu. Motif : ${dto.motive}`,
+          priority: 'HIGH',
+          actionUrl: `/espace/associations/${associationId}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: association.creatorId,
-      type: NotificationType.ASSOCIATION_STATUS,
-      priority: NotificationPriority.HIGH,
-      title: 'Association suspendue administrativement',
-      content: `L’enregistrement de "${association.name}" a été temporairement suspendu. Motif : ${dto.motive}`,
-      actionUrl: `/espace/associations/${associationId}`,
+      return res;
     });
 
     return updated;

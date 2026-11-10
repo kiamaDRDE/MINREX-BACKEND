@@ -39,7 +39,7 @@ type AuthenticatedRequest = Request & {
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
-  @Get('me')
+  @Get(['', 'me'])
   @RequirePermissions('notifications.read.self')
   @ApiOperation({ summary: 'Get paginated notifications of current user' })
   @ApiOkResponse({ description: 'List of user notifications with metadata.' })
@@ -53,7 +53,7 @@ export class NotificationController {
     );
   }
 
-  @Get('me/unread-count')
+  @Get(['unread-count', 'me/unread-count'])
   @RequirePermissions('notifications.read.self')
   @ApiOperation({ summary: 'Get unread notifications count for badge' })
   @ApiOkResponse({ description: 'Unread notifications count.' })
@@ -61,7 +61,7 @@ export class NotificationController {
     return this.notificationService.getUnreadCount(request.auth!.userId!);
   }
 
-  @Patch('me/:id/read')
+  @Patch([':id/read', 'me/:id/read'])
   @RequirePermissions('notifications.manage.self')
   @ApiOperation({ summary: 'Mark a notification as read' })
   @ApiOkResponse({ description: 'Notification marked as read.' })
@@ -72,6 +72,7 @@ export class NotificationController {
     return this.notificationService.markAsRead(request.auth!.userId!, id);
   }
 
+  @Patch(['read-all', 'me/read-all'])
   @Post('me/read-all')
   @RequirePermissions('notifications.manage.self')
   @ApiOperation({ summary: 'Mark all unread notifications as read' })
@@ -80,7 +81,7 @@ export class NotificationController {
     return this.notificationService.markAllAsRead(request.auth!.userId!);
   }
 
-  @Delete('me/:id')
+  @Delete([':id', 'me/:id'])
   @RequirePermissions('notifications.manage.self')
   @ApiOperation({ summary: 'Archive a notification' })
   @ApiOkResponse({ description: 'Notification archived.' })
@@ -91,7 +92,7 @@ export class NotificationController {
     return this.notificationService.archiveNotification(request.auth!.userId!, id);
   }
 
-  @Get('me/preferences')
+  @Get(['preferences', 'me/preferences'])
   @RequirePermissions('notifications.read.self')
   @ApiOperation({ summary: 'Get notification preferences' })
   @ApiOkResponse({ description: 'Notification preferences per event type.' })
@@ -99,7 +100,7 @@ export class NotificationController {
     return this.notificationService.getMyPreferences(request.auth!.userId!);
   }
 
-  @Patch('me/preferences')
+  @Patch(['preferences', 'me/preferences'])
   @RequirePermissions('notifications.manage.self')
   @ApiOperation({ summary: 'Update notification preferences' })
   @ApiOkResponse({ description: 'Updated notification preferences.' })

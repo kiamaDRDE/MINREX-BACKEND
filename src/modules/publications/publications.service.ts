@@ -5,15 +5,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../infrastructure/database/prisma.service.js';
-import { NotificationEventBusService } from '../notifications/events/notification-event-bus.service.js';
+import { NotificationEventBusService } from '../notifications/services/notification-event-bus.service.js';
 import { CreatePublicationDto } from './dto/create-publication.dto.js';
 import { QueryPublicationsDto } from './dto/query-publications.dto.js';
 import { ReviewPublicationDto } from './dto/review-publication.dto.js';
 import { UpdatePublicationDto } from './dto/update-publication.dto.js';
 import {
   AssociationStatus,
-  NotificationPriority,
-  NotificationType,
   PublicationReviewDecision,
   PublicationReviewLevel,
   PublicationStatus,
@@ -32,7 +30,7 @@ import {
 export class PublicationsService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly eventBus: NotificationEventBusService,
+    private readonly notifications: NotificationEventBusService,
     private readonly authorizationService: AuthorizationService,
   ) {}
 
@@ -461,18 +459,52 @@ export class PublicationsService {
       throw new BadRequestException('Cette publication a déjà été soumise.');
     }
 
-    const updated = await this.prisma.publication.update({
-      where: { id },
-      data: { status: PublicationStatus.PENDING_LEVEL1_REVIEW },
-    });
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const res = await tx.publication.update({
+        where: { id },
+        data: { status: PublicationStatus.PENDING_LEVEL1_REVIEW },
+      });
 
-    this.eventBus.emit({
-      recipientId: authorId,
-      type: NotificationType.PUBLICATION_ALERT,
-      priority: NotificationPriority.NORMAL,
-      title: 'Publication transmise pour modération',
-      content: `Votre publication "${publication.title}" est en attente d’instruction par le service territorial (Niveau 1).`,
-      actionUrl: `/espace/publications/${id}`,
+      await this.notifications.emitToUser(
+        authorId,
+        {
+          type: 'PUBLICATION_ALERT',
+          title: 'Publication soumise',
+          message: 'Votre publication a été soumise à la modération.',
+          priority: 'NORMAL',
+          actionUrl: `/espace/publications/${id}`,
+        },
+        tx,
+      );
+
+      if (publication.diplomaticPostId) {
+        await this.notifications.emitToPostRole(
+          publication.diplomaticPostId,
+          ['CONSULAR_AGENT', 'POST_MANAGER'],
+          {
+            type: 'PUBLICATION_ALERT',
+            title: 'Nouvelle publication à modérer',
+            message: `La publication "${publication.title}" a été soumise pour modération.`,
+            priority: 'NORMAL',
+            actionUrl: `/agent-consulaire`,
+          },
+          tx,
+        );
+      } else {
+        await this.notifications.emitToGlobalRole(
+          ['MINREX_CENTRAL_AGENT', 'PLATFORM_ADMIN'],
+          {
+            type: 'PUBLICATION_ALERT',
+            title: 'Nouvelle publication à modérer',
+            message: `La publication "${publication.title}" a été soumise pour modération.`,
+            priority: 'NORMAL',
+            actionUrl: `/agent-central`,
+          },
+          tx,
+        );
+      }
+
+      return res;
     });
 
     return updated;
@@ -649,19 +681,51 @@ export class PublicationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        publication.authorId,
+        {
+          type: 'PUBLICATION_ALERT',
+          priority:
+            dto.decision === PublicationReviewDecision.CORRECTION_REQUESTED
+              ? 'HIGH'
+              : 'NORMAL',
+          title: notifTitle,
+          message: notifContent,
+          actionUrl: `/espace/publications/${id}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: publication.authorId,
-      type: NotificationType.PUBLICATION_ALERT,
-      priority:
-        dto.decision === PublicationReviewDecision.CORRECTION_REQUESTED
-          ? NotificationPriority.HIGH
-          : NotificationPriority.NORMAL,
-      title: notifTitle,
-      content: notifContent,
-      actionUrl: `/espace/publications/${id}`,
+      if (dto.decision === PublicationReviewDecision.VALIDATED_TO_LEVEL2) {
+        if (publication.diplomaticPostId) {
+          await this.notifications.emitToPostRole(
+            publication.diplomaticPostId,
+            ['POST_MANAGER'],
+            {
+              type: 'PUBLICATION_ALERT',
+              title: 'Publication en attente d’approbation finale',
+              message: `La publication "${publication.title}" a passé le niveau 1 et attend votre validation.`,
+              priority: 'NORMAL',
+              actionUrl: `/agent-consulaire`,
+            },
+            tx,
+          );
+        } else {
+          await this.notifications.emitToGlobalRole(
+            ['MINREX_CENTRAL_AGENT', 'PLATFORM_ADMIN'],
+            {
+              type: 'PUBLICATION_ALERT',
+              title: 'Publication en attente d’approbation finale',
+              message: `La publication "${publication.title}" a passé le niveau 1 et attend votre validation.`,
+              priority: 'NORMAL',
+              actionUrl: `/agent-central`,
+            },
+            tx,
+          );
+        }
+      }
+
+      return res;
     });
 
     return updated;
@@ -855,16 +919,19 @@ export class PublicationsService {
         },
       });
 
-      return res;
-    });
+      await this.notifications.emitToUser(
+        publication.authorId,
+        {
+          type: 'PUBLICATION_ALERT',
+          priority: isApproved ? 'HIGH' : 'NORMAL',
+          title: notifTitle,
+          message: notifContent,
+          actionUrl: `/publications/${publication.slug}`,
+        },
+        tx,
+      );
 
-    this.eventBus.emit({
-      recipientId: publication.authorId,
-      type: NotificationType.PUBLICATION_ALERT,
-      priority: isApproved ? NotificationPriority.HIGH : NotificationPriority.NORMAL,
-      title: notifTitle,
-      content: notifContent,
-      actionUrl: `/publications/${publication.slug}`,
+      return res;
     });
 
     return updated;
@@ -922,12 +989,30 @@ export class PublicationsService {
       publication.diplomaticPostId,
     );
   
-    return this.prisma.publication.update({
-      where: { id },
-      data: {
-        status: PublicationStatus.ARCHIVED,
-      },
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const res = await tx.publication.update({
+        where: { id },
+        data: {
+          status: PublicationStatus.ARCHIVED,
+        },
+      });
+
+      await this.notifications.emitToUser(
+        publication.authorId,
+        {
+          type: 'PUBLICATION_ALERT',
+          title: 'Publication retirée',
+          message: `Votre publication "${publication.title}" a été retirée et archivée.`,
+          priority: 'NORMAL',
+          actionUrl: `/espace/publications`,
+        },
+        tx,
+      );
+
+      return res;
     });
+
+    return updated;
   }
 
   /**

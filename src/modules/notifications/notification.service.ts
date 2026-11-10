@@ -2,7 +2,6 @@ import {
   Injectable,
   Logger,
   NotFoundException,
-  OnModuleInit,
 } from '@nestjs/common';
 import {
   NotificationChannel,
@@ -17,33 +16,15 @@ import {
   NotificationPreferenceItemDto,
   UpdateNotificationPreferencesDto,
 } from './dto/update-notification-preferences.dto.js';
-import {
-  DispatchNotificationEvent,
-  NotificationEventBusService,
-} from './events/notification-event-bus.service.js';
-
+import type { DispatchNotificationEvent } from './events/notification-event-bus.service.js';
 @Injectable()
-export class NotificationService implements OnModuleInit {
+export class NotificationService {
   private readonly logger = new Logger(NotificationService.name);
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly mailService: MailService,
-    private readonly eventBus: NotificationEventBusService,
   ) {}
-
-  onModuleInit() {
-    this.eventBus.events$.subscribe({
-      next: (event) => {
-        this.processNotificationEvent(event).catch((error) => {
-          this.logger.error(
-            `Failed to process notification event for user ${event.recipientId}:`,
-            error,
-          );
-        });
-      },
-    });
-  }
 
   async processNotificationEvent(event: DispatchNotificationEvent): Promise<void> {
     const priority = event.priority ?? NotificationPriority.NORMAL;

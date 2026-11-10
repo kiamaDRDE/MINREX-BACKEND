@@ -11,6 +11,10 @@ import {
 } from '../identity/authorization/authorization.module.js';
 
 import {
+  NotificationModule,
+} from '../notifications/notification.module.js';
+
+import {
   CensusAgentController,
 } from './agent/census-agent.controller.js';
 
@@ -42,6 +46,7 @@ import {
   imports: [
     AuthModule,
     AuthorizationModule,
+    NotificationModule,
   ],
 
   controllers: [

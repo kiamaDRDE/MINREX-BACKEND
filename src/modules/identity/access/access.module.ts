@@ -11,6 +11,10 @@ import {
 } from '../authorization/authorization.module.js';
 
 import {
+  NotificationModule,
+} from '../../notifications/notification.module.js';
+
+import {
   AccessController,
 } from './access.controller.js';
 
@@ -22,6 +26,7 @@ import {
   imports: [
     AuthModule,
     AuthorizationModule,
+    NotificationModule,
   ],
 
   controllers: [

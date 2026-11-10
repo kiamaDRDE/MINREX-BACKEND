@@ -23,11 +23,17 @@ import {
   AssignRoleDto,
 } from './dto/assign-role.dto.js';
 
+import {
+  NotificationEventBusService,
+} from '../../notifications/services/notification-event-bus.service.js';
+
 @Injectable()
 export class AccessService {
   constructor(
     private readonly prisma:
       PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   /*
@@ -734,6 +740,16 @@ export class AccessService {
         },
       });
 
+    await this.notifications.emitToUser(
+      userId,
+      {
+        type: 'SYSTEM_SECURITY',
+        title: 'Modification de vos accès',
+        message: 'Vos autorisations sur la plateforme MINREX ont été modifiées.',
+        priority: 'HIGH',
+      },
+    );
+
     return {
       assignment,
     };
@@ -814,6 +830,16 @@ export class AccessService {
             false,
         },
       });
+
+      await this.notifications.emitToUser(
+        assignment.userId,
+        {
+          type: 'SYSTEM_SECURITY',
+          title: 'Modification de vos accès',
+          message: 'Vos autorisations sur la plateforme MINREX ont été modifiées.',
+          priority: 'HIGH',
+        },
+      );
     }
 
     return {

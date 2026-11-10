@@ -37,10 +37,16 @@ import {
   RejectMentorshipRequestDto,
 } from './dto/reject-mentorship-request.dto.js';
 
+import {
+  NotificationEventBusService,
+} from '../notifications/services/notification-event-bus.service.js';
+
 @Injectable()
 export class MentorshipService {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   /*
@@ -101,6 +107,25 @@ export class MentorshipService {
               'Mentorship request created.',
           },
         });
+
+        await this.notifications.emitToGlobalRole(
+          [
+            'PLATFORM_ADMIN',
+            'MINREX_CENTRAL_AGENT',
+          ],
+          {
+            type: 'MENTORSHIP_INVITE',
+        
+            title: 'Nouvelle demande de mentorat',
+        
+            message:
+              'Une nouvelle demande de mentorat nécessite une attribution.',
+        
+            priority: 'NORMAL',
+        
+          },
+          tx,
+        );
 
         return mentorshipRequest;
       },
@@ -532,6 +557,40 @@ export class MentorshipService {
           },
         });
 
+        await this.notifications.emitToUser(
+          request.requesterId,
+          {
+            type: 'MENTORSHIP_INVITE',
+        
+            title: 'Mentor attribué',
+        
+            message:
+              'Un mentor a été attribué à votre demande.',
+        
+            priority: 'HIGH',
+        
+            actionUrl: '/espace/talents',
+          },
+          tx,
+        );
+        
+        await this.notifications.emitToUser(
+          dto.mentorId,
+          {
+            type: 'MENTORSHIP_INVITE',
+        
+            title: 'Nouvelle attribution de mentorat',
+        
+            message:
+              'Une nouvelle demande de mentorat vous a été attribuée.',
+        
+            priority: 'HIGH',
+        
+            actionUrl: '/espace-mentor',
+          },
+          tx,
+        );
+
         return tx.mentorshipRequest.findUnique({
           where: {
             id:
@@ -723,6 +782,9 @@ async startMentorship(
 
         status:
           true,
+
+        requesterId:
+          true,
       },
     });
 
@@ -796,6 +858,23 @@ async startMentorship(
         },
       });
 
+      await this.notifications.emitToUser(
+        mentorshipRequest.requesterId,
+        {
+          type: 'MENTORSHIP_INVITE',
+      
+          title: 'Mentorat démarré',
+      
+          message:
+            'Votre mentor a commencé le suivi de votre demande.',
+      
+          priority: 'NORMAL',
+      
+          actionUrl: '/espace/talents',
+        },
+        tx,
+      );
+
       return tx.mentorshipRequest.findUnique({
         where: {
           id:
@@ -859,6 +938,9 @@ async startMentorship(
             true,
   
           status:
+            true,
+
+          requesterId:
             true,
         },
       });
@@ -932,6 +1014,19 @@ async startMentorship(
               'Mentorship completed by mentor.',
           },
         });
+
+        await this.notifications.emitToUser(
+          mentorshipRequest.requesterId,
+          {
+            type: 'MENTORSHIP_INVITE',
+            title: 'Mentorat clôturé',
+            message:
+              'Votre suivi de mentorat a été finalisé avec succès.',
+            priority: 'NORMAL',
+            actionUrl: '/espace/talents',
+          },
+          tx,
+        );
   
         return tx.mentorshipRequest.findUnique({
           where: {
@@ -998,6 +1093,9 @@ async startMentorship(
             true,
   
           status:
+            true,
+
+          requesterId:
             true,
         },
       });
@@ -1135,6 +1233,9 @@ async startMentorship(
             true,
   
           status:
+            true,
+
+          requesterId:
             true,
         },
       });

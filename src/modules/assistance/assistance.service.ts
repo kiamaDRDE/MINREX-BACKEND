@@ -21,6 +21,10 @@ import {
 } from '../../infrastructure/database/prisma.service.js';
 
 import {
+  NotificationEventBusService,
+} from '../notifications/services/notification-event-bus.service.js';
+
+import {
   CreateAssistanceCaseDto,
 } from './dto/create-assistance-case.dto.js';
 
@@ -29,6 +33,8 @@ export class AssistanceService {
   constructor(
     private readonly prisma:
       PrismaService,
+    private readonly notifications:
+      NotificationEventBusService,
   ) {}
 
   /*
@@ -332,6 +338,33 @@ export class AssistanceService {
                 'Assistance request created and routed to the competent diplomatic post.',
             },
           });
+
+          await this.notifications.emitToUser(
+            userId,
+            {
+              type: 'ASSISTANCE_STATUS',
+              title: 'Demande d’assistance soumise',
+              message:
+                'Votre demande d’assistance a été enregistrée et transmise au poste consulaire.',
+              priority: 'NORMAL',
+              actionUrl: '/espace/assistance',
+            },
+            tx,
+          );
+
+          await this.notifications.emitToPostRole(
+            assignedPostId,
+            ['CONSULAR_AGENT'],
+            {
+              type: 'ASSISTANCE_STATUS',
+              title: 'Nouvelle demande d’assistance',
+              message:
+                'Une nouvelle demande d’assistance nécessite votre prise en charge.',
+              priority: 'NORMAL',
+              actionUrl: '/agent-consulaire',
+            },
+            tx,
+          );
 
           return created;
         },
