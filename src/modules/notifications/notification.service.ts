@@ -16,7 +16,19 @@ import {
   NotificationPreferenceItemDto,
   UpdateNotificationPreferencesDto,
 } from './dto/update-notification-preferences.dto.js';
-import type { DispatchNotificationEvent } from './events/notification-event-bus.service.js';
+
+export interface DispatchNotificationEvent {
+  recipientId: string;
+  type: NotificationType;
+  priority?: NotificationPriority;
+  channels?: NotificationChannel[];
+  title: string;
+  content: string;
+  actionUrl?: string;
+  actionLabel?: string;
+  icon?: string;
+  metadata?: Record<string, unknown>;
+}
 @Injectable()
 export class NotificationService {
   private readonly logger = new Logger(NotificationService.name);
@@ -81,12 +93,13 @@ export class NotificationService {
           ? `${recipient.profile.firstName ?? ''} ${recipient.profile.lastName ?? ''}`.trim()
           : null;
 
-        await this.mailService.sendNotificationEmail({
+        this.mailService.enqueueNotificationEmail({
           to: recipient.email,
           recipientName,
-          subject: event.title,
+          subject: `[MINREX] ${event.title}`,
           title: event.title,
           content: event.content,
+          priority,
           actionUrl: event.actionUrl,
           actionLabel: event.actionLabel ?? 'Consulter sur le portail',
         });

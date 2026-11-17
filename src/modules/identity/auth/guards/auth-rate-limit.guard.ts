@@ -82,6 +82,44 @@ const POLICIES: Record<string, RoutePolicy> = {
       windowSeconds: 60,
     },
   },
+
+  requestOtp: {
+    ip: {
+      limit: 15,
+      windowSeconds: 15 * 60,
+    },
+    identity: {
+      field: 'identifier',
+      limit: 5,
+      windowSeconds: 15 * 60,
+    },
+  },
+
+  verifyOtp: {
+    ip: {
+      limit: 20,
+      windowSeconds: 15 * 60,
+    },
+    identity: {
+      field: 'identifier',
+      limit: 10,
+      windowSeconds: 15 * 60,
+    },
+  },
+
+  requestConsularChallenge: {
+    ip: {
+      limit: 15,
+      windowSeconds: 15 * 60,
+    },
+  },
+
+  verifyConsularChallenge: {
+    ip: {
+      limit: 20,
+      windowSeconds: 15 * 60,
+    },
+  },
 };
 
 /*

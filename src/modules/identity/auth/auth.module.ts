@@ -1,71 +1,32 @@
-import {
-  Module,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
-import {
-  ConfigModule,
-  ConfigService,
-} from '@nestjs/config';
+import { MailModule } from '../../../infrastructure/mail/mail.module.js';
+import { SmsModule } from '../../../infrastructure/sms/sms.module.js';
+import { AuthorizationModule } from '../authorization/authorization.module.js';
 
-import {
-  JwtModule,
-} from '@nestjs/jwt';
-
-import {
-  MailModule,
-} from '../../../infrastructure/mail/mail.module.js';
-
-import {
-  AuthorizationModule,
-} from '../authorization/authorization.module.js';
-
-import {
-  AuthController,
-} from './auth.controller.js';
-
-import {
-  AuthService,
-} from './auth.service.js';
-
-import {
-  AccessTokenGuard,
-} from './guards/access-token.guard.js';
-
-import {
-  AuthRateLimitGuard,
-} from './guards/auth-rate-limit.guard.js';
-
-import {
-  AuthCookieGuard,
-} from './guards/auth-cookie.guard.js';
+import { AuthController } from './auth.controller.js';
+import { AuthService } from './auth.service.js';
+import { ConsularIdentityService } from './consular-identity.service.js';
+import { AccessTokenGuard } from './guards/access-token.guard.js';
+import { AuthCookieGuard } from './guards/auth-cookie.guard.js';
+import { AuthRateLimitGuard } from './guards/auth-rate-limit.guard.js';
 
 @Module({
   imports: [
     ConfigModule,
 
     JwtModule.registerAsync({
-      imports: [
-        ConfigModule,
-      ],
-    
-      inject: [
-        ConfigService,
-      ],
-    
-      useFactory: (
-        configService: ConfigService,
-      ) => ({
-        secret:
-          configService.getOrThrow<string>(
-            'JWT_ACCESS_SECRET',
-          ),
-    
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.getOrThrow<string>('JWT_ACCESS_SECRET'),
         signOptions: {
           algorithm: 'HS256',
           issuer: 'minrex-api',
           audience: 'minrex-api:access',
         },
-    
         verifyOptions: {
           algorithms: ['HS256'],
           issuer: 'minrex-api',
@@ -76,25 +37,20 @@ import {
     }),
 
     MailModule,
-
+    SmsModule,
     AuthorizationModule,
   ],
 
-  controllers: [
-    AuthController,
-  ],
+  controllers: [AuthController],
 
   providers: [
     AuthService,
+    ConsularIdentityService,
     AccessTokenGuard,
     AuthRateLimitGuard,
-    AuthCookieGuard
+    AuthCookieGuard,
   ],
 
-  exports: [
-    AuthService,
-    JwtModule,
-    AccessTokenGuard,
-  ],
+  exports: [AuthService, ConsularIdentityService, JwtModule, AccessTokenGuard],
 })
 export class AuthModule {}

@@ -35,13 +35,33 @@ export const envValidationSchema = Joi.object({
 
   MAIL_HOST: Joi.string().required(),
   MAIL_PORT: Joi.number().port().default(1025),
-  MAIL_SECURE: Joi.boolean().default(false),
+  MAIL_SECURE: Joi.boolean().truthy('true').falsy('false').default(false),
 
   MAIL_USER: Joi.string().allow('').optional(),
   MAIL_PASSWORD: Joi.string().allow('').optional(),
 
   MAIL_FROM: Joi.string().email().required(),
   MAIL_FROM_NAME: Joi.string().default('MINREX'),
+  MAIL_REPLY_TO: Joi.string().email().allow('').optional(),
+
+  MAIL_POOL: Joi.boolean().truthy('true').falsy('false').default(true),
+  MAIL_MAX_CONNECTIONS: Joi.number().integer().min(1).max(40).default(4),
+  MAIL_MAX_MESSAGES: Joi.number().integer().min(1).default(100),
+  MAIL_RATE_LIMIT: Joi.number().integer().min(1).default(5),
+  MAIL_RATE_DELTA_MS: Joi.number().integer().min(100).default(1000),
+  MAIL_CONNECTION_TIMEOUT_MS: Joi.number().integer().min(1000).default(10000),
+  MAIL_SOCKET_TIMEOUT_MS: Joi.number().integer().min(1000).default(15000),
+
+  SMS_PROVIDER: Joi.string()
+    .valid('mock', 'twilio', 'brevo', 'infobip', 'webhook')
+    .default('mock'),
+  SMS_SENDER_ID: Joi.string().max(30).default('MINREX-CMR'),
+  SMS_API_URL: Joi.string().uri().allow('').optional(),
+  SMS_API_KEY: Joi.string().allow('').optional(),
+  SMS_API_SECRET: Joi.string().allow('').optional(),
+  SMS_ACCOUNT_SID: Joi.string().allow('').optional(),
+  SMS_FROM_NUMBER: Joi.string().allow('').optional(),
+  EXPOSE_DEV_OTP_IN_RESPONSE: Joi.boolean().truthy('true').falsy('false').default(false),
 
   FRONTEND_URL: Joi.string().uri().required(),
 

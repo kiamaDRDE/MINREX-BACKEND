@@ -489,6 +489,13 @@ export const SYSTEM_ROLES:
     
         PERMISSIONS.TALENT
           .MENTORSHIP_HANDLE,
+
+        /*
+         * Notifications
+         */
+
+        PERMISSIONS.NOTIFICATIONS.READ_SELF,
+        PERMISSIONS.NOTIFICATIONS.MANAGE_SELF,
       ],
     },
   ];

@@ -2,10 +2,13 @@ import {
   BadRequestException,
   ConflictException,
   ForbiddenException,
+  HttpException,
+  HttpStatus,
   Injectable,
   InternalServerErrorException,
   Logger,
   NotFoundException,
+  ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -13,25 +16,38 @@ import { JwtService } from '@nestjs/jwt';
 
 import * as argon2 from 'argon2';
 
-import { createHash, randomBytes, randomUUID } from 'node:crypto';
+import {
+  createHash,
+  randomBytes,
+  randomInt,
+  randomUUID,
+  timingSafeEqual,
+} from 'node:crypto';
 
 import {
   UserStatus,
   VerificationTokenType,
 } from '../../../generated/prisma/enums.js';
+import { RedisService } from '../../../infrastructure/cache/redis.service.js';
 import { PrismaService } from '../../../infrastructure/database/prisma.service.js';
 import { MailService } from '../../../infrastructure/mail/mail.service.js';
+import { SmsService } from '../../../infrastructure/sms/sms.service.js';
 
+import { ConsularIdentityService } from './consular-identity.service.js';
+import { ConsularChallengeDto } from './dto/consular-challenge.dto.js';
+import { ConsularVerifyDto } from './dto/consular-verify.dto.js';
 import { DevActivateDto } from './dto/dev-activate.dto.js';
 import { DevGrantAdminDto } from './dto/dev-grant-admin.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
+import { RequestOtpDto } from './dto/request-otp.dto.js';
 import { ResendVerificationDto } from './dto/resend-verification.dto.js';
 import { VerifyEmailDto } from './dto/verify-email.dto.js';
+import { VerifyOtpDto } from './dto/verify-otp.dto.js';
 
 import { LoginDto } from './dto/login.dto.js';
 import { JwtPayload } from './interfaces/jwt-payload.interface.js';
 import { SYSTEM_ROLE_CODES } from '../authorization/constants/system-roles.constants.js';
-import { isUUID } from 'class-validator';
+import { isEmail, isUUID } from 'class-validator';
 
 import {
   parsePhoneNumberFromString,
@@ -44,6 +60,9 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mailService: MailService,
+    private readonly smsService: SmsService,
+    private readonly redisService: RedisService,
+    private readonly consularIdentityService: ConsularIdentityService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
@@ -722,9 +741,13 @@ export class AuthService {
         id: true,
         email: true,
         username: true,
+        phone: true,
         passwordHash: true,
         status: true,
         emailVerifiedAt: true,
+        phoneVerifiedAt: true,
+        consularIdentifier: true,
+        consularVerifiedAt: true,
 
         profile: {
           select: {
@@ -779,6 +802,405 @@ export class AuthService {
     if (user.status !== UserStatus.ACTIVE) {
       throw new ForbiddenException('This account is not currently active.');
     }
+
+    return this.issueAuthSession(user, metadata);
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | AUTH CAPABILITIES (DISCOVERY FOR FRONTEND LOGIN OPTIONS)
+  |--------------------------------------------------------------------------
+  */
+
+  getAuthMethods() {
+    const sms = this.smsService.getCapabilities();
+    return {
+      otp: {
+        smsEnabled: sms.smsEnabled,
+        smsProvider: sms.provider,
+        smsProductionReady: sms.productionReady,
+        emailFallbackEnabled: true,
+      },
+      consular: {
+        enabled: true,
+        supportsConsularNumber: true,
+        supportsVerifiedCensusReference: true,
+        supportsVerifiedDocumentNumber: true,
+      },
+    };
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | OTP AUTHENTICATION (SMS / EMAIL)
+  |--------------------------------------------------------------------------
+  */
+
+  async requestOtp(dto: RequestOtpDto) {
+    const normalizedIdentifier = this.normalizeOtpIdentifier(
+      dto.channel,
+      dto.identifier,
+    );
+
+    if (dto.channel === 'SMS') {
+      const capabilities = this.smsService.getCapabilities();
+      if (!capabilities.smsEnabled) {
+        throw new ServiceUnavailableException(
+          'La passerelle SMS de production n’est pas active. Veuillez choisir l’envoi du code OTP par e-mail.',
+        );
+      }
+    }
+
+    const cooldownKey = `otp:${dto.channel}:${normalizedIdentifier}`;
+    await this.assertOtpCooldown(cooldownKey);
+
+    const user = await this.prisma.user.findFirst({
+      where:
+        dto.channel === 'SMS'
+          ? { phone: normalizedIdentifier }
+          : { email: normalizedIdentifier },
+      select: {
+        id: true,
+        email: true,
+        phone: true,
+        status: true,
+        emailVerifiedAt: true,
+        profile: {
+          select: {
+            firstName: true,
+          },
+        },
+      },
+    });
+
+    const genericResponse: {
+      sent: boolean;
+      channel: 'SMS' | 'EMAIL';
+      expiresInSeconds: number;
+      message: string;
+      devOtpPreview?: string;
+    } = {
+      sent: true,
+      channel: dto.channel,
+      expiresInSeconds: 300,
+      message:
+        dto.channel === 'SMS'
+          ? 'Si un compte actif correspond à ce numéro, un code de sécurité à 6 chiffres vient d’être envoyé par SMS.'
+          : 'Si un compte actif correspond à cette adresse, un code de sécurité à 6 chiffres vient d’être envoyé par e-mail.',
+    };
+
+    if (
+      !user ||
+      user.status !== UserStatus.ACTIVE ||
+      !user.emailVerifiedAt
+    ) {
+      return genericResponse;
+    }
+
+    const { code } = await this.generateAndStoreOtpToken(user.id, dto.channel);
+
+    try {
+      const dispatchRes = await this.dispatchOtpToChannel({
+        channel: dto.channel,
+        email: user.email,
+        phone: user.phone,
+        firstName: user.profile?.firstName ?? null,
+        code,
+        smsPurposeLabel: 'Connexion MINREX',
+        emailPurposeLabel: 'Connexion à votre espace MINREX Diaspora',
+      });
+
+      if (dispatchRes.devOtpPreview) {
+        genericResponse.devOtpPreview = dispatchRes.devOtpPreview;
+      }
+    } catch (error) {
+      await this.clearOtpCooldown(cooldownKey);
+      throw error;
+    }
+
+    return genericResponse;
+  }
+
+  async verifyOtp(
+    dto: VerifyOtpDto,
+    metadata?: {
+      ipAddress?: string | null;
+      userAgent?: string | null;
+    },
+  ) {
+    const normalizedIdentifier = this.normalizeOtpIdentifier(
+      dto.channel,
+      dto.identifier,
+    );
+
+    const user = await this.prisma.user.findFirst({
+      where:
+        dto.channel === 'SMS'
+          ? { phone: normalizedIdentifier }
+          : { email: normalizedIdentifier },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        phone: true,
+        status: true,
+        emailVerifiedAt: true,
+        phoneVerifiedAt: true,
+        consularIdentifier: true,
+        consularVerifiedAt: true,
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            preferredLanguage: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Code OTP invalide ou expiré.');
+    }
+
+    this.assertAccountAllowedToAuthenticate(user);
+
+    await this.verifyAndConsumeOtp(user.id, dto.channel, dto.code);
+
+    let updatedPhoneVerifiedAt = user.phoneVerifiedAt;
+    if (dto.channel === 'SMS' && !updatedPhoneVerifiedAt) {
+      updatedPhoneVerifiedAt = new Date();
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { phoneVerifiedAt: updatedPhoneVerifiedAt },
+      });
+    }
+
+    return this.issueAuthSession(
+      { ...user, phoneVerifiedAt: updatedPhoneVerifiedAt },
+      metadata,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | CONSULAR IDENTITY AUTHENTICATION (2-FACTOR KYC + OTP)
+  |--------------------------------------------------------------------------
+  */
+
+  async requestConsularChallenge(dto: ConsularChallengeDto) {
+    const match = await this.consularIdentityService.verifyConsularCredentials(
+      dto.consularId,
+      dto.birthDate,
+    );
+
+    if (!match) {
+      throw new UnauthorizedException(
+        'Identité consulaire introuvable, dossier non encore validé ou date de naissance incorrecte.',
+      );
+    }
+
+    const channel: 'EMAIL' | 'SMS' = dto.deliveryChannel ?? 'EMAIL';
+
+    if (channel === 'SMS') {
+      if (!match.user.phone) {
+        throw new BadRequestException(
+          'Aucun numéro de téléphone n’est rattaché à votre identité consulaire. Choisissez la vérification par e-mail.',
+        );
+      }
+      if (!this.smsService.getCapabilities().smsEnabled) {
+        throw new ServiceUnavailableException(
+          'La passerelle SMS n’est pas active. Choisissez la réception du code par e-mail.',
+        );
+      }
+    }
+
+    const cooldownKey = `consular:${match.user.id}:${channel}`;
+    await this.assertOtpCooldown(cooldownKey);
+
+    const context = `CONSULAR:${channel}`;
+    const { code } = await this.generateAndStoreOtpToken(match.user.id, context);
+
+    const challengeId = randomUUID();
+    const challengeKey = `minrex:auth:consular-challenge:${challengeId}`;
+    const redisClient = this.redisService.getClient();
+
+    if (redisClient.status !== 'ready') {
+      await this.clearOtpCooldown(cooldownKey);
+      throw new ServiceUnavailableException(
+        'Service de validation temporairement indisponible.',
+      );
+    }
+
+    let devOtpPreview: string | undefined;
+
+    try {
+      const dispatchRes = await this.dispatchOtpToChannel({
+        channel,
+        email: match.user.email,
+        phone: match.user.phone,
+        firstName: match.user.profile?.firstName ?? null,
+        code,
+        smsPurposeLabel: 'Connexion Identité Consulaire',
+        emailPurposeLabel: `Connexion par Identité Consulaire (${match.consularIdentifier})`,
+      });
+      devOtpPreview = dispatchRes.devOtpPreview;
+
+      await redisClient.set(
+        challengeKey,
+        JSON.stringify({
+          userId: match.user.id,
+          channel,
+          consularIdentifier: match.consularIdentifier,
+        }),
+        'EX',
+        300,
+      );
+    } catch (error) {
+      await this.clearOtpCooldown(cooldownKey);
+      await redisClient.del(challengeKey).catch(() => undefined);
+      throw error;
+    }
+
+    const maskedDestination =
+      channel === 'SMS' && match.user.phone
+        ? this.maskPhone(match.user.phone)
+        : this.maskEmail(match.user.email);
+
+    return {
+      challengeRequired: true,
+      challengeId,
+      channel,
+      maskedDestination,
+      consularIdentifier: match.consularIdentifier,
+      postName: match.postName,
+      expiresInSeconds: 300,
+      ...(devOtpPreview ? { devOtpPreview } : {}),
+    };
+  }
+
+  async verifyConsularChallenge(
+    dto: ConsularVerifyDto,
+    metadata?: {
+      ipAddress?: string | null;
+      userAgent?: string | null;
+    },
+  ) {
+    const challengeKey = `minrex:auth:consular-challenge:${dto.challengeId}`;
+    const redisClient = this.redisService.getClient();
+
+    if (redisClient.status !== 'ready') {
+      throw new ServiceUnavailableException(
+        'Service de validation temporairement indisponible.',
+      );
+    }
+
+    const rawChallenge = await redisClient.get(challengeKey);
+    if (!rawChallenge) {
+      throw new UnauthorizedException(
+        'Défi d’identité consulaire invalide ou expiré. Veuillez recommencer.',
+      );
+    }
+
+    let parsed: {
+      userId: string;
+      channel: 'EMAIL' | 'SMS';
+      consularIdentifier: string;
+    };
+    try {
+      parsed = JSON.parse(rawChallenge) as {
+        userId: string;
+        channel: 'EMAIL' | 'SMS';
+        consularIdentifier: string;
+      };
+    } catch {
+      throw new UnauthorizedException('Défi d’identité consulaire invalide.');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: parsed.userId },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        phone: true,
+        status: true,
+        emailVerifiedAt: true,
+        phoneVerifiedAt: true,
+        consularIdentifier: true,
+        consularVerifiedAt: true,
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            preferredLanguage: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Compte introuvable ou désactivé.');
+    }
+
+    this.assertAccountAllowedToAuthenticate(user);
+
+    await this.verifyAndConsumeOtp(
+      user.id,
+      `CONSULAR:${parsed.channel}`,
+      dto.code,
+    );
+
+    await redisClient.del(challengeKey).catch(() => undefined);
+
+    this.logger.log(
+      `Consular identity sign-in verified for user ${user.id} (${parsed.consularIdentifier}) via ${parsed.channel}.`,
+    );
+
+    return this.issueAuthSession(user, metadata);
+  }
+
+  private assertAccountAllowedToAuthenticate(user: {
+    status: UserStatus;
+    emailVerifiedAt: Date | null;
+  }): void {
+    if (!user.emailVerifiedAt || user.status === UserStatus.PENDING_VERIFICATION) {
+      throw new ForbiddenException(
+        'Veuillez d’abord confirmer votre adresse e-mail avant de vous connecter.',
+      );
+    }
+
+    if (
+      user.status === UserStatus.SUSPENDED ||
+      user.status === UserStatus.DISABLED ||
+      user.status !== UserStatus.ACTIVE
+    ) {
+      throw new ForbiddenException(
+        'Ce compte n’est actuellement pas autorisé à se connecter.',
+      );
+    }
+  }
+
+  private async issueAuthSession(
+    user: {
+      id: string;
+      email: string;
+      username: string;
+      phone?: string | null;
+      status: UserStatus;
+      phoneVerifiedAt?: Date | null;
+      consularIdentifier?: string | null;
+      consularVerifiedAt?: Date | null;
+      profile: {
+        firstName: string;
+        lastName: string;
+        preferredLanguage: string;
+      } | null;
+    },
+    metadata?: {
+      ipAddress?: string | null;
+      userAgent?: string | null;
+    },
+  ) {
 
     const sessionId = randomUUID();
 
@@ -860,7 +1282,11 @@ export class AuthService {
         id: user.id,
         email: user.email,
         username: user.username,
+        phone: user.phone ?? null,
+        phoneVerifiedAt: user.phoneVerifiedAt ?? null,
         status: user.status,
+        consularIdentifier: user.consularIdentifier ?? null,
+        consularVerifiedAt: user.consularVerifiedAt ?? null,
         profile: user.profile,
       },
 
@@ -1211,6 +1637,9 @@ export class AuthService {
         phone: true,
         status: true,
         emailVerifiedAt: true,
+        phoneVerifiedAt: true,
+        consularIdentifier: true,
+        consularVerifiedAt: true,
         lastLoginAt: true,
         createdAt: true,
 
@@ -1246,5 +1675,238 @@ export class AuthService {
 
   private hashToken(token: string): string {
     return createHash('sha256').update(token).digest('hex');
+  }
+
+  private buildOtpTokenHash(
+    userId: string,
+    context: string,
+    code: string,
+  ): string {
+    return this.hashToken(`otp:${userId}:${context}:${code}`);
+  }
+
+  private normalizeOtpIdentifier(
+    channel: 'SMS' | 'EMAIL',
+    rawIdentifier: string,
+  ): string {
+    const trimmed = rawIdentifier.trim();
+    if (channel === 'EMAIL') {
+      const normalized = trimmed.toLowerCase();
+      if (!isEmail(normalized) || normalized.length > 255) {
+        throw new BadRequestException('Adresse e-mail invalide.');
+      }
+      return normalized;
+    }
+
+    const parsedPhone = parsePhoneNumberFromString(trimmed);
+    if (!parsedPhone || !parsedPhone.isValid()) {
+      throw new BadRequestException(
+        'Numéro de téléphone international invalide (format +indicatif requis).',
+      );
+    }
+    return parsedPhone.number.toString();
+  }
+
+  private async dispatchOtpToChannel(params: {
+    channel: 'SMS' | 'EMAIL';
+    email: string;
+    phone: string | null;
+    firstName: string | null;
+    code: string;
+    smsPurposeLabel: string;
+    emailPurposeLabel: string;
+  }): Promise<{ devOtpPreview?: string }> {
+    if (params.channel === 'SMS') {
+      if (!params.phone) {
+        throw new BadRequestException(
+          'Aucun numéro de téléphone vérifiable associé à ce compte.',
+        );
+      }
+
+      const smsRes = await this.smsService.sendOtpSms({
+        to: params.phone,
+        code: params.code,
+        purposeLabel: params.smsPurposeLabel,
+        expiresMinutes: 5,
+      });
+
+      const exposeDevOtp =
+        this.configService.get<string>('NODE_ENV', 'development') ===
+          'development' &&
+        this.configService.get<boolean>('EXPOSE_DEV_OTP_IN_RESPONSE') === true &&
+        smsRes.simulated;
+
+      return exposeDevOtp ? { devOtpPreview: params.code } : {};
+    }
+
+    await this.mailService.sendOtpEmail({
+      to: params.email,
+      firstName: params.firstName,
+      code: params.code,
+      purposeLabel: params.emailPurposeLabel,
+      expiresMinutes: 5,
+    });
+
+    return {};
+  }
+
+  private async clearOtpCooldown(scopeKey: string): Promise<void> {
+    const client = this.redisService.getClient();
+    if (client.status !== 'ready') {
+      return;
+    }
+    const digest = this.hashToken(scopeKey);
+    await client.del(`minrex:auth:otp-cooldown:${digest}`).catch(() => undefined);
+  }
+
+  private async assertOtpCooldown(scopeKey: string): Promise<void> {
+    const client = this.redisService.getClient();
+    if (client.status !== 'ready') {
+      return;
+    }
+
+    const digest = this.hashToken(scopeKey);
+    const redisKey = `minrex:auth:otp-cooldown:${digest}`;
+    const created = await client.set(redisKey, '1', 'EX', 60, 'NX');
+    if (created !== 'OK') {
+      const ttl = await client.ttl(redisKey);
+      const waitSeconds = ttl > 0 ? ttl : 60;
+      throw new HttpException(
+        `Veuillez patienter ${waitSeconds} secondes avant de demander un nouveau code.`,
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
+  }
+
+  private async generateAndStoreOtpToken(
+    userId: string,
+    context: string,
+  ): Promise<{ tokenId: string; code: string; expiresAt: Date }> {
+    const code = randomInt(100000, 1000000).toString();
+    const tokenHash = this.buildOtpTokenHash(userId, context, code);
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 5 * 60 * 1000);
+
+    const created = await this.prisma.$transaction(async (tx) => {
+      await tx.verificationToken.updateMany({
+        where: {
+          userId,
+          type: VerificationTokenType.MFA_OTP,
+          consumedAt: null,
+        },
+        data: { consumedAt: now },
+      });
+
+      return tx.verificationToken.create({
+        data: {
+          userId,
+          type: VerificationTokenType.MFA_OTP,
+          tokenHash,
+          expiresAt,
+        },
+        select: { id: true },
+      });
+    });
+
+    return { tokenId: created.id, code, expiresAt };
+  }
+
+  private async verifyAndConsumeOtp(
+    userId: string,
+    context: string,
+    rawCode: string,
+  ): Promise<void> {
+    const now = new Date();
+    const token = await this.prisma.verificationToken.findFirst({
+      where: {
+        userId,
+        type: VerificationTokenType.MFA_OTP,
+        consumedAt: null,
+        expiresAt: { gt: now },
+      },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        tokenHash: true,
+      },
+    });
+
+    if (!token) {
+      throw new UnauthorizedException('Code OTP invalide ou expiré.');
+    }
+
+    const failKey = `minrex:auth:otp-fail:${token.id}`;
+    const redisClient = this.redisService.getClient();
+
+    if (redisClient.status === 'ready') {
+      const fails = Number((await redisClient.get(failKey)) ?? '0');
+      if (fails >= 5) {
+        await this.prisma.verificationToken.updateMany({
+          where: { id: token.id, consumedAt: null },
+          data: { consumedAt: now },
+        });
+        throw new UnauthorizedException(
+          'Trop de tentatives erronées. Veuillez demander un nouveau code.',
+        );
+      }
+    }
+
+    const expectedHash = this.buildOtpTokenHash(
+      userId,
+      context,
+      rawCode.trim(),
+    );
+    const expectedBuf = Buffer.from(expectedHash, 'hex');
+    const actualBuf = Buffer.from(token.tokenHash, 'hex');
+    const matches =
+      expectedBuf.length === actualBuf.length &&
+      timingSafeEqual(expectedBuf, actualBuf);
+
+    if (!matches) {
+      if (redisClient.status === 'ready') {
+        const nextFails = await redisClient.incr(failKey);
+        if (nextFails === 1) {
+          await redisClient.expire(failKey, 300);
+        }
+        if (nextFails >= 5) {
+          await this.prisma.verificationToken.updateMany({
+            where: { id: token.id, consumedAt: null },
+            data: { consumedAt: now },
+          });
+        }
+      }
+      throw new UnauthorizedException('Code OTP invalide ou expiré.');
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      const consumed = await tx.verificationToken.updateMany({
+        where: {
+          id: token.id,
+          consumedAt: null,
+          expiresAt: { gt: new Date() },
+        },
+        data: { consumedAt: new Date() },
+      });
+
+      if (consumed.count !== 1) {
+        throw new UnauthorizedException('Code OTP invalide ou expiré.');
+      }
+    });
+
+    if (redisClient.status === 'ready') {
+      await redisClient.del(failKey).catch(() => undefined);
+    }
+  }
+
+  private maskEmail(email: string): string {
+    const [local, domain] = email.split('@');
+    if (!local || !domain) return '***';
+    const prefix = local.slice(0, Math.min(2, local.length));
+    return `${prefix}***@${domain}`;
+  }
+
+  private maskPhone(phone: string): string {
+    if (phone.length <= 6) return '***';
+    return `${phone.slice(0, 4)}***${phone.slice(-3)}`;
   }
 }

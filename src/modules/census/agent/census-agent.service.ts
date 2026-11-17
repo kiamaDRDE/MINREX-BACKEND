@@ -30,6 +30,14 @@ import {
 } from './dto/verify-census.dto.js';
 
 import {
+  assignConsularIdentifierIfMissing,
+} from '../../../common/utils/consular-id.util.js';
+
+import {
+  MailService,
+} from '../../../infrastructure/mail/mail.service.js';
+
+import {
   NotificationEventBusService,
 } from '../../notifications/services/notification-event-bus.service.js';
 
@@ -40,6 +48,8 @@ export class CensusAgentService {
       PrismaService,
     private readonly notifications:
       NotificationEventBusService,
+    private readonly mailService:
+      MailService,
   ) {}
 
   /*
@@ -529,7 +539,7 @@ export class CensusAgentService {
     const now =
       new Date();
 
-    const updated =
+    const verifyOutcome =
       await this.prisma.$transaction(
         async (tx) => {
           await tx.censusReview.create({
@@ -590,26 +600,77 @@ export class CensusAgentService {
             },
           });
 
+          const [citizen, post] = await Promise.all([
+            tx.user.findUnique({
+              where: { id: record.userId },
+              select: {
+                id: true,
+                email: true,
+                emailVerifiedAt: true,
+                consularIdentifier: true,
+                profile: {
+                  select: { firstName: true },
+                },
+              },
+            }),
+            tx.diplomaticPost.findUnique({
+              where: { id: postId },
+              select: { code: true, name: true },
+            }),
+          ]);
+
+          let assignedConsularId = citizen?.consularIdentifier ?? null;
+          let newlyIssuedConsularId: string | null = null;
+
+          if (citizen && !assignedConsularId) {
+            const assigned = await assignConsularIdentifierIfMissing(
+              tx,
+              citizen.id,
+              post?.code,
+              now,
+            );
+            assignedConsularId = assigned.consularIdentifier;
+            if (assigned.newlyAssigned) {
+              newlyIssuedConsularId = assigned.consularIdentifier;
+            }
+          }
+
           await this.notifications.emitToUser(
             record.userId,
             {
               type: 'CENSUS_STATUS',
               title: 'Recensement validé',
-              message:
-                'Votre inscription consulaire a été validée avec succès.',
+              message: assignedConsularId
+                ? `Votre inscription consulaire a été validée avec succès. Identifiant consulaire : ${assignedConsularId}.`
+                : 'Votre inscription consulaire a été validée avec succès.',
               priority: 'HIGH',
               actionUrl: '/espace/recensement',
             },
             tx,
           );
 
-          return result;
+          return {
+            record: result,
+            newlyIssuedConsularId,
+            citizenEmail: citizen?.emailVerifiedAt ? citizen.email : null,
+            citizenFirstName: citizen?.profile?.firstName ?? null,
+            postName: post?.name ?? null,
+          };
         },
       );
 
+    if (verifyOutcome.newlyIssuedConsularId && verifyOutcome.citizenEmail) {
+      this.mailService.enqueueConsularIdentityEmail({
+        to: verifyOutcome.citizenEmail,
+        firstName: verifyOutcome.citizenFirstName,
+        consularIdentifier: verifyOutcome.newlyIssuedConsularId,
+        postName: verifyOutcome.postName,
+      });
+    }
+
     return {
       record:
-        updated,
+        verifyOutcome.record,
     };
   }
 

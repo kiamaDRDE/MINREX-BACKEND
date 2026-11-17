@@ -33,6 +33,8 @@ export type UserMinAggregateOutputType = {
   status: $Enums.UserStatus | null
   emailVerifiedAt: Date | null
   phoneVerifiedAt: Date | null
+  consularIdentifier: string | null
+  consularVerifiedAt: Date | null
   lastLoginAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -47,6 +49,8 @@ export type UserMaxAggregateOutputType = {
   status: $Enums.UserStatus | null
   emailVerifiedAt: Date | null
   phoneVerifiedAt: Date | null
+  consularIdentifier: string | null
+  consularVerifiedAt: Date | null
   lastLoginAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,6 +65,8 @@ export type UserCountAggregateOutputType = {
   status: number
   emailVerifiedAt: number
   phoneVerifiedAt: number
+  consularIdentifier: number
+  consularVerifiedAt: number
   lastLoginAt: number
   createdAt: number
   updatedAt: number
@@ -77,6 +83,8 @@ export type UserMinAggregateInputType = {
   status?: true
   emailVerifiedAt?: true
   phoneVerifiedAt?: true
+  consularIdentifier?: true
+  consularVerifiedAt?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -91,6 +99,8 @@ export type UserMaxAggregateInputType = {
   status?: true
   emailVerifiedAt?: true
   phoneVerifiedAt?: true
+  consularIdentifier?: true
+  consularVerifiedAt?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -105,6 +115,8 @@ export type UserCountAggregateInputType = {
   status?: true
   emailVerifiedAt?: true
   phoneVerifiedAt?: true
+  consularIdentifier?: true
+  consularVerifiedAt?: true
   lastLoginAt?: true
   createdAt?: true
   updatedAt?: true
@@ -192,6 +204,8 @@ export type UserGroupByOutputType = {
   status: $Enums.UserStatus
   emailVerifiedAt: Date | null
   phoneVerifiedAt: Date | null
+  consularIdentifier: string | null
+  consularVerifiedAt: Date | null
   lastLoginAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -227,6 +241,8 @@ export type UserWhereInput = {
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  consularIdentifier?: Prisma.StringNullableFilter<"User"> | string | null
+  consularVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -264,6 +280,8 @@ export type UserOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  consularIdentifier?: Prisma.SortOrderInput | Prisma.SortOrder
+  consularVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -297,6 +315,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   email?: string
   username?: string
   phone?: string
+  consularIdentifier?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -304,6 +323,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  consularVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -330,7 +350,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   publicationReviews?: Prisma.PublicationReviewHistoryListRelationFilter
   notificationsReceived?: Prisma.NotificationListRelationFilter
   notificationPreferences?: Prisma.NotificationPreferenceListRelationFilter
-}, "id" | "email" | "username" | "phone">
+}, "id" | "email" | "username" | "phone" | "consularIdentifier">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -341,6 +361,8 @@ export type UserOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  consularIdentifier?: Prisma.SortOrderInput | Prisma.SortOrder
+  consularVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -361,6 +383,8 @@ export type UserScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   phoneVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  consularIdentifier?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  consularVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -375,6 +399,8 @@ export type UserCreateInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -412,6 +438,8 @@ export type UserUncheckedCreateInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -449,6 +477,8 @@ export type UserUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -486,6 +516,8 @@ export type UserUncheckedUpdateInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -523,6 +555,8 @@ export type UserCreateManyInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -537,6 +571,8 @@ export type UserUpdateManyMutationInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -551,6 +587,8 @@ export type UserUncheckedUpdateManyInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -565,6 +603,8 @@ export type UserCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phoneVerifiedAt?: Prisma.SortOrder
+  consularIdentifier?: Prisma.SortOrder
+  consularVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -579,6 +619,8 @@ export type UserMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phoneVerifiedAt?: Prisma.SortOrder
+  consularIdentifier?: Prisma.SortOrder
+  consularVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -593,6 +635,8 @@ export type UserMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phoneVerifiedAt?: Prisma.SortOrder
+  consularIdentifier?: Prisma.SortOrder
+  consularVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -957,6 +1001,8 @@ export type UserCreateWithoutProfileInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -993,6 +1039,8 @@ export type UserUncheckedCreateWithoutProfileInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1045,6 +1093,8 @@ export type UserUpdateWithoutProfileInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1081,6 +1131,8 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1117,6 +1169,8 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1153,6 +1207,8 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1205,6 +1261,8 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1241,6 +1299,8 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1277,6 +1337,8 @@ export type UserCreateWithoutPostAssignmentsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1313,6 +1375,8 @@ export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1365,6 +1429,8 @@ export type UserUpdateWithoutPostAssignmentsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1401,6 +1467,8 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1437,6 +1505,8 @@ export type UserCreateWithoutVerificationTokensInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1473,6 +1543,8 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1525,6 +1597,8 @@ export type UserUpdateWithoutVerificationTokensInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1561,6 +1635,8 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1597,6 +1673,8 @@ export type UserCreateWithoutAuthSessionsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1633,6 +1711,8 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1685,6 +1765,8 @@ export type UserUpdateWithoutAuthSessionsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1721,6 +1803,8 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1757,6 +1841,8 @@ export type UserCreateWithoutCensusRecordsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1793,6 +1879,8 @@ export type UserUncheckedCreateWithoutCensusRecordsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1845,6 +1933,8 @@ export type UserUpdateWithoutCensusRecordsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1881,6 +1971,8 @@ export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1917,6 +2009,8 @@ export type UserCreateWithoutCensusReviewsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1953,6 +2047,8 @@ export type UserUncheckedCreateWithoutCensusReviewsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2005,6 +2101,8 @@ export type UserUpdateWithoutCensusReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2041,6 +2139,8 @@ export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2077,6 +2177,8 @@ export type UserCreateWithoutCensusStatusChangesInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2113,6 +2215,8 @@ export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2165,6 +2269,8 @@ export type UserUpdateWithoutCensusStatusChangesInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2201,6 +2307,8 @@ export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2237,6 +2345,8 @@ export type UserCreateWithoutAssistanceCasesCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2273,6 +2383,8 @@ export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2314,6 +2426,8 @@ export type UserCreateWithoutAssistanceCasesAssignedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2350,6 +2464,8 @@ export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2402,6 +2518,8 @@ export type UserUpdateWithoutAssistanceCasesCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2438,6 +2556,8 @@ export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2485,6 +2605,8 @@ export type UserUpdateWithoutAssistanceCasesAssignedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2521,6 +2643,8 @@ export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2557,6 +2681,8 @@ export type UserCreateWithoutAssistanceHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2593,6 +2719,8 @@ export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2645,6 +2773,8 @@ export type UserUpdateWithoutAssistanceHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2681,6 +2811,8 @@ export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2717,6 +2849,8 @@ export type UserCreateWithoutMentorshipRequestsCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2753,6 +2887,8 @@ export type UserUncheckedCreateWithoutMentorshipRequestsCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2794,6 +2930,8 @@ export type UserCreateWithoutMentorshipRequestsMentoredInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2830,6 +2968,8 @@ export type UserUncheckedCreateWithoutMentorshipRequestsMentoredInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2882,6 +3022,8 @@ export type UserUpdateWithoutMentorshipRequestsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2918,6 +3060,8 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2965,6 +3109,8 @@ export type UserUpdateWithoutMentorshipRequestsMentoredInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3001,6 +3147,8 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3037,6 +3185,8 @@ export type UserCreateWithoutMentorshipHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3073,6 +3223,8 @@ export type UserUncheckedCreateWithoutMentorshipHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3125,6 +3277,8 @@ export type UserUpdateWithoutMentorshipHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3161,6 +3315,8 @@ export type UserUncheckedUpdateWithoutMentorshipHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3197,6 +3353,8 @@ export type UserCreateWithoutAssociationsCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3233,6 +3391,8 @@ export type UserUncheckedCreateWithoutAssociationsCreatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3274,6 +3434,8 @@ export type UserCreateWithoutAssociationsValidatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3310,6 +3472,8 @@ export type UserUncheckedCreateWithoutAssociationsValidatedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3362,6 +3526,8 @@ export type UserUpdateWithoutAssociationsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3398,6 +3564,8 @@ export type UserUncheckedUpdateWithoutAssociationsCreatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3445,6 +3613,8 @@ export type UserUpdateWithoutAssociationsValidatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3481,6 +3651,8 @@ export type UserUncheckedUpdateWithoutAssociationsValidatedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3517,6 +3689,8 @@ export type UserCreateWithoutAssociationMembershipsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3553,6 +3727,8 @@ export type UserUncheckedCreateWithoutAssociationMembershipsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3605,6 +3781,8 @@ export type UserUpdateWithoutAssociationMembershipsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3641,6 +3819,8 @@ export type UserUncheckedUpdateWithoutAssociationMembershipsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3677,6 +3857,8 @@ export type UserCreateWithoutAssociationDocumentsUploadedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3713,6 +3895,8 @@ export type UserUncheckedCreateWithoutAssociationDocumentsUploadedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3765,6 +3949,8 @@ export type UserUpdateWithoutAssociationDocumentsUploadedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3801,6 +3987,8 @@ export type UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3837,6 +4025,8 @@ export type UserCreateWithoutAssociationHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3873,6 +4063,8 @@ export type UserUncheckedCreateWithoutAssociationHistoryInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3925,6 +4117,8 @@ export type UserUpdateWithoutAssociationHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3961,6 +4155,8 @@ export type UserUncheckedUpdateWithoutAssociationHistoryInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3997,6 +4193,8 @@ export type UserCreateWithoutNotificationsReceivedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4033,6 +4231,8 @@ export type UserUncheckedCreateWithoutNotificationsReceivedInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4085,6 +4285,8 @@ export type UserUpdateWithoutNotificationsReceivedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4121,6 +4323,8 @@ export type UserUncheckedUpdateWithoutNotificationsReceivedInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4157,6 +4361,8 @@ export type UserCreateWithoutNotificationPreferencesInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4193,6 +4399,8 @@ export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4245,6 +4453,8 @@ export type UserUpdateWithoutNotificationPreferencesInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4281,6 +4491,8 @@ export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4317,6 +4529,8 @@ export type UserCreateWithoutPublicationsAuthoredInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4353,6 +4567,8 @@ export type UserUncheckedCreateWithoutPublicationsAuthoredInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4405,6 +4621,8 @@ export type UserUpdateWithoutPublicationsAuthoredInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4441,6 +4659,8 @@ export type UserUncheckedUpdateWithoutPublicationsAuthoredInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4477,6 +4697,8 @@ export type UserCreateWithoutPublicationReviewsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4513,6 +4735,8 @@ export type UserUncheckedCreateWithoutPublicationReviewsInput = {
   status?: $Enums.UserStatus
   emailVerifiedAt?: Date | string | null
   phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4565,6 +4789,8 @@ export type UserUpdateWithoutPublicationReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4601,6 +4827,8 @@ export type UserUncheckedUpdateWithoutPublicationReviewsInput = {
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4857,6 +5085,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   emailVerifiedAt?: boolean
   phoneVerifiedAt?: boolean
+  consularIdentifier?: boolean
+  consularVerifiedAt?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4895,6 +5125,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   emailVerifiedAt?: boolean
   phoneVerifiedAt?: boolean
+  consularIdentifier?: boolean
+  consularVerifiedAt?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4909,6 +5141,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   emailVerifiedAt?: boolean
   phoneVerifiedAt?: boolean
+  consularIdentifier?: boolean
+  consularVerifiedAt?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4923,12 +5157,14 @@ export type UserSelectScalar = {
   status?: boolean
   emailVerifiedAt?: boolean
   phoneVerifiedAt?: boolean
+  consularIdentifier?: boolean
+  consularVerifiedAt?: boolean
   lastLoginAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "phone" | "passwordHash" | "status" | "emailVerifiedAt" | "phoneVerifiedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "phone" | "passwordHash" | "status" | "emailVerifiedAt" | "phoneVerifiedAt" | "consularIdentifier" | "consularVerifiedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   roleAssignments?: boolean | Prisma.User$roleAssignmentsArgs<ExtArgs>
@@ -4994,6 +5230,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     status: $Enums.UserStatus
     emailVerifiedAt: Date | null
     phoneVerifiedAt: Date | null
+    consularIdentifier: string | null
+    consularVerifiedAt: Date | null
     lastLoginAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -5451,6 +5689,8 @@ export interface UserFieldRefs {
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly phoneVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly consularIdentifier: Prisma.FieldRef<"User", 'String'>
+  readonly consularVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

@@ -503,9 +503,11 @@ model User {
 
   status UserStatus @default(PENDING_VERIFICATION)
 
-  emailVerifiedAt DateTime? @map("email_verified_at") @db.Timestamptz(3)
-  phoneVerifiedAt DateTime? @map("phone_verified_at") @db.Timestamptz(3)
-  lastLoginAt     DateTime? @map("last_login_at") @db.Timestamptz(3)
+  emailVerifiedAt    DateTime? @map("email_verified_at") @db.Timestamptz(3)
+  phoneVerifiedAt    DateTime? @map("phone_verified_at") @db.Timestamptz(3)
+  consularIdentifier String?   @unique @map("consular_identifier") @db.VarChar(40)
+  consularVerifiedAt DateTime? @map("consular_verified_at") @db.Timestamptz(3)
+  lastLoginAt        DateTime? @map("last_login_at") @db.Timestamptz(3)
 
   profile UserProfile?
 
@@ -545,6 +547,7 @@ model User {
   @@index([status])
   @@index([email])
   @@index([username])
+  @@index([consularIdentifier])
   @@map("users")
 }
 

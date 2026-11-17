@@ -51,8 +51,20 @@ import {
 } from './dto/login.dto.js';
 
 import {
+  ConsularChallengeDto,
+} from './dto/consular-challenge.dto.js';
+
+import {
+  ConsularVerifyDto,
+} from './dto/consular-verify.dto.js';
+
+import {
   RegisterDto,
 } from './dto/register.dto.js';
+
+import {
+  RequestOtpDto,
+} from './dto/request-otp.dto.js';
 
 import {
   ResendVerificationDto,
@@ -61,6 +73,10 @@ import {
 import {
   VerifyEmailDto,
 } from './dto/verify-email.dto.js';
+
+import {
+  VerifyOtpDto,
+} from './dto/verify-otp.dto.js';
 
 import {
   AccessTokenGuard,
@@ -331,33 +347,120 @@ export class AuthController {
         },
       );
 
-    const {
-      refreshToken,
-      refreshTokenExpiresAt,
-    } =
-      result;
+    this.setRefreshCookie(
+      request,
+      response,
+      result.refreshToken,
+      result.refreshTokenExpiresAt,
+    );
 
-    const isSecure = this.isSecureRequest(request);
+    return result;
+  }
 
-    response.cookie(
-      'minrex_refresh_token',
-      refreshToken,
-      {
-        httpOnly:
-          true,
+  /*
+  |--------------------------------------------------------------------------
+  | AUTH METHODS DISCOVERY
+  |--------------------------------------------------------------------------
+  */
 
-        secure:
-          isSecure,
+  @Get('methods')
+  @ApiOperation({
+    summary: 'Discover enabled authentication methods and OTP delivery capabilities',
+  })
+  @ApiOkResponse({
+    description: 'Available authentication capabilities.',
+  })
+  getAuthMethods() {
+    return this.authService.getAuthMethods();
+  }
 
-        sameSite:
-          'lax',
+  /*
+  |--------------------------------------------------------------------------
+  | OTP AUTHENTICATION (SMS / EMAIL)
+  |--------------------------------------------------------------------------
+  */
 
-        expires:
-          refreshTokenExpiresAt,
+  @Post('otp/request')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Request a 6-digit login OTP via SMS or Email fallback',
+  })
+  @ApiOkResponse({
+    description: 'OTP request processed.',
+  })
+  requestOtp(@Body() dto: RequestOtpDto) {
+    return this.authService.requestOtp(dto);
+  }
 
-        path:
-          '/',
-      },
+  @Post('otp/verify')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Verify a 6-digit OTP and open an authenticated session',
+  })
+  @ApiOkResponse({
+    description: 'OTP verified and authentication session issued.',
+  })
+  async verifyOtp(
+    @Body() dto: VerifyOtpDto,
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.verifyOtp(dto, {
+      ipAddress: request.ip ?? null,
+      userAgent: request.headers['user-agent'] ?? null,
+    });
+
+    this.setRefreshCookie(
+      request,
+      response,
+      result.refreshToken,
+      result.refreshTokenExpiresAt,
+    );
+
+    return result;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | CONSULAR IDENTITY AUTHENTICATION (KYC + 2FA OTP)
+  |--------------------------------------------------------------------------
+  */
+
+  @Post('consular/challenge')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Initiate consular identity login with birth date and 2FA OTP dispatch',
+  })
+  @ApiOkResponse({
+    description: 'Consular identity matched and second-factor OTP sent.',
+  })
+  requestConsularChallenge(@Body() dto: ConsularChallengeDto) {
+    return this.authService.requestConsularChallenge(dto);
+  }
+
+  @Post('consular/verify')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Complete consular identity authentication with the 2FA OTP code',
+  })
+  @ApiOkResponse({
+    description: 'Consular login verified and authentication session issued.',
+  })
+  async verifyConsularChallenge(
+    @Body() dto: ConsularVerifyDto,
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.verifyConsularChallenge(dto, {
+      ipAddress: request.ip ?? null,
+      userAgent: request.headers['user-agent'] ?? null,
+    });
+
+    this.setRefreshCookie(
+      request,
+      response,
+      result.refreshToken,
+      result.refreshTokenExpiresAt,
     );
 
     return result;
@@ -545,6 +648,21 @@ export class AuthController {
     );
 
     return result;
+  }
+
+  private setRefreshCookie(
+    request: Request,
+    response: Response,
+    refreshToken: string,
+    refreshTokenExpiresAt: Date,
+  ): void {
+    response.cookie('minrex_refresh_token', refreshToken, {
+      httpOnly: true,
+      secure: this.isSecureRequest(request),
+      sameSite: 'lax',
+      expires: refreshTokenExpiresAt,
+      path: '/',
+    });
   }
 
   private isSecureRequest(request: Request): boolean {
