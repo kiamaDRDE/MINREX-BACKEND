@@ -8,6 +8,7 @@ import { SYSTEM_PERMISSIONS } from '../src/modules/identity/authorization/consta
 import { SYSTEM_ROLES } from '../src/modules/identity/authorization/constants/system-roles.constants.js';
 import { seedCountries } from './seed-countries.js';
 import { seedDiplomaticNetwork } from './seed-diplomatic-network.js';
+import { seedAssistanceProtocols } from './seed-assistance-protocols.js';
 
 /*
 |--------------------------------------------------------------------------
@@ -242,6 +243,8 @@ async function main() {
   await seedCountries(prisma);
 
   await seedDiplomaticNetwork(prisma);
+
+  await seedAssistanceProtocols(prisma);
 
   console.log('');
   console.log('MINREX master seed completed successfully.');

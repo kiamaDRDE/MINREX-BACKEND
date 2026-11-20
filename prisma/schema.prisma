@@ -52,6 +52,8 @@ enum AssistanceHistoryAction {
   ASSIGNED
   STATUS_CHANGED
   UPDATED
+  NOTE_ADDED
+  ESCALATED
   RESOLVED
   CLOSED
   REJECTED
@@ -517,13 +519,15 @@ model User {
   verificationTokens VerificationToken[]
   authSessions       AuthSession[]
 
-  censusRecords       CensusRecord[]
-  censusReviews       CensusReview[]        @relation("CensusReviewer")
-  censusStatusChanges CensusStatusHistory[] @relation("CensusStatusChangedBy")
+  censusRecords         CensusRecord[]
+  censusRecordsAssigned CensusRecord[]        @relation("CensusAssignedAgent")
+  censusReviews         CensusReview[]        @relation("CensusReviewer")
+  censusStatusChanges   CensusStatusHistory[] @relation("CensusStatusChangedBy")
 
-  assistanceCasesCreated  AssistanceCase[]        @relation("AssistanceRequester")
-  assistanceCasesAssigned AssistanceCase[]        @relation("AssistanceAssignedAgent")
-  assistanceHistory       AssistanceCaseHistory[] @relation("AssistanceHistoryActor")
+  assistanceCasesCreated   AssistanceCase[]        @relation("AssistanceRequester")
+  assistanceCasesAssigned  AssistanceCase[]        @relation("AssistanceAssignedAgent")
+  assistanceCasesEscalated AssistanceCase[]        @relation("AssistanceEscalatedBy")
+  assistanceHistory        AssistanceCaseHistory[] @relation("AssistanceHistoryActor")
 
   mentorshipRequestsCreated  MentorshipRequest[]        @relation("MentorshipRequester")
   mentorshipRequestsMentored MentorshipRequest[]        @relation("MentorshipMentor")
@@ -873,6 +877,11 @@ model CensusRecord {
   assignedPost   DiplomaticPost? @relation(fields: [assignedPostId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   routedAt       DateTime?       @map("routed_at") @db.Timestamptz(3)
 
+  // Agent consulaire instructeur assigné (Option A — persistance BD).
+  assignedToUserId String?   @map("assigned_to_user_id") @db.Uuid
+  assignedToUser   User?     @relation("CensusAssignedAgent", fields: [assignedToUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  assignedAt       DateTime? @map("assigned_at") @db.Timestamptz(3)
+
   // Déclarations et consentements.
   declaredAccurate      Boolean @default(false) @map("declared_accurate")
   consentDataProcessing Boolean @default(false) @map("consent_data_processing")
@@ -894,6 +903,7 @@ model CensusRecord {
   @@index([status])
   @@index([residenceCountryId])
   @@index([assignedPostId])
+  @@index([assignedToUserId])
   @@map("census_records")
 }
 
@@ -1051,6 +1061,19 @@ model AssistanceCase {
 
   /**
    * |--------------------------------------------------------------------------
+   * | Protocol progress & central escalation (Option A)
+   * |--------------------------------------------------------------------------
+   */
+
+  currentStepNumber Int @default(1) @map("current_step_number")
+
+  escalatedToCentralAt DateTime? @map("escalated_to_central_at") @db.Timestamptz(3)
+  escalatedByUserId    String?   @map("escalated_by_user_id") @db.Uuid
+  escalatedByUser      User?     @relation("AssistanceEscalatedBy", fields: [escalatedByUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  escalationReason     String?   @map("escalation_reason") @db.Text
+
+  /**
+   * |--------------------------------------------------------------------------
    * | Resolution
    * |--------------------------------------------------------------------------
    */
@@ -1072,8 +1095,10 @@ model AssistanceCase {
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   @@index([requesterId])
+  @@index([categoryId])
   @@index([assignedPostId])
   @@index([assignedToUserId])
+  @@index([escalatedToCentralAt])
   @@index([countryId])
   @@index([status])
   @@index([urgency])
@@ -1111,7 +1136,9 @@ model AssistanceCategory {
   code            String            @unique @db.VarChar(50)
   name            String            @db.VarChar(150)
   shortName       String?           @map("short_name") @db.VarChar(100)
+  categoryGroup   String            @default("Urgence & Détresse") @map("category_group") @db.VarChar(80)
   description     String?           @db.Text
+  legalNotice     String?           @map("legal_notice") @db.Text
   icon            String?           @db.VarChar(50)
   badgeColor      String?           @map("badge_color") @db.VarChar(50)
   defaultUrgency  AssistanceUrgency @default(NORMAL) @map("default_urgency")
@@ -1128,6 +1155,7 @@ model AssistanceCategory {
 
   @@index([code])
   @@index([isActive])
+  @@index([categoryGroup])
   @@map("assistance_categories")
 }
 

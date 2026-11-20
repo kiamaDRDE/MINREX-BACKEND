@@ -2,12 +2,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ActionCardDto, ActionCardType } from '../dto/chat-response.dto.js';
 
 const ALLOWED_INTERNAL_ROUTES = [
+  '/espace',
   '/espace/recensement',
   '/espace/assistance',
   '/espace/associations',
   '/espace/publications',
+  '/espace/talents',
   '/espace/documents',
-  '/espace/services',
   '/reseau-diplomatique',
   '/communaute',
   '/success-stories',

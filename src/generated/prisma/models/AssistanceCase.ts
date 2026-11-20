@@ -20,8 +20,18 @@ export type AssistanceCaseModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateAssistanceCase = {
   _count: AssistanceCaseCountAggregateOutputType | null
+  _avg: AssistanceCaseAvgAggregateOutputType | null
+  _sum: AssistanceCaseSumAggregateOutputType | null
   _min: AssistanceCaseMinAggregateOutputType | null
   _max: AssistanceCaseMaxAggregateOutputType | null
+}
+
+export type AssistanceCaseAvgAggregateOutputType = {
+  currentStepNumber: number | null
+}
+
+export type AssistanceCaseSumAggregateOutputType = {
+  currentStepNumber: number | null
 }
 
 export type AssistanceCaseMinAggregateOutputType = {
@@ -43,6 +53,10 @@ export type AssistanceCaseMinAggregateOutputType = {
   routedAt: Date | null
   assignedToUserId: string | null
   assignedAt: Date | null
+  currentStepNumber: number | null
+  escalatedToCentralAt: Date | null
+  escalatedByUserId: string | null
+  escalationReason: string | null
   resolutionSummary: string | null
   resolvedAt: Date | null
   closedAt: Date | null
@@ -69,6 +83,10 @@ export type AssistanceCaseMaxAggregateOutputType = {
   routedAt: Date | null
   assignedToUserId: string | null
   assignedAt: Date | null
+  currentStepNumber: number | null
+  escalatedToCentralAt: Date | null
+  escalatedByUserId: string | null
+  escalationReason: string | null
   resolutionSummary: string | null
   resolvedAt: Date | null
   closedAt: Date | null
@@ -95,6 +113,10 @@ export type AssistanceCaseCountAggregateOutputType = {
   routedAt: number
   assignedToUserId: number
   assignedAt: number
+  currentStepNumber: number
+  escalatedToCentralAt: number
+  escalatedByUserId: number
+  escalationReason: number
   resolutionSummary: number
   resolvedAt: number
   closedAt: number
@@ -103,6 +125,14 @@ export type AssistanceCaseCountAggregateOutputType = {
   _all: number
 }
 
+
+export type AssistanceCaseAvgAggregateInputType = {
+  currentStepNumber?: true
+}
+
+export type AssistanceCaseSumAggregateInputType = {
+  currentStepNumber?: true
+}
 
 export type AssistanceCaseMinAggregateInputType = {
   id?: true
@@ -123,6 +153,10 @@ export type AssistanceCaseMinAggregateInputType = {
   routedAt?: true
   assignedToUserId?: true
   assignedAt?: true
+  currentStepNumber?: true
+  escalatedToCentralAt?: true
+  escalatedByUserId?: true
+  escalationReason?: true
   resolutionSummary?: true
   resolvedAt?: true
   closedAt?: true
@@ -149,6 +183,10 @@ export type AssistanceCaseMaxAggregateInputType = {
   routedAt?: true
   assignedToUserId?: true
   assignedAt?: true
+  currentStepNumber?: true
+  escalatedToCentralAt?: true
+  escalatedByUserId?: true
+  escalationReason?: true
   resolutionSummary?: true
   resolvedAt?: true
   closedAt?: true
@@ -175,6 +213,10 @@ export type AssistanceCaseCountAggregateInputType = {
   routedAt?: true
   assignedToUserId?: true
   assignedAt?: true
+  currentStepNumber?: true
+  escalatedToCentralAt?: true
+  escalatedByUserId?: true
+  escalationReason?: true
   resolutionSummary?: true
   resolvedAt?: true
   closedAt?: true
@@ -221,6 +263,18 @@ export type AssistanceCaseAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AssistanceCaseAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AssistanceCaseSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AssistanceCaseMinAggregateInputType
@@ -251,6 +305,8 @@ export type AssistanceCaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: AssistanceCaseCountAggregateInputType | true
+  _avg?: AssistanceCaseAvgAggregateInputType
+  _sum?: AssistanceCaseSumAggregateInputType
   _min?: AssistanceCaseMinAggregateInputType
   _max?: AssistanceCaseMaxAggregateInputType
 }
@@ -274,12 +330,18 @@ export type AssistanceCaseGroupByOutputType = {
   routedAt: Date
   assignedToUserId: string | null
   assignedAt: Date | null
+  currentStepNumber: number
+  escalatedToCentralAt: Date | null
+  escalatedByUserId: string | null
+  escalationReason: string | null
   resolutionSummary: string | null
   resolvedAt: Date | null
   closedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: AssistanceCaseCountAggregateOutputType | null
+  _avg: AssistanceCaseAvgAggregateOutputType | null
+  _sum: AssistanceCaseSumAggregateOutputType | null
   _min: AssistanceCaseMinAggregateOutputType | null
   _max: AssistanceCaseMaxAggregateOutputType | null
 }
@@ -321,6 +383,10 @@ export type AssistanceCaseWhereInput = {
   routedAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   assignedToUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   assignedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  currentStepNumber?: Prisma.IntFilter<"AssistanceCase"> | number
+  escalatedToCentralAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  escalatedByUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
+  escalationReason?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolutionSummary?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
   closedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
@@ -331,6 +397,7 @@ export type AssistanceCaseWhereInput = {
   country?: Prisma.XOR<Prisma.CountryScalarRelationFilter, Prisma.CountryWhereInput>
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  escalatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   history?: Prisma.AssistanceCaseHistoryListRelationFilter
 }
 
@@ -353,6 +420,10 @@ export type AssistanceCaseOrderByWithRelationInput = {
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentStepNumber?: Prisma.SortOrder
+  escalatedToCentralAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  escalatedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  escalationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   resolutionSummary?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -363,6 +434,7 @@ export type AssistanceCaseOrderByWithRelationInput = {
   country?: Prisma.CountryOrderByWithRelationInput
   assignedPost?: Prisma.DiplomaticPostOrderByWithRelationInput
   assignedToUser?: Prisma.UserOrderByWithRelationInput
+  escalatedByUser?: Prisma.UserOrderByWithRelationInput
   history?: Prisma.AssistanceCaseHistoryOrderByRelationAggregateInput
 }
 
@@ -388,6 +460,10 @@ export type AssistanceCaseWhereUniqueInput = Prisma.AtLeast<{
   routedAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   assignedToUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   assignedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  currentStepNumber?: Prisma.IntFilter<"AssistanceCase"> | number
+  escalatedToCentralAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  escalatedByUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
+  escalationReason?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolutionSummary?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
   closedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
@@ -398,6 +474,7 @@ export type AssistanceCaseWhereUniqueInput = Prisma.AtLeast<{
   country?: Prisma.XOR<Prisma.CountryScalarRelationFilter, Prisma.CountryWhereInput>
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostScalarRelationFilter, Prisma.DiplomaticPostWhereInput>
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  escalatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   history?: Prisma.AssistanceCaseHistoryListRelationFilter
 }, "id" | "reference">
 
@@ -420,14 +497,20 @@ export type AssistanceCaseOrderByWithAggregationInput = {
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  currentStepNumber?: Prisma.SortOrder
+  escalatedToCentralAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  escalatedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  escalationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   resolutionSummary?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AssistanceCaseCountOrderByAggregateInput
+  _avg?: Prisma.AssistanceCaseAvgOrderByAggregateInput
   _max?: Prisma.AssistanceCaseMaxOrderByAggregateInput
   _min?: Prisma.AssistanceCaseMinOrderByAggregateInput
+  _sum?: Prisma.AssistanceCaseSumOrderByAggregateInput
 }
 
 export type AssistanceCaseScalarWhereWithAggregatesInput = {
@@ -452,6 +535,10 @@ export type AssistanceCaseScalarWhereWithAggregatesInput = {
   routedAt?: Prisma.DateTimeWithAggregatesFilter<"AssistanceCase"> | Date | string
   assignedToUserId?: Prisma.UuidNullableWithAggregatesFilter<"AssistanceCase"> | string | null
   assignedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssistanceCase"> | Date | string | null
+  currentStepNumber?: Prisma.IntWithAggregatesFilter<"AssistanceCase"> | number
+  escalatedToCentralAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssistanceCase"> | Date | string | null
+  escalatedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"AssistanceCase"> | string | null
+  escalationReason?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCase"> | string | null
   resolutionSummary?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCase"> | string | null
   resolvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssistanceCase"> | Date | string | null
   closedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AssistanceCase"> | Date | string | null
@@ -473,6 +560,9 @@ export type AssistanceCaseCreateInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -483,6 +573,7 @@ export type AssistanceCaseCreateInput = {
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -505,6 +596,10 @@ export type AssistanceCaseUncheckedCreateInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -527,6 +622,9 @@ export type AssistanceCaseUpdateInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -537,6 +635,7 @@ export type AssistanceCaseUpdateInput = {
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -559,6 +658,10 @@ export type AssistanceCaseUncheckedUpdateInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -586,6 +689,10 @@ export type AssistanceCaseCreateManyInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -607,6 +714,9 @@ export type AssistanceCaseUpdateManyMutationInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -633,6 +743,10 @@ export type AssistanceCaseUncheckedUpdateManyInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -669,11 +783,19 @@ export type AssistanceCaseCountOrderByAggregateInput = {
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
   assignedAt?: Prisma.SortOrder
+  currentStepNumber?: Prisma.SortOrder
+  escalatedToCentralAt?: Prisma.SortOrder
+  escalatedByUserId?: Prisma.SortOrder
+  escalationReason?: Prisma.SortOrder
   resolutionSummary?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
   closedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type AssistanceCaseAvgOrderByAggregateInput = {
+  currentStepNumber?: Prisma.SortOrder
 }
 
 export type AssistanceCaseMaxOrderByAggregateInput = {
@@ -695,6 +817,10 @@ export type AssistanceCaseMaxOrderByAggregateInput = {
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
   assignedAt?: Prisma.SortOrder
+  currentStepNumber?: Prisma.SortOrder
+  escalatedToCentralAt?: Prisma.SortOrder
+  escalatedByUserId?: Prisma.SortOrder
+  escalationReason?: Prisma.SortOrder
   resolutionSummary?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
   closedAt?: Prisma.SortOrder
@@ -721,11 +847,19 @@ export type AssistanceCaseMinOrderByAggregateInput = {
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
   assignedAt?: Prisma.SortOrder
+  currentStepNumber?: Prisma.SortOrder
+  escalatedToCentralAt?: Prisma.SortOrder
+  escalatedByUserId?: Prisma.SortOrder
+  escalationReason?: Prisma.SortOrder
   resolutionSummary?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
   closedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type AssistanceCaseSumOrderByAggregateInput = {
+  currentStepNumber?: Prisma.SortOrder
 }
 
 export type AssistanceCaseScalarRelationFilter = {
@@ -831,6 +965,13 @@ export type AssistanceCaseCreateNestedManyWithoutAssignedToUserInput = {
   connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
 }
 
+export type AssistanceCaseCreateNestedManyWithoutEscalatedByUserInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput> | Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput | Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyEscalatedByUserInputEnvelope
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+}
+
 export type AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput = {
   create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutRequesterInput, Prisma.AssistanceCaseUncheckedCreateWithoutRequesterInput> | Prisma.AssistanceCaseCreateWithoutRequesterInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutRequesterInput[]
   connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutRequesterInput | Prisma.AssistanceCaseCreateOrConnectWithoutRequesterInput[]
@@ -842,6 +983,13 @@ export type AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput = 
   create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutAssignedToUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutAssignedToUserInput> | Prisma.AssistanceCaseCreateWithoutAssignedToUserInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutAssignedToUserInput[]
   connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutAssignedToUserInput | Prisma.AssistanceCaseCreateOrConnectWithoutAssignedToUserInput[]
   createMany?: Prisma.AssistanceCaseCreateManyAssignedToUserInputEnvelope
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+}
+
+export type AssistanceCaseUncheckedCreateNestedManyWithoutEscalatedByUserInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput> | Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput | Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyEscalatedByUserInputEnvelope
   connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
 }
 
@@ -873,6 +1021,20 @@ export type AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput = {
   deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
 }
 
+export type AssistanceCaseUpdateManyWithoutEscalatedByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput> | Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput | Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput[]
+  upsert?: Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutEscalatedByUserInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyEscalatedByUserInputEnvelope
+  set?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  disconnect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  delete?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  update?: Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutEscalatedByUserInput[]
+  updateMany?: Prisma.AssistanceCaseUpdateManyWithWhereWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpdateManyWithWhereWithoutEscalatedByUserInput[]
+  deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
+}
+
 export type AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput = {
   create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutRequesterInput, Prisma.AssistanceCaseUncheckedCreateWithoutRequesterInput> | Prisma.AssistanceCaseCreateWithoutRequesterInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutRequesterInput[]
   connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutRequesterInput | Prisma.AssistanceCaseCreateOrConnectWithoutRequesterInput[]
@@ -898,6 +1060,20 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput = 
   connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
   update?: Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutAssignedToUserInput | Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutAssignedToUserInput[]
   updateMany?: Prisma.AssistanceCaseUpdateManyWithWhereWithoutAssignedToUserInput | Prisma.AssistanceCaseUpdateManyWithWhereWithoutAssignedToUserInput[]
+  deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
+}
+
+export type AssistanceCaseUncheckedUpdateManyWithoutEscalatedByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput> | Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput[] | Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput[]
+  connectOrCreate?: Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput | Prisma.AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput[]
+  upsert?: Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpsertWithWhereUniqueWithoutEscalatedByUserInput[]
+  createMany?: Prisma.AssistanceCaseCreateManyEscalatedByUserInputEnvelope
+  set?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  disconnect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  delete?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  connect?: Prisma.AssistanceCaseWhereUniqueInput | Prisma.AssistanceCaseWhereUniqueInput[]
+  update?: Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpdateWithWhereUniqueWithoutEscalatedByUserInput[]
+  updateMany?: Prisma.AssistanceCaseUpdateManyWithWhereWithoutEscalatedByUserInput | Prisma.AssistanceCaseUpdateManyWithWhereWithoutEscalatedByUserInput[]
   deleteMany?: Prisma.AssistanceCaseScalarWhereInput | Prisma.AssistanceCaseScalarWhereInput[]
 }
 
@@ -983,6 +1159,9 @@ export type AssistanceCaseCreateWithoutCountryInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -992,6 +1171,7 @@ export type AssistanceCaseCreateWithoutCountryInput = {
   category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -1013,6 +1193,10 @@ export type AssistanceCaseUncheckedCreateWithoutCountryInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1069,6 +1253,10 @@ export type AssistanceCaseScalarWhereInput = {
   routedAt?: Prisma.DateTimeFilter<"AssistanceCase"> | Date | string
   assignedToUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
   assignedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  currentStepNumber?: Prisma.IntFilter<"AssistanceCase"> | number
+  escalatedToCentralAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
+  escalatedByUserId?: Prisma.UuidNullableFilter<"AssistanceCase"> | string | null
+  escalationReason?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolutionSummary?: Prisma.StringNullableFilter<"AssistanceCase"> | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
   closedAt?: Prisma.DateTimeNullableFilter<"AssistanceCase"> | Date | string | null
@@ -1090,6 +1278,9 @@ export type AssistanceCaseCreateWithoutAssignedPostInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1099,6 +1290,7 @@ export type AssistanceCaseCreateWithoutAssignedPostInput = {
   category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -1120,6 +1312,10 @@ export type AssistanceCaseUncheckedCreateWithoutAssignedPostInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1168,6 +1364,9 @@ export type AssistanceCaseCreateWithoutRequesterInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1177,6 +1376,7 @@ export type AssistanceCaseCreateWithoutRequesterInput = {
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -1198,6 +1398,10 @@ export type AssistanceCaseUncheckedCreateWithoutRequesterInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1230,6 +1434,9 @@ export type AssistanceCaseCreateWithoutAssignedToUserInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1239,6 +1446,7 @@ export type AssistanceCaseCreateWithoutAssignedToUserInput = {
   category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -1260,6 +1468,10 @@ export type AssistanceCaseUncheckedCreateWithoutAssignedToUserInput = {
   assignedPostId: string
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1275,6 +1487,76 @@ export type AssistanceCaseCreateOrConnectWithoutAssignedToUserInput = {
 
 export type AssistanceCaseCreateManyAssignedToUserInputEnvelope = {
   data: Prisma.AssistanceCaseCreateManyAssignedToUserInput | Prisma.AssistanceCaseCreateManyAssignedToUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type AssistanceCaseCreateWithoutEscalatedByUserInput = {
+  id?: string
+  reference: string
+  type: $Enums.AssistanceType
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  routedAt?: Date | string
+  assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requester: Prisma.UserCreateNestedOneWithoutAssistanceCasesCreatedInput
+  category?: Prisma.AssistanceCategoryCreateNestedOneWithoutCasesInput
+  country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
+  assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
+  assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
+}
+
+export type AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput = {
+  id?: string
+  reference: string
+  requesterId: string
+  type: $Enums.AssistanceType
+  categoryId?: string | null
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  countryId: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  assignedPostId: string
+  routedAt?: Date | string
+  assignedToUserId?: string | null
+  assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutAssistanceCaseInput
+}
+
+export type AssistanceCaseCreateOrConnectWithoutEscalatedByUserInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput>
+}
+
+export type AssistanceCaseCreateManyEscalatedByUserInputEnvelope = {
+  data: Prisma.AssistanceCaseCreateManyEscalatedByUserInput | Prisma.AssistanceCaseCreateManyEscalatedByUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -1310,6 +1592,22 @@ export type AssistanceCaseUpdateManyWithWhereWithoutAssignedToUserInput = {
   data: Prisma.XOR<Prisma.AssistanceCaseUpdateManyMutationInput, Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserInput>
 }
 
+export type AssistanceCaseUpsertWithWhereUniqueWithoutEscalatedByUserInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.AssistanceCaseUpdateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedUpdateWithoutEscalatedByUserInput>
+  create: Prisma.XOR<Prisma.AssistanceCaseCreateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedCreateWithoutEscalatedByUserInput>
+}
+
+export type AssistanceCaseUpdateWithWhereUniqueWithoutEscalatedByUserInput = {
+  where: Prisma.AssistanceCaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.AssistanceCaseUpdateWithoutEscalatedByUserInput, Prisma.AssistanceCaseUncheckedUpdateWithoutEscalatedByUserInput>
+}
+
+export type AssistanceCaseUpdateManyWithWhereWithoutEscalatedByUserInput = {
+  where: Prisma.AssistanceCaseScalarWhereInput
+  data: Prisma.XOR<Prisma.AssistanceCaseUpdateManyMutationInput, Prisma.AssistanceCaseUncheckedUpdateManyWithoutEscalatedByUserInput>
+}
+
 export type AssistanceCaseCreateWithoutHistoryInput = {
   id?: string
   reference: string
@@ -1324,6 +1622,9 @@ export type AssistanceCaseCreateWithoutHistoryInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1334,6 +1635,7 @@ export type AssistanceCaseCreateWithoutHistoryInput = {
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
 }
 
 export type AssistanceCaseUncheckedCreateWithoutHistoryInput = {
@@ -1355,6 +1657,10 @@ export type AssistanceCaseUncheckedCreateWithoutHistoryInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1392,6 +1698,9 @@ export type AssistanceCaseUpdateWithoutHistoryInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1402,6 +1711,7 @@ export type AssistanceCaseUpdateWithoutHistoryInput = {
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
 }
 
 export type AssistanceCaseUncheckedUpdateWithoutHistoryInput = {
@@ -1423,6 +1733,10 @@ export type AssistanceCaseUncheckedUpdateWithoutHistoryInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1444,6 +1758,9 @@ export type AssistanceCaseCreateWithoutCategoryInput = {
   contactPhone?: string | null
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1453,6 +1770,7 @@ export type AssistanceCaseCreateWithoutCategoryInput = {
   country: Prisma.CountryCreateNestedOneWithoutAssistanceCasesInput
   assignedPost: Prisma.DiplomaticPostCreateNestedOneWithoutAssistanceCasesInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesAssignedInput
+  escalatedByUser?: Prisma.UserCreateNestedOneWithoutAssistanceCasesEscalatedInput
   history?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutAssistanceCaseInput
 }
 
@@ -1474,6 +1792,10 @@ export type AssistanceCaseUncheckedCreateWithoutCategoryInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1526,6 +1848,10 @@ export type AssistanceCaseCreateManyCountryInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1547,6 +1873,9 @@ export type AssistanceCaseUpdateWithoutCountryInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1556,6 +1885,7 @@ export type AssistanceCaseUpdateWithoutCountryInput = {
   category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -1577,6 +1907,10 @@ export type AssistanceCaseUncheckedUpdateWithoutCountryInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1603,6 +1937,10 @@ export type AssistanceCaseUncheckedUpdateManyWithoutCountryInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1628,6 +1966,10 @@ export type AssistanceCaseCreateManyAssignedPostInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1649,6 +1991,9 @@ export type AssistanceCaseUpdateWithoutAssignedPostInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1658,6 +2003,7 @@ export type AssistanceCaseUpdateWithoutAssignedPostInput = {
   category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -1679,6 +2025,10 @@ export type AssistanceCaseUncheckedUpdateWithoutAssignedPostInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1705,6 +2055,10 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedPostInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1730,6 +2084,10 @@ export type AssistanceCaseCreateManyRequesterInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1755,6 +2113,39 @@ export type AssistanceCaseCreateManyAssignedToUserInput = {
   assignedPostId: string
   routedAt?: Date | string
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
+  resolutionSummary?: string | null
+  resolvedAt?: Date | string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AssistanceCaseCreateManyEscalatedByUserInput = {
+  id?: string
+  reference: string
+  requesterId: string
+  type: $Enums.AssistanceType
+  categoryId?: string | null
+  urgency?: $Enums.AssistanceUrgency
+  status?: $Enums.AssistanceCaseStatus
+  subject: string
+  description: string
+  countryId: string
+  city?: string | null
+  address?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  assignedPostId: string
+  routedAt?: Date | string
+  assignedToUserId?: string | null
+  assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1776,6 +2167,9 @@ export type AssistanceCaseUpdateWithoutRequesterInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1785,6 +2179,7 @@ export type AssistanceCaseUpdateWithoutRequesterInput = {
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -1806,6 +2201,10 @@ export type AssistanceCaseUncheckedUpdateWithoutRequesterInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1832,6 +2231,10 @@ export type AssistanceCaseUncheckedUpdateManyWithoutRequesterInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1853,6 +2256,9 @@ export type AssistanceCaseUpdateWithoutAssignedToUserInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1862,6 +2268,7 @@ export type AssistanceCaseUpdateWithoutAssignedToUserInput = {
   category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -1883,6 +2290,10 @@ export type AssistanceCaseUncheckedUpdateWithoutAssignedToUserInput = {
   assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1909,6 +2320,99 @@ export type AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserInput = {
   assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AssistanceCaseUpdateWithoutEscalatedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requester?: Prisma.UserUpdateOneRequiredWithoutAssistanceCasesCreatedNestedInput
+  category?: Prisma.AssistanceCategoryUpdateOneWithoutCasesNestedInput
+  country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
+  assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
+  assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
+}
+
+export type AssistanceCaseUncheckedUpdateWithoutEscalatedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  countryId?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutAssistanceCaseNestedInput
+}
+
+export type AssistanceCaseUncheckedUpdateManyWithoutEscalatedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  requesterId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumAssistanceTypeFieldUpdateOperationsInput | $Enums.AssistanceType
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  urgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
+  status?: Prisma.EnumAssistanceCaseStatusFieldUpdateOperationsInput | $Enums.AssistanceCaseStatus
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  countryId?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.StringFieldUpdateOperationsInput | string
+  routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1934,6 +2438,10 @@ export type AssistanceCaseCreateManyCategoryInput = {
   routedAt?: Date | string
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
+  currentStepNumber?: number
+  escalatedToCentralAt?: Date | string | null
+  escalatedByUserId?: string | null
+  escalationReason?: string | null
   resolutionSummary?: string | null
   resolvedAt?: Date | string | null
   closedAt?: Date | string | null
@@ -1955,6 +2463,9 @@ export type AssistanceCaseUpdateWithoutCategoryInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1964,6 +2475,7 @@ export type AssistanceCaseUpdateWithoutCategoryInput = {
   country?: Prisma.CountryUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneRequiredWithoutAssistanceCasesNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutAssistanceCasesAssignedNestedInput
+  escalatedByUser?: Prisma.UserUpdateOneWithoutAssistanceCasesEscalatedNestedInput
   history?: Prisma.AssistanceCaseHistoryUpdateManyWithoutAssistanceCaseNestedInput
 }
 
@@ -1985,6 +2497,10 @@ export type AssistanceCaseUncheckedUpdateWithoutCategoryInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2011,6 +2527,10 @@ export type AssistanceCaseUncheckedUpdateManyWithoutCategoryInput = {
   routedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  currentStepNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  escalatedToCentralAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  escalatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  escalationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolutionSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2068,6 +2588,10 @@ export type AssistanceCaseSelect<ExtArgs extends runtime.Types.Extensions.Intern
   routedAt?: boolean
   assignedToUserId?: boolean
   assignedAt?: boolean
+  currentStepNumber?: boolean
+  escalatedToCentralAt?: boolean
+  escalatedByUserId?: boolean
+  escalationReason?: boolean
   resolutionSummary?: boolean
   resolvedAt?: boolean
   closedAt?: boolean
@@ -2078,6 +2602,7 @@ export type AssistanceCaseSelect<ExtArgs extends runtime.Types.Extensions.Intern
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
   history?: boolean | Prisma.AssistanceCase$historyArgs<ExtArgs>
   _count?: boolean | Prisma.AssistanceCaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assistanceCase"]>
@@ -2101,6 +2626,10 @@ export type AssistanceCaseSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   routedAt?: boolean
   assignedToUserId?: boolean
   assignedAt?: boolean
+  currentStepNumber?: boolean
+  escalatedToCentralAt?: boolean
+  escalatedByUserId?: boolean
+  escalationReason?: boolean
   resolutionSummary?: boolean
   resolvedAt?: boolean
   closedAt?: boolean
@@ -2111,6 +2640,7 @@ export type AssistanceCaseSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["assistanceCase"]>
 
 export type AssistanceCaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2132,6 +2662,10 @@ export type AssistanceCaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   routedAt?: boolean
   assignedToUserId?: boolean
   assignedAt?: boolean
+  currentStepNumber?: boolean
+  escalatedToCentralAt?: boolean
+  escalatedByUserId?: boolean
+  escalationReason?: boolean
   resolutionSummary?: boolean
   resolvedAt?: boolean
   closedAt?: boolean
@@ -2142,6 +2676,7 @@ export type AssistanceCaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
 }, ExtArgs["result"]["assistanceCase"]>
 
 export type AssistanceCaseSelectScalar = {
@@ -2163,6 +2698,10 @@ export type AssistanceCaseSelectScalar = {
   routedAt?: boolean
   assignedToUserId?: boolean
   assignedAt?: boolean
+  currentStepNumber?: boolean
+  escalatedToCentralAt?: boolean
+  escalatedByUserId?: boolean
+  escalationReason?: boolean
   resolutionSummary?: boolean
   resolvedAt?: boolean
   closedAt?: boolean
@@ -2170,13 +2709,14 @@ export type AssistanceCaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AssistanceCaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "requesterId" | "type" | "categoryId" | "urgency" | "status" | "subject" | "description" | "countryId" | "city" | "address" | "contactEmail" | "contactPhone" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "resolutionSummary" | "resolvedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCase"]>
+export type AssistanceCaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "requesterId" | "type" | "categoryId" | "urgency" | "status" | "subject" | "description" | "countryId" | "city" | "address" | "contactEmail" | "contactPhone" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "currentStepNumber" | "escalatedToCentralAt" | "escalatedByUserId" | "escalationReason" | "resolutionSummary" | "resolvedAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCase"]>
 export type AssistanceCaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.AssistanceCase$categoryArgs<ExtArgs>
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
   history?: boolean | Prisma.AssistanceCase$historyArgs<ExtArgs>
   _count?: boolean | Prisma.AssistanceCaseCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -2186,6 +2726,7 @@ export type AssistanceCaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Typ
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
 }
 export type AssistanceCaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requester?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2193,6 +2734,7 @@ export type AssistanceCaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Typ
   country?: boolean | Prisma.CountryDefaultArgs<ExtArgs>
   assignedPost?: boolean | Prisma.DiplomaticPostDefaultArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>
+  escalatedByUser?: boolean | Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>
 }
 
 export type $AssistanceCasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2203,6 +2745,7 @@ export type $AssistanceCasePayload<ExtArgs extends runtime.Types.Extensions.Inte
     country: Prisma.$CountryPayload<ExtArgs>
     assignedPost: Prisma.$DiplomaticPostPayload<ExtArgs>
     assignedToUser: Prisma.$UserPayload<ExtArgs> | null
+    escalatedByUser: Prisma.$UserPayload<ExtArgs> | null
     /**
      * *
      *    * |--------------------------------------------------------------------------
@@ -2266,6 +2809,16 @@ export type $AssistanceCasePayload<ExtArgs extends runtime.Types.Extensions.Inte
      */
     assignedToUserId: string | null
     assignedAt: Date | null
+    /**
+     * *
+     *    * |--------------------------------------------------------------------------
+     *    * | Protocol progress & central escalation (Option A)
+     *    * |--------------------------------------------------------------------------
+     */
+    currentStepNumber: number
+    escalatedToCentralAt: Date | null
+    escalatedByUserId: string | null
+    escalationReason: string | null
     /**
      * *
      *    * |--------------------------------------------------------------------------
@@ -2676,6 +3229,7 @@ export interface Prisma__AssistanceCaseClient<T, Null = never, ExtArgs extends r
   country<T extends Prisma.CountryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CountryDefaultArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedPost<T extends Prisma.DiplomaticPostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DiplomaticPostDefaultArgs<ExtArgs>>): Prisma.Prisma__DiplomaticPostClient<runtime.Types.Result.GetResult<Prisma.$DiplomaticPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedToUser<T extends Prisma.AssistanceCase$assignedToUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistanceCase$assignedToUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  escalatedByUser<T extends Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistanceCase$escalatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   history<T extends Prisma.AssistanceCase$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AssistanceCase$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCaseHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2724,6 +3278,10 @@ export interface AssistanceCaseFieldRefs {
   readonly routedAt: Prisma.FieldRef<"AssistanceCase", 'DateTime'>
   readonly assignedToUserId: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly assignedAt: Prisma.FieldRef<"AssistanceCase", 'DateTime'>
+  readonly currentStepNumber: Prisma.FieldRef<"AssistanceCase", 'Int'>
+  readonly escalatedToCentralAt: Prisma.FieldRef<"AssistanceCase", 'DateTime'>
+  readonly escalatedByUserId: Prisma.FieldRef<"AssistanceCase", 'String'>
+  readonly escalationReason: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly resolutionSummary: Prisma.FieldRef<"AssistanceCase", 'String'>
   readonly resolvedAt: Prisma.FieldRef<"AssistanceCase", 'DateTime'>
   readonly closedAt: Prisma.FieldRef<"AssistanceCase", 'DateTime'>
@@ -3152,6 +3710,25 @@ export type AssistanceCase$categoryArgs<ExtArgs extends runtime.Types.Extensions
  * AssistanceCase.assignedToUser
  */
 export type AssistanceCase$assignedToUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * AssistanceCase.escalatedByUser
+ */
+export type AssistanceCase$escalatedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

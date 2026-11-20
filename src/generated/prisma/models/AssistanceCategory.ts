@@ -41,7 +41,9 @@ export type AssistanceCategoryMinAggregateOutputType = {
   code: string | null
   name: string | null
   shortName: string | null
+  categoryGroup: string | null
   description: string | null
+  legalNotice: string | null
   icon: string | null
   badgeColor: string | null
   defaultUrgency: $Enums.AssistanceUrgency | null
@@ -58,7 +60,9 @@ export type AssistanceCategoryMaxAggregateOutputType = {
   code: string | null
   name: string | null
   shortName: string | null
+  categoryGroup: string | null
   description: string | null
+  legalNotice: string | null
   icon: string | null
   badgeColor: string | null
   defaultUrgency: $Enums.AssistanceUrgency | null
@@ -75,7 +79,9 @@ export type AssistanceCategoryCountAggregateOutputType = {
   code: number
   name: number
   shortName: number
+  categoryGroup: number
   description: number
+  legalNotice: number
   icon: number
   badgeColor: number
   defaultUrgency: number
@@ -104,7 +110,9 @@ export type AssistanceCategoryMinAggregateInputType = {
   code?: true
   name?: true
   shortName?: true
+  categoryGroup?: true
   description?: true
+  legalNotice?: true
   icon?: true
   badgeColor?: true
   defaultUrgency?: true
@@ -121,7 +129,9 @@ export type AssistanceCategoryMaxAggregateInputType = {
   code?: true
   name?: true
   shortName?: true
+  categoryGroup?: true
   description?: true
+  legalNotice?: true
   icon?: true
   badgeColor?: true
   defaultUrgency?: true
@@ -138,7 +148,9 @@ export type AssistanceCategoryCountAggregateInputType = {
   code?: true
   name?: true
   shortName?: true
+  categoryGroup?: true
   description?: true
+  legalNotice?: true
   icon?: true
   badgeColor?: true
   defaultUrgency?: true
@@ -242,7 +254,9 @@ export type AssistanceCategoryGroupByOutputType = {
   code: string
   name: string
   shortName: string | null
+  categoryGroup: string
   description: string | null
+  legalNotice: string | null
   icon: string | null
   badgeColor: string | null
   defaultUrgency: $Enums.AssistanceUrgency
@@ -282,7 +296,9 @@ export type AssistanceCategoryWhereInput = {
   code?: Prisma.StringFilter<"AssistanceCategory"> | string
   name?: Prisma.StringFilter<"AssistanceCategory"> | string
   shortName?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
+  categoryGroup?: Prisma.StringFilter<"AssistanceCategory"> | string
   description?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
+  legalNotice?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   icon?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   badgeColor?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFilter<"AssistanceCategory"> | $Enums.AssistanceUrgency
@@ -301,7 +317,9 @@ export type AssistanceCategoryOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   shortName?: Prisma.SortOrderInput | Prisma.SortOrder
+  categoryGroup?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  legalNotice?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   badgeColor?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultUrgency?: Prisma.SortOrder
@@ -323,7 +341,9 @@ export type AssistanceCategoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AssistanceCategoryWhereInput | Prisma.AssistanceCategoryWhereInput[]
   name?: Prisma.StringFilter<"AssistanceCategory"> | string
   shortName?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
+  categoryGroup?: Prisma.StringFilter<"AssistanceCategory"> | string
   description?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
+  legalNotice?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   icon?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   badgeColor?: Prisma.StringNullableFilter<"AssistanceCategory"> | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFilter<"AssistanceCategory"> | $Enums.AssistanceUrgency
@@ -342,7 +362,9 @@ export type AssistanceCategoryOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   shortName?: Prisma.SortOrderInput | Prisma.SortOrder
+  categoryGroup?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  legalNotice?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
   badgeColor?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultUrgency?: Prisma.SortOrder
@@ -367,7 +389,9 @@ export type AssistanceCategoryScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"AssistanceCategory"> | string
   name?: Prisma.StringWithAggregatesFilter<"AssistanceCategory"> | string
   shortName?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCategory"> | string | null
+  categoryGroup?: Prisma.StringWithAggregatesFilter<"AssistanceCategory"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCategory"> | string | null
+  legalNotice?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCategory"> | string | null
   icon?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCategory"> | string | null
   badgeColor?: Prisma.StringNullableWithAggregatesFilter<"AssistanceCategory"> | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyWithAggregatesFilter<"AssistanceCategory"> | $Enums.AssistanceUrgency
@@ -384,7 +408,9 @@ export type AssistanceCategoryCreateInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -403,7 +429,9 @@ export type AssistanceCategoryUncheckedCreateInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -422,7 +450,9 @@ export type AssistanceCategoryUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -441,7 +471,9 @@ export type AssistanceCategoryUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -460,7 +492,9 @@ export type AssistanceCategoryCreateManyInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -477,7 +511,9 @@ export type AssistanceCategoryUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -494,7 +530,9 @@ export type AssistanceCategoryUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -516,7 +554,9 @@ export type AssistanceCategoryCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   shortName?: Prisma.SortOrder
+  categoryGroup?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  legalNotice?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   badgeColor?: Prisma.SortOrder
   defaultUrgency?: Prisma.SortOrder
@@ -538,7 +578,9 @@ export type AssistanceCategoryMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   shortName?: Prisma.SortOrder
+  categoryGroup?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  legalNotice?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   badgeColor?: Prisma.SortOrder
   defaultUrgency?: Prisma.SortOrder
@@ -555,7 +597,9 @@ export type AssistanceCategoryMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   shortName?: Prisma.SortOrder
+  categoryGroup?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  legalNotice?: Prisma.SortOrder
   icon?: Prisma.SortOrder
   badgeColor?: Prisma.SortOrder
   defaultUrgency?: Prisma.SortOrder
@@ -612,7 +656,9 @@ export type AssistanceCategoryCreateWithoutCasesInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -630,7 +676,9 @@ export type AssistanceCategoryUncheckedCreateWithoutCasesInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -664,7 +712,9 @@ export type AssistanceCategoryUpdateWithoutCasesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -682,7 +732,9 @@ export type AssistanceCategoryUncheckedUpdateWithoutCasesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -700,7 +752,9 @@ export type AssistanceCategoryCreateWithoutStepsInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -718,7 +772,9 @@ export type AssistanceCategoryUncheckedCreateWithoutStepsInput = {
   code: string
   name: string
   shortName?: string | null
+  categoryGroup?: string
   description?: string | null
+  legalNotice?: string | null
   icon?: string | null
   badgeColor?: string | null
   defaultUrgency?: $Enums.AssistanceUrgency
@@ -752,7 +808,9 @@ export type AssistanceCategoryUpdateWithoutStepsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -770,7 +828,9 @@ export type AssistanceCategoryUncheckedUpdateWithoutStepsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   shortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryGroup?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  legalNotice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   badgeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultUrgency?: Prisma.EnumAssistanceUrgencyFieldUpdateOperationsInput | $Enums.AssistanceUrgency
@@ -828,7 +888,9 @@ export type AssistanceCategorySelect<ExtArgs extends runtime.Types.Extensions.In
   code?: boolean
   name?: boolean
   shortName?: boolean
+  categoryGroup?: boolean
   description?: boolean
+  legalNotice?: boolean
   icon?: boolean
   badgeColor?: boolean
   defaultUrgency?: boolean
@@ -848,7 +910,9 @@ export type AssistanceCategorySelectCreateManyAndReturn<ExtArgs extends runtime.
   code?: boolean
   name?: boolean
   shortName?: boolean
+  categoryGroup?: boolean
   description?: boolean
+  legalNotice?: boolean
   icon?: boolean
   badgeColor?: boolean
   defaultUrgency?: boolean
@@ -865,7 +929,9 @@ export type AssistanceCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.
   code?: boolean
   name?: boolean
   shortName?: boolean
+  categoryGroup?: boolean
   description?: boolean
+  legalNotice?: boolean
   icon?: boolean
   badgeColor?: boolean
   defaultUrgency?: boolean
@@ -882,7 +948,9 @@ export type AssistanceCategorySelectScalar = {
   code?: boolean
   name?: boolean
   shortName?: boolean
+  categoryGroup?: boolean
   description?: boolean
+  legalNotice?: boolean
   icon?: boolean
   badgeColor?: boolean
   defaultUrgency?: boolean
@@ -894,7 +962,7 @@ export type AssistanceCategorySelectScalar = {
   updatedAt?: boolean
 }
 
-export type AssistanceCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "shortName" | "description" | "icon" | "badgeColor" | "defaultUrgency" | "defaultSlaHours" | "isActive" | "isSystem" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCategory"]>
+export type AssistanceCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "shortName" | "categoryGroup" | "description" | "legalNotice" | "icon" | "badgeColor" | "defaultUrgency" | "defaultSlaHours" | "isActive" | "isSystem" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["assistanceCategory"]>
 export type AssistanceCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   steps?: boolean | Prisma.AssistanceCategory$stepsArgs<ExtArgs>
   cases?: boolean | Prisma.AssistanceCategory$casesArgs<ExtArgs>
@@ -914,7 +982,9 @@ export type $AssistanceCategoryPayload<ExtArgs extends runtime.Types.Extensions.
     code: string
     name: string
     shortName: string | null
+    categoryGroup: string
     description: string | null
+    legalNotice: string | null
     icon: string | null
     badgeColor: string | null
     defaultUrgency: $Enums.AssistanceUrgency
@@ -1353,7 +1423,9 @@ export interface AssistanceCategoryFieldRefs {
   readonly code: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly name: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly shortName: Prisma.FieldRef<"AssistanceCategory", 'String'>
+  readonly categoryGroup: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly description: Prisma.FieldRef<"AssistanceCategory", 'String'>
+  readonly legalNotice: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly icon: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly badgeColor: Prisma.FieldRef<"AssistanceCategory", 'String'>
   readonly defaultUrgency: Prisma.FieldRef<"AssistanceCategory", 'AssistanceUrgency'>

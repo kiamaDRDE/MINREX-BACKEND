@@ -23,13 +23,47 @@ import {
 } from '../../../generated/prisma/enums.js';
 
 export class CreateAssistanceCaseDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     enum: AssistanceType,
     example:
       AssistanceType.DOCUMENT_LOSS,
+    description:
+      'Optional legacy AssistanceType enum. Automatically derived from categoryId / categoryCode when omitted.',
   })
+  @IsOptional()
   @IsEnum(AssistanceType)
-  type!: AssistanceType;
+  type?: AssistanceType;
+
+  @ApiPropertyOptional({
+    description:
+      'UUID of the AssistanceCategory protocol from PostgreSQL.',
+  })
+  @IsOptional()
+  @IsUUID()
+  categoryId?: string;
+
+  @ApiPropertyOptional({
+    example: 'ARRESTATION',
+    description:
+      'Optional code of the AssistanceCategory protocol (e.g. ARRESTATION, PERTE_DOCUMENTS).',
+  })
+  @IsOptional()
+  @Transform(({ value }) =>
+    typeof value === 'string'
+      ? value.trim().toUpperCase()
+      : value,
+  )
+  @IsString()
+  @MaxLength(50)
+  categoryCode?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Optional preferred diplomatic post UUID when multiple active posts cover the country.',
+  })
+  @IsOptional()
+  @IsUUID()
+  preferredPostId?: string;
 
   @ApiPropertyOptional({
     enum: AssistanceUrgency,

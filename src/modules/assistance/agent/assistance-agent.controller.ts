@@ -42,12 +42,20 @@ import {
 } from './assistance-agent.service.js';
 
 import {
+  AdvanceStepDto,
+} from './dto/advance-step.dto.js';
+
+import {
   AssignAssistanceCaseDto,
 } from './dto/assign-assistance-case.dto.js';
 
 import {
   CaseCommentDto,
 } from './dto/case-comment.dto.js';
+
+import {
+  EscalateAssistanceCaseDto,
+} from './dto/escalate-assistance-case.dto.js';
 
 import {
   ListAssistanceCasesQueryDto,
@@ -401,6 +409,64 @@ export class AssistanceAgentController {
       postId,
       caseId,
       dto,
+    );
+  }
+
+  @Post(':caseId/notes')
+  @RequirePermissions(PERMISSIONS.ASSISTANCE.CASES_UPDATE)
+  @AuthorizationScope({ postParam: 'postId' })
+  @ApiOperation({ summary: 'Add a consular note to a post assistance case' })
+  addNote(
+    @Req() request: AuthenticatedRequest,
+    @Param('postId', ParseUUIDPipe) postId: string,
+    @Param('caseId', ParseUUIDPipe) caseId: string,
+    @Body() dto: CaseCommentDto,
+  ) {
+    return this.assistanceAgentService.addNote(
+      request.auth!.userId!,
+      caseId,
+      dto,
+      postId,
+    );
+  }
+
+  @Post(':caseId/advance-step')
+  @RequirePermissions(PERMISSIONS.ASSISTANCE.CASES_UPDATE)
+  @AuthorizationScope({ postParam: 'postId' })
+  @ApiOperation({
+    summary: 'Advance the official protocol step on a post assistance case',
+  })
+  advanceStep(
+    @Req() request: AuthenticatedRequest,
+    @Param('postId', ParseUUIDPipe) postId: string,
+    @Param('caseId', ParseUUIDPipe) caseId: string,
+    @Body() dto: AdvanceStepDto,
+  ) {
+    return this.assistanceAgentService.advanceStep(
+      request.auth!.userId!,
+      caseId,
+      dto,
+      postId,
+    );
+  }
+
+  @Post(':caseId/escalate')
+  @RequirePermissions(PERMISSIONS.ASSISTANCE.CASES_UPDATE)
+  @AuthorizationScope({ postParam: 'postId' })
+  @ApiOperation({
+    summary: 'Escalate a post assistance case to central MINREX (persisted in DB)',
+  })
+  escalate(
+    @Req() request: AuthenticatedRequest,
+    @Param('postId', ParseUUIDPipe) postId: string,
+    @Param('caseId', ParseUUIDPipe) caseId: string,
+    @Body() dto: EscalateAssistanceCaseDto,
+  ) {
+    return this.assistanceAgentService.escalateCase(
+      request.auth!.userId!,
+      caseId,
+      dto,
+      postId,
     );
   }
 }

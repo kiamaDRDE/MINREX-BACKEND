@@ -97,6 +97,8 @@ export const PERMISSIONS = {
     CASES_UPDATE: 'assistance.cases.update',
 
     CASES_CLOSE: 'assistance.cases.close',
+
+    PROTOCOLS_MANAGE: 'assistance.protocols.manage',
   },
 
   /*
@@ -451,6 +453,16 @@ export const SYSTEM_PERMISSIONS:
 
       description:
         'Allows authorized personnel to resolve and close assistance cases.',
+    },
+
+    {
+      code:
+        PERMISSIONS.ASSISTANCE.PROTOCOLS_MANAGE,
+
+      name: 'Manage assistance protocols',
+
+      description:
+        'Allows platform administrators to create, edit, activate and manage consular assistance protocols and steps.',
     },
 
     /*
