@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import cookieParser from 'cookie-parser';
@@ -16,9 +17,15 @@ async function bootstrap() {
   |--------------------------------------------------------------------------
   */
 
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: true,
   });
+
+  // Respect X-Forwarded-For / X-Forwarded-Proto behind reverse proxies (Nginx/Cloudflare/Traefik)
+  app.set('trust proxy', 1);
+
+  // Gracefully close Prisma, Redis, and SMTP connection pools on SIGTERM/SIGINT
+  app.enableShutdownHooks();
 
   /*
   |--------------------------------------------------------------------------
@@ -92,6 +99,9 @@ async function bootstrap() {
       true,
     );
 
+  const nodeEnv = configService.get<string>('NODE_ENV', 'development');
+  const isProduction = nodeEnv === 'production';
+
   app.enableCors({
     origin: (
       origin: string | undefined,
@@ -99,13 +109,16 @@ async function bootstrap() {
     ) => {
       // Autoriser les requêtes sans origine (SSR, outils CLI, curl)
       if (!origin) return callback(null, true);
-      // Autoriser les origines définies dans CORS_ORIGINS
+      // Autoriser les origines explicitement définies dans CORS_ORIGINS
       if (corsOrigins.includes(origin)) return callback(null, true);
-      // Autoriser automatiquement le développement local (localhost et 127.0.0.1 sur tout port)
-      if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      // Autoriser automatiquement localhost/127.0.0.1 uniquement hors production
+      if (
+        !isProduction &&
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
+      ) {
         return callback(null, true);
       }
-      // Autoriser l'accès depuis le VPS sur tout port (8076, 8080, etc.)
+      // Autoriser l'accès depuis le VPS de pré-production si utilisé
       if (/^https?:\/\/185\.98\.136\.192(:\d+)?$/.test(origin)) {
         return callback(null, true);
       }
@@ -187,10 +200,9 @@ async function bootstrap() {
   |--------------------------------------------------------------------------
   */
 
-  const nodeEnv = configService.get<string>('NODE_ENV', 'development');
   const swaggerEnabled = configService.get<boolean>(
     'SWAGGER_ENABLED',
-    nodeEnv !== 'production',
+    !isProduction,
   );
 
   if (swaggerEnabled) {
