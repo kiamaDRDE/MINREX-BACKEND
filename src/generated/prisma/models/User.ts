@@ -253,6 +253,7 @@ export type UserWhereInput = {
   authSessions?: Prisma.AuthSessionListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
   censusRecordsAssigned?: Prisma.CensusRecordListRelationFilter
+  censusTalentReviews?: Prisma.CensusRecordListRelationFilter
   censusReviews?: Prisma.CensusReviewListRelationFilter
   censusStatusChanges?: Prisma.CensusStatusHistoryListRelationFilter
   assistanceCasesCreated?: Prisma.AssistanceCaseListRelationFilter
@@ -294,6 +295,7 @@ export type UserOrderByWithRelationInput = {
   authSessions?: Prisma.AuthSessionOrderByRelationAggregateInput
   censusRecords?: Prisma.CensusRecordOrderByRelationAggregateInput
   censusRecordsAssigned?: Prisma.CensusRecordOrderByRelationAggregateInput
+  censusTalentReviews?: Prisma.CensusRecordOrderByRelationAggregateInput
   censusReviews?: Prisma.CensusReviewOrderByRelationAggregateInput
   censusStatusChanges?: Prisma.CensusStatusHistoryOrderByRelationAggregateInput
   assistanceCasesCreated?: Prisma.AssistanceCaseOrderByRelationAggregateInput
@@ -338,6 +340,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   authSessions?: Prisma.AuthSessionListRelationFilter
   censusRecords?: Prisma.CensusRecordListRelationFilter
   censusRecordsAssigned?: Prisma.CensusRecordListRelationFilter
+  censusTalentReviews?: Prisma.CensusRecordListRelationFilter
   censusReviews?: Prisma.CensusReviewListRelationFilter
   censusStatusChanges?: Prisma.CensusStatusHistoryListRelationFilter
   assistanceCasesCreated?: Prisma.AssistanceCaseListRelationFilter
@@ -417,6 +420,7 @@ export type UserCreateInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -458,6 +462,7 @@ export type UserUncheckedCreateInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -499,6 +504,7 @@ export type UserUpdateInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -540,6 +546,7 @@ export type UserUncheckedUpdateInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -746,6 +753,12 @@ export type UserCreateNestedOneWithoutCensusRecordsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutCensusTalentReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedCreateWithoutCensusTalentReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCensusTalentReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserCreateNestedOneWithoutCensusRecordsAssignedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCensusRecordsAssignedInput, Prisma.UserUncheckedCreateWithoutCensusRecordsAssignedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCensusRecordsAssignedInput
@@ -758,6 +771,16 @@ export type UserUpdateOneRequiredWithoutCensusRecordsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutCensusRecordsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCensusRecordsInput, Prisma.UserUpdateWithoutCensusRecordsInput>, Prisma.UserUncheckedUpdateWithoutCensusRecordsInput>
+}
+
+export type UserUpdateOneWithoutCensusTalentReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedCreateWithoutCensusTalentReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCensusTalentReviewsInput
+  upsert?: Prisma.UserUpsertWithoutCensusTalentReviewsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCensusTalentReviewsInput, Prisma.UserUpdateWithoutCensusTalentReviewsInput>, Prisma.UserUncheckedUpdateWithoutCensusTalentReviewsInput>
 }
 
 export type UserUpdateOneWithoutCensusRecordsAssignedNestedInput = {
@@ -1058,6 +1081,7 @@ export type UserCreateWithoutProfileInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1098,6 +1122,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -1154,6 +1179,7 @@ export type UserUpdateWithoutProfileInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -1194,6 +1220,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1234,6 +1261,7 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1274,6 +1302,7 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -1330,6 +1359,7 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -1370,6 +1400,7 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1410,6 +1441,7 @@ export type UserCreateWithoutPostAssignmentsInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1450,6 +1482,7 @@ export type UserUncheckedCreateWithoutPostAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -1506,6 +1539,7 @@ export type UserUpdateWithoutPostAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -1546,6 +1580,7 @@ export type UserUncheckedUpdateWithoutPostAssignmentsInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1586,6 +1621,7 @@ export type UserCreateWithoutVerificationTokensInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1626,6 +1662,7 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -1682,6 +1719,7 @@ export type UserUpdateWithoutVerificationTokensInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -1722,6 +1760,7 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1762,6 +1801,7 @@ export type UserCreateWithoutAuthSessionsInput = {
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1802,6 +1842,7 @@ export type UserUncheckedCreateWithoutAuthSessionsInput = {
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -1858,6 +1899,7 @@ export type UserUpdateWithoutAuthSessionsInput = {
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -1898,6 +1940,7 @@ export type UserUncheckedUpdateWithoutAuthSessionsInput = {
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -1938,6 +1981,7 @@ export type UserCreateWithoutCensusRecordsInput = {
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -1978,6 +2022,7 @@ export type UserUncheckedCreateWithoutCensusRecordsInput = {
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -2003,6 +2048,93 @@ export type UserCreateOrConnectWithoutCensusRecordsInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutCensusRecordsInput, Prisma.UserUncheckedCreateWithoutCensusRecordsInput>
 }
 
+export type UserCreateWithoutCensusTalentReviewsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
+  assistanceCasesEscalated?: Prisma.AssistanceCaseCreateNestedManyWithoutEscalatedByUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCensusTalentReviewsInput = {
+  id?: string
+  email: string
+  username: string
+  phone?: string | null
+  passwordHash?: string | null
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  consularIdentifier?: string | null
+  consularVerifiedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.UserProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedCreateNestedManyWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
+  assistanceCasesEscalated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutEscalatedByUserInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedCreateNestedManyWithoutActorInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutRequesterInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedCreateNestedManyWithoutMentorInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedCreateNestedManyWithoutActorInput
+  associationsCreated?: Prisma.AssociationUncheckedCreateNestedManyWithoutCreatorInput
+  associationsValidated?: Prisma.AssociationUncheckedCreateNestedManyWithoutValidatorInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedCreateNestedManyWithoutUserInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedCreateNestedManyWithoutActorInput
+  publicationsAuthored?: Prisma.PublicationUncheckedCreateNestedManyWithoutAuthorInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedCreateNestedManyWithoutReviewerInput
+  notificationsReceived?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCensusTalentReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedCreateWithoutCensusTalentReviewsInput>
+}
+
 export type UserCreateWithoutCensusRecordsAssignedInput = {
   id?: string
   email: string
@@ -2023,6 +2155,7 @@ export type UserCreateWithoutCensusRecordsAssignedInput = {
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -2063,6 +2196,7 @@ export type UserUncheckedCreateWithoutCensusRecordsAssignedInput = {
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -2119,6 +2253,7 @@ export type UserUpdateWithoutCensusRecordsInput = {
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -2158,6 +2293,100 @@ export type UserUncheckedUpdateWithoutCensusRecordsInput = {
   postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
+  censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  assistanceCasesEscalated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutEscalatedByUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUncheckedUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUncheckedUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUncheckedUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUncheckedUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUncheckedUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUncheckedUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUncheckedUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUncheckedUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUncheckedUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutCensusTalentReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedUpdateWithoutCensusTalentReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedCreateWithoutCensusTalentReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCensusTalentReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCensusTalentReviewsInput, Prisma.UserUncheckedUpdateWithoutCensusTalentReviewsInput>
+}
+
+export type UserUpdateWithoutCensusTalentReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
+  censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
+  assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
+  assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
+  assistanceCasesEscalated?: Prisma.AssistanceCaseUpdateManyWithoutEscalatedByUserNestedInput
+  assistanceHistory?: Prisma.AssistanceCaseHistoryUpdateManyWithoutActorNestedInput
+  mentorshipRequestsCreated?: Prisma.MentorshipRequestUpdateManyWithoutRequesterNestedInput
+  mentorshipRequestsMentored?: Prisma.MentorshipRequestUpdateManyWithoutMentorNestedInput
+  mentorshipHistory?: Prisma.MentorshipRequestHistoryUpdateManyWithoutActorNestedInput
+  associationsCreated?: Prisma.AssociationUpdateManyWithoutCreatorNestedInput
+  associationsValidated?: Prisma.AssociationUpdateManyWithoutValidatorNestedInput
+  associationMemberships?: Prisma.AssociationMembershipUpdateManyWithoutUserNestedInput
+  associationDocumentsUploaded?: Prisma.AssociationDocumentUpdateManyWithoutUploadedByNestedInput
+  associationHistory?: Prisma.AssociationHistoryUpdateManyWithoutActorNestedInput
+  publicationsAuthored?: Prisma.PublicationUpdateManyWithoutAuthorNestedInput
+  publicationReviews?: Prisma.PublicationReviewHistoryUpdateManyWithoutReviewerNestedInput
+  notificationsReceived?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreferences?: Prisma.NotificationPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCensusTalentReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consularIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consularVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.UserProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  postAssignments?: Prisma.UserPostAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -2210,6 +2439,7 @@ export type UserUpdateWithoutCensusRecordsAssignedInput = {
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -2250,6 +2480,7 @@ export type UserUncheckedUpdateWithoutCensusRecordsAssignedInput = {
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -2291,6 +2522,7 @@ export type UserCreateWithoutCensusReviewsInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
@@ -2331,6 +2563,7 @@ export type UserUncheckedCreateWithoutCensusReviewsInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
@@ -2387,6 +2620,7 @@ export type UserUpdateWithoutCensusReviewsInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
@@ -2427,6 +2661,7 @@ export type UserUncheckedUpdateWithoutCensusReviewsInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
@@ -2467,6 +2702,7 @@ export type UserCreateWithoutCensusStatusChangesInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
@@ -2507,6 +2743,7 @@ export type UserUncheckedCreateWithoutCensusStatusChangesInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
@@ -2563,6 +2800,7 @@ export type UserUpdateWithoutCensusStatusChangesInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
@@ -2603,6 +2841,7 @@ export type UserUncheckedUpdateWithoutCensusStatusChangesInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
@@ -2643,6 +2882,7 @@ export type UserCreateWithoutAssistanceCasesCreatedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseCreateNestedManyWithoutAssignedToUserInput
@@ -2683,6 +2923,7 @@ export type UserUncheckedCreateWithoutAssistanceCasesCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutAssignedToUserInput
@@ -2728,6 +2969,7 @@ export type UserCreateWithoutAssistanceCasesAssignedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -2768,6 +3010,7 @@ export type UserUncheckedCreateWithoutAssistanceCasesAssignedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -2813,6 +3056,7 @@ export type UserCreateWithoutAssistanceCasesEscalatedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -2853,6 +3097,7 @@ export type UserUncheckedCreateWithoutAssistanceCasesEscalatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -2909,6 +3154,7 @@ export type UserUpdateWithoutAssistanceCasesCreatedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUpdateManyWithoutAssignedToUserNestedInput
@@ -2949,6 +3195,7 @@ export type UserUncheckedUpdateWithoutAssistanceCasesCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesAssigned?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutAssignedToUserNestedInput
@@ -3000,6 +3247,7 @@ export type UserUpdateWithoutAssistanceCasesAssignedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3040,6 +3288,7 @@ export type UserUncheckedUpdateWithoutAssistanceCasesAssignedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3091,6 +3340,7 @@ export type UserUpdateWithoutAssistanceCasesEscalatedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3131,6 +3381,7 @@ export type UserUncheckedUpdateWithoutAssistanceCasesEscalatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3171,6 +3422,7 @@ export type UserCreateWithoutAssistanceHistoryInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -3211,6 +3463,7 @@ export type UserUncheckedCreateWithoutAssistanceHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -3267,6 +3520,7 @@ export type UserUpdateWithoutAssistanceHistoryInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3307,6 +3561,7 @@ export type UserUncheckedUpdateWithoutAssistanceHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3347,6 +3602,7 @@ export type UserCreateWithoutMentorshipRequestsCreatedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -3387,6 +3643,7 @@ export type UserUncheckedCreateWithoutMentorshipRequestsCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -3432,6 +3689,7 @@ export type UserCreateWithoutMentorshipRequestsMentoredInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -3472,6 +3730,7 @@ export type UserUncheckedCreateWithoutMentorshipRequestsMentoredInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -3528,6 +3787,7 @@ export type UserUpdateWithoutMentorshipRequestsCreatedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3568,6 +3828,7 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3619,6 +3880,7 @@ export type UserUpdateWithoutMentorshipRequestsMentoredInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3659,6 +3921,7 @@ export type UserUncheckedUpdateWithoutMentorshipRequestsMentoredInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3699,6 +3962,7 @@ export type UserCreateWithoutMentorshipHistoryInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -3739,6 +4003,7 @@ export type UserUncheckedCreateWithoutMentorshipHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -3795,6 +4060,7 @@ export type UserUpdateWithoutMentorshipHistoryInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -3835,6 +4101,7 @@ export type UserUncheckedUpdateWithoutMentorshipHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -3875,6 +4142,7 @@ export type UserCreateWithoutAssociationsCreatedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -3915,6 +4183,7 @@ export type UserUncheckedCreateWithoutAssociationsCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -3960,6 +4229,7 @@ export type UserCreateWithoutAssociationsValidatedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4000,6 +4270,7 @@ export type UserUncheckedCreateWithoutAssociationsValidatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -4056,6 +4327,7 @@ export type UserUpdateWithoutAssociationsCreatedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4096,6 +4368,7 @@ export type UserUncheckedUpdateWithoutAssociationsCreatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4147,6 +4420,7 @@ export type UserUpdateWithoutAssociationsValidatedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4187,6 +4461,7 @@ export type UserUncheckedUpdateWithoutAssociationsValidatedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4227,6 +4502,7 @@ export type UserCreateWithoutAssociationMembershipsInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4267,6 +4543,7 @@ export type UserUncheckedCreateWithoutAssociationMembershipsInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -4323,6 +4600,7 @@ export type UserUpdateWithoutAssociationMembershipsInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4363,6 +4641,7 @@ export type UserUncheckedUpdateWithoutAssociationMembershipsInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4403,6 +4682,7 @@ export type UserCreateWithoutAssociationDocumentsUploadedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4443,6 +4723,7 @@ export type UserUncheckedCreateWithoutAssociationDocumentsUploadedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -4499,6 +4780,7 @@ export type UserUpdateWithoutAssociationDocumentsUploadedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4539,6 +4821,7 @@ export type UserUncheckedUpdateWithoutAssociationDocumentsUploadedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4579,6 +4862,7 @@ export type UserCreateWithoutAssociationHistoryInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4619,6 +4903,7 @@ export type UserUncheckedCreateWithoutAssociationHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -4675,6 +4960,7 @@ export type UserUpdateWithoutAssociationHistoryInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4715,6 +5001,7 @@ export type UserUncheckedUpdateWithoutAssociationHistoryInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4755,6 +5042,7 @@ export type UserCreateWithoutNotificationsReceivedInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4795,6 +5083,7 @@ export type UserUncheckedCreateWithoutNotificationsReceivedInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -4851,6 +5140,7 @@ export type UserUpdateWithoutNotificationsReceivedInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -4891,6 +5181,7 @@ export type UserUncheckedUpdateWithoutNotificationsReceivedInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -4931,6 +5222,7 @@ export type UserCreateWithoutNotificationPreferencesInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -4971,6 +5263,7 @@ export type UserUncheckedCreateWithoutNotificationPreferencesInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -5027,6 +5320,7 @@ export type UserUpdateWithoutNotificationPreferencesInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -5067,6 +5361,7 @@ export type UserUncheckedUpdateWithoutNotificationPreferencesInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -5107,6 +5402,7 @@ export type UserCreateWithoutPublicationsAuthoredInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -5147,6 +5443,7 @@ export type UserUncheckedCreateWithoutPublicationsAuthoredInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -5203,6 +5500,7 @@ export type UserUpdateWithoutPublicationsAuthoredInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -5243,6 +5541,7 @@ export type UserUncheckedUpdateWithoutPublicationsAuthoredInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -5283,6 +5582,7 @@ export type UserCreateWithoutPublicationReviewsInput = {
   authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseCreateNestedManyWithoutRequesterInput
@@ -5323,6 +5623,7 @@ export type UserUncheckedCreateWithoutPublicationReviewsInput = {
   authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
   censusRecords?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutUserInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput
   censusReviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutReviewerInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedCreateNestedManyWithoutRequesterInput
@@ -5379,6 +5680,7 @@ export type UserUpdateWithoutPublicationReviewsInput = {
   authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUpdateManyWithoutRequesterNestedInput
@@ -5419,6 +5721,7 @@ export type UserUncheckedUpdateWithoutPublicationReviewsInput = {
   authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
   censusRecords?: Prisma.CensusRecordUncheckedUpdateManyWithoutUserNestedInput
   censusRecordsAssigned?: Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  censusTalentReviews?: Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput
   censusReviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutReviewerNestedInput
   censusStatusChanges?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   assistanceCasesCreated?: Prisma.AssistanceCaseUncheckedUpdateManyWithoutRequesterNestedInput
@@ -5450,6 +5753,7 @@ export type UserCountOutputType = {
   authSessions: number
   censusRecords: number
   censusRecordsAssigned: number
+  censusTalentReviews: number
   censusReviews: number
   censusStatusChanges: number
   assistanceCasesCreated: number
@@ -5477,6 +5781,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   authSessions?: boolean | UserCountOutputTypeCountAuthSessionsArgs
   censusRecords?: boolean | UserCountOutputTypeCountCensusRecordsArgs
   censusRecordsAssigned?: boolean | UserCountOutputTypeCountCensusRecordsAssignedArgs
+  censusTalentReviews?: boolean | UserCountOutputTypeCountCensusTalentReviewsArgs
   censusReviews?: boolean | UserCountOutputTypeCountCensusReviewsArgs
   censusStatusChanges?: boolean | UserCountOutputTypeCountCensusStatusChangesArgs
   assistanceCasesCreated?: boolean | UserCountOutputTypeCountAssistanceCasesCreatedArgs
@@ -5546,6 +5851,13 @@ export type UserCountOutputTypeCountCensusRecordsArgs<ExtArgs extends runtime.Ty
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountCensusRecordsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CensusRecordWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCensusTalentReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CensusRecordWhereInput
 }
 
@@ -5697,6 +6009,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.User$censusRecordsArgs<ExtArgs>
   censusRecordsAssigned?: boolean | Prisma.User$censusRecordsAssignedArgs<ExtArgs>
+  censusTalentReviews?: boolean | Prisma.User$censusTalentReviewsArgs<ExtArgs>
   censusReviews?: boolean | Prisma.User$censusReviewsArgs<ExtArgs>
   censusStatusChanges?: boolean | Prisma.User$censusStatusChangesArgs<ExtArgs>
   assistanceCasesCreated?: boolean | Prisma.User$assistanceCasesCreatedArgs<ExtArgs>
@@ -5775,6 +6088,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   censusRecords?: boolean | Prisma.User$censusRecordsArgs<ExtArgs>
   censusRecordsAssigned?: boolean | Prisma.User$censusRecordsAssignedArgs<ExtArgs>
+  censusTalentReviews?: boolean | Prisma.User$censusTalentReviewsArgs<ExtArgs>
   censusReviews?: boolean | Prisma.User$censusReviewsArgs<ExtArgs>
   censusStatusChanges?: boolean | Prisma.User$censusStatusChangesArgs<ExtArgs>
   assistanceCasesCreated?: boolean | Prisma.User$assistanceCasesCreatedArgs<ExtArgs>
@@ -5808,6 +6122,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     authSessions: Prisma.$AuthSessionPayload<ExtArgs>[]
     censusRecords: Prisma.$CensusRecordPayload<ExtArgs>[]
     censusRecordsAssigned: Prisma.$CensusRecordPayload<ExtArgs>[]
+    censusTalentReviews: Prisma.$CensusRecordPayload<ExtArgs>[]
     censusReviews: Prisma.$CensusReviewPayload<ExtArgs>[]
     censusStatusChanges: Prisma.$CensusStatusHistoryPayload<ExtArgs>[]
     assistanceCasesCreated: Prisma.$AssistanceCasePayload<ExtArgs>[]
@@ -6242,6 +6557,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   authSessions<T extends Prisma.User$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusRecords<T extends Prisma.User$censusRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusRecordsAssigned<T extends Prisma.User$censusRecordsAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusRecordsAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  censusTalentReviews<T extends Prisma.User$censusTalentReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusTalentReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusReviews<T extends Prisma.User$censusReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   censusStatusChanges<T extends Prisma.User$censusStatusChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$censusStatusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assistanceCasesCreated<T extends Prisma.User$assistanceCasesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assistanceCasesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistanceCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6837,6 +7153,30 @@ export type User$censusRecordsArgs<ExtArgs extends runtime.Types.Extensions.Inte
  * User.censusRecordsAssigned
  */
 export type User$censusRecordsAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CensusRecord
+   */
+  select?: Prisma.CensusRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CensusRecord
+   */
+  omit?: Prisma.CensusRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CensusRecordInclude<ExtArgs> | null
+  where?: Prisma.CensusRecordWhereInput
+  orderBy?: Prisma.CensusRecordOrderByWithRelationInput | Prisma.CensusRecordOrderByWithRelationInput[]
+  cursor?: Prisma.CensusRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CensusRecordScalarFieldEnum | Prisma.CensusRecordScalarFieldEnum[]
+}
+
+/**
+ * User.censusTalentReviews
+ */
+export type User$censusTalentReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the CensusRecord
    */

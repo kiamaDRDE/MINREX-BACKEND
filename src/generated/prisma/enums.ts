@@ -224,6 +224,16 @@ export const CensusReviewDecision = {
 export type CensusReviewDecision = (typeof CensusReviewDecision)[keyof typeof CensusReviewDecision]
 
 
+export const TalentApplicationStatus = {
+  NONE: 'NONE',
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type TalentApplicationStatus = (typeof TalentApplicationStatus)[keyof typeof TalentApplicationStatus]
+
+
 export const MentorshipRequestStatus = {
   SUBMITTED: 'SUBMITTED',
   MATCHED: 'MATCHED',

@@ -172,6 +172,13 @@ enum CensusReviewDecision {
   REJECTED
 }
 
+enum TalentApplicationStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum MentorshipRequestStatus {
   SUBMITTED
   MATCHED
@@ -521,6 +528,7 @@ model User {
 
   censusRecords         CensusRecord[]
   censusRecordsAssigned CensusRecord[]        @relation("CensusAssignedAgent")
+  censusTalentReviews   CensusRecord[]        @relation("CensusTalentReviewer")
   censusReviews         CensusReview[]        @relation("CensusReviewer")
   censusStatusChanges   CensusStatusHistory[] @relation("CensusStatusChangedBy")
 
@@ -866,11 +874,17 @@ model CensusRecord {
   employer         String?           @db.VarChar(200)
   yearsExperience  Int?              @map("years_experience")
 
-  // Informations utiles au futur module Talent.
-  expertiseDomains     String[] @default([]) @map("expertise_domains")
-  skills               String[] @default([])
-  qualifications       String?  @db.Text
-  optInTalentDirectory Boolean  @default(false) @map("opt_in_talent_directory")
+  // Informations utiles au module Talent & Accréditation Mentor / Expert.
+  expertiseDomains      String[]                @default([]) @map("expertise_domains")
+  skills                String[]                @default([])
+  qualifications        String?                 @db.Text
+  optInTalentDirectory  Boolean                 @default(false) @map("opt_in_talent_directory")
+  talentStatus          TalentApplicationStatus @default(NONE) @map("talent_status")
+  talentSubmittedAt     DateTime?               @map("talent_submitted_at") @db.Timestamptz(3)
+  talentReviewedAt      DateTime?               @map("talent_reviewed_at") @db.Timestamptz(3)
+  talentReviewedById    String?                 @map("talent_reviewed_by_id") @db.Uuid
+  talentReviewedBy      User?                   @relation("CensusTalentReviewer", fields: [talentReviewedById], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  talentRejectionReason String?                 @map("talent_rejection_reason") @db.Text
 
   // Poste calculé à partir de la couverture territoriale.
   assignedPostId String?         @map("assigned_post_id") @db.Uuid
@@ -904,6 +918,7 @@ model CensusRecord {
   @@index([residenceCountryId])
   @@index([assignedPostId])
   @@index([assignedToUserId])
+  @@index([talentStatus])
   @@map("census_records")
 }
 

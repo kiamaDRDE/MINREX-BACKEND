@@ -8,7 +8,9 @@ import {
 
 import {
   CensusDocumentStatus,
+  CensusDocumentType,
   CensusStatus,
+  TalentApplicationStatus,
 } from '../../../generated/prisma/enums.js';
 
 import {
@@ -60,6 +62,7 @@ export class CensusDocumentsService {
           id: true,
           userId: true,
           status: true,
+          talentStatus: true,
         },
       });
 
@@ -78,12 +81,17 @@ export class CensusDocumentsService {
       );
     }
 
-    if (
-      record.status !==
-        CensusStatus.DRAFT &&
-      record.status !==
-        CensusStatus.CORRECTION_REQUIRED
-    ) {
+    const isEditableCensus =
+      record.status === CensusStatus.DRAFT ||
+      record.status === CensusStatus.CORRECTION_REQUIRED;
+
+    const isTalentDiplomaUpload =
+      dto.type === CensusDocumentType.OTHER &&
+      record.status !== CensusStatus.REJECTED &&
+      (record.talentStatus === TalentApplicationStatus.PENDING ||
+        record.talentStatus === TalentApplicationStatus.APPROVED);
+
+    if (!isEditableCensus && !isTalentDiplomaUpload) {
       throw new ConflictException(
         'Documents can only be uploaded while the census record is editable.',
       );

@@ -444,6 +444,13 @@ export type EnumEmploymentStatusNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel> | $Enums.EmploymentStatus | null
 }
 
+export type EnumTalentApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TalentApplicationStatus | Prisma.EnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel> | $Enums.TalentApplicationStatus
+}
+
 export type EnumCensusStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.CensusStatus | Prisma.EnumCensusStatusFieldRefInput<$PrismaModel>
   in?: $Enums.CensusStatus[] | Prisma.ListEnumCensusStatusFieldRefInput<$PrismaModel>
@@ -502,6 +509,16 @@ export type EnumEmploymentStatusNullableWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel>
+}
+
+export type EnumTalentApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TalentApplicationStatus | Prisma.EnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTalentApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.TalentApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel>
 }
 
 export type EnumCensusDocumentTypeFilter<$PrismaModel = never> = {
@@ -1419,6 +1436,13 @@ export type NestedEnumEmploymentStatusNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel> | $Enums.EmploymentStatus | null
 }
 
+export type NestedEnumTalentApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TalentApplicationStatus | Prisma.EnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel> | $Enums.TalentApplicationStatus
+}
+
 export type NestedEnumCensusStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.CensusStatus | Prisma.EnumCensusStatusFieldRefInput<$PrismaModel>
   in?: $Enums.CensusStatus[] | Prisma.ListEnumCensusStatusFieldRefInput<$PrismaModel>
@@ -1477,6 +1501,16 @@ export type NestedEnumEmploymentStatusNullableWithAggregatesFilter<$PrismaModel 
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEmploymentStatusNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumTalentApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TalentApplicationStatus | Prisma.EnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TalentApplicationStatus[] | Prisma.ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTalentApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.TalentApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTalentApplicationStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumCensusDocumentTypeFilter<$PrismaModel = never> = {

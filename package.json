@@ -13,6 +13,7 @@
     "start:prod": "node dist/main.js",
     "lint": "oxlint --type-aware src/ test/",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:e2e": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config ./test/jest-e2e.json",
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "test:cov": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "db:generate": "prisma generate",

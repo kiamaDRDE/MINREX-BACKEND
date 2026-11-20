@@ -3191,6 +3191,11 @@ export const CensusRecordScalarFieldEnum = {
   skills: 'skills',
   qualifications: 'qualifications',
   optInTalentDirectory: 'optInTalentDirectory',
+  talentStatus: 'talentStatus',
+  talentSubmittedAt: 'talentSubmittedAt',
+  talentReviewedAt: 'talentReviewedAt',
+  talentReviewedById: 'talentReviewedById',
+  talentRejectionReason: 'talentRejectionReason',
   assignedPostId: 'assignedPostId',
   routedAt: 'routedAt',
   assignedToUserId: 'assignedToUserId',
@@ -3813,6 +3818,20 @@ export type EnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'EmploymentStatus[]'
  */
 export type ListEnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TalentApplicationStatus'
+ */
+export type EnumTalentApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TalentApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TalentApplicationStatus[]'
+ */
+export type ListEnumTalentApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TalentApplicationStatus[]'>
     
 
 

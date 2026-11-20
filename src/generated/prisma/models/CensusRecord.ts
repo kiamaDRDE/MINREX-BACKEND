@@ -81,6 +81,11 @@ export type CensusRecordMinAggregateOutputType = {
   yearsExperience: number | null
   qualifications: string | null
   optInTalentDirectory: boolean | null
+  talentStatus: $Enums.TalentApplicationStatus | null
+  talentSubmittedAt: Date | null
+  talentReviewedAt: Date | null
+  talentReviewedById: string | null
+  talentRejectionReason: string | null
   assignedPostId: string | null
   routedAt: Date | null
   assignedToUserId: string | null
@@ -132,6 +137,11 @@ export type CensusRecordMaxAggregateOutputType = {
   yearsExperience: number | null
   qualifications: string | null
   optInTalentDirectory: boolean | null
+  talentStatus: $Enums.TalentApplicationStatus | null
+  talentSubmittedAt: Date | null
+  talentReviewedAt: Date | null
+  talentReviewedById: string | null
+  talentRejectionReason: string | null
   assignedPostId: string | null
   routedAt: Date | null
   assignedToUserId: string | null
@@ -185,6 +195,11 @@ export type CensusRecordCountAggregateOutputType = {
   skills: number
   qualifications: number
   optInTalentDirectory: number
+  talentStatus: number
+  talentSubmittedAt: number
+  talentReviewedAt: number
+  talentReviewedById: number
+  talentRejectionReason: number
   assignedPostId: number
   routedAt: number
   assignedToUserId: number
@@ -256,6 +271,11 @@ export type CensusRecordMinAggregateInputType = {
   yearsExperience?: true
   qualifications?: true
   optInTalentDirectory?: true
+  talentStatus?: true
+  talentSubmittedAt?: true
+  talentReviewedAt?: true
+  talentReviewedById?: true
+  talentRejectionReason?: true
   assignedPostId?: true
   routedAt?: true
   assignedToUserId?: true
@@ -307,6 +327,11 @@ export type CensusRecordMaxAggregateInputType = {
   yearsExperience?: true
   qualifications?: true
   optInTalentDirectory?: true
+  talentStatus?: true
+  talentSubmittedAt?: true
+  talentReviewedAt?: true
+  talentReviewedById?: true
+  talentRejectionReason?: true
   assignedPostId?: true
   routedAt?: true
   assignedToUserId?: true
@@ -360,6 +385,11 @@ export type CensusRecordCountAggregateInputType = {
   skills?: true
   qualifications?: true
   optInTalentDirectory?: true
+  talentStatus?: true
+  talentSubmittedAt?: true
+  talentReviewedAt?: true
+  talentReviewedById?: true
+  talentRejectionReason?: true
   assignedPostId?: true
   routedAt?: true
   assignedToUserId?: true
@@ -500,6 +530,11 @@ export type CensusRecordGroupByOutputType = {
   skills: string[]
   qualifications: string | null
   optInTalentDirectory: boolean
+  talentStatus: $Enums.TalentApplicationStatus
+  talentSubmittedAt: Date | null
+  talentReviewedAt: Date | null
+  talentReviewedById: string | null
+  talentRejectionReason: string | null
   assignedPostId: string | null
   routedAt: Date | null
   assignedToUserId: string | null
@@ -576,6 +611,11 @@ export type CensusRecordWhereInput = {
   skills?: Prisma.StringNullableListFilter<"CensusRecord">
   qualifications?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   optInTalentDirectory?: Prisma.BoolFilter<"CensusRecord"> | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFilter<"CensusRecord"> | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedById?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
+  talentRejectionReason?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   assignedPostId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
   routedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
   assignedToUserId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
@@ -591,6 +631,7 @@ export type CensusRecordWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   nationalityCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
   residenceCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
+  talentReviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostNullableScalarRelationFilter, Prisma.DiplomaticPostWhereInput> | null
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   documents?: Prisma.CensusDocumentListRelationFilter
@@ -637,6 +678,11 @@ export type CensusRecordOrderByWithRelationInput = {
   skills?: Prisma.SortOrder
   qualifications?: Prisma.SortOrderInput | Prisma.SortOrder
   optInTalentDirectory?: Prisma.SortOrder
+  talentStatus?: Prisma.SortOrder
+  talentSubmittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentReviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentRejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedPostId?: Prisma.SortOrderInput | Prisma.SortOrder
   routedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -652,6 +698,7 @@ export type CensusRecordOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   nationalityCountry?: Prisma.CountryOrderByWithRelationInput
   residenceCountry?: Prisma.CountryOrderByWithRelationInput
+  talentReviewedBy?: Prisma.UserOrderByWithRelationInput
   assignedPost?: Prisma.DiplomaticPostOrderByWithRelationInput
   assignedToUser?: Prisma.UserOrderByWithRelationInput
   documents?: Prisma.CensusDocumentOrderByRelationAggregateInput
@@ -701,6 +748,11 @@ export type CensusRecordWhereUniqueInput = Prisma.AtLeast<{
   skills?: Prisma.StringNullableListFilter<"CensusRecord">
   qualifications?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   optInTalentDirectory?: Prisma.BoolFilter<"CensusRecord"> | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFilter<"CensusRecord"> | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedById?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
+  talentRejectionReason?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   assignedPostId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
   routedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
   assignedToUserId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
@@ -716,6 +768,7 @@ export type CensusRecordWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   nationalityCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
   residenceCountry?: Prisma.XOR<Prisma.CountryNullableScalarRelationFilter, Prisma.CountryWhereInput> | null
+  talentReviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   assignedPost?: Prisma.XOR<Prisma.DiplomaticPostNullableScalarRelationFilter, Prisma.DiplomaticPostWhereInput> | null
   assignedToUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   documents?: Prisma.CensusDocumentListRelationFilter
@@ -762,6 +815,11 @@ export type CensusRecordOrderByWithAggregationInput = {
   skills?: Prisma.SortOrder
   qualifications?: Prisma.SortOrderInput | Prisma.SortOrder
   optInTalentDirectory?: Prisma.SortOrder
+  talentStatus?: Prisma.SortOrder
+  talentSubmittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentReviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentReviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  talentRejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedPostId?: Prisma.SortOrderInput | Prisma.SortOrder
   routedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -823,6 +881,11 @@ export type CensusRecordScalarWhereWithAggregatesInput = {
   skills?: Prisma.StringNullableListFilter<"CensusRecord">
   qualifications?: Prisma.StringNullableWithAggregatesFilter<"CensusRecord"> | string | null
   optInTalentDirectory?: Prisma.BoolWithAggregatesFilter<"CensusRecord"> | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusWithAggregatesFilter<"CensusRecord"> | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CensusRecord"> | Date | string | null
+  talentReviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CensusRecord"> | Date | string | null
+  talentReviewedById?: Prisma.UuidNullableWithAggregatesFilter<"CensusRecord"> | string | null
+  talentRejectionReason?: Prisma.StringNullableWithAggregatesFilter<"CensusRecord"> | string | null
   assignedPostId?: Prisma.UuidNullableWithAggregatesFilter<"CensusRecord"> | string | null
   routedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CensusRecord"> | Date | string | null
   assignedToUserId?: Prisma.UuidNullableWithAggregatesFilter<"CensusRecord"> | string | null
@@ -873,6 +936,10 @@ export type CensusRecordCreateInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -886,6 +953,7 @@ export type CensusRecordCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -932,6 +1000,11 @@ export type CensusRecordUncheckedCreateInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -985,6 +1058,10 @@ export type CensusRecordUpdateInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -998,6 +1075,7 @@ export type CensusRecordUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -1044,6 +1122,11 @@ export type CensusRecordUncheckedUpdateInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1100,6 +1183,11 @@ export type CensusRecordCreateManyInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -1150,6 +1238,10 @@ export type CensusRecordUpdateManyMutationInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1201,6 +1293,11 @@ export type CensusRecordUncheckedUpdateManyInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1272,6 +1369,11 @@ export type CensusRecordCountOrderByAggregateInput = {
   skills?: Prisma.SortOrder
   qualifications?: Prisma.SortOrder
   optInTalentDirectory?: Prisma.SortOrder
+  talentStatus?: Prisma.SortOrder
+  talentSubmittedAt?: Prisma.SortOrder
+  talentReviewedAt?: Prisma.SortOrder
+  talentReviewedById?: Prisma.SortOrder
+  talentRejectionReason?: Prisma.SortOrder
   assignedPostId?: Prisma.SortOrder
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
@@ -1332,6 +1434,11 @@ export type CensusRecordMaxOrderByAggregateInput = {
   yearsExperience?: Prisma.SortOrder
   qualifications?: Prisma.SortOrder
   optInTalentDirectory?: Prisma.SortOrder
+  talentStatus?: Prisma.SortOrder
+  talentSubmittedAt?: Prisma.SortOrder
+  talentReviewedAt?: Prisma.SortOrder
+  talentReviewedById?: Prisma.SortOrder
+  talentRejectionReason?: Prisma.SortOrder
   assignedPostId?: Prisma.SortOrder
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
@@ -1383,6 +1490,11 @@ export type CensusRecordMinOrderByAggregateInput = {
   yearsExperience?: Prisma.SortOrder
   qualifications?: Prisma.SortOrder
   optInTalentDirectory?: Prisma.SortOrder
+  talentStatus?: Prisma.SortOrder
+  talentSubmittedAt?: Prisma.SortOrder
+  talentReviewedAt?: Prisma.SortOrder
+  talentReviewedById?: Prisma.SortOrder
+  talentRejectionReason?: Prisma.SortOrder
   assignedPostId?: Prisma.SortOrder
   routedAt?: Prisma.SortOrder
   assignedToUserId?: Prisma.SortOrder
@@ -1551,6 +1663,13 @@ export type CensusRecordCreateNestedManyWithoutAssignedToUserInput = {
   connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
 }
 
+export type CensusRecordCreateNestedManyWithoutTalentReviewedByInput = {
+  create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput> | Prisma.CensusRecordCreateWithoutTalentReviewedByInput[] | Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput[]
+  connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput | Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput[]
+  createMany?: Prisma.CensusRecordCreateManyTalentReviewedByInputEnvelope
+  connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+}
+
 export type CensusRecordUncheckedCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutUserInput, Prisma.CensusRecordUncheckedCreateWithoutUserInput> | Prisma.CensusRecordCreateWithoutUserInput[] | Prisma.CensusRecordUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutUserInput | Prisma.CensusRecordCreateOrConnectWithoutUserInput[]
@@ -1562,6 +1681,13 @@ export type CensusRecordUncheckedCreateNestedManyWithoutAssignedToUserInput = {
   create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutAssignedToUserInput, Prisma.CensusRecordUncheckedCreateWithoutAssignedToUserInput> | Prisma.CensusRecordCreateWithoutAssignedToUserInput[] | Prisma.CensusRecordUncheckedCreateWithoutAssignedToUserInput[]
   connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutAssignedToUserInput | Prisma.CensusRecordCreateOrConnectWithoutAssignedToUserInput[]
   createMany?: Prisma.CensusRecordCreateManyAssignedToUserInputEnvelope
+  connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+}
+
+export type CensusRecordUncheckedCreateNestedManyWithoutTalentReviewedByInput = {
+  create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput> | Prisma.CensusRecordCreateWithoutTalentReviewedByInput[] | Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput[]
+  connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput | Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput[]
+  createMany?: Prisma.CensusRecordCreateManyTalentReviewedByInputEnvelope
   connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
 }
 
@@ -1593,6 +1719,20 @@ export type CensusRecordUpdateManyWithoutAssignedToUserNestedInput = {
   deleteMany?: Prisma.CensusRecordScalarWhereInput | Prisma.CensusRecordScalarWhereInput[]
 }
 
+export type CensusRecordUpdateManyWithoutTalentReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput> | Prisma.CensusRecordCreateWithoutTalentReviewedByInput[] | Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput[]
+  connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput | Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput[]
+  upsert?: Prisma.CensusRecordUpsertWithWhereUniqueWithoutTalentReviewedByInput | Prisma.CensusRecordUpsertWithWhereUniqueWithoutTalentReviewedByInput[]
+  createMany?: Prisma.CensusRecordCreateManyTalentReviewedByInputEnvelope
+  set?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  disconnect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  delete?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  update?: Prisma.CensusRecordUpdateWithWhereUniqueWithoutTalentReviewedByInput | Prisma.CensusRecordUpdateWithWhereUniqueWithoutTalentReviewedByInput[]
+  updateMany?: Prisma.CensusRecordUpdateManyWithWhereWithoutTalentReviewedByInput | Prisma.CensusRecordUpdateManyWithWhereWithoutTalentReviewedByInput[]
+  deleteMany?: Prisma.CensusRecordScalarWhereInput | Prisma.CensusRecordScalarWhereInput[]
+}
+
 export type CensusRecordUncheckedUpdateManyWithoutUserNestedInput = {
   create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutUserInput, Prisma.CensusRecordUncheckedCreateWithoutUserInput> | Prisma.CensusRecordCreateWithoutUserInput[] | Prisma.CensusRecordUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutUserInput | Prisma.CensusRecordCreateOrConnectWithoutUserInput[]
@@ -1618,6 +1758,20 @@ export type CensusRecordUncheckedUpdateManyWithoutAssignedToUserNestedInput = {
   connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
   update?: Prisma.CensusRecordUpdateWithWhereUniqueWithoutAssignedToUserInput | Prisma.CensusRecordUpdateWithWhereUniqueWithoutAssignedToUserInput[]
   updateMany?: Prisma.CensusRecordUpdateManyWithWhereWithoutAssignedToUserInput | Prisma.CensusRecordUpdateManyWithWhereWithoutAssignedToUserInput[]
+  deleteMany?: Prisma.CensusRecordScalarWhereInput | Prisma.CensusRecordScalarWhereInput[]
+}
+
+export type CensusRecordUncheckedUpdateManyWithoutTalentReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput> | Prisma.CensusRecordCreateWithoutTalentReviewedByInput[] | Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput[]
+  connectOrCreate?: Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput | Prisma.CensusRecordCreateOrConnectWithoutTalentReviewedByInput[]
+  upsert?: Prisma.CensusRecordUpsertWithWhereUniqueWithoutTalentReviewedByInput | Prisma.CensusRecordUpsertWithWhereUniqueWithoutTalentReviewedByInput[]
+  createMany?: Prisma.CensusRecordCreateManyTalentReviewedByInputEnvelope
+  set?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  disconnect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  delete?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  connect?: Prisma.CensusRecordWhereUniqueInput | Prisma.CensusRecordWhereUniqueInput[]
+  update?: Prisma.CensusRecordUpdateWithWhereUniqueWithoutTalentReviewedByInput | Prisma.CensusRecordUpdateWithWhereUniqueWithoutTalentReviewedByInput[]
+  updateMany?: Prisma.CensusRecordUpdateManyWithWhereWithoutTalentReviewedByInput | Prisma.CensusRecordUpdateManyWithWhereWithoutTalentReviewedByInput[]
   deleteMany?: Prisma.CensusRecordScalarWhereInput | Prisma.CensusRecordScalarWhereInput[]
 }
 
@@ -1661,6 +1815,10 @@ export type CensusRecordUpdateexpertiseDomainsInput = {
 export type CensusRecordUpdateskillsInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type EnumTalentApplicationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.TalentApplicationStatus
 }
 
 export type CensusRecordCreateNestedOneWithoutDocumentsInput = {
@@ -1741,6 +1899,10 @@ export type CensusRecordCreateWithoutResidenceCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -1753,6 +1915,7 @@ export type CensusRecordCreateWithoutResidenceCountryInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -1798,6 +1961,11 @@ export type CensusRecordUncheckedCreateWithoutResidenceCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -1861,6 +2029,10 @@ export type CensusRecordCreateWithoutNationalityCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -1873,6 +2045,7 @@ export type CensusRecordCreateWithoutNationalityCountryInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -1918,6 +2091,11 @@ export type CensusRecordUncheckedCreateWithoutNationalityCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -2003,6 +2181,11 @@ export type CensusRecordScalarWhereInput = {
   skills?: Prisma.StringNullableListFilter<"CensusRecord">
   qualifications?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   optInTalentDirectory?: Prisma.BoolFilter<"CensusRecord"> | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFilter<"CensusRecord"> | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
+  talentReviewedById?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
+  talentRejectionReason?: Prisma.StringNullableFilter<"CensusRecord"> | string | null
   assignedPostId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
   routedAt?: Prisma.DateTimeNullableFilter<"CensusRecord"> | Date | string | null
   assignedToUserId?: Prisma.UuidNullableFilter<"CensusRecord"> | string | null
@@ -2069,6 +2252,10 @@ export type CensusRecordCreateWithoutAssignedPostInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2082,6 +2269,7 @@ export type CensusRecordCreateWithoutAssignedPostInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
   reviews?: Prisma.CensusReviewCreateNestedManyWithoutCensusRecordInput
@@ -2127,6 +2315,11 @@ export type CensusRecordUncheckedCreateWithoutAssignedPostInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
@@ -2205,6 +2398,10 @@ export type CensusRecordCreateWithoutUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2217,6 +2414,7 @@ export type CensusRecordCreateWithoutUserInput = {
   updatedAt?: Date | string
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -2262,6 +2460,11 @@ export type CensusRecordUncheckedCreateWithoutUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -2325,6 +2528,10 @@ export type CensusRecordCreateWithoutAssignedToUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2338,6 +2545,7 @@ export type CensusRecordCreateWithoutAssignedToUserInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
   reviews?: Prisma.CensusReviewCreateNestedManyWithoutCensusRecordInput
@@ -2383,6 +2591,11 @@ export type CensusRecordUncheckedCreateWithoutAssignedToUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
@@ -2406,6 +2619,136 @@ export type CensusRecordCreateOrConnectWithoutAssignedToUserInput = {
 
 export type CensusRecordCreateManyAssignedToUserInputEnvelope = {
   data: Prisma.CensusRecordCreateManyAssignedToUserInput | Prisma.CensusRecordCreateManyAssignedToUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type CensusRecordCreateWithoutTalentReviewedByInput = {
+  id?: string
+  reference: string
+  status?: $Enums.CensusStatus
+  firstName?: string | null
+  lastName?: string | null
+  birthDate?: Date | string | null
+  birthPlace?: string | null
+  email?: string | null
+  primaryPhone?: string | null
+  secondaryPhone?: string | null
+  preferredContactChannel?: $Enums.ContactChannel | null
+  residenceCity?: string | null
+  residenceAddress?: string | null
+  residencePostalCode?: string | null
+  latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: number | null
+  residenceStatus?: $Enums.ResidenceStatus | null
+  cameroonRegion?: string | null
+  cameroonCity?: string | null
+  lastCameroonAddress?: string | null
+  departureYear?: number | null
+  departureReason?: $Enums.DepartureReason | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  dependantsCount?: number | null
+  employmentStatus?: $Enums.EmploymentStatus | null
+  profession?: string | null
+  jobTitle?: string | null
+  sector?: string | null
+  employer?: string | null
+  yearsExperience?: number | null
+  expertiseDomains?: Prisma.CensusRecordCreateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordCreateskillsInput | string[]
+  qualifications?: string | null
+  optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
+  routedAt?: Date | string | null
+  assignedAt?: Date | string | null
+  declaredAccurate?: boolean
+  consentDataProcessing?: boolean
+  privacyNoticeAccepted?: boolean
+  submittedAt?: Date | string | null
+  verifiedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
+  nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
+  residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
+  assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
+  documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
+  reviews?: Prisma.CensusReviewCreateNestedManyWithoutCensusRecordInput
+  statusHistory?: Prisma.CensusStatusHistoryCreateNestedManyWithoutCensusRecordInput
+}
+
+export type CensusRecordUncheckedCreateWithoutTalentReviewedByInput = {
+  id?: string
+  reference: string
+  userId: string
+  status?: $Enums.CensusStatus
+  firstName?: string | null
+  lastName?: string | null
+  birthDate?: Date | string | null
+  birthPlace?: string | null
+  nationalityCountryId?: string | null
+  email?: string | null
+  primaryPhone?: string | null
+  secondaryPhone?: string | null
+  preferredContactChannel?: $Enums.ContactChannel | null
+  residenceCountryId?: string | null
+  residenceCity?: string | null
+  residenceAddress?: string | null
+  residencePostalCode?: string | null
+  latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: number | null
+  residenceStatus?: $Enums.ResidenceStatus | null
+  cameroonRegion?: string | null
+  cameroonCity?: string | null
+  lastCameroonAddress?: string | null
+  departureYear?: number | null
+  departureReason?: $Enums.DepartureReason | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  dependantsCount?: number | null
+  employmentStatus?: $Enums.EmploymentStatus | null
+  profession?: string | null
+  jobTitle?: string | null
+  sector?: string | null
+  employer?: string | null
+  yearsExperience?: number | null
+  expertiseDomains?: Prisma.CensusRecordCreateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordCreateskillsInput | string[]
+  qualifications?: string | null
+  optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
+  assignedPostId?: string | null
+  routedAt?: Date | string | null
+  assignedToUserId?: string | null
+  assignedAt?: Date | string | null
+  declaredAccurate?: boolean
+  consentDataProcessing?: boolean
+  privacyNoticeAccepted?: boolean
+  submittedAt?: Date | string | null
+  verifiedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  documents?: Prisma.CensusDocumentUncheckedCreateNestedManyWithoutCensusRecordInput
+  reviews?: Prisma.CensusReviewUncheckedCreateNestedManyWithoutCensusRecordInput
+  statusHistory?: Prisma.CensusStatusHistoryUncheckedCreateNestedManyWithoutCensusRecordInput
+}
+
+export type CensusRecordCreateOrConnectWithoutTalentReviewedByInput = {
+  where: Prisma.CensusRecordWhereUniqueInput
+  create: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput>
+}
+
+export type CensusRecordCreateManyTalentReviewedByInputEnvelope = {
+  data: Prisma.CensusRecordCreateManyTalentReviewedByInput | Prisma.CensusRecordCreateManyTalentReviewedByInput[]
   skipDuplicates?: boolean
 }
 
@@ -2439,6 +2782,22 @@ export type CensusRecordUpdateWithWhereUniqueWithoutAssignedToUserInput = {
 export type CensusRecordUpdateManyWithWhereWithoutAssignedToUserInput = {
   where: Prisma.CensusRecordScalarWhereInput
   data: Prisma.XOR<Prisma.CensusRecordUpdateManyMutationInput, Prisma.CensusRecordUncheckedUpdateManyWithoutAssignedToUserInput>
+}
+
+export type CensusRecordUpsertWithWhereUniqueWithoutTalentReviewedByInput = {
+  where: Prisma.CensusRecordWhereUniqueInput
+  update: Prisma.XOR<Prisma.CensusRecordUpdateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedUpdateWithoutTalentReviewedByInput>
+  create: Prisma.XOR<Prisma.CensusRecordCreateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedCreateWithoutTalentReviewedByInput>
+}
+
+export type CensusRecordUpdateWithWhereUniqueWithoutTalentReviewedByInput = {
+  where: Prisma.CensusRecordWhereUniqueInput
+  data: Prisma.XOR<Prisma.CensusRecordUpdateWithoutTalentReviewedByInput, Prisma.CensusRecordUncheckedUpdateWithoutTalentReviewedByInput>
+}
+
+export type CensusRecordUpdateManyWithWhereWithoutTalentReviewedByInput = {
+  where: Prisma.CensusRecordScalarWhereInput
+  data: Prisma.XOR<Prisma.CensusRecordUpdateManyMutationInput, Prisma.CensusRecordUncheckedUpdateManyWithoutTalentReviewedByInput>
 }
 
 export type CensusRecordCreateWithoutDocumentsInput = {
@@ -2477,6 +2836,10 @@ export type CensusRecordCreateWithoutDocumentsInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2490,6 +2853,7 @@ export type CensusRecordCreateWithoutDocumentsInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   reviews?: Prisma.CensusReviewCreateNestedManyWithoutCensusRecordInput
@@ -2535,6 +2899,11 @@ export type CensusRecordUncheckedCreateWithoutDocumentsInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -2603,6 +2972,10 @@ export type CensusRecordUpdateWithoutDocumentsInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2616,6 +2989,7 @@ export type CensusRecordUpdateWithoutDocumentsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   reviews?: Prisma.CensusReviewUpdateManyWithoutCensusRecordNestedInput
@@ -2661,6 +3035,11 @@ export type CensusRecordUncheckedUpdateWithoutDocumentsInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2713,6 +3092,10 @@ export type CensusRecordCreateWithoutReviewsInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2726,6 +3109,7 @@ export type CensusRecordCreateWithoutReviewsInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -2771,6 +3155,11 @@ export type CensusRecordUncheckedCreateWithoutReviewsInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -2839,6 +3228,10 @@ export type CensusRecordUpdateWithoutReviewsInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2852,6 +3245,7 @@ export type CensusRecordUpdateWithoutReviewsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -2897,6 +3291,11 @@ export type CensusRecordUncheckedUpdateWithoutReviewsInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2949,6 +3348,10 @@ export type CensusRecordCreateWithoutStatusHistoryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
@@ -2962,6 +3365,7 @@ export type CensusRecordCreateWithoutStatusHistoryInput = {
   user: Prisma.UserCreateNestedOneWithoutCensusRecordsInput
   nationalityCountry?: Prisma.CountryCreateNestedOneWithoutCensusNationalityRecordsInput
   residenceCountry?: Prisma.CountryCreateNestedOneWithoutCensusResidenceRecordsInput
+  talentReviewedBy?: Prisma.UserCreateNestedOneWithoutCensusTalentReviewsInput
   assignedPost?: Prisma.DiplomaticPostCreateNestedOneWithoutCensusRecordsInput
   assignedToUser?: Prisma.UserCreateNestedOneWithoutCensusRecordsAssignedInput
   documents?: Prisma.CensusDocumentCreateNestedManyWithoutCensusRecordInput
@@ -3007,6 +3411,11 @@ export type CensusRecordUncheckedCreateWithoutStatusHistoryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -3075,6 +3484,10 @@ export type CensusRecordUpdateWithoutStatusHistoryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3088,6 +3501,7 @@ export type CensusRecordUpdateWithoutStatusHistoryInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -3133,6 +3547,11 @@ export type CensusRecordUncheckedUpdateWithoutStatusHistoryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3187,6 +3606,11 @@ export type CensusRecordCreateManyResidenceCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -3239,6 +3663,11 @@ export type CensusRecordCreateManyNationalityCountryInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -3289,6 +3718,10 @@ export type CensusRecordUpdateWithoutResidenceCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3301,6 +3734,7 @@ export type CensusRecordUpdateWithoutResidenceCountryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -3346,6 +3780,11 @@ export type CensusRecordUncheckedUpdateWithoutResidenceCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3401,6 +3840,11 @@ export type CensusRecordUncheckedUpdateManyWithoutResidenceCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3451,6 +3895,10 @@ export type CensusRecordUpdateWithoutNationalityCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3463,6 +3911,7 @@ export type CensusRecordUpdateWithoutNationalityCountryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -3508,6 +3957,11 @@ export type CensusRecordUncheckedUpdateWithoutNationalityCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3563,6 +4017,11 @@ export type CensusRecordUncheckedUpdateManyWithoutNationalityCountryInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3616,6 +4075,11 @@ export type CensusRecordCreateManyAssignedPostInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
   assignedAt?: Date | string | null
@@ -3665,6 +4129,10 @@ export type CensusRecordUpdateWithoutAssignedPostInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3678,6 +4146,7 @@ export type CensusRecordUpdateWithoutAssignedPostInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
   reviews?: Prisma.CensusReviewUpdateManyWithoutCensusRecordNestedInput
@@ -3723,6 +4192,11 @@ export type CensusRecordUncheckedUpdateWithoutAssignedPostInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3778,6 +4252,11 @@ export type CensusRecordUncheckedUpdateManyWithoutAssignedPostInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3829,6 +4308,11 @@ export type CensusRecordCreateManyUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
   assignedToUserId?: string | null
@@ -3882,8 +4366,70 @@ export type CensusRecordCreateManyAssignedToUserInput = {
   skills?: Prisma.CensusRecordCreateskillsInput | string[]
   qualifications?: string | null
   optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentReviewedById?: string | null
+  talentRejectionReason?: string | null
   assignedPostId?: string | null
   routedAt?: Date | string | null
+  assignedAt?: Date | string | null
+  declaredAccurate?: boolean
+  consentDataProcessing?: boolean
+  privacyNoticeAccepted?: boolean
+  submittedAt?: Date | string | null
+  verifiedAt?: Date | string | null
+  rejectedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CensusRecordCreateManyTalentReviewedByInput = {
+  id?: string
+  reference: string
+  userId: string
+  status?: $Enums.CensusStatus
+  firstName?: string | null
+  lastName?: string | null
+  birthDate?: Date | string | null
+  birthPlace?: string | null
+  nationalityCountryId?: string | null
+  email?: string | null
+  primaryPhone?: string | null
+  secondaryPhone?: string | null
+  preferredContactChannel?: $Enums.ContactChannel | null
+  residenceCountryId?: string | null
+  residenceCity?: string | null
+  residenceAddress?: string | null
+  residencePostalCode?: string | null
+  latitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: number | null
+  residenceStatus?: $Enums.ResidenceStatus | null
+  cameroonRegion?: string | null
+  cameroonCity?: string | null
+  lastCameroonAddress?: string | null
+  departureYear?: number | null
+  departureReason?: $Enums.DepartureReason | null
+  maritalStatus?: $Enums.MaritalStatus | null
+  dependantsCount?: number | null
+  employmentStatus?: $Enums.EmploymentStatus | null
+  profession?: string | null
+  jobTitle?: string | null
+  sector?: string | null
+  employer?: string | null
+  yearsExperience?: number | null
+  expertiseDomains?: Prisma.CensusRecordCreateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordCreateskillsInput | string[]
+  qualifications?: string | null
+  optInTalentDirectory?: boolean
+  talentStatus?: $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Date | string | null
+  talentReviewedAt?: Date | string | null
+  talentRejectionReason?: string | null
+  assignedPostId?: string | null
+  routedAt?: Date | string | null
+  assignedToUserId?: string | null
   assignedAt?: Date | string | null
   declaredAccurate?: boolean
   consentDataProcessing?: boolean
@@ -3931,6 +4477,10 @@ export type CensusRecordUpdateWithoutUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3943,6 +4493,7 @@ export type CensusRecordUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
@@ -3988,6 +4539,11 @@ export type CensusRecordUncheckedUpdateWithoutUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4043,6 +4599,11 @@ export type CensusRecordUncheckedUpdateManyWithoutUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4093,6 +4654,10 @@ export type CensusRecordUpdateWithoutAssignedToUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4106,6 +4671,7 @@ export type CensusRecordUpdateWithoutAssignedToUserInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
   nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
   residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  talentReviewedBy?: Prisma.UserUpdateOneWithoutCensusTalentReviewsNestedInput
   assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
   documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
   reviews?: Prisma.CensusReviewUpdateManyWithoutCensusRecordNestedInput
@@ -4151,6 +4717,11 @@ export type CensusRecordUncheckedUpdateWithoutAssignedToUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4206,8 +4777,190 @@ export type CensusRecordUncheckedUpdateManyWithoutAssignedToUserInput = {
   skills?: Prisma.CensusRecordUpdateskillsInput | string[]
   qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDataProcessing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  privacyNoticeAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CensusRecordUpdateWithoutTalentReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCensusStatusFieldUpdateOperationsInput | $Enums.CensusStatus
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  birthPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredContactChannel?: Prisma.NullableEnumContactChannelFieldUpdateOperationsInput | $Enums.ContactChannel | null
+  residenceCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residencePostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residenceStatus?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  cameroonRegion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cameroonCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCameroonAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departureYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departureReason?: Prisma.NullableEnumDepartureReasonFieldUpdateOperationsInput | $Enums.DepartureReason | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dependantsCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employmentStatus?: Prisma.NullableEnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus | null
+  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yearsExperience?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expertiseDomains?: Prisma.CensusRecordUpdateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordUpdateskillsInput | string[]
+  qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDataProcessing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  privacyNoticeAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCensusRecordsNestedInput
+  nationalityCountry?: Prisma.CountryUpdateOneWithoutCensusNationalityRecordsNestedInput
+  residenceCountry?: Prisma.CountryUpdateOneWithoutCensusResidenceRecordsNestedInput
+  assignedPost?: Prisma.DiplomaticPostUpdateOneWithoutCensusRecordsNestedInput
+  assignedToUser?: Prisma.UserUpdateOneWithoutCensusRecordsAssignedNestedInput
+  documents?: Prisma.CensusDocumentUpdateManyWithoutCensusRecordNestedInput
+  reviews?: Prisma.CensusReviewUpdateManyWithoutCensusRecordNestedInput
+  statusHistory?: Prisma.CensusStatusHistoryUpdateManyWithoutCensusRecordNestedInput
+}
+
+export type CensusRecordUncheckedUpdateWithoutTalentReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCensusStatusFieldUpdateOperationsInput | $Enums.CensusStatus
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  birthPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalityCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredContactChannel?: Prisma.NullableEnumContactChannelFieldUpdateOperationsInput | $Enums.ContactChannel | null
+  residenceCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residencePostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residenceStatus?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  cameroonRegion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cameroonCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCameroonAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departureYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departureReason?: Prisma.NullableEnumDepartureReasonFieldUpdateOperationsInput | $Enums.DepartureReason | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dependantsCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employmentStatus?: Prisma.NullableEnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus | null
+  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yearsExperience?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expertiseDomains?: Prisma.CensusRecordUpdateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordUpdateskillsInput | string[]
+  qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDataProcessing?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  privacyNoticeAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.CensusDocumentUncheckedUpdateManyWithoutCensusRecordNestedInput
+  reviews?: Prisma.CensusReviewUncheckedUpdateManyWithoutCensusRecordNestedInput
+  statusHistory?: Prisma.CensusStatusHistoryUncheckedUpdateManyWithoutCensusRecordNestedInput
+}
+
+export type CensusRecordUncheckedUpdateManyWithoutTalentReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCensusStatusFieldUpdateOperationsInput | $Enums.CensusStatus
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  birthPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalityCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredContactChannel?: Prisma.NullableEnumContactChannelFieldUpdateOperationsInput | $Enums.ContactChannel | null
+  residenceCountryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residenceAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  residencePostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  longitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  residenceSinceYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  residenceStatus?: Prisma.NullableEnumResidenceStatusFieldUpdateOperationsInput | $Enums.ResidenceStatus | null
+  cameroonRegion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cameroonCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCameroonAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departureYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departureReason?: Prisma.NullableEnumDepartureReasonFieldUpdateOperationsInput | $Enums.DepartureReason | null
+  maritalStatus?: Prisma.NullableEnumMaritalStatusFieldUpdateOperationsInput | $Enums.MaritalStatus | null
+  dependantsCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  employmentStatus?: Prisma.NullableEnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus | null
+  profession?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sector?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yearsExperience?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expertiseDomains?: Prisma.CensusRecordUpdateexpertiseDomainsInput | string[]
+  skills?: Prisma.CensusRecordUpdateskillsInput | string[]
+  qualifications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  optInTalentDirectory?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  talentStatus?: Prisma.EnumTalentApplicationStatusFieldUpdateOperationsInput | $Enums.TalentApplicationStatus
+  talentSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentReviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  talentRejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedPostId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  routedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   assignedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declaredAccurate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   consentDataProcessing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4307,6 +5060,11 @@ export type CensusRecordSelect<ExtArgs extends runtime.Types.Extensions.Internal
   skills?: boolean
   qualifications?: boolean
   optInTalentDirectory?: boolean
+  talentStatus?: boolean
+  talentSubmittedAt?: boolean
+  talentReviewedAt?: boolean
+  talentReviewedById?: boolean
+  talentRejectionReason?: boolean
   assignedPostId?: boolean
   routedAt?: boolean
   assignedToUserId?: boolean
@@ -4322,6 +5080,7 @@ export type CensusRecordSelect<ExtArgs extends runtime.Types.Extensions.Internal
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
   documents?: boolean | Prisma.CensusRecord$documentsArgs<ExtArgs>
@@ -4369,6 +5128,11 @@ export type CensusRecordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   skills?: boolean
   qualifications?: boolean
   optInTalentDirectory?: boolean
+  talentStatus?: boolean
+  talentSubmittedAt?: boolean
+  talentReviewedAt?: boolean
+  talentReviewedById?: boolean
+  talentRejectionReason?: boolean
   assignedPostId?: boolean
   routedAt?: boolean
   assignedToUserId?: boolean
@@ -4384,6 +5148,7 @@ export type CensusRecordSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
 }, ExtArgs["result"]["censusRecord"]>
@@ -4427,6 +5192,11 @@ export type CensusRecordSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   skills?: boolean
   qualifications?: boolean
   optInTalentDirectory?: boolean
+  talentStatus?: boolean
+  talentSubmittedAt?: boolean
+  talentReviewedAt?: boolean
+  talentReviewedById?: boolean
+  talentRejectionReason?: boolean
   assignedPostId?: boolean
   routedAt?: boolean
   assignedToUserId?: boolean
@@ -4442,6 +5212,7 @@ export type CensusRecordSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
 }, ExtArgs["result"]["censusRecord"]>
@@ -4485,6 +5256,11 @@ export type CensusRecordSelectScalar = {
   skills?: boolean
   qualifications?: boolean
   optInTalentDirectory?: boolean
+  talentStatus?: boolean
+  talentSubmittedAt?: boolean
+  talentReviewedAt?: boolean
+  talentReviewedById?: boolean
+  talentRejectionReason?: boolean
   assignedPostId?: boolean
   routedAt?: boolean
   assignedToUserId?: boolean
@@ -4499,11 +5275,12 @@ export type CensusRecordSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CensusRecordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "userId" | "status" | "firstName" | "lastName" | "birthDate" | "birthPlace" | "nationalityCountryId" | "email" | "primaryPhone" | "secondaryPhone" | "preferredContactChannel" | "residenceCountryId" | "residenceCity" | "residenceAddress" | "residencePostalCode" | "latitude" | "longitude" | "residenceSinceYear" | "residenceStatus" | "cameroonRegion" | "cameroonCity" | "lastCameroonAddress" | "departureYear" | "departureReason" | "maritalStatus" | "dependantsCount" | "employmentStatus" | "profession" | "jobTitle" | "sector" | "employer" | "yearsExperience" | "expertiseDomains" | "skills" | "qualifications" | "optInTalentDirectory" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "declaredAccurate" | "consentDataProcessing" | "privacyNoticeAccepted" | "submittedAt" | "verifiedAt" | "rejectedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["censusRecord"]>
+export type CensusRecordOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "reference" | "userId" | "status" | "firstName" | "lastName" | "birthDate" | "birthPlace" | "nationalityCountryId" | "email" | "primaryPhone" | "secondaryPhone" | "preferredContactChannel" | "residenceCountryId" | "residenceCity" | "residenceAddress" | "residencePostalCode" | "latitude" | "longitude" | "residenceSinceYear" | "residenceStatus" | "cameroonRegion" | "cameroonCity" | "lastCameroonAddress" | "departureYear" | "departureReason" | "maritalStatus" | "dependantsCount" | "employmentStatus" | "profession" | "jobTitle" | "sector" | "employer" | "yearsExperience" | "expertiseDomains" | "skills" | "qualifications" | "optInTalentDirectory" | "talentStatus" | "talentSubmittedAt" | "talentReviewedAt" | "talentReviewedById" | "talentRejectionReason" | "assignedPostId" | "routedAt" | "assignedToUserId" | "assignedAt" | "declaredAccurate" | "consentDataProcessing" | "privacyNoticeAccepted" | "submittedAt" | "verifiedAt" | "rejectedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["censusRecord"]>
 export type CensusRecordInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
   documents?: boolean | Prisma.CensusRecord$documentsArgs<ExtArgs>
@@ -4515,6 +5292,7 @@ export type CensusRecordIncludeCreateManyAndReturn<ExtArgs extends runtime.Types
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
 }
@@ -4522,6 +5300,7 @@ export type CensusRecordIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   nationalityCountry?: boolean | Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>
   residenceCountry?: boolean | Prisma.CensusRecord$residenceCountryArgs<ExtArgs>
+  talentReviewedBy?: boolean | Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>
   assignedPost?: boolean | Prisma.CensusRecord$assignedPostArgs<ExtArgs>
   assignedToUser?: boolean | Prisma.CensusRecord$assignedToUserArgs<ExtArgs>
 }
@@ -4532,6 +5311,7 @@ export type $CensusRecordPayload<ExtArgs extends runtime.Types.Extensions.Intern
     user: Prisma.$UserPayload<ExtArgs>
     nationalityCountry: Prisma.$CountryPayload<ExtArgs> | null
     residenceCountry: Prisma.$CountryPayload<ExtArgs> | null
+    talentReviewedBy: Prisma.$UserPayload<ExtArgs> | null
     assignedPost: Prisma.$DiplomaticPostPayload<ExtArgs> | null
     assignedToUser: Prisma.$UserPayload<ExtArgs> | null
     documents: Prisma.$CensusDocumentPayload<ExtArgs>[]
@@ -4577,6 +5357,11 @@ export type $CensusRecordPayload<ExtArgs extends runtime.Types.Extensions.Intern
     skills: string[]
     qualifications: string | null
     optInTalentDirectory: boolean
+    talentStatus: $Enums.TalentApplicationStatus
+    talentSubmittedAt: Date | null
+    talentReviewedAt: Date | null
+    talentReviewedById: string | null
+    talentRejectionReason: string | null
     assignedPostId: string | null
     routedAt: Date | null
     assignedToUserId: string | null
@@ -4986,6 +5771,7 @@ export interface Prisma__CensusRecordClient<T, Null = never, ExtArgs extends run
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   nationalityCountry<T extends Prisma.CensusRecord$nationalityCountryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$nationalityCountryArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   residenceCountry<T extends Prisma.CensusRecord$residenceCountryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$residenceCountryArgs<ExtArgs>>): Prisma.Prisma__CountryClient<runtime.Types.Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  talentReviewedBy<T extends Prisma.CensusRecord$talentReviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$talentReviewedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assignedPost<T extends Prisma.CensusRecord$assignedPostArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$assignedPostArgs<ExtArgs>>): Prisma.Prisma__DiplomaticPostClient<runtime.Types.Result.GetResult<Prisma.$DiplomaticPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assignedToUser<T extends Prisma.CensusRecord$assignedToUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$assignedToUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.CensusRecord$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CensusRecord$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CensusDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5058,6 +5844,11 @@ export interface CensusRecordFieldRefs {
   readonly skills: Prisma.FieldRef<"CensusRecord", 'String[]'>
   readonly qualifications: Prisma.FieldRef<"CensusRecord", 'String'>
   readonly optInTalentDirectory: Prisma.FieldRef<"CensusRecord", 'Boolean'>
+  readonly talentStatus: Prisma.FieldRef<"CensusRecord", 'TalentApplicationStatus'>
+  readonly talentSubmittedAt: Prisma.FieldRef<"CensusRecord", 'DateTime'>
+  readonly talentReviewedAt: Prisma.FieldRef<"CensusRecord", 'DateTime'>
+  readonly talentReviewedById: Prisma.FieldRef<"CensusRecord", 'String'>
+  readonly talentRejectionReason: Prisma.FieldRef<"CensusRecord", 'String'>
   readonly assignedPostId: Prisma.FieldRef<"CensusRecord", 'String'>
   readonly routedAt: Prisma.FieldRef<"CensusRecord", 'DateTime'>
   readonly assignedToUserId: Prisma.FieldRef<"CensusRecord", 'String'>
@@ -5506,6 +6297,25 @@ export type CensusRecord$residenceCountryArgs<ExtArgs extends runtime.Types.Exte
    */
   include?: Prisma.CountryInclude<ExtArgs> | null
   where?: Prisma.CountryWhereInput
+}
+
+/**
+ * CensusRecord.talentReviewedBy
+ */
+export type CensusRecord$talentReviewedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
