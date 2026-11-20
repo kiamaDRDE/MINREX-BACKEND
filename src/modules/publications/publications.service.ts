@@ -187,6 +187,7 @@ export class PublicationsService {
         },
       },
       orderBy: { updatedAt: 'desc' },
+      take: 100,
     });
   }
 

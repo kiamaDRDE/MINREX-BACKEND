@@ -171,6 +171,7 @@ export class AssociationsService {
         _count: { select: { documents: true, memberships: true } },
       },
       orderBy: { updatedAt: 'desc' },
+      take: 100,
     });
   }
 
@@ -587,6 +588,7 @@ export class AssociationsService {
         { isLegalRepresentative: 'desc' },
         { joinedAt: 'asc' },
       ],
+      take: 200,
     });
   }
 
