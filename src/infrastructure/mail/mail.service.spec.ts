@@ -145,6 +145,23 @@ describe('MailService', () => {
     expect(sendMailMock).toHaveBeenCalledTimes(1);
   });
 
+  it('queues verification emails asynchronously without blocking caller', async () => {
+    sendMailMock.mockResolvedValueOnce({ messageId: 'msg-queued-verify' });
+
+    service.enqueueVerificationEmail({
+      to: 'queued@example.com',
+      firstName: 'Amina',
+      token: 'b'.repeat(64),
+    });
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    expect(sendMailMock).toHaveBeenCalledTimes(1);
+    const mailArgs = sendMailMock.mock.calls[0]?.[0] as { to: string; html: string };
+    expect(mailArgs.to).toBe('queued@example.com');
+    expect(mailArgs.html).toContain('/auth/verify-email?token=');
+  });
+
   it('closes transporter pool cleanly on module destroy', () => {
     service.onModuleDestroy();
     expect(closeMock).toHaveBeenCalledTimes(1);

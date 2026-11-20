@@ -460,32 +460,14 @@ export class AuthService {
       });
   
     /*
-     * Send email verification.
-     *
-     * Failure to send the email must not cancel
-     * the database registration.
+     * Queue email verification asynchronously so SMTP latency/retries
+     * never block the HTTP registration response or trigger client timeouts.
      */
-    try {
-      await this.mailService.sendVerificationEmail({
-        to:
-          email,
-  
-        firstName:
-          user.profile
-            ?.firstName ??
-          null,
-  
-        token:
-          rawVerificationToken,
-      });
-    } catch (error) {
-      this.logger.error(
-        'Unable to send registration verification email.',
-        error instanceof Error
-          ? error.stack
-          : undefined,
-      );
-    }
+    this.mailService.enqueueVerificationEmail({
+      to: email,
+      firstName: user.profile?.firstName ?? null,
+      token: rawVerificationToken,
+    });
   
     return {
       user,
@@ -689,22 +671,13 @@ export class AuthService {
     ]);
 
     /*
-     * Send replacement verification email.
+     * Queue replacement verification email asynchronously.
      */
-    try {
-      await this.mailService.sendVerificationEmail({
-        to: user.email,
-
-        firstName: user.profile?.firstName ?? null,
-
-        token: rawVerificationToken,
-      });
-    } catch (error) {
-      this.logger.error(
-        'Unable to resend verification email.',
-        error instanceof Error ? error.stack : undefined,
-      );
-    }
+    this.mailService.enqueueVerificationEmail({
+      to: user.email,
+      firstName: user.profile?.firstName ?? null,
+      token: rawVerificationToken,
+    });
 
     return genericResponse;
   }

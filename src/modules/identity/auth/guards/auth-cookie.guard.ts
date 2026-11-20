@@ -15,8 +15,11 @@ import type { Request } from 'express';
 @Injectable()
 export class AuthCookieGuard implements CanActivate {
   private readonly allowedOrigins: Set<string>;
+  private readonly isProduction: boolean;
 
   constructor(configService: ConfigService) {
+    this.isProduction =
+      configService.get<string>('NODE_ENV', 'development') === 'production';
     this.allowedOrigins = new Set(
       configService
         .get<string>('CORS_ORIGINS', '')
@@ -42,7 +45,8 @@ export class AuthCookieGuard implements CanActivate {
     if (origin !== undefined) {
       const isAllowed =
         this.allowedOrigins.has(origin) ||
-        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ||
+        (!this.isProduction &&
+          /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) ||
         /^https?:\/\/185\.98\.136\.192(:\d+)?$/.test(origin);
 
       if (!isAllowed) {

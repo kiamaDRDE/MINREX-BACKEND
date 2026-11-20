@@ -231,6 +231,20 @@ export class MailService implements OnModuleDestroy {
     );
   }
 
+  enqueueVerificationEmail(options: SendVerificationEmailOptions): void {
+    this.enqueueJob(async () => {
+      try {
+        await this.sendVerificationEmail(options);
+      } catch (error) {
+        this.logger.error(
+          `Failed to send verification email to ${options.to}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
+      }
+    });
+  }
+
   enqueueNotificationEmail(options: SendNotificationEmailOptions): void {
     this.enqueueJob(async () => {
       try {
