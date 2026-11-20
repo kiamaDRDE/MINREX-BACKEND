@@ -1,10 +1,12 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 
 import {
+  AssignmentStatus,
   CensusReviewDecision,
   CensusStatus,
 } from '../../../generated/prisma/enums.js';
@@ -12,6 +14,10 @@ import {
 import {
   PrismaService,
 } from '../../../infrastructure/database/prisma.service.js';
+
+import {
+  AssignCensusRecordDto,
+} from './dto/assign-census-record.dto.js';
 
 import {
   ListCensusRecordsQueryDto,
@@ -139,8 +145,28 @@ export class CensusAgentService {
             rejectedAt:
               true,
 
+            assignedToUserId:
+              true,
+
+            assignedAt:
+              true,
+
             createdAt:
               true,
+
+            assignedToUser: {
+              select: {
+                id: true,
+                email: true,
+                profile: {
+                  select: {
+                    firstName: true,
+                    lastName: true,
+                    displayName: true,
+                  },
+                },
+              },
+            },
 
             residenceCountry: {
               select: {
@@ -246,6 +272,20 @@ export class CensusAgentService {
 
               city:
                 true,
+            },
+          },
+
+          assignedToUser: {
+            select: {
+              id: true,
+              email: true,
+              profile: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                  displayName: true,
+                },
+              },
             },
           },
 
@@ -780,6 +820,91 @@ export class CensusAgentService {
       record:
         updated,
     };
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Assign census record to an active post consular agent (Option A)
+  |--------------------------------------------------------------------------
+  */
+
+  async assignRecord(
+    actorId: string,
+    postId: string,
+    recordId: string,
+    dto: AssignCensusRecordDto,
+  ) {
+    const record = await this.findScopedRecord(postId, recordId);
+
+    const assignment = await this.prisma.userPostAssignment.findFirst({
+      where: {
+        userId: dto.agentUserId,
+        postId,
+        status: AssignmentStatus.ACTIVE,
+      },
+      select: { id: true },
+    });
+
+    if (!assignment) {
+      throw new BadRequestException(
+        'The selected agent is not actively assigned to this diplomatic post.',
+      );
+    }
+
+    const now = new Date();
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const res = await tx.censusRecord.update({
+        where: { id: record.id },
+        data: {
+          assignedToUserId: dto.agentUserId,
+          assignedAt: now,
+        },
+        include: {
+          residenceCountry: true,
+          assignedPost: {
+            select: { id: true, code: true, name: true, city: true },
+          },
+          assignedToUser: {
+            select: {
+              id: true,
+              email: true,
+              profile: {
+                select: { firstName: true, lastName: true, displayName: true },
+              },
+            },
+          },
+        },
+      });
+
+      await tx.censusStatusHistory.create({
+        data: {
+          censusRecordId: record.id,
+          fromStatus: record.status,
+          toStatus: record.status,
+          changedById: actorId,
+          reason:
+            dto.comment?.trim() ||
+            `Dossier affecté à l'agent consulaire (${dto.agentUserId}).`,
+        },
+      });
+
+      await this.notifications.emitToUser(
+        dto.agentUserId,
+        {
+          type: 'CENSUS_STATUS',
+          title: 'Nouveau dossier de recensement affecté',
+          message: `Un dossier de recensement vous a été affecté pour instruction.`,
+          priority: 'HIGH',
+          actionUrl: '/agent-consulaire',
+        },
+        tx,
+      );
+
+      return res;
+    });
+
+    return { record: updated };
   }
 
   /*

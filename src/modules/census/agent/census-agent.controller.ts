@@ -42,6 +42,10 @@ import {
 } from './census-agent.service.js';
 
 import {
+  AssignCensusRecordDto,
+} from './dto/assign-census-record.dto.js';
+
+import {
   ListCensusRecordsQueryDto,
 } from './dto/list-census-records-query.dto.js';
 
@@ -343,6 +347,32 @@ export class CensusAgentController {
       RejectCensusDto,
   ) {
     return this.censusAgentService.reject(
+      request.auth!.userId!,
+      postId,
+      recordId,
+      dto,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Assign to Consular Agent (Option A — DB persisted)
+  |--------------------------------------------------------------------------
+  */
+
+  @Post(':recordId/assign')
+  @RequirePermissions('census.records.review')
+  @AuthorizationScope({ postParam: 'postId' })
+  @ApiOperation({
+    summary: 'Assign a census record to an active consular agent of the post',
+  })
+  assign(
+    @Req() request: AuthenticatedRequest,
+    @Param('postId', ParseUUIDPipe) postId: string,
+    @Param('recordId', ParseUUIDPipe) recordId: string,
+    @Body() dto: AssignCensusRecordDto,
+  ) {
+    return this.censusAgentService.assignRecord(
       request.auth!.userId!,
       postId,
       recordId,

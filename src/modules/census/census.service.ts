@@ -856,6 +856,15 @@ export class CensusService {
 
               status:
                 true,
+
+              parentPostId:
+                true,
+
+              type: {
+                select: {
+                  code: true,
+                },
+              },
             },
           },
         },
@@ -883,34 +892,57 @@ export class CensusService {
 
     /*
     |--------------------------------------------------------------------------
-    | Ambiguous coverage
-    |--------------------------------------------------------------------------
-    |
-    | For the MVP we avoid silently choosing between several diplomatic
-    | posts. The diplomatic network must first be corrected.
+    | Deterministic post resolution (city match -> root Embassy/High Commission)
     |--------------------------------------------------------------------------
     */
 
-    const uniquePostIds = [
-      ...new Set(
-        coverages.map(
-          (coverage) =>
-            coverage.postId,
-        ),
-      ),
-    ];
+    const coveringPostsMap = new Map<string, (typeof coverages)[number]['post']>();
+    for (const cov of coverages) {
+      if (!coveringPostsMap.has(cov.postId)) {
+        coveringPostsMap.set(cov.postId, cov.post);
+      }
+    }
+    const coveringPosts = Array.from(coveringPostsMap.values());
 
-    if (
-      uniquePostIds.length >
-      1
-    ) {
-      throw new ConflictException(
-        'Several diplomatic posts currently cover this country. The diplomatic network configuration must be reviewed.',
+    const normalizeGeo = (value?: string | null) =>
+      (value ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim()
+        .toLowerCase();
+
+    const postRank = (typeCode?: string | null, isRoot?: boolean): number => {
+      const code = (typeCode ?? '').toUpperCase();
+      if (code === 'AMBASSADE' || code === 'EMBASSY') return isRoot ? 100 : 90;
+      if (code === 'HAUT_COMMISSARIAT' || code === 'HIGH_COMMISSION') {
+        return isRoot ? 95 : 85;
+      }
+      if (code === 'CONSULAT_GENERAL') return isRoot ? 75 : 70;
+      if (code === 'CONSULAT') return 60;
+      if (code === 'MISSION_PERMANENTE' || code === 'PERMANENT_MISSION') return 40;
+      return isRoot ? 50 : 20;
+    };
+
+    const normalizedCity = normalizeGeo(record.residenceCity);
+    const cityMatchedPost = normalizedCity
+      ? coveringPosts.find((p) => normalizeGeo(p.city) === normalizedCity)
+      : undefined;
+
+    const rankedPosts = [...coveringPosts].sort((a, b) => {
+      const diff =
+        postRank(b.type?.code, b.parentPostId === null) -
+        postRank(a.type?.code, a.parentPostId === null);
+      if (diff !== 0) return diff;
+      return a.name.localeCompare(b.name);
+    });
+
+    const assignedPostId = (cityMatchedPost ?? rankedPosts[0])?.id;
+
+    if (!assignedPostId) {
+      throw new BadRequestException(
+        'Unable to determine the competent diplomatic post.',
       );
     }
-
-    const assignedPostId =
-      uniquePostIds[0];
 
     /*
     |--------------------------------------------------------------------------
