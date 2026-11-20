@@ -35,6 +35,10 @@ import {
 } from '../authorization/constants/permissions.constants.js';
 
 import {
+  AuthorizationScope,
+} from '../authorization/decorators/authorization-scope.decorator.js';
+
+import {
   RequirePermissions,
 } from '../authorization/decorators/require-permissions.decorator.js';
 
@@ -108,6 +112,43 @@ export class UsersController {
   ) {
     return this.usersService.findAll(
       query,
+    );
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | LIST AGENTS OF A DIPLOMATIC POST (POST-SCOPED)
+  |--------------------------------------------------------------------------
+  */
+
+  @Get('posts/:postId/agents')
+  @RequirePermissions(
+    PERMISSIONS.IDENTITY.USERS_READ,
+  )
+  @AuthorizationScope({
+    postParam: 'postId',
+  })
+  @ApiOperation({
+    summary:
+      'List active consular agents and managers assigned to a specific diplomatic post',
+  })
+  @ApiOkResponse({
+    description:
+      'Post agents returned successfully.',
+  })
+  @ApiForbiddenResponse({
+    description:
+      'The authenticated user is not authorized to read agents for this diplomatic post.',
+  })
+  findPostAgents(
+    @Param(
+      'postId',
+      ParseUUIDPipe,
+    )
+    postId: string,
+  ) {
+    return this.usersService.findPostAgents(
+      postId,
     );
   }
 

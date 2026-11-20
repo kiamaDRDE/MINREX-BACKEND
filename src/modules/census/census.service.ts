@@ -12,6 +12,7 @@ import {
 
 import {
   CensusStatus,
+  TalentApplicationStatus,
 } from '../../generated/prisma/enums.js';
 
 import {
@@ -264,6 +265,12 @@ export class CensusService {
             true,
 
           status:
+            true,
+
+          talentStatus:
+            true,
+
+          talentSubmittedAt:
             true,
         },
       });
@@ -541,6 +548,66 @@ export class CensusService {
             ? {
                 yearsExperience:
                   dto.yearsExperience,
+              }
+            : {}),
+
+          ...(dto.expertiseDomains !==
+          undefined
+            ? {
+                expertiseDomains: [
+                  ...new Set(
+                    dto.expertiseDomains
+                      .map((item) => item.trim())
+                      .filter(Boolean),
+                  ),
+                ],
+              }
+            : {}),
+
+          ...(dto.skills !== undefined
+            ? {
+                skills: [
+                  ...new Set(
+                    dto.skills
+                      .map((item) => item.trim())
+                      .filter(Boolean),
+                  ),
+                ],
+              }
+            : {}),
+
+          ...(dto.qualifications !==
+          undefined
+            ? {
+                qualifications:
+                  dto.qualifications.trim() || null,
+              }
+            : {}),
+
+          ...(dto.optInTalentDirectory !==
+          undefined
+            ? {
+                optInTalentDirectory:
+                  dto.optInTalentDirectory,
+                ...(dto.optInTalentDirectory &&
+                record.talentStatus !==
+                  TalentApplicationStatus.APPROVED
+                  ? {
+                      talentStatus:
+                        TalentApplicationStatus.PENDING,
+                      talentSubmittedAt:
+                        record.talentSubmittedAt ??
+                        new Date(),
+                      talentRejectionReason: null,
+                    }
+                  : !dto.optInTalentDirectory &&
+                      record.talentStatus ===
+                        TalentApplicationStatus.PENDING
+                    ? {
+                        talentStatus:
+                          TalentApplicationStatus.NONE,
+                      }
+                    : {}),
               }
             : {}),
 

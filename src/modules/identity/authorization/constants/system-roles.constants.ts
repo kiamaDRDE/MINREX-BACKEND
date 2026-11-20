@@ -405,6 +405,12 @@ export const SYSTEM_ROLES:
 
       permissions: [
         /*
+         * Diplomatic network (lecture référentiel pays & postes)
+         */
+
+        PERMISSIONS.NETWORK.POSTS_READ,
+
+        /*
          * Census
          */
 
@@ -479,6 +485,12 @@ export const SYSTEM_ROLES:
         true,
     
       permissions: [
+        /*
+         * Diplomatic network (lecture référentiel pays & postes)
+         */
+
+        PERMISSIONS.NETWORK.POSTS_READ,
+
         /*
          * Own talent profile
          */

@@ -15,8 +15,13 @@ import type {
 } from '../../../generated/prisma/client.js';
 
 import {
+  AssignmentStatus,
   UserStatus,
 } from '../../../generated/prisma/enums.js';
+
+import {
+  SYSTEM_ROLE_CODES,
+} from '../authorization/constants/system-roles.constants.js';
 
 import {
   PrismaService,
@@ -437,6 +442,122 @@ export class UsersService {
               ),
       },
     };
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | LIST ACTIVE AGENTS OF A DIPLOMATIC POST (POST-SCOPED)
+  |--------------------------------------------------------------------------
+  */
+
+  async findPostAgents(postId: string) {
+    const post = await this.prisma.diplomaticPost.findUnique({
+      where: { id: postId },
+      select: { id: true },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Diplomatic post not found.');
+    }
+
+    const now = new Date();
+    const activeRoleAssignmentWhere: Prisma.UserRoleAssignmentWhereInput = {
+      isActive: true,
+      OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+      role: { isActive: true },
+    };
+
+    const items = await this.prisma.user.findMany({
+      where: {
+        status: UserStatus.ACTIVE,
+        OR: [
+          {
+            postAssignments: {
+              some: {
+                postId,
+                status: AssignmentStatus.ACTIVE,
+              },
+            },
+          },
+          {
+            roleAssignments: {
+              some: {
+                postId,
+                isActive: true,
+                OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+                role: {
+                  isActive: true,
+                  code: {
+                    in: [
+                      SYSTEM_ROLE_CODES.CONSULAR_AGENT,
+                      SYSTEM_ROLE_CODES.POST_MANAGER,
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+      orderBy: { createdAt: 'asc' },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        phone: true,
+        status: true,
+        emailVerifiedAt: true,
+        phoneVerifiedAt: true,
+        lastLoginAt: true,
+        createdAt: true,
+        updatedAt: true,
+        profile: {
+          select: {
+            firstName: true,
+            lastName: true,
+            displayName: true,
+            photoUrl: true,
+            preferredLanguage: true,
+            residenceCountry: true,
+          },
+        },
+        roleAssignments: {
+          where: activeRoleAssignmentWhere,
+          select: {
+            id: true,
+            postId: true,
+            serviceId: true,
+            isActive: true,
+            assignedAt: true,
+            expiresAt: true,
+            role: {
+              select: {
+                id: true,
+                code: true,
+                name: true,
+                scope: true,
+              },
+            },
+            post: {
+              select: {
+                id: true,
+                code: true,
+                name: true,
+              },
+            },
+            service: {
+              select: {
+                id: true,
+                code: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return { items };
   }
 
   /*

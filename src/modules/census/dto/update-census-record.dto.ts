@@ -8,6 +8,8 @@ import {
 } from 'class-transformer';
 
 import {
+  ArrayMaxSize,
+  IsArray,
   IsBoolean,
   IsDateString,
   IsEmail,
@@ -262,6 +264,49 @@ export class UpdateCensusRecordDto {
   @IsInt()
   @Min(0)
   yearsExperience?: number;
+
+  /*
+  |--------------------------------------------------------------------------
+  | Talent & Expertise directory
+  |--------------------------------------------------------------------------
+  */
+
+  @ApiPropertyOptional({
+    type: [String],
+    example: ["Technologies de l'Information & IA"],
+  })
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(20)
+  @IsString({ each: true })
+  @MaxLength(100, { each: true })
+  expertiseDomains?: string[];
+
+  @ApiPropertyOptional({
+    type: [String],
+    example: ['Kubernetes', 'TypeScript'],
+  })
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(30)
+  @IsString({ each: true })
+  @MaxLength(100, { each: true })
+  skills?: string[];
+
+  @ApiPropertyOptional({
+    example: 'Diplômes: Master Génie Logiciel (Polytechnique, 2020)',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(4000)
+  qualifications?: string;
+
+  @ApiPropertyOptional({
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  optInTalentDirectory?: boolean;
 
   /*
   |--------------------------------------------------------------------------

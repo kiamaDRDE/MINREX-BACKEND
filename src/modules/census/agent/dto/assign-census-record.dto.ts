@@ -18,3 +18,4 @@ export class AssignCensusRecordDto {
   @MaxLength(1000)
   comment?: string;
 }
+

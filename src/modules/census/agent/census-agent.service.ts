@@ -9,6 +9,7 @@ import {
   AssignmentStatus,
   CensusReviewDecision,
   CensusStatus,
+  TalentApplicationStatus,
 } from '../../../generated/prisma/enums.js';
 
 import {
@@ -38,6 +39,10 @@ import {
 import {
   assignConsularIdentifierIfMissing,
 } from '../../../common/utils/consular-id.util.js';
+
+import {
+  grantMentorExpertRoleIfMissing,
+} from '../../../common/utils/mentor-role.util.js';
 
 import {
   MailService,
@@ -143,6 +148,12 @@ export class CensusAgentService {
               true,
 
             rejectedAt:
+              true,
+
+            optInTalentDirectory:
+              true,
+
+            talentStatus:
               true,
 
             assignedToUserId:
@@ -579,6 +590,10 @@ export class CensusAgentService {
     const now =
       new Date();
 
+    const shouldApproveTalent =
+      record.optInTalentDirectory &&
+      record.talentStatus !== TalentApplicationStatus.REJECTED;
+
     const verifyOutcome =
       await this.prisma.$transaction(
         async (tx) => {
@@ -617,6 +632,18 @@ export class CensusAgentService {
 
                 rejectedAt:
                   null,
+
+                ...(shouldApproveTalent
+                  ? {
+                      talentStatus:
+                        TalentApplicationStatus.APPROVED,
+                      talentReviewedAt: now,
+                      talentReviewedById:
+                        reviewerId,
+                      talentRejectionReason:
+                        null,
+                    }
+                  : {}),
               },
             });
 
@@ -639,6 +666,18 @@ export class CensusAgentService {
                 'Census record verified.',
             },
           });
+
+          let mentorRoleGranted = false;
+          if (shouldApproveTalent) {
+            const roleOutcome =
+              await grantMentorExpertRoleIfMissing(
+                tx,
+                record.userId,
+                now,
+              );
+            mentorRoleGranted =
+              roleOutcome.granted;
+          }
 
           const [citizen, post] = await Promise.all([
             tx.user.findUnique({
@@ -689,8 +728,24 @@ export class CensusAgentService {
             tx,
           );
 
+          if (shouldApproveTalent) {
+            await this.notifications.emitToUser(
+              record.userId,
+              {
+                type: 'MENTORSHIP_INVITE',
+                title: 'Accréditation Expert & Mentor MTC activée',
+                message:
+                  'Votre profil d’expertise a été validé avec votre dossier consulaire. Votre rôle Mentor / Expert est désormais actif et vous pouvez accéder à votre Espace Mentor.',
+                priority: 'HIGH',
+                actionUrl: '/espace-mentor',
+              },
+              tx,
+            );
+          }
+
           return {
             record: result,
+            mentorRoleGranted,
             newlyIssuedConsularId,
             citizenEmail: citizen?.emailVerifiedAt ? citizen.email : null,
             citizenFirstName: citizen?.profile?.firstName ?? null,
@@ -711,6 +766,8 @@ export class CensusAgentService {
     return {
       record:
         verifyOutcome.record,
+      mentorRoleGranted:
+        verifyOutcome.mentorRoleGranted,
     };
   }
 
@@ -961,6 +1018,12 @@ export class CensusAgentService {
             true,
 
           assignedPostId:
+            true,
+
+          optInTalentDirectory:
+            true,
+
+          talentStatus:
             true,
         },
       });

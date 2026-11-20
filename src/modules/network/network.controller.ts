@@ -26,6 +26,10 @@ import {
 } from '../identity/authorization/constants/permissions.constants.js';
 
 import {
+  AuthorizationScope,
+} from '../identity/authorization/decorators/authorization-scope.decorator.js';
+
+import {
   RequirePermissions,
 } from '../identity/authorization/decorators/require-permissions.decorator.js';
 
@@ -100,6 +104,9 @@ export class NetworkController {
   @RequirePermissions(
     PERMISSIONS.NETWORK.POSTS_READ,
   )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary:
       'List active countries',
@@ -142,6 +149,9 @@ export class NetworkController {
   @RequirePermissions(
     PERMISSIONS.NETWORK.POSTS_READ,
   )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary:
       'List diplomatic post types',
@@ -183,6 +193,9 @@ export class NetworkController {
   @RequirePermissions(
     PERMISSIONS.NETWORK.POSTS_READ,
   )
+  @AuthorizationScope({
+    allowAssignedPosts: true,
+  })
   @ApiOperation({
     summary:
       'List diplomatic posts',
