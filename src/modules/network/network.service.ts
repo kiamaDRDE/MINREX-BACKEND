@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 
@@ -47,6 +48,10 @@ import {
 
 @Injectable()
 export class NetworkService {
+  private readonly logger = new Logger(
+    NetworkService.name,
+  );
+
   constructor(
     private readonly prisma:
       PrismaService,
@@ -68,6 +73,8 @@ export class NetworkService {
         orderBy: {
           name: 'asc',
         },
+
+        take: 500,
 
         select: {
           id: true,
@@ -157,6 +164,8 @@ export class NetworkService {
         orderBy: {
           name: 'asc',
         },
+
+        take: 100,
       });
 
     return {
@@ -232,15 +241,22 @@ export class NetworkService {
           name: 'asc',
         },
 
+        take: 500,
+
         select: {
           id: true,
           code: true,
           name: true,
           status: true,
+          typeId: true,
+          hostCountryId: true,
+          parentPostId: true,
           city: true,
           address: true,
           latitude: true,
           longitude: true,
+          openedAt: true,
+          closedAt: true,
 
           type: {
             select: {
@@ -264,6 +280,43 @@ export class NetworkService {
               id: true,
               code: true,
               name: true,
+            },
+          },
+
+          services: {
+            orderBy: {
+              name: 'asc',
+            },
+            select: {
+              id: true,
+              postId: true,
+              code: true,
+              name: true,
+              serviceType: true,
+              description: true,
+              status: true,
+            },
+          },
+
+          coverages: {
+            orderBy: {
+              startDate: 'desc',
+            },
+            select: {
+              id: true,
+              postId: true,
+              countryId: true,
+              competenceNature: true,
+              startDate: true,
+              endDate: true,
+              country: {
+                select: {
+                  id: true,
+                  iso2Code: true,
+                  iso3Code: true,
+                  name: true,
+                },
+              },
             },
           },
         },
@@ -292,13 +345,23 @@ export class NetworkService {
             lat = resolved.latitude;
             lon = resolved.longitude;
 
-            await this.prisma.diplomaticPost.update({
-              where: { id: item.id },
-              data: {
-                latitude: resolved.latitude,
-                longitude: resolved.longitude,
-              },
-            });
+            try {
+              await this.prisma.diplomaticPost.update({
+                where: { id: item.id },
+                data: {
+                  latitude: resolved.latitude,
+                  longitude: resolved.longitude,
+                },
+              });
+            } catch (error) {
+              this.logger.warn(
+                `Failed to backfill coordinates for post ${item.code}: ${
+                  error instanceof Error
+                    ? error.message
+                    : String(error)
+                }`,
+              );
+            }
           }
         }
 
@@ -330,10 +393,15 @@ export class NetworkService {
           code: true,
           name: true,
           status: true,
+          typeId: true,
+          hostCountryId: true,
+          parentPostId: true,
           city: true,
           address: true,
           latitude: true,
           longitude: true,
+          openedAt: true,
+          closedAt: true,
           createdAt: true,
           updatedAt: true,
 
@@ -363,18 +431,28 @@ export class NetworkService {
           },
 
           services: {
+            orderBy: {
+              name: 'asc',
+            },
             select: {
               id: true,
+              postId: true,
               code: true,
               name: true,
               serviceType: true,
+              description: true,
               status: true,
             },
           },
 
           coverages: {
+            orderBy: {
+              startDate: 'desc',
+            },
             select: {
               id: true,
+              postId: true,
+              countryId: true,
               competenceNature: true,
               startDate: true,
               endDate: true,
@@ -532,18 +610,31 @@ export class NetworkService {
       );
     }
 
+    const effectiveHostCountryId =
+      dto.hostCountryId !== undefined
+        ? (dto.hostCountryId ?? undefined)
+        : (existing.hostCountryId ?? undefined);
+
+    const effectiveParentPostId =
+      dto.parentPostId !== undefined
+        ? (dto.parentPostId ?? undefined)
+        : (existing.parentPostId ?? undefined);
+
     await this.validatePostReferences(
       dto.typeId ??
         existing.typeId,
 
-      dto.hostCountryId ??
-        existing.hostCountryId ??
-        undefined,
+      effectiveHostCountryId,
 
-      dto.parentPostId ??
-        existing.parentPostId ??
-        undefined,
+      effectiveParentPostId,
     );
+
+    if (dto.parentPostId) {
+      await this.assertNoHierarchyCycle(
+        postId,
+        dto.parentPostId,
+      );
+    }
 
     if (
       dto.code !==
@@ -587,8 +678,7 @@ export class NetworkService {
           latitude: dto.latitude,
           longitude: dto.longitude,
           city: dto.city ?? existing.city,
-          hostCountryId:
-            dto.hostCountryId ?? existing.hostCountryId,
+          hostCountryId: effectiveHostCountryId,
           name: dto.name ?? existing.name,
         })
       : null;
@@ -706,6 +796,8 @@ export class NetworkService {
           name:
             'asc',
         },
+
+        take: 200,
 
         select: {
           id: true,
@@ -901,6 +993,8 @@ export class NetworkService {
           startDate:
             'desc',
         },
+
+        take: 500,
 
         select: {
           id: true,
@@ -1178,6 +1272,34 @@ export class NetworkService {
     }
 
     return post;
+  }
+
+  private async assertNoHierarchyCycle(
+    postId: string,
+    candidateParentId: string,
+  ): Promise<void> {
+    const visited = new Set<string>([postId]);
+    let currentId: string | null = candidateParentId;
+    let depth = 0;
+
+    while (currentId && depth < 50) {
+      if (visited.has(currentId)) {
+        throw new BadRequestException(
+          'Hierarchy cycle detected: a diplomatic post cannot be attached under one of its descendants.',
+        );
+      }
+
+      visited.add(currentId);
+
+      const ancestor: { parentPostId: string | null } | null =
+        await this.prisma.diplomaticPost.findUnique({
+          where: { id: currentId },
+          select: { parentPostId: true },
+        });
+
+      currentId = ancestor?.parentPostId ?? null;
+      depth += 1;
+    }
   }
 
   private async validatePostReferences(

@@ -17,6 +17,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 
 import {
@@ -53,19 +54,32 @@ export class UpdateDiplomaticPostDto {
   @IsUUID()
   typeId?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    nullable: true,
+  })
   @IsOptional()
+  @ValidateIf((_, value) => value !== null)
   @IsUUID()
-  hostCountryId?: string;
+  hostCountryId?: string | null;
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) =>
+    typeof value === 'string'
+      ? value.trim()
+      : value,
+  )
   @IsString()
   @MaxLength(150)
   city?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
+  @Transform(({ value }) =>
+    typeof value === 'string'
+      ? value.trim()
+      : value,
+  )
   @IsString()
   @MaxLength(255)
   address?: string;
@@ -90,10 +104,15 @@ export class UpdateDiplomaticPostDto {
   @Max(180)
   longitude?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    nullable: true,
+    description:
+      'Optional parent diplomatic post UUID, or null to detach to top level.',
+  })
   @IsOptional()
+  @ValidateIf((_, value) => value !== null)
   @IsUUID()
-  parentPostId?: string;
+  parentPostId?: string | null;
 
   @ApiPropertyOptional({
     enum: DiplomaticPostStatus,
